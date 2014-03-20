@@ -17,10 +17,13 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject legL, legR;
 
+	private PlayerAbility playerAbility;
+
 
 	void Start () {
 	
 		playerSingleton = this.transform;
+		playerAbility = this.GetComponent<PlayerAbility>();
 	}
 	
 	void Update () {
@@ -41,10 +44,16 @@ public class PlayerController : MonoBehaviour {
 
 		// ability
 		if(Input.GetButton("Fire1")){
+
+
+
+
+			//Old code
+			/*
 			if(Time.time > fireRate+lastShot){
 				GameObject clone = Instantiate(
                     fireProj, 
-                    gameObject.transform.position + (new Vector3(0, 0/*gameObject.transform.renderer.bounds.size.y/2*/ ,0)) + (gameObject.transform.forward.normalized * 1), 
+                    gameObject.transform.position + (new Vector3(0, 0 ,0)) + (gameObject.transform.forward.normalized * 1), 
                     gameObject.transform.rotation
                 ) as GameObject;
 				
@@ -52,6 +61,44 @@ public class PlayerController : MonoBehaviour {
 				clone.rigidbody.velocity = thisCamera.transform.forward * fireSpeed * Time.deltaTime;
 				
 				lastShot = Time.time;
+			}*/
+		}
+
+		if( playerAbility )
+		{
+			if( playerAbility.Charged() )
+			{
+				if( Input.GetButtonUp("Fire1") )
+				{
+					GameObject clone = Instantiate(
+						playerAbility.ProjectilePrefab, 
+						gameObject.transform.position + (new Vector3(0, 0 ,0)) + (gameObject.transform.forward.normalized * 1), 
+						gameObject.transform.rotation
+						) as GameObject;
+					clone.rigidbody.velocity = thisCamera.transform.forward * playerAbility.speed * Time.deltaTime;
+					
+					playerAbility.stopCharge();
+					print ("fired");
+				}
+				print ("charged");
+			}
+			else if( playerAbility.isCharging() )
+			{
+				if( Input.GetButtonUp("Fire1") )
+				{
+					if (playerAbility.needsFullChargeToFire)
+					{
+						playerAbility.stopCharge();
+					}
+				}
+				print("Charging");
+			}
+			else if( Input.GetButton("Fire1") )
+			{
+				if( !playerAbility.isCharging() )
+				{
+					playerAbility.startCharge();
+				}
 			}
 		}
 	}

@@ -63,6 +63,8 @@ public class MGSpawner : MonoBehaviour {
 		{
 			Transform unit = (Transform) Instantiate(unitList[(int)unitLevel].transform, this.transform.position, Quaternion.identity) as Transform;
 			unit.FindChild("ExampleEnemyAI").GetComponent<MGAISuperClass>().SetOwner(this);
+
+			//set the player to follow
 			unit.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", PlayerController.playerSingleton.gameObject);
 
 			numberOfUnits++;
