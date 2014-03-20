@@ -2,6 +2,9 @@
 using System.Collections;
 using MGSpawn.Spawn;
 
+using RAIN.Core;
+using RAIN.Action;
+
 public class MGSpawner : MonoBehaviour {
 	
 	public SpawnMemberType unitLevel = SpawnMemberType.Easy;
@@ -59,7 +62,8 @@ public class MGSpawner : MonoBehaviour {
 		if (unitList[(int)unitLevel] != null)
 		{
 			Transform unit = (Transform) Instantiate(unitList[(int)unitLevel].transform, this.transform.position, Quaternion.identity) as Transform;
-			unit.GetComponent<MGAISuperClass>().SetOwner(this);
+			unit.FindChild("ExampleEnemyAI").GetComponent<MGAISuperClass>().SetOwner(this);
+			unit.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", PlayerController.playerSingleton.gameObject);
 
 			numberOfUnits++;
 			totalSpawnedUnits++;
