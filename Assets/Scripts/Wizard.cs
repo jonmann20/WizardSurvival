@@ -3,12 +3,23 @@ using System.Collections;
 
 public class Wizard : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	void Awake()
+	{
+		print("WIZARD INITIALIZED");
+		//Don't control wizards belonging to other  players
+		print(GetComponent<PhotonView>().isMine);
+		if(!GetComponent<PhotonView>().isMine)
+		{
+			
+			PlayerController p = GetComponent<PlayerController>();
+			p.enabled = false;
+		}
 	}
-	
-	// Update is called once per frame
+
+	//WARNING: Start() does not get called upon PhotonNetwork.Instantiate(). Use awake instead.
+	void Start () {
+	}
+
 	void Update () {
         if(Input.GetKey(KeyCode.W)) {
             rigidbody.velocity += new Vector3(0, 0, 15 * Time.deltaTime);
