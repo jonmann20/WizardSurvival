@@ -57,6 +57,7 @@ public class PlayerAbility : MonoBehaviour {
 	{
 		charging = false;
 		canActivate = false;
+		currentCharge = 0;
 	}
 	public void startCharge()
 	{
