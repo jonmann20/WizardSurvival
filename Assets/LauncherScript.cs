@@ -17,6 +17,5 @@ public class LauncherScript : MonoBehaviour {
 	}
 
 	void Update () {
-		print(PhotonNetwork.countOfPlayers);
 	}
 }
