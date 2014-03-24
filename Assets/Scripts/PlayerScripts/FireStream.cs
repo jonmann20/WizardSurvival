@@ -15,7 +15,7 @@ public class FireStream : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
+	// Update is called once per framesa
 	void Update () {
 		life --;
 		float fraction = (float)life / 30.0f;

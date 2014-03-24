@@ -59,7 +59,7 @@ public class MouseCamera : MonoBehaviour {
 
 	void LateUpdate () {
 		if (target) {
-			if( Input.GetMouseButton(1) || Input.GetMouseButton(0) )
+			if( Input.GetMouseButton(1) )
 			{
 				float horizontal = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
 				x += horizontal;
