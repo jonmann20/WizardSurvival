@@ -19,7 +19,7 @@ public class PlayerAbility : MonoBehaviour {
 
 	public float speed = 5;
 
-	public GameObject ProjectilePrefab;
+	public string ProjectilePrefabString = "Fireball";
 
 	public Transform player; 
 
@@ -73,5 +73,9 @@ public class PlayerAbility : MonoBehaviour {
 	{
 		return canActivate;
 	}
-	
+
+	public float getPercentCharged()
+	{
+		return currentCharge;
+	}
 }

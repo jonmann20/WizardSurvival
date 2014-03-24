@@ -8,8 +8,8 @@ public class LauncherScript : MonoBehaviour {
 
 	void Start () {
 
-		if(PhotonNetwork.countOfPlayers == 1)
-			Instantiate(DebugGroundPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+		//if(PhotonNetwork.countOfPlayers == 1)
+		//	Instantiate(DebugGroundPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
 		GameObject wiz = Instantiate(WizardPrefab, new Vector3(0, 5, 0), Quaternion.identity) as GameObject;
 		GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;

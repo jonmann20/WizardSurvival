@@ -5,6 +5,9 @@ public class PlayerController : MonoBehaviour {
 	public float movementSpeed = 10;
 	public float strafeSpeed = 8;
 
+	public enum JumpState { IN_AIR, NOT_IN_AIR };
+	public JumpState currentJumpState = JumpState.IN_AIR;
+
 	public float fireRate = .11f;
 	private float lastShot = -10;
 
@@ -16,12 +19,14 @@ public class PlayerController : MonoBehaviour {
 	public static Transform playerSingleton;
 
     public GameObject legL, legR;
+	public float sinCounter = 0;
 
 	private PlayerAbility playerAbility;
-
-
-	void Start () {
 	
+	void Start () {
+
+		thisCamera = (GameObject.FindWithTag("MainCamera") as GameObject).transform;
+
 		playerSingleton = this.transform;
 		playerAbility = this.GetComponent<PlayerAbility>();
 	}
@@ -37,7 +42,7 @@ public class PlayerController : MonoBehaviour {
 
         // jump
         if(Input.GetButtonDown("Jump")){
-            rigidbody.AddForce(0, 405, 0);
+			attemptJump();
         }
 
         animate();
@@ -45,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 		// ability
 		if(Input.GetButton("Fire1")){
 
-
+			print("FIRE!");
 
 
 			//Old code
@@ -70,12 +75,12 @@ public class PlayerController : MonoBehaviour {
 			{
 				if( Input.GetButtonUp("Fire1") )
 				{
-					GameObject clone = Instantiate(
-						playerAbility.ProjectilePrefab, 
+					GameObject clone = PhotonNetwork.Instantiate(
+						playerAbility.ProjectilePrefabString, 
 						gameObject.transform.position + (new Vector3(0, 0 ,0)) + (gameObject.transform.forward.normalized * 1), 
-						gameObject.transform.rotation
+						gameObject.transform.rotation, 0
 						) as GameObject;
-					clone.rigidbody.velocity = thisCamera.transform.forward * playerAbility.speed * Time.deltaTime;
+					clone.rigidbody.velocity = thisCamera.transform.forward * playerAbility.speed;
 					
 					playerAbility.stopCharge();
 					print ("fired");
@@ -91,7 +96,7 @@ public class PlayerController : MonoBehaviour {
 						playerAbility.stopCharge();
 					}
 				}
-				print("Charging");
+				print("Charging: " + playerAbility.getPercentCharged());
 			}
 			else if( Input.GetButton("Fire1") )
 			{
@@ -106,8 +111,8 @@ public class PlayerController : MonoBehaviour {
     bool isStepL = true;
     bool isStepR = false;
     void animate() {
-        animateLeg(legL.transform, ref isStepL);
-        animateLeg(legR.transform, ref isStepR);
+        animateLeg2(legL.transform, false);
+        animateLeg2(legR.transform, true);
     }
 
     void animateLeg(Transform leg, ref bool isStep) {
@@ -141,5 +146,45 @@ public class PlayerController : MonoBehaviour {
         if(dtAngle != 0) {
             leg.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
         }
+
+
+
     }
+
+	void animateLeg2(Transform legTran, bool isRightLeg)
+	{
+		Vector3 vel2d = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+		float velocityMagnitude = vel2d.magnitude;
+		if(velocityMagnitude < 1)
+			velocityMagnitude = 0;
+		//print(velocityMagnitude);
+		sinCounter += velocityMagnitude * 10 * Time.deltaTime;
+		//print(sinCounter);
+		if(isRightLeg)
+			legTran.localRotation = Quaternion.Euler(Mathf.Sin(sinCounter) * 45, 0, 0);
+		//else
+			//legTran.localRotation = Quaternion.Euler(Mathf.Cos(sinCounter) * 45, 0, 0);		                                  
+	}
+
+	void attemptJump()
+	{
+		if(currentJumpState == JumpState.NOT_IN_AIR)
+		{
+			rigidbody.AddForce(0, 405, 0);
+		}
+	}
+	
+	void OnCollisionEnter(Collision col){
+		if(col.gameObject.tag == "Ground"){
+			currentJumpState = JumpState.NOT_IN_AIR;
+		}
+	}
+	void OnCollisionStay(Collision col){
+		if(col.gameObject.tag == "Ground"){
+			currentJumpState = JumpState.NOT_IN_AIR;
+		}
+	}
+	void OnCollisionExit(Collision col){
+		currentJumpState = JumpState.IN_AIR;
+	}
 }

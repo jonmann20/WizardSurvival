@@ -8,14 +8,25 @@ public class FireStream : MonoBehaviour {
 	public float range = 10;
 	public GameObject explosionPrefab;
 
+	public int life = 90;
+
 	// Use this for initialization
 	void Start () {
-		Destroy(this.gameObject,3);
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		life --;
+		float fraction = (float)life / 30.0f;
+
+		if(fraction < 1.0f)
+		{
+			transform.localScale = new Vector3(fraction, fraction, fraction);
+		}
+
+		if(life <= 0)
+			PhotonNetwork.Destroy(gameObject);
 	}
 	void OnCollisionEnter(Collision coll) {
 
