@@ -53,38 +53,77 @@ public class MouseCamera : MonoBehaviour {
 			distance + Input.GetAxis ("Mouse ScrollWheel") * -zoomSpeed * Time.deltaTime,
 			minDistance,
 			maxDistance
-			);
+		);
 	}
 
 
 	void LateUpdate () {
-		if (target) {
-			if( Input.GetMouseButton(1) )
-			{
-				float horizontal = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
-				x += horizontal;
-				y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
+		if (target){
+			bool b0 = mouseIn();
+			bool b1 = rightStickIn();
 
-				target.transform.Rotate(0, horizontal, 0);
-				
-				y = ClampAngle(y, yMinLimit, yMaxLimit);
-				
-				Quaternion rotation = Quaternion.Euler(y, x, 0);
-				Vector3 position = (rotation * Vector3.forward * -distance) + target.transform.position;
-				position.y += .5f;
-				
-				transform.rotation = rotation;
-				transform.position = position;
-			}
-			else
-			{
-				Vector3 position = (transform.rotation * Vector3.forward * -distance) + target.transform.position;
-				position.y += .5f;
-				
-				//transform.rotation = rotation;
-				transform.position = position;
+			if(!b0 && !b1){
+				holdPos();
 			}
 		}
+	}
+
+	void holdPos(){
+		Vector3 position = (transform.rotation * Vector3.forward * -distance) + target.transform.position;
+		position.y += .5f;
+		
+		//transform.rotation = rotation;
+		transform.position = position;
+	}
+
+	bool rightStickIn(){
+		float rH = Input.GetAxisRaw("RightH");
+		float rV = Input.GetAxisRaw("RightV");
+		//print (rH);
+
+		if(rH != 0 || rV != 0){
+			float horizontal = Input.GetAxis("RightH") * xSpeed * Time.deltaTime;
+			x += horizontal;
+			y -= Input.GetAxis("RightV") * ySpeed * Time.deltaTime;
+			
+			target.transform.Rotate(0, horizontal, 0);
+			
+			y = ClampAngle(y, yMinLimit, yMaxLimit);
+			
+			Quaternion rotation = Quaternion.Euler(y, x, 0);
+			Vector3 position = (rotation * Vector3.forward * -distance) + target.transform.position;
+			position.y += .5f;
+			
+			transform.rotation = rotation;
+			transform.position = position;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	bool mouseIn(){
+		if(Input.GetMouseButton(1)){
+			float horizontal = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
+			x += horizontal;
+			y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
+			
+			target.transform.Rotate(0, horizontal, 0);
+			
+			y = ClampAngle(y, yMinLimit, yMaxLimit);
+			
+			Quaternion rotation = Quaternion.Euler(y, x, 0);
+			Vector3 position = (rotation * Vector3.forward * -distance) + target.transform.position;
+			position.y += .5f;
+			
+			transform.rotation = rotation;
+			transform.position = position;
+
+			return true;
+		}
+
+		return false;
 	}
 
 	static float ClampAngle (float angle, float min, float max) {
@@ -94,9 +133,4 @@ public class MouseCamera : MonoBehaviour {
 			angle -= 360;
 		return Mathf.Clamp (angle, min, max);
 	}
-
-	void OnGUI()
-	{
-	}
-
 }

@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour {
 						playerAbility.stopCharge();
 					}
 				}
-				print("Charging: " + playerAbility.getPercentCharged());
+				//print("Charging: " + playerAbility.getPercentCharged());
 			}
 			else if( Input.GetButton("Fire1") )
 			{

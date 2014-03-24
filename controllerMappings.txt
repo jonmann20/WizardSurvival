@@ -1,0 +1,10 @@
+PS4
+---
+* Fire1: joystick button 7 ==> R1??
+* Jump: joystick button 1 ==> X
+
+
+XBOX360
+-------
+* Fire1: joystick button 5 ==> Right Bumper
+* Jump: joystick button 0 ==> A
