@@ -19,6 +19,8 @@ public class MGSpawner : MonoBehaviour {
 	private bool waveSpawn = true;
 	public bool spawn = true;
 
+	private bool startedSpawn = false;
+
 	public SpawnModes spawnType = SpawnModes.Continuous;
 
 	//WAVE
@@ -33,7 +35,8 @@ public class MGSpawner : MonoBehaviour {
 
 	//Location of Spawner
 	void Start () {
-		StartSpawn();
+		StartCoroutine("OpeningDelay");
+		//StartSpawn();
 	}
 
 	void OnDrawGizmos()
@@ -61,11 +64,14 @@ public class MGSpawner : MonoBehaviour {
 	{
 		if (unitList[(int)unitLevel] != null)
 		{
-			Transform unit = (Transform) Instantiate(unitList[(int)unitLevel].transform, this.transform.position, Quaternion.identity) as Transform;
-			unit.FindChild("ExampleEnemyAI").GetComponent<MGAISuperClass>().SetOwner(this);
+			GameObject unit = (GameObject) PhotonNetwork.Instantiate("EnemyWithAI", this.transform.position, Quaternion.identity,0) as GameObject;
+			unit.transform.FindChild("ExampleEnemyAI").GetComponent<MGAISuperClass>().SetOwner(this);
+			print("Spawn");
+			print(PhotonNetwork.playerList[0].ID);
 
+			GameObject tempPlayer = GameObject.FindGameObjectWithTag("Player");
 			//set the player to follow
-			unit.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", PlayerController.playerSingleton.gameObject);
+			unit.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", tempPlayer);
 
 			numberOfUnits++;
 			totalSpawnedUnits++;
@@ -192,7 +198,29 @@ public class MGSpawner : MonoBehaviour {
 
 	public void StartSpawn()
 	{
-		spawn = true;
-		StartCoroutine("DoSpawn");
+		//if( PhotonNetwork.isMasterClient )
+		{
+			spawn = true;
+			StartCoroutine("DoSpawn");
+		}
+	}
+
+	private IEnumerator OpeningDelay()
+	{
+		if( startedSpawn == true )
+		{
+			print ("Starting spawn");
+			StartSpawn();
+
+			//return;
+		}
+		else
+		{
+			print ("Timer started");
+			startedSpawn = true;
+			yield return new WaitForSeconds(5.0f);
+			StartCoroutine("OpeningDelay");
+
+		}
 	}
 }
