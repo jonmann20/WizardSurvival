@@ -5,6 +5,11 @@ public class FireballScript : MonoBehaviour {
 	
 	public int life = 0;
 
+	void Awake()
+	{
+		print("Fireball CREATED");
+	}
+
 	void Update () {
 		life --;
 		float fraction = (float)life / 30.0f;
