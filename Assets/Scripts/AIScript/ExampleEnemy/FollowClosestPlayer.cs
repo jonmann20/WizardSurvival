@@ -14,6 +14,7 @@ public class FollowClosestPlayer : MonoBehaviour {
 
 	IEnumerator FindClosestPlayer()
 	{
+
 		GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
 		
 		if( playerList.Length > 1 )
@@ -43,6 +44,7 @@ public class FollowClosestPlayer : MonoBehaviour {
 		{
 			this.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", playerList[0]);
 		}
+
 		yield return new WaitForSeconds(howOftenToCheckForClosestPlayer);
 		StartCoroutine("FindClosestPlayer");
 

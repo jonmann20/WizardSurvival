@@ -23,11 +23,6 @@ public class SampleAIController : MonoBehaviour {
 
 		this.transform.LookAt(player);
 
-
-		transform.position = Vector3.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
-
-		//check health
-
 		if( health <= 0 )
 		{
 			Remove();

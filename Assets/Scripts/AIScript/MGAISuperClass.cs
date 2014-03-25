@@ -18,7 +18,7 @@ public class MGAISuperClass : MonoBehaviour {
 		{
 			mOwner.RemoveUnit(mOwner.spawnID);
 		}
-		Destroy(transform.gameObject);
+		PhotonNetwork.Destroy(this.transform.parent.transform.gameObject);
 	}
 
 
