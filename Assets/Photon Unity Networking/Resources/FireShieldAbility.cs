@@ -1,0 +1,63 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class FireShieldAbility : AbilityBase {
+	
+	string FireballPrefabString = "FireballPrefab";
+	const int SPEED = 20;
+	const int MAX_LIFE = 90;
+	float sinCounter = 0.0f;
+	const float CIRCLE_RATE = 0.1f;
+	const float CIRCLE_RADIUS = 1.5f;
+	const int NUMBER_OF_FIREBALLS = 3;
+	List<GameObject> shieldFlames = new List<GameObject>();
+	
+	public void Awake()
+	{
+		print("NEW FireShieldAbility CREATED");
+	}
+	
+	public override void fire()
+	{
+		print("FireShieldAbility FIRED");
+
+		for(int i = 0; i < NUMBER_OF_FIREBALLS; i++)
+		{
+			float diff = (2.0f * Mathf.PI) / ((float)NUMBER_OF_FIREBALLS);
+			float sinValue = (diff * i);
+			Vector3 pos = gameObject.transform.position + new Vector3(Mathf.Sin(sinValue), 0, Mathf.Cos(sinValue));
+			GameObject projectile = PhotonNetwork.Instantiate(
+				FireballPrefabString, 
+				pos, 
+				gameObject.transform.rotation, 0
+			) as GameObject;
+
+			//set life
+			projectile.GetComponent<FireballScript>().life = MAX_LIFE;
+
+			shieldFlames.Add(projectile);
+		}
+	}
+
+	void Update()
+	{
+
+		sinCounter += CIRCLE_RATE;
+		for(int i = 0; i < shieldFlames.Count; i++)
+		{
+			if(shieldFlames[i] == null)
+			{
+				shieldFlames.RemoveAt(i);
+				continue;
+			}
+			float diff = (2.0f * Mathf.PI) / ((float)NUMBER_OF_FIREBALLS);
+			float sinValue = (diff * i) + sinCounter;
+			Vector3 pos = new Vector3(Mathf.Sin(sinValue), 0, Mathf.Cos(sinValue));
+			pos.Normalize();
+			pos *= CIRCLE_RADIUS;
+
+			shieldFlames[i].transform.position = gameObject.transform.position + pos;
+		}
+	}
+}

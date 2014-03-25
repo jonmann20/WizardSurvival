@@ -7,11 +7,13 @@ public class Wizard : MonoBehaviour {
 	{
 		if(!GetComponent<PhotonView>().isMine)
 		{
-			
 			PlayerController p = GetComponent<PlayerController>();
 			Rigidbody r = GetComponent<Rigidbody>();
+			AbilityManagerScript ams = GetComponent<AbilityManagerScript>();
+
 			r.useGravity = false;
 			p.enabled = false;
+			ams.enabled = false;
 		}
 	}
 }
