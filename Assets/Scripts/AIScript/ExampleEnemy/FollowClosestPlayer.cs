@@ -26,7 +26,7 @@ public class FollowClosestPlayer : MonoBehaviour {
 			float closestDistance = tempX + tempY + tempZ;
 			int closePlayerIdx = 0;
 			
-			for (int i = 0; i < playerList.Length; i++)
+			for (int i = 1; i < playerList.Length; i++)
 			{
 				tempX= Mathf.Abs(playerList[i].transform.position.x - this.transform.position.x);
 				tempY= Mathf.Abs(playerList[i].transform.position.y - this.transform.position.y);

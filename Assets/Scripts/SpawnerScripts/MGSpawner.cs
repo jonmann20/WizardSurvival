@@ -62,7 +62,7 @@ public class MGSpawner : MonoBehaviour {
 
 	private void SpawnUnit()
 	{
-		if (unitList[(int)unitLevel] != null)
+		if (unitList[(int)unitLevel] != null && PhotonNetwork.isMasterClient)
 		{
 			GameObject unit = (GameObject) PhotonNetwork.Instantiate("EnemyWithAI", this.transform.position, Quaternion.identity,0) as GameObject;
 			unit.transform.FindChild("ExampleEnemyAI").GetComponent<MGAISuperClass>().SetOwner(this);
