@@ -68,48 +68,13 @@ public class PlayerController : MonoBehaviour {
 				lastShot = Time.time;
 			}*/
 		}
-
-		if( playerAbility )
-		{
-			if( playerAbility.Charged() )
-			{
-				if( Input.GetButtonUp("Fire1") )
-				{
-					GameObject clone = PhotonNetwork.Instantiate(
-						playerAbility.ProjectilePrefabString, 
-						gameObject.transform.position + (new Vector3(0, 0 ,0)) + (gameObject.transform.forward.normalized * 1), 
-						gameObject.transform.rotation, 0
-						) as GameObject;
-					clone.rigidbody.velocity = thisCamera.transform.forward * playerAbility.speed;
-					
-					playerAbility.stopCharge();
-					print ("fired");
-				}
-				print ("charged");
-			}
-			else if( playerAbility.isCharging() )
-			{
-				if( Input.GetButtonUp("Fire1") )
-				{
-					playerAbility.stopCharge();
-				}
-				//print("Charging: " + playerAbility.getPercentCharged());
-			}
-			else if( Input.GetButton("Fire1") )
-			{
-				if( !playerAbility.isCharging() )
-				{
-					playerAbility.startCharge();
-				}
-			}
-		}
 	}
 
     bool isStepL = true;
     bool isStepR = false;
     void animate() {
-        animateLeg2(legL.transform, false);
-        animateLeg2(legR.transform, true);
+        //animateLeg2(legL.transform, false);
+        //animateLeg2(legR.transform, true);
     }
 
     void animateLeg(Transform leg, ref bool isStep) {
