@@ -10,4 +10,6 @@ public abstract class AbilityBase : MonoBehaviour {
 
 	public int getCharge() { return charge; }
 	public bool isCharged() { return (charge >= maxCharge); }
+	public abstract string getAbilityName();
+	public abstract string getAbilityDescription();
 }

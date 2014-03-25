@@ -18,6 +18,11 @@ public class HudScript : MonoBehaviour {
 	List<GameObject> healthVoxels = new List<GameObject>();
 	GameObject hudCamera;
 
+	//TEXT
+	GameObject AbilityNameText;
+	GameObject AbilityDescriptionText;
+	public Font font;
+
 	// Use this for initialization
 	void Awake () {
 		HEALTHBAR_X_OFFSET = -(NUMBER_OF_VOXELS * VOXEL_WIDTH) * 0.5f;
@@ -43,6 +48,22 @@ public class HudScript : MonoBehaviour {
 
 			healthVoxels.Add(cube);
 		}
+
+		//TEXT
+		AbilityNameText = new GameObject();
+		AbilityNameText.transform.position = new Vector3(3.45f, 2.39f, 4.76f);
+		AbilityNameText.transform.parent = hudCamera.transform;
+		AbilityNameText.layer = 9;
+
+		TextMesh textMesh = AbilityNameText.AddComponent("TextMesh") as TextMesh;
+		MeshRenderer meshRenderer = AbilityNameText.AddComponent("MeshRenderer") as MeshRenderer;
+
+
+		textMesh.characterSize = 0.1f;
+		textMesh.tabSize = 4;
+		textMesh.fontSize = 31;
+		textMesh.font = font;
+		textMesh.text = "Hello World!";
 	}
 	
 	// Update is called once per frame
@@ -62,5 +83,10 @@ public class HudScript : MonoBehaviour {
 
 			healthVoxels[i].transform.localPosition = new Vector3(i * VOXEL_WIDTH + HEALTHBAR_X_OFFSET, HEALTHBAR_Y_OFFSET + bonusHeight, HEALTHBAR_Z_OFFSET);
 		}
+
+		//TEXT
+		AbilityNameText.transform.position = new Vector3(3.45f, 2.39f, 4.76f);
+		//AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
+		//AbilityNameText.text = AbilityManagerScript.getAbilityDescription();
 	}
 }

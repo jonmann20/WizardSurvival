@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AbilityManagerScript : MonoBehaviour {
 
-	public AbilityBase currentAbility;
+	public static AbilityBase currentAbility;
 
 	// Use this for initialization
 	void Start () {

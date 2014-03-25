@@ -28,4 +28,13 @@ public class FireballAbility : AbilityBase {
 		//set life
 		projectile.GetComponent<FireballScript>().life = MAX_LIFE;
 	}
+
+	public override string getAbilityName()
+	{
+		return "Calore";
+	}
+	public override string getAbilityDescription()
+	{
+		return "Burn, baby, Burn.";
+	}
 }

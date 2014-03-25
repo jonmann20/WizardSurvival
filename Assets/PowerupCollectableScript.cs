@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FireShieldPowerupScript : MonoBehaviour {
+public class PowerupCollectableScript : MonoBehaviour {
 
+	public string BestowedAbilityName;
 	float sinCounter = 0.0f;
 	Vector3 initialPosition;
 	void Start () {
@@ -19,7 +20,7 @@ public class FireShieldPowerupScript : MonoBehaviour {
 
 		if(collision.gameObject.tag == "Player")
 		{
-			collision.gameObject.GetComponent<AbilityManagerScript>().changeAbility("FireShieldAbility");
+			collision.gameObject.GetComponent<AbilityManagerScript>().changeAbility(BestowedAbilityName);
 			Destroy(gameObject);
 		}
 	}

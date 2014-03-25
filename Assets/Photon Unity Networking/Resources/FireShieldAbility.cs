@@ -58,4 +58,13 @@ public class FireShieldAbility : AbilityBase {
 			shieldFlames[i].transform.position = gameObject.transform.position + pos;
 		}
 	}
+
+	public override string getAbilityName()
+	{
+		return "Fiery Winds";
+	}
+	public override string getAbilityDescription()
+	{
+		return "On nights like tonight, legend has it the air carries a vaunted flame to aid the innocent.";
+	}
 }
