@@ -66,8 +66,8 @@ public class MGSpawner : MonoBehaviour {
 		{
 			GameObject unit = (GameObject) PhotonNetwork.Instantiate("EnemyWithAI", this.transform.position, Quaternion.identity,0) as GameObject;
 			unit.transform.FindChild("ExampleEnemyAI").GetComponent<MGAISuperClass>().SetOwner(this);
-			print("Spawn");
-			print(PhotonNetwork.playerList[0].ID);
+			//print("Spawn");
+			//print(PhotonNetwork.playerList[0].ID);
 
 			//GameObject tempPlayer = GameObject.FindGameObjectWithTag("Player");
 			//set the player to follow
