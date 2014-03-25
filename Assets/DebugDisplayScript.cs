@@ -7,11 +7,18 @@ public class DebugDisplayScript : MonoBehaviour {
 	delegate List<string> StringListReturningDelegate();
 	List<StringListReturningDelegate> ThingsToDisplay = new List<StringListReturningDelegate>();
 
+	//FPS STUFF
+	int m_frameCounter = 0;
+	float m_timeCounter = 0.0f;
+	float m_lastFramerate = 0.0f;
+	public float m_refreshTime = 0.5f;
+
 	//To add additional debug information...
 	//(1) Create a new string-returning function
 	//(2) Add a StringReturningDelegate for that function to ThingsToDisplay in Awake()
 	void Awake()
 	{
+		ThingsToDisplay.Add(new StringListReturningDelegate(fps));
 		ThingsToDisplay.Add(new StringListReturningDelegate(numberOfConnectedPlayers));
 		ThingsToDisplay.Add(new StringListReturningDelegate(playerListInformation));
 	}
@@ -43,6 +50,14 @@ public class DebugDisplayScript : MonoBehaviour {
 
 		return output;
 	}
+
+	List<string> fps()
+	{
+		List<string> output = new List<string>();
+		string str = "fps: " + m_lastFramerate;
+		output.Add(str);
+		return output;
+	}
 	
 	void OnGUI()
 	{
@@ -54,6 +69,23 @@ public class DebugDisplayScript : MonoBehaviour {
 				string thingToDisplay = currentThingList[j];
 				GUI.Label(new Rect(10, i * 20 + j * 20, 999, 20), thingToDisplay);
 			}
+		}
+	}
+
+	void Update()
+	{
+		//FPS STUFF
+		if( m_timeCounter < m_refreshTime )
+		{
+			m_timeCounter += Time.deltaTime;
+			m_frameCounter++;
+		}
+		else
+		{
+			//This code will break if you set your m_refreshTime to 0, which makes no sense.
+			m_lastFramerate = (float)m_frameCounter/m_timeCounter;
+			m_frameCounter = 0;
+			m_timeCounter = 0.0f;
 		}
 	}
 }

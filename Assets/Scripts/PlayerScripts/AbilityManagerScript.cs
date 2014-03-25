@@ -7,7 +7,7 @@ public class AbilityManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		currentAbility = gameObject.AddComponent<FireShieldAbility>() as AbilityBase;
+		currentAbility = gameObject.AddComponent<FireballAbility>() as AbilityBase;
 	}
 	
 	// Update is called once per frame
