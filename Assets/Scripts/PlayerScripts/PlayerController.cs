@@ -108,8 +108,8 @@ public class PlayerController : MonoBehaviour {
     bool isStepL = true;
     bool isStepR = false;
     void animate() {
-        animateLeg2(legL.transform, false);
-        animateLeg2(legR.transform, true);
+        //animateLeg2(legL.transform, false);
+        //animateLeg2(legR.transform, true);
     }
 
     void animateLeg(Transform leg, ref bool isStep) {
