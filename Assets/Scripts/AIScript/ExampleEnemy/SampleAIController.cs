@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class SampleAIController : MonoBehaviour {
-
-	//player to move towards
-	public Transform player;
+	
 
 	public float speed = 1.0f;
 
@@ -12,16 +10,11 @@ public class SampleAIController : MonoBehaviour {
 
 	void Start()
 	{
-		if( player == null )
-		{
-			print ("WTF");
-		}
-		player = PlayerController.playerSingleton;
 	}
 
 	void Update () {
 
-		this.transform.LookAt(player);
+		//this.transform.LookAt(player);
 
 		if( health <= 0 )
 		{
