@@ -69,9 +69,9 @@ public class MGSpawner : MonoBehaviour {
 			print("Spawn");
 			print(PhotonNetwork.playerList[0].ID);
 
-			GameObject tempPlayer = GameObject.FindGameObjectWithTag("Player");
+			//GameObject tempPlayer = GameObject.FindGameObjectWithTag("Player");
 			//set the player to follow
-			unit.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", tempPlayer);
+			//unit.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", tempPlayer);
 
 			numberOfUnits++;
 			totalSpawnedUnits++;
