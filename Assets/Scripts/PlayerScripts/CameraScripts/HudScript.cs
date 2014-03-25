@@ -51,19 +51,21 @@ public class HudScript : MonoBehaviour {
 
 		//TEXT
 		AbilityNameText = new GameObject();
-		AbilityNameText.transform.position = new Vector3(3.45f, 2.39f, 4.76f);
-		AbilityNameText.transform.parent = hudCamera.transform;
 		AbilityNameText.layer = 9;
+		AbilityNameText.transform.parent = hudCamera.transform;
+		AbilityNameText.transform.localPosition = new Vector3(2.5f, 2.39f, 4.76f);
 
 		TextMesh textMesh = AbilityNameText.AddComponent("TextMesh") as TextMesh;
-		MeshRenderer meshRenderer = AbilityNameText.AddComponent("MeshRenderer") as MeshRenderer;
+		MeshRenderer meshRenderer = AbilityNameText.GetComponent("MeshRenderer") as MeshRenderer;
 
-
+		Font ArialFont = (Font)Resources.GetBuiltinResource (typeof(Font), "Arial.ttf");
+		print(ArialFont);
+		textMesh.font = ArialFont;
+		textMesh.renderer.material = ArialFont.material;
 		textMesh.characterSize = 0.1f;
 		textMesh.tabSize = 4;
 		textMesh.fontSize = 31;
-		textMesh.font = font;
-		textMesh.text = "Hello World!";
+
 	}
 	
 	// Update is called once per frame
@@ -85,7 +87,11 @@ public class HudScript : MonoBehaviour {
 		}
 
 		//TEXT
-		AbilityNameText.transform.position = new Vector3(3.45f, 2.39f, 4.76f);
+		if(AbilityManagerScript.currentAbility != null)
+		{
+			AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
+		}
+
 		//AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
 		//AbilityNameText.text = AbilityManagerScript.getAbilityDescription();
 	}
