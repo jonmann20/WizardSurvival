@@ -3,14 +3,25 @@ using System.Collections;
 
 public class SampleAIController : MonoBehaviour {
 	
-
-	public float speed = 1.0f;
-
 	public int health = 3;
+	public float speed = 1.0f;
+	const int MAX_INVINCIBILITY_TIMER = 5;
+	public int invincibilityTimer = 0;
+
+	public Material initialMaterial;
+	public Material redMaterial;
+	MeshRenderer renderer;
+
+	Transform skeleton;
 
 	void Start()
 	{
+		skeleton = transform.Find("skeleton");
 		this.transform.rigidbody.freezeRotation = true;
+
+		initialMaterial = skeleton.renderer.material;
+		redMaterial = new Material(Shader.Find("Diffuse"));
+		redMaterial.color = Color.red;
 	}
 
 	void Update () {
@@ -21,13 +32,23 @@ public class SampleAIController : MonoBehaviour {
 		{
 			Remove();
 		}
+
+		//INVINCIBLE
+		if(invincibilityTimer > 0)
+		{
+			invincibilityTimer --;
+			skeleton.renderer.material = redMaterial; 
+		}
+		else
+			skeleton.renderer.material = initialMaterial;
 	}
 
 	void OnCollisionEnter(Collision coll)
 	{
-		if( coll.gameObject.tag == "PlayerBullet" )
+		if( invincibilityTimer <= 0 && coll.gameObject.tag == "PlayerBullet")
 		{
 			health--;
+			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 		}
 	}
 
