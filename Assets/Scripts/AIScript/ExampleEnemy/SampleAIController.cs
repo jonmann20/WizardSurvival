@@ -11,7 +11,7 @@ public class SampleAIController : MonoBehaviour {
 	public Material initialMaterial;
 	public Material redMaterial;
 	MeshRenderer renderer;
-
+	
 	Transform skeleton;
 
 	void Start()
@@ -22,11 +22,10 @@ public class SampleAIController : MonoBehaviour {
 		initialMaterial = skeleton.renderer.material;
 		redMaterial = new Material(Shader.Find("Diffuse"));
 		redMaterial.color = Color.red;
+		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
 
 	void Update () {
-
-		//this.transform.LookAt(player);
 
 		if( health <= 0 )
 		{
@@ -49,6 +48,7 @@ public class SampleAIController : MonoBehaviour {
 		{
 			health--;
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
+			this.transform.parent.transform.GetComponent<Health>().Damage(25f);
 		}
 	}
 
@@ -59,7 +59,6 @@ public class SampleAIController : MonoBehaviour {
 			if(coll.gameObject.GetComponent<PhotonView>().isMine)
 			{
 				GLOBAL.health --;
-//				print("health: " + GLOBAL.health);
 			}
 		}
 	}
