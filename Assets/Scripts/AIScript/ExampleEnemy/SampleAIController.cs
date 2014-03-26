@@ -6,11 +6,12 @@ public class SampleAIController : MonoBehaviour {
 
 	public float speed = 1.0f;
 
-	public int health = 3;
+	private float health;
 
 	void Start()
 	{
 		this.transform.rigidbody.freezeRotation = true;
+		health = transform.parent.transform.GetComponent<Health>().health;
 	}
 
 	void Update () {
@@ -27,7 +28,7 @@ public class SampleAIController : MonoBehaviour {
 	{
 		if( coll.gameObject.tag == "PlayerBullet" )
 		{
-			health--;
+			this.transform.parent.transform.GetComponent<Health>().Damage(25f);
 		}
 	}
 
