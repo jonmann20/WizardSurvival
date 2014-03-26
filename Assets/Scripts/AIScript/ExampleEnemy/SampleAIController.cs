@@ -10,11 +10,13 @@ public class SampleAIController : MonoBehaviour {
 
 	void Start()
 	{
+		this.transform.rigidbody.freezeRotation = true;
 	}
 
 	void Update () {
 
 		//this.transform.LookAt(player);
+	
 
 		if( health <= 0 )
 		{
