@@ -9,6 +9,7 @@ public class Health : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		aiRig = gameObject.GetComponentInChildren<AIRig>();
+		health = this.transform.GetComponentInChildren<SampleAIController>().health;
 	}
 	
 	// Update is called once per frame

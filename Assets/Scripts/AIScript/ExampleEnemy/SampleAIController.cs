@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SampleAIController : MonoBehaviour {
 	
-	public int health = 3;
+	public float health = 100f;
 	public float speed = 2.0f;
 	const int MAX_INVINCIBILITY_TIMER = 5;
 	public int invincibilityTimer = 0;
@@ -46,9 +46,8 @@ public class SampleAIController : MonoBehaviour {
 	{
 		if( invincibilityTimer <= 0 && coll.gameObject.tag == "PlayerBullet")
 		{
-			health--;
+			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
-			this.transform.parent.transform.GetComponent<Health>().Damage(25f);
 		}
 	}
 
