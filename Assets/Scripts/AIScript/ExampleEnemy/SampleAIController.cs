@@ -16,7 +16,6 @@ public class SampleAIController : MonoBehaviour {
 	void Update () {
 
 		//this.transform.LookAt(player);
-	
 
 		if( health <= 0 )
 		{
@@ -26,18 +25,27 @@ public class SampleAIController : MonoBehaviour {
 
 	void OnCollisionEnter(Collision coll)
 	{
+		if( coll.gameObject.tag == "PlayerBullet" )
+		{
+			health--;
+		}
+	}
+
+	void OnCollisionStay(Collision coll)
+	{
 		if( coll.gameObject.tag == "Player" )
 		{
-			Remove();
+			if(coll.gameObject.GetComponent<PhotonView>().isMine)
+			{
+				GLOBAL.health --;
+				print("health: " + GLOBAL.health);
+			}
 		}
 	}
 
 	void OnTriggerEnter(Collider coll)
 	{
-		if( coll.gameObject.tag == "PlayerBullet" )
-		{
-			health--;
-		}
+	
 	}
 
 	public void Remove()

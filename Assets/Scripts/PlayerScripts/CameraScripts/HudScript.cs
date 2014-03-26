@@ -23,11 +23,15 @@ public class HudScript : MonoBehaviour {
 	GameObject AbilityDescriptionText;
 	public Font font;
 
+	//PERIL FLASH
+	Light hudLight;
+
 	// Use this for initialization
 	void Awake () {
 		HEALTHBAR_X_OFFSET = -(NUMBER_OF_VOXELS * VOXEL_WIDTH) * 0.5f;
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
-
+		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();
+		print(hudLight);
 		Color greenColor = Color.green;
 		Color redColor = Color.red;
 		float fraction = 0.0f;
@@ -74,16 +78,21 @@ public class HudScript : MonoBehaviour {
 		if(sinCounter > Mathf.PI * healthVoxels.Count * 2)
 			sinCounter = 0;
 
+		float currentHealthIndex = (float)GLOBAL.health / (float)NUMBER_OF_VOXELS;
+
 		for(int i = 0; i < healthVoxels.Count; i++)
 		{
 			float bonusHeight = 0;
 
-
 			bonusHeight = Mathf.Sin(sinCounter * i) * HEALTHBAR_FLOAT_ALTITUDE;
-
-			//bonusHeight
-
 			healthVoxels[i].transform.localPosition = new Vector3(i * VOXEL_WIDTH + HEALTHBAR_X_OFFSET, HEALTHBAR_Y_OFFSET + bonusHeight, HEALTHBAR_Z_OFFSET);
+
+			//ADJUST FOR CURRENT HEALTH
+
+			if(currentHealthIndex < i)
+				healthVoxels[i].GetComponent<MeshRenderer>().enabled = false;
+			else
+				healthVoxels[i].GetComponent<MeshRenderer>().enabled = true;
 		}
 
 		//TEXT
@@ -92,7 +101,10 @@ public class HudScript : MonoBehaviour {
 			AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
 		}
 
-		//AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
-		//AbilityNameText.text = AbilityManagerScript.getAbilityDescription();
+		//WARNING FLASH
+		if(GLOBAL.health < 40)
+		{
+			hudLight.intensity = Mathf.Abs(Mathf.Sin(sinCounter * 10)) * 5;
+		}
 	}
 }
