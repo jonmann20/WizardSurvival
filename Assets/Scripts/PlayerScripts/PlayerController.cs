@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 		// ability
 		if(Input.GetButton("Fire1")){
 
-			print("FIRE!");
+			//print("FIRE!");
 
 
 			//Old code
@@ -73,8 +73,12 @@ public class PlayerController : MonoBehaviour {
     bool isStepL = true;
     bool isStepR = false;
     void animate() {
-        //animateLeg2(legL.transform, false);
-        //animateLeg2(legR.transform, true);
+		print (rigidbody.velocity.magnitude);
+
+		if(rigidbody.velocity.magnitude > 0.001f){
+        	animateLeg(legL.transform, ref isStepL);
+        	animateLeg(legR.transform, ref isStepR);
+		}
     }
 
     void animateLeg(Transform leg, ref bool isStep) {
@@ -108,30 +112,25 @@ public class PlayerController : MonoBehaviour {
         if(dtAngle != 0) {
             leg.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
         }
-
-
-
     }
 
-	void animateLeg2(Transform legTran, bool isRightLeg)
-	{
-		Vector3 vel2d = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-		float velocityMagnitude = vel2d.magnitude;
-		if(velocityMagnitude < 1)
-			velocityMagnitude = 0;
-		//print(velocityMagnitude);
-		sinCounter += velocityMagnitude * 10 * Time.deltaTime;
-		//print(sinCounter);
-		if(isRightLeg)
-			legTran.localRotation = Quaternion.Euler(Mathf.Sin(sinCounter) * 45, 0, 0);
-		//else
-			//legTran.localRotation = Quaternion.Euler(Mathf.Cos(sinCounter) * 45, 0, 0);		                                  
-	}
+//	void animateLeg2(Transform legTran, bool isRightLeg)
+//	{
+//		Vector3 vel2d = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+//		float velocityMagnitude = vel2d.magnitude;
+//		if(velocityMagnitude < 1)
+//			velocityMagnitude = 0;
+//		//print(velocityMagnitude);
+//		sinCounter += velocityMagnitude * 10 * Time.deltaTime;
+//		//print(sinCounter);
+//		if(isRightLeg)
+//			legTran.localRotation = Quaternion.Euler(Mathf.Sin(sinCounter) * 45, 0, 0);
+//		//else
+//			//legTran.localRotation = Quaternion.Euler(Mathf.Cos(sinCounter) * 45, 0, 0);		                                  
+//	}
 
-	void attemptJump()
-	{
-		if(currentJumpState == JumpState.NOT_IN_AIR)
-		{
+	void attemptJump(){
+		if(currentJumpState == JumpState.NOT_IN_AIR){
 			rigidbody.AddForce(0, 405, 0);
 		}
 	}
