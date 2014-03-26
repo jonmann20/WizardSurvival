@@ -14,12 +14,13 @@ public class Health : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		health = this.transform.GetComponentInChildren<SampleAIController>().health;
 	
 		aiRig.AI.WorkingMemory.SetItem("health", health);
 	}
 
 	public void Damage( float damage )
 	{
-		health = Mathf.Clamp(health-damage,0,health);
+		this.transform.GetComponentInChildren<SampleAIController>().health = Mathf.Clamp(health-damage,0,health);
 	}
 }

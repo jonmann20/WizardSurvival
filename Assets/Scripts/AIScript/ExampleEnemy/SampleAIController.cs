@@ -5,6 +5,10 @@ public class SampleAIController : MonoBehaviour {
 	
 	public float health = 100f;
 	public float speed = 2.0f;
+
+	private float deathTimer = 3.0f;
+	public float timeUntilRemove = 3.0f;
+
 	const int MAX_INVINCIBILITY_TIMER = 5;
 	public int invincibilityTimer = 0;
 
@@ -27,9 +31,17 @@ public class SampleAIController : MonoBehaviour {
 
 	void Update () {
 
-		if( health <= 0 )
+		if( health <= 0  )
 		{
-			Remove();
+			deathTimer -= Time.deltaTime;
+			if( deathTimer <= 0 )
+			{
+				Remove();
+			}
+		}
+		else
+		{
+			deathTimer = timeUntilRemove;
 		}
 
 		//INVINCIBLE
