@@ -4,7 +4,7 @@ using System.Collections;
 public class SampleAIController : MonoBehaviour {
 	
 	public int health = 3;
-	public float speed = 1.0f;
+	public float speed = 2.0f;
 	const int MAX_INVINCIBILITY_TIMER = 5;
 	public int invincibilityTimer = 0;
 
