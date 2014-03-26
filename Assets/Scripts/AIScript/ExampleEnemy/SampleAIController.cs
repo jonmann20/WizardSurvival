@@ -38,7 +38,7 @@ public class SampleAIController : MonoBehaviour {
 			if(coll.gameObject.GetComponent<PhotonView>().isMine)
 			{
 				GLOBAL.health --;
-				print("health: " + GLOBAL.health);
+//				print("health: " + GLOBAL.health);
 			}
 		}
 	}
