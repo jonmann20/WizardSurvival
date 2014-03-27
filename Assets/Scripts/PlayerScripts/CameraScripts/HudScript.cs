@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class HudScript : MonoBehaviour {
 
 	const float VOXEL_WIDTH = 0.2f;
-	const float HEALTHBAR_X_OFFSET = -3.5f;
+	const float HEALTHBAR_X_OFFSET = -4.0f;
 	const float HEALTHBAR_Y_OFFSET = 2.0f;
 	const float HEALTHBAR_Z_OFFSET = 4;
 	const float HEALTHBAR_FLOAT_RATE = 0.005f;
@@ -26,11 +26,20 @@ public class HudScript : MonoBehaviour {
 
 	public Shader toonShader;
 
+	//INVENTORY
+	const int INVENTORY_MAX = 4;
+	const float INVENTORY_OFFSET_X = -4.0f;
+	const float INVENTORY_OFFSET_Y = -2.0f;
+	const float INVENTORY_OFFSET_Z = 5;
+	const float INVENTORY_PANELS_X_SCALE = 0.3f;
+	const float INVENTORY_PANELS_Y_SCALE = 0.1f;
+	const float INVENTORY_PANELS_Z_SCALE = 0.3f;
+	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
+	//List<GameObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
+
 
 	// Use this for initialization
 	void Awake () {
-		print(toonShader.ToString());
-
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
 		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();
 		print(hudLight);
@@ -53,6 +62,23 @@ public class HudScript : MonoBehaviour {
 			cube.GetComponent<MeshRenderer>().material = mat;
 
 			healthVoxels.Add(cube);
+		}
+
+		//INVENTORY
+		for(int i = 0; i < INVENTORY_MAX; i++)
+		{
+			GameObject c = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			c.layer = 9;
+			c.transform.parent = hudCamera.transform;
+			c.transform.localScale = new Vector3(INVENTORY_PANELS_X_SCALE, INVENTORY_PANELS_Y_SCALE, INVENTORY_PANELS_Z_SCALE);
+			c.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
+			                                   INVENTORY_OFFSET_Y,
+			                                   4);
+
+			Material mat;
+			mat = new Material(toonShader);
+			mat.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+			c.GetComponent<MeshRenderer>().material = mat;
 		}
 	}
 	

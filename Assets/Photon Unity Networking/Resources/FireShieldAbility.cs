@@ -61,7 +61,7 @@ public class FireShieldAbility : AbilityBase {
 
 	public override string getAbilityName()
 	{
-		return "Fiery Winds";
+		return "Wind";
 	}
 	public override string getAbilityDescription()
 	{
