@@ -30,7 +30,7 @@ public class MouseCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		Screen.lockCursor = true;
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
 		y = angles.x;
@@ -104,7 +104,7 @@ public class MouseCamera : MonoBehaviour {
 	}
 
 	bool mouseIn(){
-		if(Input.GetMouseButton(1)){
+		//if(Input.GetMouseButton(1)){
 			float horizontal = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
 			x += horizontal;
 			y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
@@ -121,7 +121,7 @@ public class MouseCamera : MonoBehaviour {
 			transform.position = position;
 
 			return true;
-		}
+		//}
 
 		return false;
 	}

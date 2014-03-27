@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class HudScript : MonoBehaviour {
 
 	const float VOXEL_WIDTH = 0.2f;
-	const float HEALTHBAR_X_OFFSET = -4.0f;
+	const float HEALTHBAR_X_OFFSET = -3.75f;
 	const float HEALTHBAR_Y_OFFSET = 2.0f;
 	const float HEALTHBAR_Z_OFFSET = 4;
 	const float HEALTHBAR_FLOAT_RATE = 0.005f;
@@ -25,10 +25,11 @@ public class HudScript : MonoBehaviour {
 	Light hudLight;
 
 	public Shader toonShader;
+	public Shader toonShaderLight;
 
 	//INVENTORY
 	const int INVENTORY_MAX = 4;
-	const float INVENTORY_OFFSET_X = -4.0f;
+	const float INVENTORY_OFFSET_X = -3.75f;
 	const float INVENTORY_OFFSET_Y = -2.0f;
 	const float INVENTORY_OFFSET_Z = 5;
 	const float INVENTORY_PANELS_X_SCALE = 0.3f;
@@ -52,11 +53,12 @@ public class HudScript : MonoBehaviour {
 			GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			cube.layer = 9;
 			cube.transform.parent = hudCamera.transform;
-			cube.transform.localScale = new Vector3(VOXEL_WIDTH, VOXEL_WIDTH, VOXEL_WIDTH);
 			cube.transform.position = new Vector3(i * VOXEL_WIDTH + 0.1f + HEALTHBAR_X_OFFSET, HEALTHBAR_Y_OFFSET, HEALTHBAR_Z_OFFSET);
+			Bouncy b = cube.AddComponent<Bouncy>() as Bouncy;
+			b.target = 0.2f;
 
 			Material mat;
-			mat = new Material(toonShader);
+			mat = new Material(toonShaderLight);
 			mat.color = Color.Lerp(redColor, greenColor, fraction);
 			fraction += 1.0f / (float)NUMBER_OF_VOXELS;
 			cube.GetComponent<MeshRenderer>().material = mat;
@@ -98,11 +100,13 @@ public class HudScript : MonoBehaviour {
 			healthVoxels[i].transform.localPosition = new Vector3(i * (VOXEL_WIDTH + 0.05f) + HEALTHBAR_X_OFFSET, HEALTHBAR_Y_OFFSET + bonusHeight, HEALTHBAR_Z_OFFSET);
 
 			//ADJUST FOR CURRENT HEALTH
+			Bouncy b = healthVoxels[i].GetComponent<Bouncy>() as Bouncy;
+
 
 			if(currentHealthIndex < i)
-				healthVoxels[i].GetComponent<MeshRenderer>().enabled = false;
+				b.target = 0.1f;
 			else
-				healthVoxels[i].GetComponent<MeshRenderer>().enabled = true;
+				b.target = 0.2f;
 		}
 
 		//TEXT

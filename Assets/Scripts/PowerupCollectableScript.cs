@@ -21,13 +21,15 @@ public class PowerupCollectableScript : MonoBehaviour {
 
 		if(collision.gameObject.tag == "Player")
 		{
-			GameObject NewInventoryItem = Instantiate(InventoryItemPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-			if(GLOBAL.addToInventory(NewInventoryItem))
+
+			if(collision.gameObject.GetComponent<PhotonView>().isMine)
 			{
-				Destroy(gameObject);
+				GameObject NewInventoryItem = Instantiate(InventoryItemPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+				if(GLOBAL.addToInventory(NewInventoryItem))
+					Destroy(gameObject);
+				else
+					Destroy(NewInventoryItem);
 			}
-			else
-				Destroy(NewInventoryItem);
 		}
 	}
 }
