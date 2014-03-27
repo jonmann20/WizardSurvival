@@ -73,8 +73,6 @@ public class PlayerController : MonoBehaviour {
     bool isStepL = true;
     bool isStepR = false;
     void animate() {
-		print (rigidbody.velocity.magnitude);
-
 		if(rigidbody.velocity.magnitude > 0.001f){
         	animateLeg(legL.transform, ref isStepL);
         	animateLeg(legR.transform, ref isStepR);

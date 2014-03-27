@@ -35,8 +35,6 @@ public class HudScript : MonoBehaviour {
 	const float INVENTORY_PANELS_Y_SCALE = 0.1f;
 	const float INVENTORY_PANELS_Z_SCALE = 0.3f;
 	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
-	//List<GameObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
-
 
 	// Use this for initialization
 	void Awake () {
@@ -115,6 +113,18 @@ public class HudScript : MonoBehaviour {
 		if(GLOBAL.health < 40)
 		{
 			hudLight.intensity = Mathf.Abs(Mathf.Sin(sinCounter * 10)) * 5;
+		}
+
+		//INVENTORY
+		for(int i = 0; i < GLOBAL.Inventory.Count; i++)
+		{
+			GameObject g = GLOBAL.Inventory[i];
+			g.layer = 9;
+			g.transform.parent = hudCamera.transform;
+			g.transform.localScale = new Vector3(3.0f, 3.0f, 3.0f);
+			g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
+			                                        INVENTORY_OFFSET_Y + 0.1f,
+			                                        4);
 		}
 	}
 }
