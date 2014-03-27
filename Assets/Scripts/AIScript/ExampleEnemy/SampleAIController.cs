@@ -33,6 +33,8 @@ public class SampleAIController : MonoBehaviour {
 
 		if( health <= 0  )
 		{
+			//transform.GetComponent<BoxCollider>().enabled = false;
+			gameObject.layer = LayerMask.NameToLayer("Dead Enemy");
 			deathTimer -= Time.deltaTime;
 			if( deathTimer <= 0 )
 			{
