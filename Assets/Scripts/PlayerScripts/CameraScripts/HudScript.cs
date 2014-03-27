@@ -35,6 +35,8 @@ public class HudScript : MonoBehaviour {
 	const float INVENTORY_PANELS_Y_SCALE = 0.1f;
 	const float INVENTORY_PANELS_Z_SCALE = 0.3f;
 	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
+	int inventorySelectedIndex = -1;
+
 
 	// Use this for initialization
 	void Awake () {
@@ -116,15 +118,44 @@ public class HudScript : MonoBehaviour {
 		}
 
 		//INVENTORY
-		for(int i = 0; i < GLOBAL.Inventory.Count; i++)
+		int numInventoryItems = GLOBAL.getInventoryCount();
+		for(int i = 0; i < numInventoryItems; i++)
 		{
-			GameObject g = GLOBAL.Inventory[i];
+			GameObject g = GLOBAL.getInventoryItemAt(i);
 			g.layer = 9;
 			g.transform.parent = hudCamera.transform;
-			g.transform.localScale = new Vector3(3.0f, 3.0f, 3.0f);
+			if(i == inventorySelectedIndex)
+			{
+				g.GetComponent<InventoryItemScript>().target = 5.0f;
+			}
+			else
+			{
+				g.GetComponent<InventoryItemScript>().target = 4.0f;
+			}
 			g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
 			                                        INVENTORY_OFFSET_Y + 0.1f,
 			                                        4);
+		}
+	}
+
+	void Update()
+	{
+		int numInventoryItems = GLOBAL.getInventoryCount();
+		if(Input.GetKeyDown("right") && inventorySelectedIndex < numInventoryItems - 1)
+		{
+			inventorySelectedIndex ++;
+		}
+		if(Input.GetKeyDown("left") && inventorySelectedIndex > -1)
+		{
+			inventorySelectedIndex --;
+		}
+		if(Input.GetKeyDown("return"))
+		{
+			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems)
+			{
+				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
+				inventorySelectedIndex --;
+			}
 		}
 	}
 }

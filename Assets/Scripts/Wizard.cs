@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Wizard : MonoBehaviour {
 
+	public static GameObject myWizard;
+
 	void Awake()
 	{
 		if(!GetComponent<PhotonView>().isMine)
@@ -14,6 +16,10 @@ public class Wizard : MonoBehaviour {
 			r.useGravity = false;
 			p.enabled = false;
 			ams.enabled = false;
+		}
+		else
+		{
+			myWizard = gameObject;
 		}
 	}
 }
