@@ -18,13 +18,15 @@ public class SampleAIController : MonoBehaviour {
 	
 	Transform skeleton;
 
+	public Shader toonShader;
+
 	void Start()
 	{
 		skeleton = transform.Find("skeleton");
 		this.transform.rigidbody.freezeRotation = true;
 
 		initialMaterial = skeleton.renderer.material;
-		redMaterial = new Material(Shader.Find("Diffuse"));
+		redMaterial = new Material(Shader.Find("Toon/Basic Outline"));
 		redMaterial.color = Color.red;
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}

@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: 906594aa42601408d8a29e6c3340b696
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - initialMaterial: {instanceID: 0}
+  - redMaterial: {instanceID: 0}
+  - toonShader: {fileID: 4800000, guid: 9ce107479d11178d11005b9844295342, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
