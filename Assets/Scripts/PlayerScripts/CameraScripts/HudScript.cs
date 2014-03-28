@@ -5,11 +5,7 @@ using System.Collections.Generic;
 public class HudScript : MonoBehaviour {
 
 	const float VOXEL_WIDTH = 0.2f;
-<<<<<<< HEAD
     float HEALTHBAR_X_OFFSET = -0.75f;
-=======
-	const float HEALTHBAR_X_OFFSET = -3.75f;
->>>>>>> d712511b14a9d464c6fe6857769792791c378a0d
 	const float HEALTHBAR_Y_OFFSET = 2.0f;
 	const float HEALTHBAR_Z_OFFSET = 4;
 	const float HEALTHBAR_FLOAT_RATE = 0.005f;
@@ -23,14 +19,11 @@ public class HudScript : MonoBehaviour {
 	GameObject hudCamera;
 
 	//TEXT
-<<<<<<< HEAD
     //GameObject AbilityNameText;
     //GameObject AbilityDescriptionText;
     //public Font font;
-=======
-	public GameObject AbilityNameText;
-	public GameObject ScoreText;
->>>>>>> d712511b14a9d464c6fe6857769792791c378a0d
+    //public GameObject AbilityNameText;
+    //public GameObject ScoreText;
 
 	//PERIL FLASH
 	Light hudLight;
@@ -58,13 +51,10 @@ public class HudScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-<<<<<<< HEAD
 		HEALTHBAR_X_OFFSET = -(NUMBER_OF_VOXELS * VOXEL_WIDTH) * 0.5f;
 
         HEALTHBAR_X_OFFSET += 2.8f;
 
-=======
->>>>>>> d712511b14a9d464c6fe6857769792791c378a0d
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
 		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();
 		//print(hudLight);
@@ -90,7 +80,6 @@ public class HudScript : MonoBehaviour {
 			healthVoxels.Add(cube);
 		}
 
-<<<<<<< HEAD
 		//TEXT
         //AbilityNameText = new GameObject();
         //AbilityNameText.layer = 9;
@@ -107,7 +96,7 @@ public class HudScript : MonoBehaviour {
         //textMesh.characterSize = 0.1f;
         //textMesh.tabSize = 4;
         //textMesh.fontSize = 31;
-=======
+
 		//INVENTORY
 		for(int i = 0; i < INVENTORY_MAX; i++)
 		{
@@ -118,7 +107,6 @@ public class HudScript : MonoBehaviour {
 			c.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
 			                                   INVENTORY_OFFSET_Y,
 			                                   4);
->>>>>>> d712511b14a9d464c6fe6857769792791c378a0d
 
 			Material mat;
 			mat = new Material(toonShader);
@@ -204,14 +192,6 @@ public class HudScript : MonoBehaviour {
 				inventorySelectedIndex --;
 			}
 		}
-	}
-
-	void OnGUI()
-	{
-		/*if(	GUI.Button(new Rect(Screen.width * LEADERBOARD_X, Screen.height * LEADERBOARD_Y, Screen.width * LEADERBOARD_WIDTH, Screen.width * LEADERBOARD_HEIGHT), "Leaderboard") )
-		{
-			this.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
-		}*/
 	}
 
     void OnGUI(){

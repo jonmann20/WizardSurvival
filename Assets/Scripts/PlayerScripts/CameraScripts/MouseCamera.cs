@@ -28,13 +28,9 @@ public class MouseCamera : MonoBehaviour {
 
 	public GUITexture reticle;
 
-<<<<<<< HEAD
-	void Start(){
-=======
-	// Use this for initialization
 	void Start () {
 		Screen.lockCursor = true;
->>>>>>> d712511b14a9d464c6fe6857769792791c378a0d
+
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
 		y = angles.x;
@@ -60,9 +56,9 @@ public class MouseCamera : MonoBehaviour {
 		);
 	}
 
-    void OnCollisionEnter(Collision col){
-        print("col");
-    }
+    //void OnCollisionEnter(Collision col){
+    //    print("col");
+    //}
 
 
 	void LateUpdate () {
@@ -131,7 +127,7 @@ public class MouseCamera : MonoBehaviour {
 			return true;
 		//}
 
-		return false;
+		//return false;
 	}
 
 	static float ClampAngle (float angle, float min, float max) {

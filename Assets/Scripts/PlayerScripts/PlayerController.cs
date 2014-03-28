@@ -89,11 +89,8 @@ public class PlayerController : MonoBehaviour {
     bool isStepL = true;
     bool isStepR = false;
     void animate() {
-<<<<<<< HEAD
 		//print (rigidbody.velocity.magnitude);
 
-=======
->>>>>>> d712511b14a9d464c6fe6857769792791c378a0d
 		if(rigidbody.velocity.magnitude > 0.001f){
         	animateLeg(legL.transform, ref isStepL);
         	animateLeg(legR.transform, ref isStepR);
@@ -193,7 +190,8 @@ public class PlayerController : MonoBehaviour {
 	{
 		score += numToAdd;
 
-		hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
+        // TODO: bring back matt's text functionality
+		//hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 
 	}
 	
