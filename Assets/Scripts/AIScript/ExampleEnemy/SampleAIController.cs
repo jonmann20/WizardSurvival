@@ -18,13 +18,17 @@ public class SampleAIController : MonoBehaviour {
 	
 	Transform skeleton;
 
+	public int scoreValue = 10;
+
+	public Shader toonShader;
+
 	void Start()
 	{
 		skeleton = transform.Find("skeleton");
 		this.transform.rigidbody.freezeRotation = true;
 
 		initialMaterial = skeleton.renderer.material;
-		redMaterial = new Material(Shader.Find("Diffuse"));
+		redMaterial = new Material(Shader.Find("Toon/Basic Outline"));
 		redMaterial.color = Color.red;
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
@@ -62,6 +66,14 @@ public class SampleAIController : MonoBehaviour {
 		{
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
+
+			if( health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy") )
+			{
+				if( coll.gameObject.GetPhotonView().isMine )
+				{
+					Wizard.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
+				}
+			}
 		}
 	}
 

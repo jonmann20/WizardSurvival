@@ -1,0 +1,6 @@
+Unit Blocks: _(typename)[_(keyStructuralDifference)][_(color/texture)]
+    _castle
+    _castleWalls    // for typename Captitalize next word
+    _castleWalls_hollow
+    _castleWalls_hollow_grey
+Rooms: (typename)[_(keyStructuralDifference)][_(position)][_(color/texture)]

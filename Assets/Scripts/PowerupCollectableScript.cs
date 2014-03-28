@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PowerupCollectableScript : MonoBehaviour {
 
+	public GameObject InventoryItemPrefab;
 	public string BestowedAbilityName;
 	float sinCounter = 0.0f;
 	Vector3 initialPosition;
@@ -22,8 +23,15 @@ public class PowerupCollectableScript : MonoBehaviour {
 
 		if(collision.gameObject.tag == "Player")
 		{
-			collision.gameObject.GetComponent<AbilityManagerScript>().changeAbility(BestowedAbilityName);
-			Destroy(gameObject);
+
+			if(collision.gameObject.GetComponent<PhotonView>().isMine)
+			{
+				GameObject NewInventoryItem = Instantiate(InventoryItemPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+				if(GLOBAL.addToInventory(NewInventoryItem))
+					Destroy(gameObject);
+				else
+					Destroy(NewInventoryItem);
+			}
 		}
 	}
 }

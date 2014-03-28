@@ -67,7 +67,7 @@ public class DebugDisplayScript : MonoBehaviour {
 			for(int j = 0; j < currentThingList.Count; j++)
 			{
 				string thingToDisplay = currentThingList[j];
-				GUI.Label(new Rect(10, i * 20 + j * 20, 999, 20), thingToDisplay);
+				GUI.Label(new Rect(10, i * 20 + j * 20 + 200, 999, 20), thingToDisplay);
 			}
 		}
 	}

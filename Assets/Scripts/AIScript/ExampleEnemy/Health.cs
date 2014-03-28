@@ -23,4 +23,5 @@ public class Health : MonoBehaviour {
 	{
 		this.transform.GetComponentInChildren<SampleAIController>().health = Mathf.Clamp(health-damage,0,health);
 	}
+	
 }

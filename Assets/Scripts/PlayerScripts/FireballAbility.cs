@@ -36,7 +36,7 @@ public class FireballAbility : AbilityBase {
 
 	public override string getAbilityName()
 	{
-		return "Calore";
+		return "Fireball";
 	}
 	public override string getAbilityDescription()
 	{
