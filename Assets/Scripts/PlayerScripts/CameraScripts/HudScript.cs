@@ -172,9 +172,9 @@ public class HudScript : MonoBehaviour {
 
 	void OnGUI()
 	{
-		if(	GUI.Button(new Rect(Screen.width * LEADERBOARD_X, Screen.height * LEADERBOARD_Y, Screen.width * LEADERBOARD_WIDTH, Screen.width * LEADERBOARD_HEIGHT), "Leaderboard") )
+		/*if(	GUI.Button(new Rect(Screen.width * LEADERBOARD_X, Screen.height * LEADERBOARD_Y, Screen.width * LEADERBOARD_WIDTH, Screen.width * LEADERBOARD_HEIGHT), "Leaderboard") )
 		{
 			this.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
-		}
+		}*/
 	}
 }
