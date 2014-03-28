@@ -18,6 +18,8 @@ public class SampleAIController : MonoBehaviour {
 	
 	Transform skeleton;
 
+	public int scoreValue = 10;
+
 	public Shader toonShader;
 
 	void Start()
@@ -64,6 +66,14 @@ public class SampleAIController : MonoBehaviour {
 		{
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
+
+			if( health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy") )
+			{
+				if( coll.gameObject.GetPhotonView().isMine )
+				{
+					Wizard.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
+				}
+			}
 		}
 	}
 

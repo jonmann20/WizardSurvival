@@ -18,17 +18,27 @@ public class PlayerController : MonoBehaviour {
 
 	public static Transform playerSingleton;
 
-    public GameObject legL, legR;
+    public GameObject legL, legR, armL, armR;
 	public float sinCounter = 0;
 
 	private PlayerAbility playerAbility;
-	
-	void Start () {
 
+	private int score = 0;
+
+	private GameObject hud;
+	
+	void Start(){
 		thisCamera = (GameObject.FindWithTag("MainCamera") as GameObject).transform;
 
 		playerSingleton = this.transform;
 		playerAbility = this.GetComponent<PlayerAbility>();
+
+		hud = GameObject.Find("HudCamera");
+
+		if( hud == null )
+		{
+			print ("HudCamera Object not found for leaderboard");
+		}
 	}
 	
 	void Update () {
@@ -44,6 +54,12 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetButtonDown("Jump")){
 			attemptJump();
         }
+
+		//Leaderboard
+		if(Input.GetButtonDown("Select")){
+			hud.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
+		
+		}
 
         animate();
 
@@ -73,10 +89,33 @@ public class PlayerController : MonoBehaviour {
     bool isStepL = true;
     bool isStepR = false;
     void animate() {
+		//print (rigidbody.velocity.magnitude);
+
 		if(rigidbody.velocity.magnitude > 0.001f){
         	animateLeg(legL.transform, ref isStepL);
         	animateLeg(legR.transform, ref isStepR);
+
+            animateArm(armL.transform, isStepL);
+            animateArm(armR.transform, isStepR);
 		}
+    }
+
+    void animateArm(Transform arm, bool isStep) {
+        float dtAngle = 0;
+        float normalizedAngle = arm.localEulerAngles.x;
+
+        if(normalizedAngle > 300) {
+            normalizedAngle -= 360;
+        }
+
+        if(isStep) {
+            dtAngle = -42f;
+        }
+        else {
+            dtAngle = 42f;
+        }
+
+        arm.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
     }
 
     void animateLeg(Transform leg, ref bool isStep) {
@@ -146,4 +185,14 @@ public class PlayerController : MonoBehaviour {
 	void OnCollisionExit(Collision col){
 		currentJumpState = JumpState.IN_AIR;
 	}
+
+	public void IncrementPoints( int numToAdd )
+	{
+		score += numToAdd;
+
+        // TODO: bring back matt's text functionality
+		//hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
+
+	}
+	
 }

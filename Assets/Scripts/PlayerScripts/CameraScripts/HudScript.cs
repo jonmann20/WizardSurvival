@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class HudScript : MonoBehaviour {
 
 	const float VOXEL_WIDTH = 0.2f;
-	const float HEALTHBAR_X_OFFSET = -3.75f;
+    float HEALTHBAR_X_OFFSET = -0.75f;
 	const float HEALTHBAR_Y_OFFSET = 2.0f;
 	const float HEALTHBAR_Z_OFFSET = 4;
 	const float HEALTHBAR_FLOAT_RATE = 0.005f;
@@ -19,7 +19,11 @@ public class HudScript : MonoBehaviour {
 	GameObject hudCamera;
 
 	//TEXT
-	public GameObject AbilityNameText;
+    //GameObject AbilityNameText;
+    //GameObject AbilityDescriptionText;
+    //public Font font;
+    //public GameObject AbilityNameText;
+    //public GameObject ScoreText;
 
 	//PERIL FLASH
 	Light hudLight;
@@ -38,12 +42,22 @@ public class HudScript : MonoBehaviour {
 	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
 	int inventorySelectedIndex = -1;
 
+	//Leaderboard Button
+	const float LEADERBOARD_X = 0.75f;
+	const float LEADERBOARD_Y = 0.85f;
+	const float LEADERBOARD_WIDTH = 0.18f;
+	const float LEADERBOARD_HEIGHT = 0.07f;
+
 
 	// Use this for initialization
 	void Awake () {
+		HEALTHBAR_X_OFFSET = -(NUMBER_OF_VOXELS * VOXEL_WIDTH) * 0.5f;
+
+        HEALTHBAR_X_OFFSET += 2.6f;
+
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
 		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();
-		print(hudLight);
+		//print(hudLight);
 		Color greenColor = Color.green;
 		Color redColor = Color.red;
 		float fraction = 0.0f;
@@ -65,6 +79,23 @@ public class HudScript : MonoBehaviour {
 
 			healthVoxels.Add(cube);
 		}
+
+		//TEXT
+        //AbilityNameText = new GameObject();
+        //AbilityNameText.layer = 9;
+        //AbilityNameText.transform.parent = hudCamera.transform;
+        //AbilityNameText.transform.localPosition = new Vector3(2.5f, 2.39f, 4.76f);
+
+        //TextMesh textMesh = AbilityNameText.AddComponent("TextMesh") as TextMesh;
+        //MeshRenderer meshRenderer = AbilityNameText.GetComponent("MeshRenderer") as MeshRenderer;
+
+        //Font ArialFont = (Font)Resources.GetBuiltinResource (typeof(Font), "Arial.ttf");
+        ////print(ArialFont);
+        //textMesh.font = ArialFont;
+        //textMesh.renderer.material = ArialFont.material;
+        //textMesh.characterSize = 0.1f;
+        //textMesh.tabSize = 4;
+        //textMesh.fontSize = 31;
 
 		//INVENTORY
 		for(int i = 0; i < INVENTORY_MAX; i++)
@@ -109,11 +140,11 @@ public class HudScript : MonoBehaviour {
 				b.target = 0.2f;
 		}
 
-		//TEXT
-		if(AbilityManagerScript.currentAbility != null)
-		{
-			AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
-		}
+        ////TEXT
+        //if(AbilityManagerScript.currentAbility != null)
+        //{
+        //    AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
+        //}
 
 		//WARNING FLASH
 		if(GLOBAL.health < 40)
@@ -162,4 +193,10 @@ public class HudScript : MonoBehaviour {
 			}
 		}
 	}
+
+    void OnGUI(){
+        EZGUI.init();
+
+        EZGUI.placeTxt("Calzone", 50, EZGUI.FULLW - 300, 190);
+    }
 }

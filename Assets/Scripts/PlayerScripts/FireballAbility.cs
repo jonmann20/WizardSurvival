@@ -7,14 +7,16 @@ public class FireballAbility : AbilityBase {
 	const int SPEED = 20;
 	const int MAX_LIFE = 90;
 
-	public void Awake()
-	{
-		print ("NEW FireballAbility CREATED!");
+    GameObject wizardHolder;
+
+	void Awake(){
+		//print ("NEW FireballAbility CREATED!");
+        wizardHolder = GameObject.Find("_WizardHolder");
 	}
 
 	public override void fire()
 	{
-		print("FireballAbility FIRED");
+		//print("FireballAbility FIRED");
 
 		GameObject projectile = PhotonNetwork.Instantiate(
 			FireballPrefabString, 
@@ -27,6 +29,9 @@ public class FireballAbility : AbilityBase {
 
 		//set life
 		projectile.GetComponent<FireballScript>().life = MAX_LIFE;
+
+        // keep Hierarchy clean
+        projectile.transform.parent = wizardHolder.transform;
 	}
 
 	public override string getAbilityName()

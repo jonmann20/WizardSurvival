@@ -19,7 +19,7 @@ public class AbilityManagerScript : MonoBehaviour {
 				if( Input.GetButtonUp("Fire1") )
 				{
 					currentAbility.fire();
-					print ("FIRE!");
+					//print ("FIRE!");
 				}
 			}
 		}

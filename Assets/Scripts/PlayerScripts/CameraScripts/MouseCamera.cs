@@ -28,9 +28,9 @@ public class MouseCamera : MonoBehaviour {
 
 	public GUITexture reticle;
 
-	// Use this for initialization
 	void Start () {
 		Screen.lockCursor = true;
+
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
 		y = angles.x;
@@ -55,6 +55,10 @@ public class MouseCamera : MonoBehaviour {
 			maxDistance
 		);
 	}
+
+    //void OnCollisionEnter(Collision col){
+    //    print("col");
+    //}
 
 
 	void LateUpdate () {
@@ -123,7 +127,7 @@ public class MouseCamera : MonoBehaviour {
 			return true;
 		//}
 
-		return false;
+		//return false;
 	}
 
 	static float ClampAngle (float angle, float min, float max) {
