@@ -23,7 +23,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
     {
         if (ConnectInUpdate && AutoConnect)
         {
-            Debug.Log("Update() was called by Unity. Scene is loaded. Let's connect to the Photon Master Server. Calling: PhotonNetwork.ConnectUsingSettings();");
+            //Debug.Log("Update() was called by Unity. Scene is loaded. Let's connect to the Photon Master Server. Calling: PhotonNetwork.ConnectUsingSettings();");
 
             ConnectInUpdate = false;
             PhotonNetwork.ConnectUsingSettings("1");
@@ -34,7 +34,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 
     public virtual void OnConnectedToMaster()
     {
-        Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
+        //Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -54,12 +54,12 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 	public GameObject NetworkLauncherPrefab;
     public void OnJoinedRoom()
     {
-        Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room. From here on, your game would be running. For reference, all callbacks are listed in enum: PhotonNetworkingMessage");
+        //Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room. From here on, your game would be running. For reference, all callbacks are listed in enum: PhotonNetworkingMessage");
 		Instantiate(NetworkLauncherPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 	}
 
     public virtual void OnJoinedLobby()
     {
-        Debug.Log("OnJoinedLobby(). Use a GUI to show existing rooms available in PhotonNetwork.GetRoomList().");
+        //Debug.Log("OnJoinedLobby(). Use a GUI to show existing rooms available in PhotonNetwork.GetRoomList().");
     }
 }

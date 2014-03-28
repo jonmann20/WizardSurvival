@@ -28,9 +28,7 @@ public class MouseCamera : MonoBehaviour {
 
 	public GUITexture reticle;
 
-	// Use this for initialization
-	void Start () {
-	
+	void Start(){
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
 		y = angles.x;
@@ -55,6 +53,10 @@ public class MouseCamera : MonoBehaviour {
 			maxDistance
 		);
 	}
+
+    void OnCollisionEnter(Collision col){
+        print("col");
+    }
 
 
 	void LateUpdate () {

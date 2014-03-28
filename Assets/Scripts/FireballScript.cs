@@ -9,11 +9,12 @@ public class FireballScript : MonoBehaviour {
 	{
 		if(!GetComponent<PhotonView>().isMine)
 			this.enabled = false;
-		print("Fireball CREATED");
+		//print("Fireball CREATED");
 	}
 
 	void Update () {
-		life --;
+		--life;
+
 		float fraction = (float)life / 30.0f;
 		
 		if(fraction < 1.0f)

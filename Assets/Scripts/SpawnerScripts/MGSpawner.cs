@@ -33,6 +33,12 @@ public class MGSpawner : MonoBehaviour {
 
 	public float timeBetweenSpawns = 0.5f;
 
+    GameObject enemyHolder;
+
+    void Awake(){
+        enemyHolder = GameObject.Find("_EnemyHolder");
+    }
+
 	//Location of Spawner
 	void Start () {
 		StartCoroutine("OpeningDelay");
@@ -66,6 +72,9 @@ public class MGSpawner : MonoBehaviour {
 		{
 			GameObject unit = (GameObject) PhotonNetwork.Instantiate("EnemyWithAI 1", this.transform.position, Quaternion.identity,0) as GameObject;
 			unit.transform.FindChild("skeletonNormal").GetComponent<MGAISuperClass>().SetOwner(this);
+
+            unit.transform.parent = enemyHolder.transform;
+
 			//print("Spawn");
 			//print(PhotonNetwork.playerList[0].ID);
 
@@ -73,8 +82,8 @@ public class MGSpawner : MonoBehaviour {
 			//set the player to follow
 			//unit.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", tempPlayer);
 
-			numberOfUnits++;
-			totalSpawnedUnits++;
+			++numberOfUnits;
+			++totalSpawnedUnits;
 		}
 		else
 		{
@@ -209,14 +218,14 @@ public class MGSpawner : MonoBehaviour {
 	{
 		if( startedSpawn == true )
 		{
-			print ("Starting spawn");
+			//print ("Starting spawn");
 			StartSpawn();
 
 			//return;
 		}
 		else
 		{
-			print ("Timer started");
+			//print ("Timer started");
 			startedSpawn = true;
 			yield return new WaitForSeconds(5.0f);
 			StartCoroutine("OpeningDelay");
