@@ -59,15 +59,21 @@ public class DebugDisplayScript : MonoBehaviour {
 		return output;
 	}
 	
-	void OnGUI()
-	{
+	void OnGUI(){
+        EZGUI.init();
+
 		for(int i = 0; i < ThingsToDisplay.Count; i++)
 		{
 			List<string> currentThingList = ThingsToDisplay[i]();
+
 			for(int j = 0; j < currentThingList.Count; j++)
 			{
 				string thingToDisplay = currentThingList[j];
-				GUI.Label(new Rect(10, i * 20 + j * 20 + 200, 999, 20), thingToDisplay);
+				//GUI.Label(new Rect(10, i * 20 + j * 20 + 200, 999, 20), thingToDisplay);
+                EZOpt e = new EZOpt(Color.white, new Color(0.1f, 0.1f, 0.1f));
+                e.leftJustify = true;
+                e.dropShadowX = e.dropShadowY = 1;
+                EZGUI.placeTxt(thingToDisplay, 23, 10, i * 31 + j * 31 + 33, e);
 			}
 		}
 	}

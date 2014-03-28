@@ -53,7 +53,7 @@ public class HudScript : MonoBehaviour {
 	void Awake () {
 		HEALTHBAR_X_OFFSET = -(NUMBER_OF_VOXELS * VOXEL_WIDTH) * 0.5f;
 
-        HEALTHBAR_X_OFFSET += 2.8f;
+        HEALTHBAR_X_OFFSET += 2.6f;
 
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
 		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();
