@@ -20,6 +20,7 @@ public class HudScript : MonoBehaviour {
 
 	//TEXT
 	public GameObject AbilityNameText;
+	public GameObject ScoreText;
 
 	//PERIL FLASH
 	Light hudLight;
@@ -37,6 +38,12 @@ public class HudScript : MonoBehaviour {
 	const float INVENTORY_PANELS_Z_SCALE = 0.3f;
 	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
 	int inventorySelectedIndex = -1;
+
+	//Leaderboard Button
+	const float LEADERBOARD_X = 0.75f;
+	const float LEADERBOARD_Y = 0.85f;
+	const float LEADERBOARD_WIDTH = 0.18f;
+	const float LEADERBOARD_HEIGHT = 0.07f;
 
 
 	// Use this for initialization
@@ -160,6 +167,14 @@ public class HudScript : MonoBehaviour {
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
 				inventorySelectedIndex --;
 			}
+		}
+	}
+
+	void OnGUI()
+	{
+		if(	GUI.Button(new Rect(Screen.width * LEADERBOARD_X, Screen.height * LEADERBOARD_Y, Screen.width * LEADERBOARD_WIDTH, Screen.width * LEADERBOARD_HEIGHT), "Leaderboard") )
+		{
+			this.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
 		}
 	}
 }

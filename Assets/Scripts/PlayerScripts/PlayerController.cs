@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour {
 	public float sinCounter = 0;
 
 	private PlayerAbility playerAbility;
+
+	private int score = 0;
+
+	private GameObject hud;
 	
 	void Start () {
 
@@ -29,6 +33,13 @@ public class PlayerController : MonoBehaviour {
 
 		playerSingleton = this.transform;
 		playerAbility = this.GetComponent<PlayerAbility>();
+
+		hud = GameObject.Find("HudCamera");
+
+		if( hud == null )
+		{
+			print ("HudCamera Object not found for leaderboard");
+		}
 	}
 	
 	void Update () {
@@ -44,6 +55,12 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetButtonDown("Jump")){
 			attemptJump();
         }
+
+		//Leaderboard
+		if(Input.GetButtonDown("Select")){
+			hud.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
+		
+		}
 
         animate();
 
@@ -146,4 +163,13 @@ public class PlayerController : MonoBehaviour {
 	void OnCollisionExit(Collision col){
 		currentJumpState = JumpState.IN_AIR;
 	}
+
+	public void IncrementPoints( int numToAdd )
+	{
+		score += numToAdd;
+
+		hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
+
+	}
+	
 }
