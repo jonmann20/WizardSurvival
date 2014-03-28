@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using InControl;
+
 public class MouseCamera : MonoBehaviour {
 
 	public GameObject target;
@@ -29,7 +31,7 @@ public class MouseCamera : MonoBehaviour {
 	public GUITexture reticle;
 
 	void Start () {
-		Screen.lockCursor = true;
+		//Screen.lockCursor = true;
 
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
@@ -47,10 +49,12 @@ public class MouseCamera : MonoBehaviour {
 		//target = (GameObject) Instantiate(playerPrefab, new Vector3(0,2,0), Quaternion.identity) as GameObject;
 	}
 
-	void Update()
-	{
+	void Update(){
+
+        InputDevice device = InputManager.ActiveDevice;
+        
 		distance = (float) Mathf.Clamp (
-			distance + Input.GetAxis ("Mouse ScrollWheel") * -zoomSpeed * Time.deltaTime,
+            distance + device.GetControl(InputControlType.ScrollWheel) * -zoomSpeed * Time.deltaTime,
 			minDistance,
 			maxDistance
 		);
@@ -63,10 +67,9 @@ public class MouseCamera : MonoBehaviour {
 
 	void LateUpdate () {
 		if (target){
-			bool b0 = mouseIn();
-			bool b1 = rightStickIn();
+            bool inputRightStick = rightStickIn();
 
-			if(!b0 && !b1){
+            if(!inputRightStick) {
 				holdPos();
 			}
 		}
@@ -81,14 +84,14 @@ public class MouseCamera : MonoBehaviour {
 	}
 
 	bool rightStickIn(){
-		float rH = Input.GetAxisRaw("RightH");
-		float rV = Input.GetAxisRaw("RightV");
-		//print (rH);
+        InputDevice device = InputManager.ActiveDevice;
+        InputControl ctrl_RightStickX = device.GetControl(InputControlType.RightStickX);
+        InputControl ctrl_RightStickY = device.GetControl(InputControlType.RightStickY);
 
-		if(rH != 0 || rV != 0){
-			float horizontal = Input.GetAxis("RightH") * xSpeed * Time.deltaTime;
+		if(ctrl_RightStickX.IsPressed || ctrl_RightStickY.IsPressed){
+			float horizontal = ctrl_RightStickX.LastValue * xSpeed * Time.deltaTime;
 			x += horizontal;
-			y -= Input.GetAxis("RightV") * ySpeed * Time.deltaTime;
+			y -= ctrl_RightStickY.LastValue * ySpeed * Time.deltaTime;
 			
 			target.transform.Rotate(0, horizontal, 0);
 			
@@ -105,29 +108,6 @@ public class MouseCamera : MonoBehaviour {
 		}
 
 		return false;
-	}
-
-	bool mouseIn(){
-		//if(Input.GetMouseButton(1)){
-			float horizontal = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
-			x += horizontal;
-			y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
-			
-			target.transform.Rotate(0, horizontal, 0);
-			
-			y = ClampAngle(y, yMinLimit, yMaxLimit);
-			
-			Quaternion rotation = Quaternion.Euler(y, x, 0);
-			Vector3 position = (rotation * Vector3.forward * -distance) + target.transform.position;
-			position.y += .5f;
-			
-			transform.rotation = rotation;
-			transform.position = position;
-
-			return true;
-		//}
-
-		//return false;
 	}
 
 	static float ClampAngle (float angle, float min, float max) {

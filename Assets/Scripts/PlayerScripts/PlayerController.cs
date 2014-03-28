@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using InControl;
+
 public class PlayerController : MonoBehaviour {
 	public float movementSpeed = 10;
 	public float strafeSpeed = 8;
@@ -42,48 +44,39 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update () {
-	
-		// movement
-		float horizontal = Input.GetAxis("Horizontal") * strafeSpeed * Time.deltaTime;
-		transform.Translate(horizontal, 0, 0);
-		
-		float vertical = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
-		transform.Translate(0, 0, vertical);
+        InputDevice device = InputManager.ActiveDevice;
+        InputControl ctrl_Jump = device.GetControl(InputControlType.Action1);
+        InputControl ctrl_LeftStickX = device.GetControl(InputControlType.LeftStickX);
+        InputControl ctrl_LeftStickY = device.GetControl(InputControlType.LeftStickY);
+        InputControl ctrl_Select = device.GetControl(InputControlType.Select);
 
-        // jump
-        if(Input.GetButtonDown("Jump")){
-			attemptJump();
+        // movement
+        if(ctrl_LeftStickX.IsPressed) {
+            float hor = ctrl_LeftStickX.LastValue * strafeSpeed * Time.deltaTime;
+            transform.Translate(hor, 0, 0);
         }
 
-		//Leaderboard
-		if(Input.GetButtonDown("Select")){
+        if(ctrl_LeftStickY.IsPressed) {
+            float vert = ctrl_LeftStickY.LastValue * movementSpeed * Time.deltaTime;
+            transform.Translate(0, 0, vert);
+        }
+
+        // jump
+        if(ctrl_Jump.IsPressed) {
+            attemptJump();
+        }
+
+        // ability (see AbilityManagerScript.cs)
+        //if(ctrl_RightTrigger.IsPressed) {
+        //    print("shoot");
+        //}
+
+		// leaderboard
+        if(ctrl_Select.IsPressed) {
 			hud.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
-		
 		}
 
         animate();
-
-		// ability
-		if(Input.GetButton("Fire1")){
-
-			//print("FIRE!");
-
-
-			//Old code
-			/*
-			if(Time.time > fireRate+lastShot){
-				GameObject clone = Instantiate(
-                    fireProj, 
-                    gameObject.transform.position + (new Vector3(0, 0 ,0)) + (gameObject.transform.forward.normalized * 1), 
-                    gameObject.transform.rotation
-                ) as GameObject;
-				
-                //fireProj.tag = "Bullet";
-				clone.rigidbody.velocity = thisCamera.transform.forward * fireSpeed * Time.deltaTime;
-				
-				lastShot = Time.time;
-			}*/
-		}
 	}
 
     bool isStepL = true;
@@ -168,7 +161,7 @@ public class PlayerController : MonoBehaviour {
 
 	void attemptJump(){
 		if(currentJumpState == JumpState.NOT_IN_AIR){
-			rigidbody.AddForce(0, 405, 0);
+			rigidbody.AddForce(0, 205, 0); //405
 		}
 	}
 	
