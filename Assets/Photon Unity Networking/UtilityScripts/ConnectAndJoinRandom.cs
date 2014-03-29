@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+//using ExitGames.Client.Photon.Hashtable;
 
 /// <summary>
 /// This script automatically connects to Photon (using the settings file), 
@@ -34,6 +35,8 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 
     public virtual void OnConnectedToMaster()
     {
+		ExitGames.Client.Photon.Hashtable customPlayerProps = new ExitGames.Client.Photon.Hashtable() {{"Score", 0}};
+		PhotonNetwork.player.SetCustomProperties(customPlayerProps);
         //Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
         PhotonNetwork.JoinRandomRoom();
     }

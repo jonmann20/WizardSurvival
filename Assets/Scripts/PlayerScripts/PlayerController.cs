@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour {
 
 	private PlayerAbility playerAbility;
 
+	private ExitGames.Client.Photon.Hashtable networkedProperties;
+
 	private int score = 0;
 
 	private GameObject hud;
@@ -34,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 
 		playerSingleton = this.transform;
 		playerAbility = this.GetComponent<PlayerAbility>();
+
+		networkedProperties = PhotonNetwork.player.customProperties;
 
 		hud = GameObject.Find("HudCamera");
 
@@ -186,15 +190,16 @@ public class PlayerController : MonoBehaviour {
         // TODO: bring back matt's text functionality
 		hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 
-		if( PhotonNetwork.player.customProperties.ContainsKey("Score") )
+		if( networkedProperties.ContainsKey("Score") )
 		{
-			PhotonNetwork.player.customProperties["Score"] = score;
+			networkedProperties["Score"] = score;
 		}
 		else
 		{
-			PhotonNetwork.player.customProperties.Add("Score", score);
+			networkedProperties.Add("Score", score);
 		}
 
+		PhotonNetwork.player.SetCustomProperties( networkedProperties );
 		
 	}
 	

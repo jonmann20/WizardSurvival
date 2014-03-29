@@ -70,7 +70,8 @@ public class MGSpawner : MonoBehaviour {
 	{
 		if (unitList[(int)unitLevel] != null && PhotonNetwork.isMasterClient)
 		{
-			GameObject unit = (GameObject) PhotonNetwork.Instantiate("EnemyWithAI 1", this.transform.position, Quaternion.identity,0) as GameObject;
+			Object[] temp = new Object[0];
+			GameObject unit = (GameObject) PhotonNetwork.InstantiateSceneObject("EnemyWithAI 1", this.transform.position, Quaternion.identity,0, temp ) as GameObject;
 			unit.transform.FindChild("skeletonNormal").GetComponent<MGAISuperClass>().SetOwner(this);
 
             unit.transform.parent = enemyHolder.transform;
