@@ -195,21 +195,23 @@ public class HudScript : MonoBehaviour {
 		
 		int offset = 15;
 		//GUI.Label( new Rect( Screen.width/2 , Screen.height/2, 300,25 ), "Number of Players");
-
-		for( int i = 0; i < PhotonNetwork.otherPlayers.Length; i++ )
+		int teamScore = 0;
+		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
 		{
-			int tempScore = 0;
+			teamScore = 0;
 			//Object key = "String";
-			if( PhotonNetwork.otherPlayers[i].customProperties.ContainsKey("Score") )
+			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Score") )
 			{
-				tempScore = (int) PhotonNetwork.otherPlayers[i].customProperties["Score"];
-				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
+				int tempScore = (int) PhotonNetwork.playerList[i].customProperties["Score"];
+				teamScore += tempScore;
+				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + teamScore.ToString() );
 			}
 			else
 			{
-				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": does not have score property" );
+				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.playerList[i].ID + ": does not have score property" );
 			}
-			
+
+			this.gameObject.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
 			//GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
 		}
 

@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 	private ExitGames.Client.Photon.Hashtable networkedProperties;
 
 	private int score = 0;
+	private int Teamscore = 0;
 
 	private GameObject hud;
 	
@@ -188,7 +189,7 @@ public class PlayerController : MonoBehaviour {
 		score += numToAdd;
 
         // TODO: bring back matt's text functionality
-		hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
+
 
 		if( networkedProperties.ContainsKey("Score") )
 		{
@@ -200,6 +201,8 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		PhotonNetwork.player.SetCustomProperties( networkedProperties );
+
+		hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 		
 	}
 	
