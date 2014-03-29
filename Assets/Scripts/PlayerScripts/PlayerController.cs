@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour {
 
 	private PlayerAbility playerAbility;
 
+	private GameObject spawnPoint; 
+
 	private ExitGames.Client.Photon.Hashtable networkedProperties;
 
 	private int score = 0;
@@ -34,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 	
 	void Start(){
 		thisCamera = (GameObject.FindWithTag("MainCamera") as GameObject).transform;
+
+		spawnPoint = (GameObject.Find("SpawnPoint") as GameObject);
 
 		playerSingleton = this.transform;
 		playerAbility = this.GetComponent<PlayerAbility>();
@@ -87,6 +91,8 @@ public class PlayerController : MonoBehaviour {
 		{
 			GLOBAL.health = 100;
 			score = 0;
+
+			transform.position = spawnPoint.transform.position;
 			/*GameObject wiz = PhotonNetwork.Instantiate("Wizard", new Vector3(0, 5, 0), Quaternion.identity, 0) as GameObject;
 			GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;
 			(mainCam.GetComponent<MouseCamera>() as MouseCamera).target = wiz;
