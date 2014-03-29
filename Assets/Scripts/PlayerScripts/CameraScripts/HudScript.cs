@@ -23,7 +23,7 @@ public class HudScript : MonoBehaviour {
     //GameObject AbilityDescriptionText;
     //public Font font;
     //public GameObject AbilityNameText;
-    //public GameObject ScoreText;
+    public GameObject ScoreText;
 
 	//PERIL FLASH
 	Light hudLight;
@@ -198,5 +198,20 @@ public class HudScript : MonoBehaviour {
         EZGUI.init();
 
         EZGUI.placeTxt("Calzone", 50, EZGUI.FULLW - 300, 190);
+
+		//Scores (TEMP)
+		
+		int offset = 10;
+		for( int i = 0; i < PhotonNetwork.otherPlayers.Length; i++ )
+		{
+			int tempScore = 0;
+			if( PhotonNetwork.otherPlayers[i].customProperties.ContainsKey("Score") )
+			{
+				tempScore = (int) PhotonNetwork.otherPlayers[i].customProperties["Score"];
+			}
+			
+			GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 25f, 10f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
+		}
+
     }
 }

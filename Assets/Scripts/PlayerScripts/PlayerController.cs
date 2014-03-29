@@ -184,8 +184,18 @@ public class PlayerController : MonoBehaviour {
 		score += numToAdd;
 
         // TODO: bring back matt's text functionality
-		//hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
+		hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 
+		if( PhotonNetwork.player.customProperties.ContainsKey("Score") )
+		{
+			PhotonNetwork.player.customProperties["Score"] = score;
+		}
+		else
+		{
+			PhotonNetwork.player.customProperties.Add("Score", score);
+		}
+
+		
 	}
 	
 }
