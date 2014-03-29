@@ -3,3 +3,24 @@ https://www.assetstore.unity3d.com/#/content/3356
 
 cross-platform controller:
 https://github.com/pbhogan/InControl
+
+spells:
+http://opengameart.org/content/spell-sounds-starter-pack
+
+slight screams:
+http://opengameart.org/content/15-vocal-male-strainhurtpainjump-sounds
+
+jumpland:
+http://opengameart.org/content/jump-landing-sound
+
+jrpg OST:
+http://opengameart.org/content/generic-8-bit-jrpg-soundtrack
+
+Ove Melaa - Essential Game Audio:
+http://opengameart.org/content/oves-essential-game-audio-pack-collection-160-files
+
+mosnster RPG:
+http://opengameart.org/content/42-monster-rpg-2-music-tracks
+
+quotes:
+http://opengameart.org/content/character-quotes

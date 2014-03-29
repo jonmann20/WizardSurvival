@@ -19,7 +19,7 @@ public class AbilityManagerScript : MonoBehaviour {
                 InputDevice device = InputManager.ActiveDevice;
                 InputControl ctrl_RightTrigger = device.GetControl(InputControlType.RightTrigger);
 
-				if(ctrl_RightTrigger.WasReleased)
+				if(ctrl_RightTrigger.IsPressed && ctrl_RightTrigger.LastValue == 0)
 				{
 					currentAbility.fire();
 				}

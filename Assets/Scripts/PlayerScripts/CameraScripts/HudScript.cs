@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class HudScript : MonoBehaviour {
 
+	bool playedLowHeath = false;
+
 	const float VOXEL_WIDTH = 0.2f;
     float HEALTHBAR_X_OFFSET = -3.75f;
 	const float HEALTHBAR_Y_OFFSET = 2.0f;
@@ -147,7 +149,12 @@ public class HudScript : MonoBehaviour {
 
 		//WARNING FLASH
 		if(GLOBAL.health < 40)
-		{
+		{	
+			if(!playedLowHeath){
+				playedLowHeath = true;
+				GameAudio.playLowHP();
+			}
+
 			hudLight.intensity = Mathf.Abs(Mathf.Sin(sinCounter * 10)) * 5;
 		}
 

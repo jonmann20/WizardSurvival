@@ -26,8 +26,6 @@ public abstract class CollectableBase : MonoBehaviour {
 	
 	public void OnCollisionEnter(Collision collision) {
 
-		print("COLLECT IT BABEH!");
-
 		if(collision.gameObject.tag == "Player")
 		{
 			

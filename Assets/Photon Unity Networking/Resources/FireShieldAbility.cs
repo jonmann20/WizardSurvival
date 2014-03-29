@@ -12,11 +12,6 @@ public class FireShieldAbility : AbilityBase {
 	const int NUMBER_OF_FIREBALLS = 3;
 	List<GameObject> shieldFlames = new List<GameObject>();
 	
-	public void Awake()
-	{
-		print("NEW FireShieldAbility CREATED");
-	}
-	
 	public override void fire()
 	{
 		print("FireShieldAbility FIRED");

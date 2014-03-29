@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         // jump
-        if(ctrl_Jump.IsPressed) {
+        if(ctrl_Jump.IsPressed && ctrl_Jump.LastValue == 0){
             attemptJump();
         }
 
@@ -145,7 +145,8 @@ public class PlayerController : MonoBehaviour {
         //print(dtAngle);
 
         if(dtAngle != 0) {
-            leg.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
+			// TODO: causing IN_AIR state
+            //leg.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
         }
     }
 
@@ -166,12 +167,14 @@ public class PlayerController : MonoBehaviour {
 
 	void attemptJump(){
 		if(currentJumpState == JumpState.NOT_IN_AIR){
-			rigidbody.AddForce(0, 205, 0); //405
+			GameAudio.playJump();
+			rigidbody.AddForce(0, 345, 0); //405
 		}
 	}
 	
 	void OnCollisionEnter(Collision col){
 		if(col.gameObject.tag == "Ground"){
+			GameAudio.playJumpland();
 			currentJumpState = JumpState.NOT_IN_AIR;
 		}
 	}
