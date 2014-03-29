@@ -21,3 +21,6 @@ http://opengameart.org/content/oves-essential-game-audio-pack-collection-160-fil
 
 mosnster RPG:
 http://opengameart.org/content/42-monster-rpg-2-music-tracks
+
+quotes:
+http://opengameart.org/content/character-quotes

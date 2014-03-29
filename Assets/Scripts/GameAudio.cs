@@ -4,10 +4,10 @@ using System.Collections;
 public class GameAudio : MonoBehaviour {
 
 	public static AudioSource[] jumpSrc;
-	public static AudioSource jumplandSrc, introSrc, spell0Src;
+	public static AudioSource jumplandSrc, introSrc, spell0Src, lowHealthSrc;
 
 	GameObject[] jumpHolder;
-	GameObject audioHolder, jumplandHolder, introHolder, spell0Holder;
+	GameObject audioHolder, jumplandHolder, introHolder, spell0Holder, lowHealthHolder;
 
 	void Awake(){
 		audioHolder = new GameObject("_AudioHolder");
@@ -22,6 +22,7 @@ public class GameAudio : MonoBehaviour {
 		setSoundEffect(ref jumplandHolder, ref jumplandSrc, "jumpLand");
 		setSoundEffect(ref introHolder, ref introSrc, "HeavenSings");
 		setSoundEffect(ref spell0Holder, ref spell0Src, "warp3");
+		setSoundEffect(ref lowHealthHolder, ref lowHealthSrc, "lowhealth");
 	}
 
 	void setSoundEffect(ref GameObject holder, ref AudioSource src, string clip){
@@ -48,5 +49,9 @@ public class GameAudio : MonoBehaviour {
 
 	public static void playSpell0(){
 		spell0Src.audio.Play();
+	}
+
+	public static void playLowHP(){
+		lowHealthSrc.audio.Play();
 	}
 }
