@@ -198,7 +198,6 @@ public class HudScript : MonoBehaviour {
 		int teamScore = 0;
 		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
 		{
-			teamScore = 0;
 			//Object key = "String";
 			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Score") )
 			{
