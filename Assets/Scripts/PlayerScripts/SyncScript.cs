@@ -57,7 +57,6 @@ public class SyncScript : Photon.MonoBehaviour
 			latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
 			latestCorrectRot = rot;
 
-			print(latestCorrectPos.ToString());
 			onUpdatePos = transform.position;  // we interpolate from here to latestCorrectPos
 			onUpdateRot = transform.rotation;
 			fraction = 0;                           // reset the fraction we alreay moved. see Update()

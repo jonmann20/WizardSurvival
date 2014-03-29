@@ -160,11 +160,11 @@ public class HudScript : MonoBehaviour {
 			g.transform.parent = hudCamera.transform;
 			if(i == inventorySelectedIndex)
 			{
-				g.GetComponent<InventoryItemScript>().target = 5.0f;
+				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getSelectedItemSizeInInventory() + 1;
 			}
 			else
 			{
-				g.GetComponent<InventoryItemScript>().target = 4.0f;
+				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getNonSelectedItemSizeInInventory();
 			}
 			g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
 			                                        INVENTORY_OFFSET_Y + 0.1f,
@@ -206,7 +206,7 @@ public class HudScript : MonoBehaviour {
 			{
 				int tempScore = (int) PhotonNetwork.playerList[i].customProperties["Score"];
 				teamScore += tempScore;
-				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + tempScore.ToString() );
+				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + teamScore.ToString() );
 			}
 			else
 			{
