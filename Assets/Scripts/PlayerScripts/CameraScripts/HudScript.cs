@@ -191,12 +191,6 @@ public class HudScript : MonoBehaviour {
 	}
 
     void OnGUI(){
-        EZGUI.init();
-
-        EZGUI.placeTxt("Calzone", 50, EZGUI.FULLW - 300, 190);
-
-		//Scores (TEMP)
-		
 		int offset = 10;
 		for( int i = 0; i < PhotonNetwork.otherPlayers.Length; i++ )
 		{
