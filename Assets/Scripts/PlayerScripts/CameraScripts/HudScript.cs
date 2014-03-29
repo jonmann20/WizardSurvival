@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class HudScript : MonoBehaviour {
 
 	const float VOXEL_WIDTH = 0.2f;
-    float HEALTHBAR_X_OFFSET = -0.75f;
+    float HEALTHBAR_X_OFFSET = -3.75f;
 	const float HEALTHBAR_Y_OFFSET = 2.0f;
 	const float HEALTHBAR_Z_OFFSET = 4;
 	const float HEALTHBAR_FLOAT_RATE = 0.005f;
@@ -47,13 +47,9 @@ public class HudScript : MonoBehaviour {
 	const float LEADERBOARD_Y = 0.85f;
 	const float LEADERBOARD_WIDTH = 0.18f;
 	const float LEADERBOARD_HEIGHT = 0.07f;
-
-
+	
 	// Use this for initialization
 	void Awake () {
-		HEALTHBAR_X_OFFSET = -(NUMBER_OF_VOXELS * VOXEL_WIDTH) * 0.5f;
-
-        HEALTHBAR_X_OFFSET += 2.6f;
 
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
 		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();

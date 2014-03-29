@@ -5,10 +5,9 @@ using System.Collections.Generic;
 public class FireShieldAbility : AbilityBase {
 	
 	string FireballPrefabString = "FireballPrefab";
-	const int SPEED = 20;
 	const int MAX_LIFE = 90;
 	float sinCounter = 0.0f;
-	const float CIRCLE_RATE = 0.1f;
+	const float CIRCLE_RATE = 0.2f;
 	const float CIRCLE_RADIUS = 3.0f;
 	const int NUMBER_OF_FIREBALLS = 3;
 	List<GameObject> shieldFlames = new List<GameObject>();
