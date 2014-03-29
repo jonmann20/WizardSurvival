@@ -82,6 +82,20 @@ public class PlayerController : MonoBehaviour {
 		}
 
         animate();
+
+		if( GLOBAL.health <= 0 )
+		{
+			GLOBAL.health = 100;
+			score = 0;
+			/*GameObject wiz = PhotonNetwork.Instantiate("Wizard", new Vector3(0, 5, 0), Quaternion.identity, 0) as GameObject;
+			GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;
+			(mainCam.GetComponent<MouseCamera>() as MouseCamera).target = wiz;
+			
+			
+			// keep Hierachy clean
+			wiz.transform.parent = GameObject.Find("_WizardHolder").transform;
+			PhotonNetwork.Destroy(gameObject);*/
+		}
 	}
 
     bool isStepL = true;
