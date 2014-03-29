@@ -168,6 +168,8 @@ public class HudScript : MonoBehaviour {
 				inventorySelectedIndex --;
 			}
 		}
+
+
 	}
 
 	void OnGUI()
@@ -176,5 +178,19 @@ public class HudScript : MonoBehaviour {
 		{
 			this.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
 		}*/
+
+		//Scores (TEMP)
+
+		int offset = 10;
+		for( int i = 0; i < PhotonNetwork.otherPlayers.Length; i++ )
+		{
+			int tempScore = 0;
+			if( PhotonNetwork.otherPlayers[i].customProperties.ContainsKey("Score") )
+			{
+				tempScore = (int) PhotonNetwork.otherPlayers[i].customProperties["Score"];
+			}
+
+			GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 25f, 10f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
+		}
 	}
 }

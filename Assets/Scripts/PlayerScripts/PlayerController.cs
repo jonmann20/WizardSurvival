@@ -169,6 +169,7 @@ public class PlayerController : MonoBehaviour {
 		score += numToAdd;
 
 		hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
+		PhotonNetwork.player.customProperties.Add("Score", score);
 
 	}
 	
