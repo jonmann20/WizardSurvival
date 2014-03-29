@@ -203,9 +203,14 @@ public class HudScript : MonoBehaviour {
 			if( PhotonNetwork.otherPlayers[i].customProperties.ContainsKey("Score") )
 			{
 				tempScore = (int) PhotonNetwork.otherPlayers[i].customProperties["Score"];
+				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
+			}
+			else
+			{
+				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": does not have score property" );
 			}
 			
-			GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
+			//GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
 		}
 
     }
