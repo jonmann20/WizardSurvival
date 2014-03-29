@@ -89,7 +89,9 @@ public class PlayerController : MonoBehaviour {
 
 		if( GLOBAL.health <= 0 )
 		{
-			GLOBAL.health = 100;
+			GLOBAL.health = 0;
+			TakeDamage(-100);
+
 			score = 0;
 
 			transform.position = spawnPoint.transform.position;
@@ -227,6 +229,15 @@ public class PlayerController : MonoBehaviour {
 
 		hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 		
+	}
+
+	public void TakeDamage( int damage )
+	{
+		GLOBAL.health = Mathf.Clamp(GLOBAL.health - damage, 0 , 100 );
+		networkedProperties["Health"] = GLOBAL.health;
+
+		PhotonNetwork.player.SetCustomProperties(networkedProperties);
+
 	}
 	
 }
