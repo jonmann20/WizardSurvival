@@ -1,25 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using InControl;
+
 public class AbilityManagerScript : MonoBehaviour {
 
 	public static AbilityBase currentAbility;
 
-	// Use this for initialization
 	void Start () {
 		changeAbility("FireballAbility");
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update(){
 		if( currentAbility )
 		{
 			if( currentAbility.isCharged() )
 			{
-				if( Input.GetButtonUp("Fire1") )
+                InputDevice device = InputManager.ActiveDevice;
+                InputControl ctrl_RightTrigger = device.GetControl(InputControlType.RightTrigger);
+
+				if(ctrl_RightTrigger.IsPressed)
 				{
 					currentAbility.fire();
-					//print ("FIRE!");
 				}
 			}
 		}
