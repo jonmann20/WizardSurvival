@@ -21,6 +21,7 @@ public class GLOBAL : MonoBehaviour {
 	{
 		if(Inventory.Count < maxInventory)
 		{
+			g.AddComponent<InventoryItemScript>();
 			Inventory.Add(g);
 			return true;
 		}

@@ -13,6 +13,7 @@ public class InventoryItemScript : MonoBehaviour {
 	float damping = 0.8f;
 
 	void Start () {
+		gameObject.layer = 9;
 		transform.localScale = new Vector3(scale, scale, scale);
 	}
 
