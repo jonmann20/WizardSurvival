@@ -211,9 +211,10 @@ public class HudScript : MonoBehaviour {
 				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.playerList[i].ID + ": does not have score property" );
 			}
 
-			this.gameObject.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
+
 			//GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
 		}
+		this.gameObject.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
 
     }
 }
