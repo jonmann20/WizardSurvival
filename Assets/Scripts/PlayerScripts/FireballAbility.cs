@@ -16,6 +16,8 @@ public class FireballAbility : AbilityBase {
 
 	public override void fire()
 	{
+		GameAudio.playSpell0();
+
 		//print("FireballAbility FIRED");
 
 		GameObject projectile = PhotonNetwork.Instantiate(

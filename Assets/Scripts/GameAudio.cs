@@ -4,22 +4,24 @@ using System.Collections;
 public class GameAudio : MonoBehaviour {
 
 	public static AudioSource[] jumpSrc;
-	public static AudioSource jumplandSrc, introSrc;
+	public static AudioSource jumplandSrc, introSrc, spell0Src;
 
 	GameObject[] jumpHolder;
-	GameObject audioHolder, jumplandHolder, introHolder;
+	GameObject audioHolder, jumplandHolder, introHolder, spell0Holder;
 
 	void Awake(){
 		audioHolder = new GameObject("_AudioHolder");
 
-//		jumpHolder = new GameObject[4];
+		jumpSrc = new AudioSource[4];
+		jumpHolder = new GameObject[4];
 
-//		setSoundEffect(ref jumpHolder[0], ref jumpSrc[0], "jump0");
-//		setSoundEffect(ref jumpHolder[1], ref jumpSrc[1], "jump1");
-//		setSoundEffect(ref jumpHolder[2], ref jumpSrc[2], "jump2");
-//		setSoundEffect(ref jumpHolder[3], ref jumpSrc[3], "jump3");
+		setSoundEffect(ref jumpHolder[0], ref jumpSrc[0], "jump0");
+		setSoundEffect(ref jumpHolder[1], ref jumpSrc[1], "jump1");
+		setSoundEffect(ref jumpHolder[2], ref jumpSrc[2], "jump2");
+		setSoundEffect(ref jumpHolder[3], ref jumpSrc[3], "jump3");
 		setSoundEffect(ref jumplandHolder, ref jumplandSrc, "jumpLand");
 		setSoundEffect(ref introHolder, ref introSrc, "HeavenSings");
+		setSoundEffect(ref spell0Holder, ref spell0Src, "warp3");
 	}
 
 	void setSoundEffect(ref GameObject holder, ref AudioSource src, string clip){
@@ -41,7 +43,10 @@ public class GameAudio : MonoBehaviour {
 	}
 
 	public static void playIntro(){
-		print("playing");
 		introSrc.audio.Play();
+	}
+
+	public static void playSpell0(){
+		spell0Src.audio.Play();
 	}
 }
