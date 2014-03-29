@@ -40,7 +40,10 @@ public class HudScript : MonoBehaviour {
 	const float INVENTORY_PANELS_Y_SCALE = 0.1f;
 	const float INVENTORY_PANELS_Z_SCALE = 0.3f;
 	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
+	public float target = 1.0f;
 	int inventorySelectedIndex = -1;
+
+
 
 	//Leaderboard Button
 	const float LEADERBOARD_X = 0.75f;
