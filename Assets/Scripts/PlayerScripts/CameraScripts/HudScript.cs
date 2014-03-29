@@ -201,7 +201,8 @@ public class HudScript : MonoBehaviour {
 
 		//Scores (TEMP)
 		
-		int offset = 10;
+		int offset = 15;
+		//GUI.Label( new Rect( Screen.width/2 , Screen.height/2, 300,25 ), "Number of Players");
 		for( int i = 0; i < PhotonNetwork.otherPlayers.Length; i++ )
 		{
 			int tempScore = 0;
@@ -210,7 +211,7 @@ public class HudScript : MonoBehaviour {
 				tempScore = (int) PhotonNetwork.otherPlayers[i].customProperties["Score"];
 			}
 			
-			GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 25f, 10f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
+			GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
 		}
 
     }
