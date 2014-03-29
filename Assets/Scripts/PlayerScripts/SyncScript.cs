@@ -40,8 +40,8 @@ public class SyncScript : Photon.MonoBehaviour
 	{
 		if (stream.isWriting)
 		{
-			Vector3 pos = transform.localPosition;
-			Quaternion rot = transform.localRotation;
+			Vector3 pos = transform.position;
+			Quaternion rot = transform.rotation;
 			stream.Serialize(ref pos);
 			stream.Serialize(ref rot);
 		}
@@ -56,8 +56,10 @@ public class SyncScript : Photon.MonoBehaviour
 			
 			latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
 			latestCorrectRot = rot;
-			onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
-			onUpdateRot = transform.localRotation;
+
+			print(latestCorrectPos.ToString());
+			onUpdatePos = transform.position;  // we interpolate from here to latestCorrectPos
+			onUpdateRot = transform.rotation;
 			fraction = 0;                           // reset the fraction we alreay moved. see Update()
 		}
 	}
@@ -72,7 +74,7 @@ public class SyncScript : Photon.MonoBehaviour
 		// We want it to take a bit longer, so we multiply with 9 instead.
 		
 		fraction = fraction + Time.deltaTime * 9;
-		transform.localPosition = Vector3.Lerp(onUpdatePos, latestCorrectPos, fraction);    // set our pos between A and B
-		transform.localRotation = Quaternion.Lerp(onUpdateRot, latestCorrectRot, fraction);
+		transform.position = Vector3.Lerp(onUpdatePos, latestCorrectPos, fraction);    // set our pos between A and B
+		transform.rotation = Quaternion.Lerp(onUpdateRot, latestCorrectRot, fraction);
 	}
 }

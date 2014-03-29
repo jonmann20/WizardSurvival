@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>UnityPlayer.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>unity.DefaultCompany.WizardSurvival</string>
+	<string>unity.EECS494.WizardSurvival</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
