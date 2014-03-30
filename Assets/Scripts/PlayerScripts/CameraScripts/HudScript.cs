@@ -27,6 +27,9 @@ public class HudScript : MonoBehaviour {
     //public GameObject AbilityNameText;
     public GameObject ScoreText;
 
+	//HealthBar
+	public Texture healthBarTexture;
+
 	//PERIL FLASH
 	Light hudLight;
 
@@ -44,6 +47,8 @@ public class HudScript : MonoBehaviour {
 	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
 	public float target = 1.0f;
 	int inventorySelectedIndex = -1;
+
+
 
 
 
@@ -205,7 +210,7 @@ public class HudScript : MonoBehaviour {
     void OnGUI(){
 		//Scores (TEMP)
 		
-		int offset = 15;
+		int offset = 20;
 		//GUI.Label( new Rect( Screen.width/2 , Screen.height/2, 300,25 ), "Number of Players");
 		int teamScore = 0;
 		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
@@ -215,11 +220,18 @@ public class HudScript : MonoBehaviour {
 			{
 				int tempScore = (int) PhotonNetwork.playerList[i].customProperties["Score"];
 				teamScore += tempScore;
-				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + teamScore.ToString() );
+				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + teamScore.ToString() );
 			}
 			else
 			{
-				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.playerList[i].ID + ": does not have score property" );
+				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i) ), (Screen.width * .16f), Screen.height * .03f), "Player " + PhotonNetwork.playerList[i].ID + ": does not have score property" );
+			}
+			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health") )
+			{
+				float tempHealth = (int) PhotonNetwork.playerList[i].customProperties["Health"];
+				print (tempHealth);
+				tempHealth = tempHealth/100;
+				GUI.DrawTexture(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * i) + (Screen.height * .022f), (Screen.width * .16f) * tempHealth, Screen.height * .01f), healthBarTexture);
 			}
 
 
