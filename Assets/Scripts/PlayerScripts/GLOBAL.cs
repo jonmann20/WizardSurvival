@@ -40,8 +40,8 @@ public class GLOBAL : MonoBehaviour {
 	{
 		GameObject inventoryItem = Inventory[i];
 		Inventory.RemoveAt(i);
-
+		inventoryItem.GetComponent<CollectableBase>().useItem();
 		Destroy(inventoryItem);
-		Wizard.myWizard.GetComponent<AbilityManagerScript>().changeAbility("FireShieldAbility");
+
 	}
 }

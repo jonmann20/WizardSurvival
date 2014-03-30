@@ -18,8 +18,9 @@ public abstract class CollectableBase : MonoBehaviour {
 	{
 		sinCounter += 0.025f;
 		transform.position = new Vector3(transform.position.x, transform.position.y + Mathf.Sin(sinCounter) * 0.01f, transform.position.z);
-		
-		transform.Rotate(Vector3.up * Time.deltaTime * 55);
+
+		if(GetComponent<InventoryItemScript>() == null)
+			transform.Rotate(Vector3.up * Time.deltaTime * 55);
 
 		customUpdate();
 	}

@@ -21,7 +21,7 @@ public class HudScript : MonoBehaviour {
 	GameObject hudCamera;
 
 	//TEXT
-    //GameObject AbilityNameText;
+    public GameObject AbilityNameText;
     //GameObject AbilityDescriptionText;
     //public Font font;
     //public GameObject AbilityNameText;
@@ -142,10 +142,10 @@ public class HudScript : MonoBehaviour {
 		}
 
         ////TEXT
-        //if(AbilityManagerScript.currentAbility != null)
-        //{
-        //    AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
-        //}
+        if(AbilityManagerScript.currentAbility != null)
+        {
+            AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
+        }
 
 		//WARNING FLASH
 		if(GLOBAL.health < 40)
@@ -168,10 +168,12 @@ public class HudScript : MonoBehaviour {
 			if(i == inventorySelectedIndex)
 			{
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getSelectedItemSizeInInventory() + 1;
+				g.transform.Rotate(Vector3.up * Time.deltaTime * 55);
 			}
 			else
 			{
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getNonSelectedItemSizeInInventory();
+				g.transform.rotation = Quaternion.identity;
 			}
 			g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
 			                                        INVENTORY_OFFSET_Y + 0.1f,
