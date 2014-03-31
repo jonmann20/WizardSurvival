@@ -31,7 +31,7 @@ public class MouseCamera : MonoBehaviour {
 	public GUITexture reticle;
 
 	void Start () {
-		//Screen.lockCursor = true;
+		Screen.lockCursor = true;
 
 		Vector3 position = (this.target.transform.rotation * Vector3.forward * -distance) + target.transform.position;
 		position.y += .5f;

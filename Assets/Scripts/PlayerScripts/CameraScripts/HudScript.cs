@@ -208,6 +208,10 @@ public class HudScript : MonoBehaviour {
 	}
 
     void OnGUI(){
+
+		//Temporary instructions
+		GUI.Label(new Rect(10, Screen.height * 0.72f, 100, 100), "Arrow keys for inventory. Enter to use.");
+
 		//Scores (TEMP)
 		
 		int offset = 20;

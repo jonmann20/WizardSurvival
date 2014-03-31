@@ -49,31 +49,25 @@ public class FireArcAbility : AbilityBase {
 
 	void Update()
 	{
-		Vector3 first = transform.position;
-		Vector3 last = otherWizard.transform.position;
-		
-		float fraction = 1.0f / (float)numberOfFireballs;
-		float sum = 0;
-
-		for(int i = 0; i < projectiles.Count; i++)
+		if(PhotonNetwork.playerList.Length > 1)
 		{
-			if(projectiles[i] == null)
+			Vector3 first = transform.position;
+			Vector3 last = otherWizard.transform.position;
+		
+			float fraction = 1.0f / (float)numberOfFireballs;
+			float sum = 0;
+
+			for(int i = 0; i < projectiles.Count; i++)
 			{
-				projectiles.RemoveAt(i);
-				continue;
+				if(projectiles[i] == null)
+				{
+					projectiles.RemoveAt(i);
+					continue;
+				}
+				sum += fraction;
+				Vector3 p = Vector3.Lerp(first, last, sum);
+				projectiles[i].transform.position = p;
 			}
-			sum += fraction;
-			Vector3 p = Vector3.Lerp(first, last, sum);
-			projectiles[i].transform.position = p;
-			//print("first: " + first.ToString() + "last: " + last.ToString() + "sum: " + sum + "p: " + p.ToString());
-			//GameObject projectile = PhotonNetwork.Instantiate("FireballPrefab", p, Quaternion.identity, 0) as GameObject;
-			//projectiles.Add(projectile);
-			
-			//set life
-			//projectile.GetComponent<FireballScript>().life = MAX_LIFE;
-			
-			// keep Hierarchy clean
-			//projectile.transform.parent = wizardHolder.transform;
 		}
 	}
 
