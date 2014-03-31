@@ -22,7 +22,7 @@ public class HudScript : MonoBehaviour {
 	GameObject hudCamera;
 
 	//TEXT
-    //GameObject AbilityNameText;
+    public GameObject AbilityNameText;
     //GameObject AbilityDescriptionText;
     //public Font font;
     //public GameObject AbilityNameText;
@@ -148,10 +148,10 @@ public class HudScript : MonoBehaviour {
 		}
 
         ////TEXT
-        //if(AbilityManagerScript.currentAbility != null)
-        //{
-        //    AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
-        //}
+        if(AbilityManagerScript.currentAbility != null)
+        {
+            AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
+        }
 
 		//WARNING FLASH
 		if(GLOBAL.health < 40)
@@ -223,7 +223,15 @@ public class HudScript : MonoBehaviour {
 			{
 				int tempScore = (int) PhotonNetwork.playerList[i].customProperties["Score"];
 				teamScore += tempScore;
-				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + tempScore.ToString() );
+				if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Ability") )
+				{
+					string abilityName = (string) PhotonNetwork.playerList[i].customProperties["Ability"];
+					GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " +  abilityName + " Score: " + tempScore.ToString() );
+				}
+				else
+				{
+					GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + tempScore.ToString() );
+				}
 			}
 			else
 			{
@@ -236,6 +244,7 @@ public class HudScript : MonoBehaviour {
 				tempHealth = tempHealth/100;
 				GUI.DrawTexture(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * i) + (Screen.height * .022f), (Screen.width * .16f) * tempHealth, Screen.height * .01f), healthBarTexture);
 			}
+
 
 
 			//GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );

@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour {
 
 	private GameObject spawnPoint; 
 
-	private ExitGames.Client.Photon.Hashtable networkedProperties;
+	public ExitGames.Client.Photon.Hashtable networkedProperties;
 
 	private int score = 0;
 	private int Teamscore = 0;
@@ -43,6 +43,12 @@ public class PlayerController : MonoBehaviour {
 		playerAbility = this.GetComponent<PlayerAbility>();
 
 		networkedProperties = PhotonNetwork.player.customProperties;
+
+		if( networkedProperties.ContainsKey("Ability") )
+		{
+			networkedProperties["Ability"] = AbilityManagerScript.currentAbility.getAbilityName();
+			PhotonNetwork.player.SetCustomProperties(networkedProperties);
+		}
 
 		hud = GameObject.Find("HudCamera");
 
@@ -238,6 +244,11 @@ public class PlayerController : MonoBehaviour {
 
 		PhotonNetwork.player.SetCustomProperties(networkedProperties);
 
+	}
+
+	public ExitGames.Client.Photon.Hashtable GetNetworkedProperties()
+	{
+		return networkedProperties;
 	}
 	
 }
