@@ -234,9 +234,9 @@ public class HudScript : MonoBehaviour {
 		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
 		{
 			//Don't list duplicate information about the current player.
-			if(Wizard.myWizard != null)
+			/*if(Wizard.myWizard != null)
 			if(PhotonNetwork.playerList[i] == Wizard.myWizard.GetComponent<PhotonView>().owner)
-				continue;
+				continue;*/
 
 			//Object key = "String";
 			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Score") )
