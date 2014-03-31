@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using InControl;
+
 public class HudScript : MonoBehaviour {
 
 	bool playedLowHeath = false;
@@ -188,21 +190,24 @@ public class HudScript : MonoBehaviour {
 
 	void Update()
 	{
+		InputDevice device = InputManager.ActiveDevice;
+		InputControl ctrl_DPadL = device.GetControl(InputControlType.DPadLeft);
+		InputControl ctrl_DPadR = device.GetControl(InputControlType.DPadRight);
+		InputControl ctrl_RightTrigger = device.GetControl(InputControlType.RightTrigger);
+
 		int numInventoryItems = GLOBAL.getInventoryCount();
-		if(Input.GetKeyDown("right") && inventorySelectedIndex < numInventoryItems - 1)
-		{
-			inventorySelectedIndex ++;
+		if(ctrl_DPadR.IsPressed && ctrl_DPadR.LastValue == 0 && inventorySelectedIndex < numInventoryItems - 1){
+			++inventorySelectedIndex;
 		}
-		if(Input.GetKeyDown("left") && inventorySelectedIndex > -1)
-		{
-			inventorySelectedIndex --;
+
+		if(ctrl_DPadL.IsPressed && ctrl_DPadL.LastValue == 0 && inventorySelectedIndex > -1){
+			--inventorySelectedIndex;
 		}
-		if(Input.GetKeyDown("return"))
-		{
-			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems)
-			{
+
+		if(ctrl_RightTrigger.IsPressed && ctrl_RightTrigger.LastValue == 0){
+			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
-				inventorySelectedIndex --;
+				--inventorySelectedIndex;
 			}
 		}
 	}

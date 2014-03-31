@@ -14,12 +14,12 @@ public class AbilityManagerScript : MonoBehaviour {
 	void Update(){
 		if( currentAbility )
 		{
-			if( currentAbility.isCharged() )
+			if(currentAbility.isCharged())
 			{
                 InputDevice device = InputManager.ActiveDevice;
-                InputControl ctrl_RightTrigger = device.GetControl(InputControlType.RightTrigger);
+                InputControl ctrl_RightBumper = device.GetControl(InputControlType.RightBumper);
 
-				if(ctrl_RightTrigger.IsPressed && ctrl_RightTrigger.LastValue == 0)
+				if(ctrl_RightBumper.IsPressed && ctrl_RightBumper.LastValue == 0)
 				{
 					currentAbility.fire();
 				}
