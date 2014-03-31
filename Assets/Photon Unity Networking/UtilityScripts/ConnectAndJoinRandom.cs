@@ -37,6 +37,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
     {
 		ExitGames.Client.Photon.Hashtable customPlayerProps = new ExitGames.Client.Photon.Hashtable() {{"Score", 0}};
 		customPlayerProps.Add("Health", 100);
+		customPlayerProps.Add("Ability", "none");
 		PhotonNetwork.player.SetCustomProperties(customPlayerProps);
         //Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
         PhotonNetwork.JoinRandomRoom();

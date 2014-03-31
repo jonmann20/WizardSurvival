@@ -22,11 +22,15 @@ public class HudScript : MonoBehaviour {
 	GameObject hudCamera;
 
 	//TEXT
-    //GameObject AbilityNameText;
+    public GameObject AbilityNameText;
     //GameObject AbilityDescriptionText;
     //public Font font;
     //public GameObject AbilityNameText;
     public GameObject ScoreText;
+	public GameObject RoundTimer;
+	private float timer = 1200f;
+	private float seconds = 0;
+	private int minutes = 0;
 
 	//HealthBar
 	public Texture healthBarTexture;
@@ -148,10 +152,10 @@ public class HudScript : MonoBehaviour {
 		}
 
         ////TEXT
-        //if(AbilityManagerScript.currentAbility != null)
-        //{
-        //    AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
-        //}
+        if(AbilityManagerScript.currentAbility != null)
+        {
+            AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
+        }
 
 		//WARNING FLASH
 		if(GLOBAL.health < 40)
@@ -208,6 +212,15 @@ public class HudScript : MonoBehaviour {
 				inventorySelectedIndex --;
 			}
 		}
+
+		//Timer
+	
+		timer -= Time.deltaTime;
+		minutes = (int)timer/60;
+		seconds = timer - (minutes * 60) ;
+
+		RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
+
 	}
 
     void OnGUI(){
@@ -223,7 +236,15 @@ public class HudScript : MonoBehaviour {
 			{
 				int tempScore = (int) PhotonNetwork.playerList[i].customProperties["Score"];
 				teamScore += tempScore;
-				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + tempScore.ToString() );
+				if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Ability") )
+				{
+					string abilityName = (string) PhotonNetwork.playerList[i].customProperties["Ability"];
+					GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " +  abilityName + " Score: " + tempScore.ToString() );
+				}
+				else
+				{
+					GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + tempScore.ToString() );
+				}
 			}
 			else
 			{
@@ -238,9 +259,10 @@ public class HudScript : MonoBehaviour {
 			}
 
 
+
 			//GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
 		}
-		this.gameObject.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
+		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
 
     }
 }
