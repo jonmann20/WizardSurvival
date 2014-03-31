@@ -14,15 +14,13 @@ public class IntroScript : MonoBehaviour {
 		{
 			for(int j = 0; j < 15; j++)
 			{
-				Vector3 pos = new Vector3(i * 3 - 80, 1, j * 3 - 130);
+				Vector3 pos = new Vector3(i * 3 - 47, 1, j * 3 - 30);
 				GameObject newMarcher = Instantiate(MarchingObjectPrefab, pos, Quaternion.identity) as GameObject;
 			}
 		}
 	}
 
 	void Update(){
-		Vector3 pos = new Vector3(Random.Range(-100.0f, 50.0f), 1, -12 - Random.Range(0.0f, 5.0f));
-		//GameObject newMarcher = Instantiate(MarchingObjectPrefab, pos, Quaternion.identity) as GameObject;
 
 		if(transform.position.z > 10)
 		{
@@ -30,15 +28,11 @@ public class IntroScript : MonoBehaviour {
 			transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + diff);
 		}
 
+		//Check for press Start
 		InputDevice device = InputManager.ActiveDevice;
 		InputControl ctrl_Start = device.GetControl(InputControlType.Start);
-		if(ctrl_Start.IsPressed && ctrl_Start.LastValue == 0) {
+		if((ctrl_Start.IsPressed && ctrl_Start.LastValue == 0) || Input.GetKeyDown("space")) {
 			Application.LoadLevel("NetworkSample");
 		}
-		/*
-		if(Input.GetKeyDown("space"))
-		{
-			Application.LoadLevel("NetworkSample");
-		}*/
 	}
 }
