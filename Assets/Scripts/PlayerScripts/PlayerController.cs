@@ -69,11 +69,15 @@ public class PlayerController : MonoBehaviour {
         if(ctrl_LeftStickX.IsPressed) {
             float hor = ctrl_LeftStickX.LastValue * strafeSpeed * Time.deltaTime;
             transform.Translate(hor, 0, 0);
-        }
+			//rigidbody.velocity = new Vector3(rigidbody.velocity.x + hor, rigidbody.velocity.y, rigidbody.velocity.z);
+			//rigidbody.MovePosition(transform.position + new Vector3(hor, 0, 0));
+		}
 
         if(ctrl_LeftStickY.IsPressed) {
             float vert = ctrl_LeftStickY.LastValue * movementSpeed * Time.deltaTime;
             transform.Translate(0, 0, vert);
+			//rigidbody.velocity = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z + vert);
+			//rigidbody.MovePosition(transform.position + new Vector3(0, 0, vert));
         }
 
         // jump
