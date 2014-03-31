@@ -183,6 +183,7 @@ public class HudScript : MonoBehaviour {
 			else
 			{
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getNonSelectedItemSizeInInventory();
+				g.transform.rotation = Quaternion.identity;
 			}
 			g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
 			                                        INVENTORY_OFFSET_Y + 0.1f,
@@ -232,6 +233,11 @@ public class HudScript : MonoBehaviour {
 		int teamScore = 0;
 		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
 		{
+			//Don't list duplicate information about the current player.
+			if(Wizard.myWizard != null)
+			if(PhotonNetwork.playerList[i] == Wizard.myWizard.GetComponent<PhotonView>().owner)
+				continue;
+
 			//Object key = "String";
 			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Score") )
 			{
@@ -240,23 +246,23 @@ public class HudScript : MonoBehaviour {
 				if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Ability") )
 				{
 					string abilityName = (string) PhotonNetwork.playerList[i].customProperties["Ability"];
-					GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " +  abilityName + " Score: " + tempScore.ToString() );
+					GUI.Label(new Rect( Screen.width * .05f, Screen.height * .1f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " +  abilityName + " Score: " + tempScore.ToString() );
 				}
 				else
 				{
-					GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + tempScore.ToString() );
+					GUI.Label(new Rect( Screen.width * .05f, Screen.height * .1f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + tempScore.ToString() );
 				}
 			}
 			else
 			{
-				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i) ), (Screen.width * .16f), Screen.height * .03f), "Player " + PhotonNetwork.playerList[i].ID + ": does not have score property" );
+				GUI.Label(new Rect( Screen.width * .05f, Screen.height * .1f + (offset * (i) ), (Screen.width * .16f), Screen.height * .03f), "Player " + PhotonNetwork.playerList[i].ID + ": does not have score property" );
 			}
-			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health") )
+			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health"))
 			{
 				float tempHealth = (int) PhotonNetwork.playerList[i].customProperties["Health"];
 				//print (tempHealth);
 				tempHealth = tempHealth/100;
-				GUI.DrawTexture(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * i) + (Screen.height * .022f), (Screen.width * .16f) * tempHealth, Screen.height * .01f), healthBarTexture);
+				GUI.DrawTexture(new Rect( Screen.width * .05f, 5 + Screen.height * .1f + (offset * i) + (Screen.height * .022f), (Screen.width * .16f) * tempHealth, Screen.height * .01f), healthBarTexture);
 			}
 
 
