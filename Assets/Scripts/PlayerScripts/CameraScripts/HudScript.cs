@@ -234,9 +234,12 @@ public class HudScript : MonoBehaviour {
 		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
 		{
 			//Don't list duplicate information about the current player.
-			/*if(Wizard.myWizard != null)
+			if(Wizard.myWizard != null)
 			if(PhotonNetwork.playerList[i] == Wizard.myWizard.GetComponent<PhotonView>().owner)
-				continue;*/
+			{
+				teamScore += PhotonNetwork.playerList[i].customProperties["Score"];
+				continue;
+			}
 
 			//Object key = "String";
 			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Score") )
@@ -269,6 +272,7 @@ public class HudScript : MonoBehaviour {
 
 			//GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
 		}
+
 		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
 
     }
