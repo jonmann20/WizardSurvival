@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 public class IntroScript : MonoBehaviour {
 
@@ -9,9 +10,9 @@ public class IntroScript : MonoBehaviour {
 	void Start(){
 		GameAudio.playIntro();
 
-		for(int i = 0; i < 20; i++)
+		for(int i = 0; i < 15; i++)
 		{
-			for(int j = 0; j < 25; j++)
+			for(int j = 0; j < 15; j++)
 			{
 				Vector3 pos = new Vector3(i * 3 - 80, 1, j * 3 - 130);
 				GameObject newMarcher = Instantiate(MarchingObjectPrefab, pos, Quaternion.identity) as GameObject;
@@ -29,9 +30,15 @@ public class IntroScript : MonoBehaviour {
 			transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + diff);
 		}
 
+		InputDevice device = InputManager.ActiveDevice;
+		InputControl ctrl_Start = device.GetControl(InputControlType.Start);
+		if(ctrl_Start.IsPressed && ctrl_Start.LastValue == 0) {
+			Application.LoadLevel("NetworkSample");
+		}
+		/*
 		if(Input.GetKeyDown("space"))
 		{
 			Application.LoadLevel("NetworkSample");
-		}
+		}*/
 	}
 }
