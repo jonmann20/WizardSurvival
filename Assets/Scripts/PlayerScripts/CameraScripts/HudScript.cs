@@ -196,15 +196,15 @@ public class HudScript : MonoBehaviour {
 		InputControl ctrl_RightTrigger = device.GetControl(InputControlType.RightTrigger);
 
 		int numInventoryItems = GLOBAL.getInventoryCount();
-		if(ctrl_DPadR.IsPressed && ctrl_DPadR.LastValue == 0 && inventorySelectedIndex < numInventoryItems - 1){
+		if(((ctrl_DPadR.IsPressed && ctrl_DPadR.LastValue == 0) || Input.GetKeyDown("right")) && inventorySelectedIndex < numInventoryItems - 1){
 			++inventorySelectedIndex;
 		}
 
-		if(ctrl_DPadL.IsPressed && ctrl_DPadL.LastValue == 0 && inventorySelectedIndex > -1){
+		if(((ctrl_DPadL.IsPressed && ctrl_DPadL.LastValue == 0) || Input.GetKeyDown("left")) && inventorySelectedIndex > -1){
 			--inventorySelectedIndex;
 		}
 
-		if(ctrl_RightTrigger.IsPressed && ctrl_RightTrigger.LastValue == 0){
+		if((ctrl_RightTrigger.IsPressed && ctrl_RightTrigger.LastValue == 0) || Input.GetKeyDown("return")){
 			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
 				--inventorySelectedIndex;
