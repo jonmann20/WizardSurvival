@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour {
 	void attemptJump(){
 		if(currentJumpState == JumpState.NOT_IN_AIR){
 			GameAudio.playJump();
-			rigidbody.AddForce(0, 345, 0); //405
+			rigidbody.AddForce(0, 635, 0);
 		}
 	}
 	
