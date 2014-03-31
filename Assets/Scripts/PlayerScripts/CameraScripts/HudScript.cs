@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using InControl;
-
 public class HudScript : MonoBehaviour {
 
 	bool playedLowHeath = false;
@@ -23,7 +21,7 @@ public class HudScript : MonoBehaviour {
 	GameObject hudCamera;
 
 	//TEXT
-    public GameObject AbilityNameText;
+    //GameObject AbilityNameText;
     //GameObject AbilityDescriptionText;
     //public Font font;
     //public GameObject AbilityNameText;
@@ -149,10 +147,10 @@ public class HudScript : MonoBehaviour {
 		}
 
         ////TEXT
-        if(AbilityManagerScript.currentAbility != null)
-        {
-            AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
-        }
+        //if(AbilityManagerScript.currentAbility != null)
+        //{
+        //    AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
+        //}
 
 		//WARNING FLASH
 		if(GLOBAL.health < 40)
@@ -175,12 +173,10 @@ public class HudScript : MonoBehaviour {
 			if(i == inventorySelectedIndex)
 			{
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getSelectedItemSizeInInventory() + 1;
-				g.transform.Rotate(Vector3.up * Time.deltaTime * 55);
 			}
 			else
 			{
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getNonSelectedItemSizeInInventory();
-				g.transform.rotation = Quaternion.identity;
 			}
 			g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
 			                                        INVENTORY_OFFSET_Y + 0.1f,
@@ -190,33 +186,26 @@ public class HudScript : MonoBehaviour {
 
 	void Update()
 	{
-		InputDevice device = InputManager.ActiveDevice;
-		InputControl ctrl_DPadL = device.GetControl(InputControlType.DPadLeft);
-		InputControl ctrl_DPadR = device.GetControl(InputControlType.DPadRight);
-		InputControl ctrl_RightTrigger = device.GetControl(InputControlType.RightTrigger);
-
 		int numInventoryItems = GLOBAL.getInventoryCount();
-		if(ctrl_DPadR.IsPressed && ctrl_DPadR.LastValue == 0 && inventorySelectedIndex < numInventoryItems - 1){
-			++inventorySelectedIndex;
+		if(Input.GetKeyDown("right") && inventorySelectedIndex < numInventoryItems - 1)
+		{
+			inventorySelectedIndex ++;
 		}
-
-		if(ctrl_DPadL.IsPressed && ctrl_DPadL.LastValue == 0 && inventorySelectedIndex > -1){
-			--inventorySelectedIndex;
+		if(Input.GetKeyDown("left") && inventorySelectedIndex > -1)
+		{
+			inventorySelectedIndex --;
 		}
-
-		if(ctrl_RightTrigger.IsPressed && ctrl_RightTrigger.LastValue == 0){
-			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
+		if(Input.GetKeyDown("return"))
+		{
+			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems)
+			{
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
-				--inventorySelectedIndex;
+				inventorySelectedIndex --;
 			}
 		}
 	}
 
     void OnGUI(){
-
-		//Temporary instructions
-		GUI.Label(new Rect(10, Screen.height * 0.72f, 100, 100), "Arrow keys for inventory. Enter to use.");
-
 		//Scores (TEMP)
 		
 		int offset = 20;
@@ -229,7 +218,7 @@ public class HudScript : MonoBehaviour {
 			{
 				int tempScore = (int) PhotonNetwork.playerList[i].customProperties["Score"];
 				teamScore += tempScore;
-				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + teamScore.ToString() );
+				GUI.Label(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + tempScore.ToString() );
 			}
 			else
 			{
@@ -238,7 +227,7 @@ public class HudScript : MonoBehaviour {
 			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health") )
 			{
 				float tempHealth = (int) PhotonNetwork.playerList[i].customProperties["Health"];
-				print (tempHealth);
+				//print (tempHealth);
 				tempHealth = tempHealth/100;
 				GUI.DrawTexture(new Rect( Screen.width * .8f, Screen.height * .72f + (offset * i) + (Screen.height * .022f), (Screen.width * .16f) * tempHealth, Screen.height * .01f), healthBarTexture);
 			}
