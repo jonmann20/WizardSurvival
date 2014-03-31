@@ -44,11 +44,11 @@ public class PlayerController : MonoBehaviour {
 
 		networkedProperties = PhotonNetwork.player.customProperties;
 
-		if( networkedProperties.ContainsKey("Ability") )
+		/*if( networkedProperties.ContainsKey("Ability") )
 		{
 			networkedProperties["Ability"] = AbilityManagerScript.currentAbility.getAbilityName();
 			PhotonNetwork.player.SetCustomProperties(networkedProperties);
-		}
+		}*/
 
 		hud = GameObject.Find("HudCamera");
 
@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour {
 
 		PhotonNetwork.player.SetCustomProperties( networkedProperties );
 
-		hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
+		//hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 		
 	}
 
