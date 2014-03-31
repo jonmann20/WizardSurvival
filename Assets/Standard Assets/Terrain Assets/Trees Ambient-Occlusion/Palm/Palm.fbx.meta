@@ -1,23 +1,20 @@
 fileFormatVersion: 2
-guid: ac1662dcde6d71845b2122252445d909
+guid: 4c85abd0a4d974473b97e81d10a3a6bc
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: default
-    100002: //RootNode
-    400000: default
-    400002: //RootNode
-    2300000: default
-    3300000: default
-    4300000: default
-    6400000: default
-    9500000: //RootNode
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: polySurface1
+    11100000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 0
+    materialName: 3
     materialSearch: 1
   animations:
-    legacyGenerateAnimations: 4
+    legacyGenerateAnimations: 0
     bakeSimulation: 0
     optimizeGameObjects: 0
     animationCompression: 1
@@ -32,7 +29,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -45,7 +42,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
+    splitTangentsAcrossUV: 0
     normalImportMode: 0
     tangentImportMode: 1
   importAnimation: 1
@@ -62,6 +59,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   additionalBone: 1
   userData: 
