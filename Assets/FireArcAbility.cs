@@ -49,7 +49,7 @@ public class FireArcAbility : AbilityBase {
 
 	void Update()
 	{
-		if(PhotonNetwork.playerList.Length > 1)
+		if(otherWizard != null)
 		{
 			Vector3 first = transform.position;
 			Vector3 last = otherWizard.transform.position;

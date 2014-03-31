@@ -16,5 +16,4 @@ public class UpdateInputManager : MonoBehaviour {
 
         InputManager.Update();
 	}
-
 }
