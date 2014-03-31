@@ -237,7 +237,7 @@ public class HudScript : MonoBehaviour {
 			if(Wizard.myWizard != null)
 			if(PhotonNetwork.playerList[i] == Wizard.myWizard.GetComponent<PhotonView>().owner)
 			{
-				teamScore += PhotonNetwork.playerList[i].customProperties["Score"];
+				teamScore += (int)PhotonNetwork.playerList[i].customProperties["Score"];
 				continue;
 			}
 
