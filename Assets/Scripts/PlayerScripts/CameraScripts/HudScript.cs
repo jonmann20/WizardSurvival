@@ -27,6 +27,10 @@ public class HudScript : MonoBehaviour {
     //public Font font;
     //public GameObject AbilityNameText;
     public GameObject ScoreText;
+	public GameObject RoundTimer;
+	private float timer = 1200f;
+	private float seconds = 0;
+	private int minutes = 0;
 
 	//HealthBar
 	public Texture healthBarTexture;
@@ -208,6 +212,15 @@ public class HudScript : MonoBehaviour {
 				inventorySelectedIndex --;
 			}
 		}
+
+		//Timer
+	
+		timer -= Time.deltaTime;
+		minutes = (int)timer/60;
+		seconds = timer - (minutes * 60) ;
+
+		RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
+
 	}
 
     void OnGUI(){
@@ -249,7 +262,7 @@ public class HudScript : MonoBehaviour {
 
 			//GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
 		}
-		this.gameObject.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
+		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
 
     }
 }
