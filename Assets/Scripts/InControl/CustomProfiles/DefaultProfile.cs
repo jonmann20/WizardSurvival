@@ -30,14 +30,38 @@ namespace InControl {
 				new InputControlMapping
 				{
 					Handle = "Fire",
-					Target = InputControlType.RightTrigger,
+					Target = InputControlType.RightBumper,
 					Source = MouseButton0
+				},
+				new InputControlMapping
+				{
+					Handle = "Special",
+					Target = InputControlType.RightTrigger,
+					Source = MouseButton1
 				},
 				new InputControlMapping
 				{
 					Handle = "Jump",
 					Target = InputControlType.Action1,
 					Source = KeyCodeButton(KeyCode.Space)
+				},
+				new InputControlMapping
+				{
+					Handle = "Start",
+					Target = InputControlType.Start,
+					Source = KeyCodeButton(KeyCode.Return)
+				},
+				new InputControlMapping
+				{
+					Handle = "DPadL",
+					Target = InputControlType.DPadLeft,
+					Source = KeyCodeButton(KeyCode.Q)
+				},
+				new InputControlMapping
+				{
+					Handle = "DPadR",
+					Target = InputControlType.DPadRight,
+					Source = KeyCodeButton(KeyCode.R)
 				}
 			};
 
