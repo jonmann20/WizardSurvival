@@ -18,13 +18,11 @@ public class FireballAbility : AbilityBase {
 	{
 		GameAudio.playSpell0();
 
-		//print("FireballAbility FIRED");
-
 		GameObject projectile = PhotonNetwork.Instantiate(
 			FireballPrefabString, 
 			gameObject.transform.position + (new Vector3(0, 0 ,0)) + (gameObject.transform.forward.normalized * 1), 
 			gameObject.transform.rotation, 0
-			) as GameObject;
+		) as GameObject;
 
 		//set initial velocity
 		projectile.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * SPEED;
@@ -36,12 +34,11 @@ public class FireballAbility : AbilityBase {
         projectile.transform.parent = wizardHolder.transform;
 	}
 
-	public override string getAbilityName()
-	{
+	public override string getAbilityName(){
 		return "Fireball";
 	}
-	public override string getAbilityDescription()
-	{
+
+	public override string getAbilityDescription(){
 		return "Burn, baby, Burn.";
 	}
 }
