@@ -189,35 +189,32 @@ public class HudScript : MonoBehaviour {
 	void Update()
 	{
 		InputDevice device = InputManager.ActiveDevice;
-		InputControl ctrl_DPadL = device.GetControl(InputControlType.DPadLeft);
-		InputControl ctrl_DPadR = device.GetControl(InputControlType.DPadRight);
-		InputControl ctrl_RightTrigger = device.GetControl(InputControlType.RightTrigger);
+		InputControl ctrl_invL = device.GetControl(InputControlType.LeftTrigger);
+		InputControl ctrl_invR = device.GetControl(InputControlType.RightTrigger);
+		InputControl ctrl_special = device.GetControl(InputControlType.LeftBumper);
 		int numInventoryItems = GLOBAL.getInventoryCount();
 
-		if(((ctrl_DPadR.IsPressed && ctrl_DPadR.LastValue == 0) || Input.GetKeyDown("right")) && inventorySelectedIndex < numInventoryItems - 1){
-			++inventorySelectedIndex;
-		}
-
-		if(((ctrl_DPadL.IsPressed && ctrl_DPadL.LastValue == 0) || Input.GetKeyDown("left")) && inventorySelectedIndex > -1){
+		if(ctrl_invL.WasPressed && inventorySelectedIndex > -1){
 			--inventorySelectedIndex;
 		}
 
-		if((ctrl_RightTrigger.IsPressed && ctrl_RightTrigger.LastValue == 0) || Input.GetKeyDown("return")){
-			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
+		if(ctrl_invR.WasPressed && inventorySelectedIndex < numInventoryItems - 1){
+			++inventorySelectedIndex;
+		}
 
+		if(ctrl_special.WasPressed || Input.GetKeyDown("return")){
+			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
-				inventorySelectedIndex --;
+				--inventorySelectedIndex;
 			}
 		}
 
-		//Timer
-	
+		// timer
 		timer -= Time.deltaTime;
 		minutes = (int)timer/60;
 		seconds = timer - (minutes * 60) ;
 
 		RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
-
 	}
 
     void OnGUI(){

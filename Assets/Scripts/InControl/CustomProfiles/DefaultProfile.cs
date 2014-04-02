@@ -36,7 +36,7 @@ namespace InControl {
 				new InputControlMapping
 				{
 					Handle = "Special",
-					Target = InputControlType.RightTrigger,
+					Target = InputControlType.LeftBumper,
 					Source = MouseButton1
 				},
 				new InputControlMapping
@@ -53,15 +53,15 @@ namespace InControl {
 				},
 				new InputControlMapping
 				{
-					Handle = "DPadL",
-					Target = InputControlType.DPadLeft,
+					Handle = "LeftTrigger",
+					Target = InputControlType.LeftTrigger,
 					Source = KeyCodeButton(KeyCode.Q)
 				},
 				new InputControlMapping
 				{
-					Handle = "DPadR",
-					Target = InputControlType.DPadRight,
-					Source = KeyCodeButton(KeyCode.R)
+					Handle = "RightTrigger",
+					Target = InputControlType.RightTrigger,
+					Source = KeyCodeButton(KeyCode.E)
 				}
 			};
 

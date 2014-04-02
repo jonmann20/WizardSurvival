@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour {
 	
 	void Start(){
 		thisCamera = (GameObject.FindWithTag("MainCamera") as GameObject).transform;
-
 		spawnPoint = (GameObject.Find("SpawnPoint") as GameObject);
 
 		playerSingleton = this.transform;
@@ -60,7 +59,7 @@ public class PlayerController : MonoBehaviour {
 	
 	void Update () {
         InputDevice device = InputManager.ActiveDevice;
-        InputControl ctrl_Jump = device.GetControl(InputControlType.Action1);
+		InputControl ctrl_Jump = device.GetControl(InputControlType.Action1);
         InputControl ctrl_LeftStickX = device.GetControl(InputControlType.LeftStickX);
         InputControl ctrl_LeftStickY = device.GetControl(InputControlType.LeftStickY);
         InputControl ctrl_Select = device.GetControl(InputControlType.Select);
@@ -81,7 +80,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         // jump
-        if(ctrl_Jump.IsPressed && ctrl_Jump.LastValue == 0){
+        if(ctrl_Jump.WasPressed){
             attemptJump();
         }
 

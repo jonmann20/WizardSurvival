@@ -19,8 +19,7 @@ public class AbilityManagerScript : MonoBehaviour {
                 InputDevice device = InputManager.ActiveDevice;
                 InputControl ctrl_RightBumper = device.GetControl(InputControlType.RightBumper);
 
-				if(ctrl_RightBumper.IsPressed && ctrl_RightBumper.LastValue == 0)
-				{
+				if(ctrl_RightBumper.WasPressed){
 					currentAbility.fire();
 				}
 			}
@@ -29,8 +28,9 @@ public class AbilityManagerScript : MonoBehaviour {
 
 	public void changeAbility(string abilityName)
 	{
-		if(currentAbility != null)
+		if(currentAbility != null){
 			Destroy(currentAbility);
+		}
 		
 		currentAbility = gameObject.AddComponent(abilityName) as AbilityBase;
 
