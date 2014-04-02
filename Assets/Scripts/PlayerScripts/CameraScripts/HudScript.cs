@@ -51,6 +51,11 @@ public class HudScript : MonoBehaviour {
 	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
 	public float target = 1.0f;
 	int inventorySelectedIndex = -1;
+
+	//INVENTORY TEXTS
+	GameObject FirstItemQuantityText;
+	GameObject SecondItemQuantityText;
+	GameObject ThirdItemQuantityText;
 	
 	//Leaderboard Button
 	const float LEADERBOARD_X = 0.75f;
@@ -64,6 +69,11 @@ public class HudScript : MonoBehaviour {
 		healthPerVoxel = 100.0f / (float)NUMBER_OF_VOXELS;
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
 		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();
+
+		FirstItemQuantityText = GameObject.Find("FirstItemQuantityText") as GameObject;
+		SecondItemQuantityText = GameObject.Find("SecondItemQuantityText") as GameObject;
+		ThirdItemQuantityText = GameObject.Find("ThirdItemQuantityText") as GameObject;
+
 		//HEALTH
 		Color greenColor = Color.green;
 		Color redColor = Color.red;
@@ -173,6 +183,7 @@ public class HudScript : MonoBehaviour {
 			if(i == inventorySelectedIndex)
 			{
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getSelectedItemSizeInInventory() + 1;
+				print("current item quantity: " + g.GetComponent<CollectableBase>().getQuantity());
 				g.transform.Rotate(Vector3.up * Time.deltaTime * 55);
 			}
 			else
@@ -183,7 +194,34 @@ public class HudScript : MonoBehaviour {
 			g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
 			                                        INVENTORY_OFFSET_Y + 0.1f,
 			                                        4);
+
+			//Quantity text
+			//Workaround for the generally poor process of creating 3D texts dynamically.
+			if(i == 0)
+				setQuantityText(FirstItemQuantityText, g);
+			else if(i == 1)
+				setQuantityText(SecondItemQuantityText, g);
+			else if(i == 2)
+				setQuantityText(ThirdItemQuantityText, g);
 		}
+
+		if(numInventoryItems < 3)
+			ThirdItemQuantityText.GetComponent<TextMesh>().text = "";
+		if(numInventoryItems < 2)
+			SecondItemQuantityText.GetComponent<TextMesh>().text = "";
+		if(numInventoryItems < 1)
+			FirstItemQuantityText.GetComponent<TextMesh>().text = "";
+	}
+
+	void setQuantityText(GameObject textGameObject, GameObject inventoryObject)
+	{
+		textGameObject.transform.position = inventoryObject.transform.position + new Vector3(0, 1, 0);
+
+		int quantity = inventoryObject.GetComponent<CollectableBase>().getQuantity();
+		if(quantity == 0)
+			textGameObject.GetComponent<TextMesh>().text = "";
+		else
+			textGameObject.GetComponent<TextMesh>().text = "" + quantity;
 	}
 
 	void Update()
@@ -205,16 +243,16 @@ public class HudScript : MonoBehaviour {
 		if(ctrl_special.WasPressed || Input.GetKeyDown("return")){
 			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
-				--inventorySelectedIndex;
+
 			}
 		}
 
 		// timer
 		timer -= Time.deltaTime;
 		minutes = (int)timer/60;
-		seconds = timer - (minutes * 60) ;
+		seconds = timer - (minutes * 60);
 
-		RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
+		//RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
 	}
 
     void OnGUI(){

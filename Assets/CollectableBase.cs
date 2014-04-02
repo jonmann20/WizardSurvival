@@ -7,6 +7,10 @@ public abstract class CollectableBase : MonoBehaviour {
 	public abstract float getNonSelectedItemSizeInInventory();
 	public abstract void customUpdate();
 	public abstract void useItem();
+
+	int quantity = 1;
+	public void setQuantity(int n) { quantity = n; }
+	public int getQuantity() { return quantity; }
 	
 	float sinCounter = 0.0f;
 	Vector3 initialPosition;
@@ -33,6 +37,7 @@ public abstract class CollectableBase : MonoBehaviour {
 			if(collision.gameObject.GetComponent<PhotonView>().isMine)
 			{
 				GameObject NewInventoryItem = Instantiate(gameObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+				NewInventoryItem.GetComponent<CollectableBase>().setQuantity(quantity);
 				if(GLOBAL.addToInventory(NewInventoryItem))
 					Destroy(gameObject);
 				else

@@ -8,6 +8,7 @@ public class ArcCollectableScript : CollectableBase {
 	public override void customUpdate() { }
 	public override void useItem() 
 	{ 
-		Wizard.myWizard.GetComponent<AbilityManagerScript>().changeAbility("FireArcAbility");
+		AbilityBase ability = Wizard.myWizard.AddComponent<FireArcAbility>() as AbilityBase;
+		ability.fire();
 	}
 }

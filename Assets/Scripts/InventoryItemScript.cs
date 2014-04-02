@@ -12,8 +12,6 @@ public class InventoryItemScript : MonoBehaviour {
 	float velocity = 0.0f;
 	float damping = 0.8f;
 
-	int quantity = 1;
-
 	void Start () {
 		gameObject.layer = 9;
 		transform.localScale = new Vector3(scale, scale, scale);
@@ -30,14 +28,5 @@ public class InventoryItemScript : MonoBehaviour {
 	void setName(string n)
 	{
 		itemName = n;
-	}
-
-	public void setQuantity(int n)
-	{
-		quantity = n;
-	}
-	public int getQuantity()
-	{
-		return quantity;
 	}
 }

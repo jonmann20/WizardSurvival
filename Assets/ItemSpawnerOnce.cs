@@ -4,13 +4,14 @@ using System.Collections;
 public class ItemSpawnerOnce : MonoBehaviour {
 
 	public GameObject ItemPrefab; 
-	public int ItemQuantity = 1;
+	public int ItemQuantity;
 
 	// Use this for initialization
 	void Start () {
 		GameObject item = Instantiate(ItemPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
 		item.transform.parent = transform;
 		item.transform.localPosition = new Vector3(0, 0, 0);
-		item.GetComponent<InventoryItemScript>().setQuantity(ItemQuantity);
+
+		item.GetComponent<CollectableBase>().setQuantity(ItemQuantity);
 	}
 }
