@@ -41,6 +41,12 @@ namespace InControl {
 				},
 				new InputControlMapping
 				{
+					Handle = "Action",
+					Target = InputControlType.Action3,
+					Source = KeyCodeButton(KeyCode.R)
+				},
+				new InputControlMapping
+				{
 					Handle = "Jump",
 					Target = InputControlType.Action1,
 					Source = KeyCodeButton(KeyCode.Space)
