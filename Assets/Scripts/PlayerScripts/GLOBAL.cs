@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class GLOBAL : MonoBehaviour {
 
 	public static int health = 100;
-	public static int maxInventory = 4;
+	public static int maxInventory = 3;
 	public static List<GameObject> Inventory = new List<GameObject>();
 
 	void Awake()
