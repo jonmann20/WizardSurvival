@@ -199,18 +199,35 @@ public class HudScript : MonoBehaviour {
 		InputControl ctrl_special = device.GetControl(InputControlType.LeftBumper);
 		int numInventoryItems = GLOBAL.getInventoryCount();
 
-		if(ctrl_invL.WasPressed && inventorySelectedIndex > -1){
-			--inventorySelectedIndex;
+		if(ctrl_invL.WasPressed){
+			if(inventorySelectedIndex > -1){
+				GameAudio.playInvMove();
+				--inventorySelectedIndex;
+			}
+			else {
+				GameAudio.playInvNoMove();
+			}
 		}
 
-		if(ctrl_invR.WasPressed && inventorySelectedIndex < numInventoryItems - 1){
-			++inventorySelectedIndex;
+		if(ctrl_invR.WasPressed){
+			if(inventorySelectedIndex < numInventoryItems - 1){
+				GameAudio.playInvMove();
+				++inventorySelectedIndex;
+			}
+			else {
+				GameAudio.playInvNoMove();
+			}
 		}
 
-		if(ctrl_special.WasPressed || Input.GetKeyDown("return")){
+		if(ctrl_special.WasPressed){
 			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
+				GameAudio.playInvSelect();
+
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
 				--inventorySelectedIndex;
+			}
+			else {
+				GameAudio.playMagicFail();
 			}
 		}
 

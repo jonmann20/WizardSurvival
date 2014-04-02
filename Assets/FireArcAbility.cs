@@ -19,7 +19,7 @@ public class FireArcAbility : AbilityBase {
 	
 	public override void fire()
 	{
-		GameAudio.playSpell0();
+		GameAudio.playChain();
 
 		if(PhotonNetwork.playerList.Length > 1)
 		{

@@ -4,6 +4,10 @@ using System.Collections;
 using InControl;
 
 public class PlayerController : MonoBehaviour {
+
+	public GameObject head, hat, body, legL, legR, armL, armR;
+	Color initShaderColor;
+
 	public float movementSpeed = 10;
 	public float strafeSpeed = 8;
 
@@ -19,8 +23,6 @@ public class PlayerController : MonoBehaviour {
 	public Transform thisCamera;
 
 	public static Transform playerSingleton;
-
-    public GameObject legL, legR, armL, armR;
 	public float sinCounter = 0;
 
 	private PlayerAbility playerAbility;
@@ -33,7 +35,13 @@ public class PlayerController : MonoBehaviour {
 	private int Teamscore = 0;
 
 	private GameObject hud;
-	
+
+	int hitTimer = 0;
+
+	void Awake(){
+		initShaderColor = body.renderer.materials[1].GetColor("_ReflectColor");
+	}
+
 	void Start(){
 		thisCamera = (GameObject.FindWithTag("MainCamera") as GameObject).transform;
 		spawnPoint = (GameObject.Find("SpawnPoint") as GameObject);
@@ -96,6 +104,20 @@ public class PlayerController : MonoBehaviour {
 
         animate();
 
+		// health
+		if(--hitTimer < 0){									// reset color
+			swapShader(initShaderColor);
+		}
+		else if((hitTimer <= 18 && hitTimer > 15) ||		// blink color (init)
+		        (hitTimer <= 12 && hitTimer > 9) ||
+		        (hitTimer <= 6 && hitTimer > 3)
+        ){		
+			swapShader(initShaderColor);
+		}
+		else {
+			swapShader(Color.red);							// blink color (red)
+		}
+
 		if( GLOBAL.health <= 0 )
 		{
 			GLOBAL.health = 0;
@@ -113,6 +135,16 @@ public class PlayerController : MonoBehaviour {
 			wiz.transform.parent = GameObject.Find("_WizardHolder").transform;
 			PhotonNetwork.Destroy(gameObject);*/
 		}
+	}
+
+	void swapShader(Color c){
+		head.renderer.materials[1].SetColor("_ReflectColor", c);
+		hat.renderer.materials[1].SetColor("_ReflectColor", c);
+		body.renderer.materials[1].SetColor("_ReflectColor", c);
+		legL.renderer.materials[1].SetColor("_ReflectColor", c);
+		legR.renderer.materials[1].SetColor("_ReflectColor", c);
+		armL.renderer.materials[1].SetColor("_ReflectColor", c);
+		armR.renderer.materials[1].SetColor("_ReflectColor", c);
 	}
 
     bool isStepL = true;
@@ -205,7 +237,8 @@ public class PlayerController : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision col){
 		if(col.gameObject.tag == "Ground"){
-			GameAudio.playJumpland();
+			// TODO: fix coming off ground bug
+			//GameAudio.playJumpland();
 			currentJumpState = JumpState.NOT_IN_AIR;
 		}
 	}
@@ -222,9 +255,6 @@ public class PlayerController : MonoBehaviour {
 	{
 		score += numToAdd;
 
-        // TODO: bring back matt's text functionality
-
-
 		if( networkedProperties.ContainsKey("Score") )
 		{
 			networkedProperties["Score"] = score;
@@ -237,16 +267,21 @@ public class PlayerController : MonoBehaviour {
 		PhotonNetwork.player.SetCustomProperties( networkedProperties );
 
 		//hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
-		
 	}
-
-	public void TakeDamage( int damage )
+	
+	public void TakeDamage(int damage)
 	{
-		GLOBAL.health = Mathf.Clamp(GLOBAL.health - damage, 0 , 100 );
-		networkedProperties["Health"] = GLOBAL.health;
+		if(hitTimer < 0){
+			hitTimer = 21;
 
-		PhotonNetwork.player.SetCustomProperties(networkedProperties);
+			GameAudio.playPain();
+			swapShader(Color.red);
 
+			GLOBAL.health = Mathf.Clamp(GLOBAL.health - damage, 0 , 100 );
+			networkedProperties["Health"] = GLOBAL.health;
+			
+			PhotonNetwork.player.SetCustomProperties(networkedProperties);
+		}
 	}
 
 	public ExitGames.Client.Photon.Hashtable GetNetworkedProperties()

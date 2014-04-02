@@ -14,6 +14,8 @@ public class FireShieldAbility : AbilityBase {
 	
 	public override void fire()
 	{
+		GameAudio.playWind();
+
 		for(int i = 0; i < NUMBER_OF_FIREBALLS; i++)
 		{
 			Vector3 pos = new Vector3(0, 0, 0);
