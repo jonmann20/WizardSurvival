@@ -27,3 +27,9 @@ http://opengameart.org/content/character-quotes
 
 pain sounds:
 http://opengameart.org/content/11-male-human-paindeath-sounds
+
+module ancient pillars:
+https://www.assetstore.unity3d.com/#/content/9831
+
+open book:
+http://opengameart.org/content/spell-book-of-fire
