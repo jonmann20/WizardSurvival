@@ -28,7 +28,7 @@ public class HudScript : MonoBehaviour {
     //public GameObject AbilityNameText;
     public GameObject ScoreText;
 	public GameObject RoundTimer;
-	private float timer = 1200f;
+	private float timer = 300f;
 	private float seconds = 0;
 	private int minutes = 0;
 
