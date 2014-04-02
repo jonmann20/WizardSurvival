@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour {
 			rigidbody.constraints = RigidbodyConstraints.None;
 			rigidbody.mass = 0.1f;
 			GLOBAL.health = 0;
-			TakeDamage(-100);
+			TakeDamage(-100, transform);
 			
 			score = 0;
 		}
@@ -333,7 +333,7 @@ public class PlayerController : MonoBehaviour {
 		//hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 	}
 	
-	public void TakeDamage(int damage)
+	public void TakeDamage(int damage, Transform t)
 	{
 		if(hitTimer < 0){
 			hitTimer = 21;

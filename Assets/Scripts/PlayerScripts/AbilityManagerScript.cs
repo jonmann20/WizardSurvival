@@ -8,7 +8,7 @@ public class AbilityManagerScript : MonoBehaviour {
 	public static AbilityBase currentAbility;
 
 	void Start () {
-		changeAbility("FireballAbility");
+		changeAbility("PunchAbility");
 	}
 	
 	void Update(){

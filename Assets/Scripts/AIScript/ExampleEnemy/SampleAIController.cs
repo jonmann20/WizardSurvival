@@ -62,14 +62,14 @@ public class SampleAIController : MonoBehaviour {
 
 	void OnCollisionEnter(Collision coll)
 	{
-		if( invincibilityTimer <= 0 && coll.gameObject.tag == "PlayerBullet")
+		if( invincibilityTimer <= 0 && coll.collider.gameObject.tag == "PlayerBullet")
 		{
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 
 			if( health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy") )
 			{
-				if( coll.gameObject.GetPhotonView().isMine )
+				if( coll.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine )
 				{
 					Wizard.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
 				}
@@ -79,11 +79,12 @@ public class SampleAIController : MonoBehaviour {
 
 	void OnCollisionStay(Collision coll)
 	{
-		if( coll.gameObject.tag == "Player" )
+
+		if(coll.collider.gameObject.tag == "Player")
 		{
-			if(coll.gameObject.GetComponent<PhotonView>().isMine)
+			if(coll.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine)
 			{
-				coll.gameObject.GetComponent<PlayerController>().TakeDamage(20);
+				coll.collider.gameObject.transform.parent.GetComponent<PlayerController>().TakeDamage(20, transform);
 
 			}
 		}
