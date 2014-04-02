@@ -12,16 +12,16 @@ public class AbilityManagerScript : MonoBehaviour {
 	}
 	
 	void Update(){
+
+	}
+
+	public void attemptFire()
+	{
 		if( currentAbility )
 		{
 			if(currentAbility.isCharged())
 			{
-                InputDevice device = InputManager.ActiveDevice;
-                InputControl ctrl_RightBumper = device.GetControl(InputControlType.RightBumper);
-
-				if(ctrl_RightBumper.WasPressed){
-					currentAbility.fire();
-				}
+				currentAbility.fire();
 			}
 		}
 	}

@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour {
 	public enum JumpState { IN_AIR, NOT_IN_AIR };
 	public JumpState currentJumpState = JumpState.IN_AIR;
 
+	public enum PlayerState { ACTIVE, DOWN, DEAD, RAGDOLL}
+	public PlayerState currentPlayerState = PlayerState.ACTIVE;
+
 	public float fireRate = .11f;
 	private float lastShot = -10;
 
@@ -38,7 +41,16 @@ public class PlayerController : MonoBehaviour {
 
 	int hitTimer = 0;
 
+	//CONTROLS
+	InputDevice idevice = InputManager.ActiveDevice;
+	InputControl ctrl_Jump;
+	InputControl ctrl_LeftStickX;
+	InputControl ctrl_LeftStickY;
+	InputControl ctrl_Select;
+	InputControl ctrl_RightBumper;
+
 	void Awake(){
+		refreshControls();
 		initShaderColor = body.renderer.materials[1].GetColor("_ReflectColor");
 	}
 
@@ -64,46 +76,69 @@ public class PlayerController : MonoBehaviour {
 			print ("HudCamera Object not found for leaderboard");
 		}
 	}
-	
-	void Update () {
-        InputDevice device = InputManager.ActiveDevice;
-		InputControl ctrl_Jump = device.GetControl(InputControlType.Action1);
-        InputControl ctrl_LeftStickX = device.GetControl(InputControlType.LeftStickX);
-        InputControl ctrl_LeftStickY = device.GetControl(InputControlType.LeftStickY);
-        InputControl ctrl_Select = device.GetControl(InputControlType.Select);
 
-        // movement
-        if(ctrl_LeftStickX.IsPressed) {
-            float hor = ctrl_LeftStickX.LastValue * strafeSpeed * Time.deltaTime;
-            transform.Translate(hor, 0, 0);
+	void refreshControls()
+	{
+		idevice = InputManager.ActiveDevice;
+		ctrl_Jump = idevice.GetControl(InputControlType.Action1);
+		ctrl_LeftStickX = idevice.GetControl(InputControlType.LeftStickX);
+		ctrl_LeftStickY = idevice.GetControl(InputControlType.LeftStickY);
+		ctrl_Select = idevice.GetControl(InputControlType.Select);
+		ctrl_RightBumper = idevice.GetControl(InputControlType.RightBumper);
+	}
+
+	//Control while the player is alive and kicking
+	void control_active()
+	{
+		//FIRE
+		if(ctrl_RightBumper.WasPressed){
+			GetComponent<AbilityManagerScript>().attemptFire();
+		}
+
+		// movement
+		if(ctrl_LeftStickX.IsPressed) {
+			float hor = ctrl_LeftStickX.LastValue * strafeSpeed * Time.deltaTime;
+			transform.Translate(hor, 0, 0);
 			//rigidbody.velocity = new Vector3(rigidbody.velocity.x + hor, rigidbody.velocity.y, rigidbody.velocity.z);
 			//rigidbody.MovePosition(transform.position + new Vector3(hor, 0, 0));
 		}
-
-        if(ctrl_LeftStickY.IsPressed) {
-            float vert = ctrl_LeftStickY.LastValue * movementSpeed * Time.deltaTime;
-            transform.Translate(0, 0, vert);
+		
+		if(ctrl_LeftStickY.IsPressed) {
+			float vert = ctrl_LeftStickY.LastValue * movementSpeed * Time.deltaTime;
+			transform.Translate(0, 0, vert);
 			//rigidbody.velocity = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z + vert);
 			//rigidbody.MovePosition(transform.position + new Vector3(0, 0, vert));
-        }
-
-        // jump
-        if(ctrl_Jump.WasPressed){
-            attemptJump();
-        }
-
-        // ability (see AbilityManagerScript.cs)
-        //if(ctrl_RightTrigger.IsPressed) {
-        //    print("shoot");
-        //}
-
-		// leaderboard
-        if(ctrl_Select.IsPressed) {
-			hud.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
 		}
+		
+		// jump
+		if(ctrl_Jump.WasPressed){
+			attemptJump();
+		}
+	}
 
-        animate();
+	//control while the player is down
+	void control_down()
+	{
+		if(ctrl_Jump)
+		{
+			GLOBAL.health = 100;
+			currentPlayerState = PlayerState.ACTIVE;
+			Vector3 newForward = new Vector3(thisCamera.transform.forward.x, 0, thisCamera.transform.forward.z);
+			transform.forward = newForward;
+			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+			rigidbody.mass = 1.0f;
+		}
+	}
 
+	//control while the player is dead
+	void control_dead()
+	{
+
+	}
+
+	void update_active()
+	{
+		animate();
 		// health
 		if(--hitTimer < 0){									// reset color
 			swapShader(initShaderColor);
@@ -111,29 +146,58 @@ public class PlayerController : MonoBehaviour {
 		else if((hitTimer <= 18 && hitTimer > 15) ||		// blink color (init)
 		        (hitTimer <= 12 && hitTimer > 9) ||
 		        (hitTimer <= 6 && hitTimer > 3)
-        ){		
+		        ){		
 			swapShader(initShaderColor);
 		}
 		else {
 			swapShader(Color.red);							// blink color (red)
 		}
-
+		
 		if( GLOBAL.health <= 0 )
 		{
+			currentPlayerState = PlayerState.DOWN;
+			rigidbody.constraints = RigidbodyConstraints.None;
+			rigidbody.mass = 0.1f;
 			GLOBAL.health = 0;
 			TakeDamage(-100);
-
+			
 			score = 0;
+		}
+	}
 
-			transform.position = spawnPoint.transform.position;
-			/*GameObject wiz = PhotonNetwork.Instantiate("Wizard", new Vector3(0, 5, 0), Quaternion.identity, 0) as GameObject;
-			GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;
-			(mainCam.GetComponent<MouseCamera>() as MouseCamera).target = wiz;
-			
-			
-			// keep Hierachy clean
-			wiz.transform.parent = GameObject.Find("_WizardHolder").transform;
-			PhotonNetwork.Destroy(gameObject);*/
+	void update_down()
+	{
+
+	}
+
+	void update_dead()
+	{
+
+	}
+	
+	void Update () {
+
+		//CONTROL STATE MACHINE
+		refreshControls();
+		if(currentPlayerState == PlayerState.ACTIVE)
+		{
+			control_active();
+			update_active();
+		}
+		else if(currentPlayerState == PlayerState.DOWN)
+		{
+			control_down();
+			update_down();
+		}
+		else if(currentPlayerState == PlayerState.DEAD)
+		{
+			control_dead();
+			update_dead();
+		}
+
+		// leaderboard
+        if(ctrl_Select.IsPressed) {
+			hud.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
 		}
 	}
 
@@ -288,5 +352,4 @@ public class PlayerController : MonoBehaviour {
 	{
 		return networkedProperties;
 	}
-	
 }

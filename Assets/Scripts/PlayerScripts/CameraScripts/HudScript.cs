@@ -150,7 +150,7 @@ public class HudScript : MonoBehaviour {
 			//ADJUST FOR CURRENT HEALTH
 			Bouncy b = healthVoxels[i].GetComponent<Bouncy>() as Bouncy;
 
-			if(GLOBAL.health < i * healthPerVoxel)
+			if(GLOBAL.health < (i + 1) * healthPerVoxel)
 				b.target = 0.1f;
 			else
 				b.target = 0.2f;
