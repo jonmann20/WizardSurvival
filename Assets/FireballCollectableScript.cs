@@ -8,6 +8,7 @@ public class FireballCollectableScript : CollectableBase {
 	public override void customUpdate() { }
 	public override void useItem() 
 	{ 
-		Wizard.myWizard.GetComponent<AbilityManagerScript>().changeAbility("FireballAbility");
+		AbilityBase ability = Wizard.myWizard.AddComponent<FireballAbility>() as AbilityBase;
+		ability.fire();
 	}
 }

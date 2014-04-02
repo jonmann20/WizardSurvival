@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class GLOBAL : MonoBehaviour {
 
 	public static int health = 100;
-	public static int maxInventory = 4;
+	public static int maxInventory = 3;
 	public static List<GameObject> Inventory = new List<GameObject>();
 
 	void Awake()
@@ -38,10 +38,20 @@ public class GLOBAL : MonoBehaviour {
 	}
 	public static void useInventoryItemAt(int i)
 	{
+		//Use item
 		GameObject inventoryItem = Inventory[i];
-		Inventory.RemoveAt(i);
-		inventoryItem.GetComponent<CollectableBase>().useItem();
-		Destroy(inventoryItem);
 
+		inventoryItem.GetComponent<CollectableBase>().useItem();
+
+		//Adjust remaining quantity of item.
+		int quantity = inventoryItem.GetComponent<CollectableBase>().getQuantity();
+
+		if(quantity - 1 <= 0)
+		{
+			Inventory.RemoveAt(i);
+			Destroy(inventoryItem);
+		}
+		else
+			inventoryItem.GetComponent<CollectableBase>().setQuantity(quantity - 1);
 	}
 }

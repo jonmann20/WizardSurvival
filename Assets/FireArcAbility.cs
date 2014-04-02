@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class FireArcAbility : AbilityBase {
 	
 	const int SPEED = 20;
-	const int MAX_LIFE = 90;
+	const int MAX_LIFE = 120;
 	const int numberOfFireballs = 20;
 	
 	GameObject wizardHolder;

@@ -8,6 +8,7 @@ public class FireShieldCollectableScript : CollectableBase {
 	public override void customUpdate() { }
 	public override void useItem()
 	{ 
-		Wizard.myWizard.GetComponent<AbilityManagerScript>().changeAbility("FireShieldAbility");
+		AbilityBase ability = Wizard.myWizard.AddComponent<FireShieldAbility>() as AbilityBase;
+		ability.fire();
 	}
 }

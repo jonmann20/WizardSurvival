@@ -13,8 +13,8 @@ public class HudScript : MonoBehaviour {
 	const float HEALTHBAR_Z_OFFSET = 4;
 	const float HEALTHBAR_FLOAT_RATE = 0.005f;
 	const float HEALTHBAR_FLOAT_ALTITUDE = 0.05f;
-
-	const int NUMBER_OF_VOXELS = 10;
+	const int NUMBER_OF_VOXELS = 5;
+	float healthPerVoxel = 100;
 
 	float sinCounter = 0.0f;
 
@@ -42,7 +42,6 @@ public class HudScript : MonoBehaviour {
 	public Shader toonShaderLight;
 
 	//INVENTORY
-	const int INVENTORY_MAX = 4;
 	const float INVENTORY_OFFSET_X = -3.75f;
 	const float INVENTORY_OFFSET_Y = -2.0f;
 	const float INVENTORY_OFFSET_Z = 5;
@@ -53,10 +52,11 @@ public class HudScript : MonoBehaviour {
 	public float target = 1.0f;
 	int inventorySelectedIndex = -1;
 
-
-
-
-
+	//INVENTORY TEXTS
+	GameObject FirstItemQuantityText;
+	GameObject SecondItemQuantityText;
+	GameObject ThirdItemQuantityText;
+	
 	//Leaderboard Button
 	const float LEADERBOARD_X = 0.75f;
 	const float LEADERBOARD_Y = 0.85f;
@@ -66,13 +66,19 @@ public class HudScript : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 
+		healthPerVoxel = 100.0f / (float)NUMBER_OF_VOXELS;
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
 		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();
-		//print(hudLight);
+
+		FirstItemQuantityText = GameObject.Find("FirstItemQuantityText") as GameObject;
+		SecondItemQuantityText = GameObject.Find("SecondItemQuantityText") as GameObject;
+		ThirdItemQuantityText = GameObject.Find("ThirdItemQuantityText") as GameObject;
+
+		//HEALTH
 		Color greenColor = Color.green;
 		Color redColor = Color.red;
 		float fraction = 0.0f;
-
+		
 		for(int i = 0; i < NUMBER_OF_VOXELS; i++)
 		{
 			GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -109,7 +115,7 @@ public class HudScript : MonoBehaviour {
         //textMesh.fontSize = 31;
 
 		//INVENTORY
-		for(int i = 0; i < INVENTORY_MAX; i++)
+		for(int i = 0; i < GLOBAL.maxInventory; i++)
 		{
 			GameObject c = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			c.layer = 9;
@@ -132,7 +138,7 @@ public class HudScript : MonoBehaviour {
 		if(sinCounter > Mathf.PI * healthVoxels.Count * 2)
 			sinCounter = 0;
 
-		float currentHealthIndex = (float)GLOBAL.health / (float)NUMBER_OF_VOXELS;
+
 
 		for(int i = 0; i < healthVoxels.Count; i++)
 		{
@@ -144,8 +150,7 @@ public class HudScript : MonoBehaviour {
 			//ADJUST FOR CURRENT HEALTH
 			Bouncy b = healthVoxels[i].GetComponent<Bouncy>() as Bouncy;
 
-
-			if(currentHealthIndex < i)
+			if(GLOBAL.health < i * healthPerVoxel)
 				b.target = 0.1f;
 			else
 				b.target = 0.2f;
@@ -178,6 +183,7 @@ public class HudScript : MonoBehaviour {
 			if(i == inventorySelectedIndex)
 			{
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getSelectedItemSizeInInventory() + 1;
+				print("current item quantity: " + g.GetComponent<CollectableBase>().getQuantity());
 				g.transform.Rotate(Vector3.up * Time.deltaTime * 55);
 			}
 			else
@@ -188,7 +194,34 @@ public class HudScript : MonoBehaviour {
 			g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
 			                                        INVENTORY_OFFSET_Y + 0.1f,
 			                                        4);
+
+			//Quantity text
+			//Workaround for the generally poor process of creating 3D texts dynamically.
+			if(i == 0)
+				setQuantityText(FirstItemQuantityText, g);
+			else if(i == 1)
+				setQuantityText(SecondItemQuantityText, g);
+			else if(i == 2)
+				setQuantityText(ThirdItemQuantityText, g);
 		}
+
+		if(numInventoryItems < 3)
+			ThirdItemQuantityText.GetComponent<TextMesh>().text = "";
+		if(numInventoryItems < 2)
+			SecondItemQuantityText.GetComponent<TextMesh>().text = "";
+		if(numInventoryItems < 1)
+			FirstItemQuantityText.GetComponent<TextMesh>().text = "";
+	}
+
+	void setQuantityText(GameObject textGameObject, GameObject inventoryObject)
+	{
+		textGameObject.transform.position = inventoryObject.transform.position + new Vector3(0, 1, 0);
+
+		int quantity = inventoryObject.GetComponent<CollectableBase>().getQuantity();
+		if(quantity == 0)
+			textGameObject.GetComponent<TextMesh>().text = "";
+		else
+			textGameObject.GetComponent<TextMesh>().text = "" + quantity;
 	}
 
 	void Update()
@@ -224,7 +257,7 @@ public class HudScript : MonoBehaviour {
 				GameAudio.playInvSelect();
 
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
-				--inventorySelectedIndex;
+
 			}
 			else {
 				GameAudio.playMagicFail();
@@ -234,9 +267,9 @@ public class HudScript : MonoBehaviour {
 		// timer
 		timer -= Time.deltaTime;
 		minutes = (int)timer/60;
-		seconds = timer - (minutes * 60) ;
+		seconds = timer - (minutes * 60);
 
-		RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
+		//RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
 	}
 
     void OnGUI(){
