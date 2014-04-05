@@ -56,7 +56,12 @@ public class HudScript : MonoBehaviour {
 	GameObject FirstItemQuantityText;
 	GameObject SecondItemQuantityText;
 	GameObject ThirdItemQuantityText;
-	
+
+	//MESSAGE TEXT
+	static GameObject MessageText;
+	static string messageString = "";
+	static int messageLife = 0;
+
 	//Leaderboard Button
 	const float LEADERBOARD_X = 0.75f;
 	const float LEADERBOARD_Y = 0.85f;
@@ -73,6 +78,9 @@ public class HudScript : MonoBehaviour {
 		FirstItemQuantityText = GameObject.Find("FirstItemQuantityText") as GameObject;
 		SecondItemQuantityText = GameObject.Find("SecondItemQuantityText") as GameObject;
 		ThirdItemQuantityText = GameObject.Find("ThirdItemQuantityText") as GameObject;
+
+		MessageText = GameObject.Find("MessageText") as GameObject;
+		ScoreText.transform.localPosition = new Vector3(1.849f, -1.433f, 3.12f);
 
 		//HEALTH
 		Color greenColor = Color.green;
@@ -162,7 +170,7 @@ public class HudScript : MonoBehaviour {
         }
 
 		//WARNING FLASH
-		if(GLOBAL.health < 40)
+		if(GLOBAL.health <= 40)
 		{	
 			if(!playedLowHeath){
 				playedLowHeath = true;
@@ -269,6 +277,18 @@ public class HudScript : MonoBehaviour {
 		seconds = timer - (minutes * 60);
 
 		//RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
+		//MESSAGE TEXT
+
+		MessageText.GetComponent<TextMesh>().text = messageString;
+		if(messageLife > 0)
+		{
+			messageLife --;
+			MessageText.transform.localPosition += (new Vector3(0.1f, -1.00f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
+		}
+		else
+		{
+			MessageText.transform.localPosition += (new Vector3(0.1f, -2.05f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
+		}
 	}
 
     void OnGUI(){
@@ -320,6 +340,11 @@ public class HudScript : MonoBehaviour {
 		}
 
 		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
-
     }
+
+	public static void setNewMessage(string strmessage, int duration)
+	{
+		messageLife = duration;
+		messageString = strmessage;
+	}
 }

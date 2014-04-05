@@ -11,4 +11,5 @@ public class FireShieldCollectableScript : CollectableBase {
 		AbilityBase ability = Wizard.myWizard.AddComponent<FireShieldAbility>() as AbilityBase;
 		ability.fire();
 	}
+	public override string getName() { return "Wind Book"; }
 }
