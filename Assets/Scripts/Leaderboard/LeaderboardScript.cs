@@ -23,9 +23,10 @@ public class LeaderboardScript : MonoBehaviour {
 	const float LEADERBOARD_WIDTH = .25f;
 	const float LEADERBOARD_HEIGHT = .70f;
 	
-	
+
+	bool gameOver = true;
+
 	// Reference to the dreamloLeaderboard prefab in the scene
-	
 	dreamloLeaderBoard dl;
 	
 	void Start () 
@@ -52,14 +53,26 @@ public class LeaderboardScript : MonoBehaviour {
 		}
 		else if (this.gs == gameState.leaderboard){
 			InputDevice device = InputManager.ActiveDevice;
+
 			InputControl ctrl_X = device.GetControl(InputControlType.Action1);
 			InputControl ctrl_T = device.GetControl(InputControlType.Action4);
 
-			if(ctrl_X.WasPressed){
-				Application.LoadLevel("Title");
+			if(gameOver){
+				InputControl ctrl_Start = device.GetControl(InputControlType.Start);
+
+				if(ctrl_Start.WasPressed || ctrl_T.WasPressed || ctrl_X.WasPressed){
+					Application.LoadLevel("Title");
+				}
 			}
-			else if(ctrl_T.WasPressed){ // triangle
-				Application.Quit();
+			else {
+
+				
+				if(ctrl_X.WasPressed){
+					Application.LoadLevel("Title");
+				}
+				else if(ctrl_T.WasPressed){ // triangle
+					Application.Quit();
+				}
 			}
 		}
 	}
@@ -80,11 +93,16 @@ public class LeaderboardScript : MonoBehaviour {
 		Rect r = new Rect(Screen.width/2 + (Screen.width * LEADERBOARD_WIDTH), Screen.height/2 + (Screen.width * LEADERBOARD_HEIGHT)/2, Screen.width * LEADERBOARD_WIDTH, Screen.height * LEADERBOARD_HEIGHT);
 		GUILayout.BeginArea(r, new GUIStyle("box"));
 
-		GUILayout.Label("Press \"△\" to exit to start screen");
-		GUILayout.Label("Press \"X\" to quit the game");
+		if(gameOver){
+			GUILayout.Label("Press \"Start\" to continue");
+		}
+		else {
+			GUILayout.Label("Press \"△\" to exit to start screen");
+			GUILayout.Label("Press \"X\" to quit the game");
+		}
+
+
 		//GUILayout.BeginVertical();
-
-
 
 //		if (this.gs == gameState.leaderboard)
 //		{

@@ -31,13 +31,15 @@ public class AbilityManagerScript : MonoBehaviour {
 		if(currentAbility != null){
 			Destroy(currentAbility);
 		}
-		
+
 		currentAbility = gameObject.AddComponent(abilityName) as AbilityBase;
 
-		if( Wizard.myWizard.GetComponent<PlayerController>().networkedProperties.ContainsKey("Ability") )
-		{
-			Wizard.myWizard.GetComponent<PlayerController>().networkedProperties["Ability"] = AbilityManagerScript.currentAbility.getAbilityName();
-			PhotonNetwork.player.SetCustomProperties(Wizard.myWizard.GetComponent<PlayerController>().networkedProperties);
-		}
+		if(Wizard.myWizard != null)
+			if(Wizard.myWizard.GetComponent<PlayerController>() != null)
+				if( Wizard.myWizard.GetComponent<PlayerController>().networkedProperties.ContainsKey("Ability") )
+				{
+					Wizard.myWizard.GetComponent<PlayerController>().networkedProperties["Ability"] = AbilityManagerScript.currentAbility.getAbilityName();
+					PhotonNetwork.player.SetCustomProperties(Wizard.myWizard.GetComponent<PlayerController>().networkedProperties);
+				}
 	}
 }
