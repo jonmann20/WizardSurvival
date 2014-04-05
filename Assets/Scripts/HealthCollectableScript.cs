@@ -12,4 +12,5 @@ public class HealthCollectableScript : CollectableBase {
 		if(GLOBAL.health > 100)
 			GLOBAL.health = 100;
 	}
+	public override string getName() { return "Surgeon's Delight"; }
 }

@@ -11,4 +11,5 @@ public class ArcCollectableScript : CollectableBase {
 		AbilityBase ability = Wizard.myWizard.AddComponent<FireArcAbility>() as AbilityBase;
 		ability.fire();
 	}
+	public override string getName() { return "Arc Book"; }
 }

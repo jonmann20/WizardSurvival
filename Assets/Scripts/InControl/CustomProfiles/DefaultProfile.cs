@@ -80,6 +80,12 @@ namespace InControl {
 					Handle = "RightTrigger",
 					Target = InputControlType.RightTrigger,
 					Source = KeyCodeButton(KeyCode.E)
+				},
+				new InputControlMapping
+				{
+					Handle = "RightJoystickClick",
+					Target = InputControlType.RightStickButton,
+					Source = KeyCodeButton(KeyCode.LeftShift)
 				}
 			};
 

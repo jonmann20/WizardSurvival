@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour {
 	InputControl ctrl_LeftStickY;
 	InputControl ctrl_Select;
 	InputControl ctrl_RightBumper;
+	InputControl ctrl_RightJoystickButton;
 
 	void Awake(){
 		refreshControls();
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviour {
 		ctrl_LeftStickY = idevice.GetControl(InputControlType.LeftStickY);
 		ctrl_Select = idevice.GetControl(InputControlType.Select);
 		ctrl_RightBumper = idevice.GetControl(InputControlType.RightBumper);
+		ctrl_RightJoystickButton = idevice.GetControl(InputControlType.RightStickButton);
 	}
 
 	//Control while the player is alive and kicking
@@ -93,6 +95,11 @@ public class PlayerController : MonoBehaviour {
 		//FIRE
 		if(ctrl_RightBumper.WasPressed){
 			GetComponent<AbilityManagerScript>().attemptFire();
+		}
+
+		//PUNCH
+		if(ctrl_RightJoystickButton.WasPressed){
+			GetComponent<PunchAbility>().fire();
 		}
 
 		// movement
@@ -126,7 +133,6 @@ public class PlayerController : MonoBehaviour {
 			Vector3 newForward = new Vector3(thisCamera.transform.forward.x, 0, thisCamera.transform.forward.z);
 			transform.forward = newForward;
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-			rigidbody.mass = 1.0f;
 		}
 	}
 
@@ -155,9 +161,9 @@ public class PlayerController : MonoBehaviour {
 		
 		if( GLOBAL.health <= 0 )
 		{
+			HudScript.setNewMessage("KO!", 120);
 			currentPlayerState = PlayerState.DOWN;
 			rigidbody.constraints = RigidbodyConstraints.None;
-			rigidbody.mass = 1.0f;
 			GLOBAL.health = 0;
 			TakeDamage(-100, transform);
 			

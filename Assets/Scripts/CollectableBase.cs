@@ -5,6 +5,7 @@ public abstract class CollectableBase : MonoBehaviour {
 
 	public abstract float getSelectedItemSizeInInventory();
 	public abstract float getNonSelectedItemSizeInInventory();
+	public abstract string getName();
 	public abstract void customUpdate();
 	public abstract void useItem();
 
@@ -33,7 +34,12 @@ public abstract class CollectableBase : MonoBehaviour {
 
 		if(collision.gameObject.tag == "Player")
 		{
-			
+			string quantityString = "";
+			if(quantity > 1)
+				quantityString = "(" + quantity + ")";
+
+			HudScript.setNewMessage("Collected " + getName() + " " + quantityString, 120);
+
 			if(collision.gameObject.GetComponent<PhotonView>().isMine)
 			{
 				GameObject NewInventoryItem = Instantiate(gameObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
