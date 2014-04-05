@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+using InControl;
+
 public class LeaderboardScript : MonoBehaviour {
 	float startTime = 10.0f;
 	float timeLeft = 0.0f;
@@ -42,9 +44,22 @@ public class LeaderboardScript : MonoBehaviour {
 		if (this.gs == gameState.running)
 		{
 			timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, this.startTime);
+
 			if (timeLeft == 0)
 			{
 				this.gs = gameState.enterscore;
+			}
+		}
+		else if (this.gs == gameState.leaderboard){
+			InputDevice device = InputManager.ActiveDevice;
+			InputControl ctrl_X = device.GetControl(InputControlType.Action1);
+			InputControl ctrl_T = device.GetControl(InputControlType.Action4);
+
+			if(ctrl_X.WasPressed){
+				Application.LoadLevel("Title");
+			}
+			else if(ctrl_T.WasPressed){ // triangle
+				Application.Quit();
 			}
 		}
 	}
@@ -52,8 +67,7 @@ public class LeaderboardScript : MonoBehaviour {
 
 	void OnGUI()
 	{
-
-		if( this.gs != gameState.leaderboard )
+		if(this.gs != gameState.leaderboard)
 		{
 			return;
 		}
@@ -65,36 +79,40 @@ public class LeaderboardScript : MonoBehaviour {
 		
 		Rect r = new Rect(Screen.width/2 + (Screen.width * LEADERBOARD_WIDTH), Screen.height/2 + (Screen.width * LEADERBOARD_HEIGHT)/2, Screen.width * LEADERBOARD_WIDTH, Screen.height * LEADERBOARD_HEIGHT);
 		GUILayout.BeginArea(r, new GUIStyle("box"));
-		
-		GUILayout.BeginVertical();
-		
 
-		if (this.gs == gameState.leaderboard)
-		{
-			GUILayout.Label("High Scores:");
-			List<dreamloLeaderBoard.Score> scoreList = dl.ToListHighToLow();
-			
-			if (scoreList == null) 
-			{
-				GUILayout.Label("(loading...)");
-			} 
-			else 
-			{
-				int maxToDisplay = 20;
-				int count = 0;
-				foreach (dreamloLeaderBoard.Score currentScore in scoreList)
-				{
-					count++;
-					GUILayout.BeginHorizontal();
-					GUILayout.Label(currentScore.playerName, width200);
-					GUILayout.Label(currentScore.score.ToString(), width200);
-					GUILayout.EndHorizontal();
-					
-					if (count >= maxToDisplay) break;
-				}
-			}
-		}
-		GUILayout.EndArea();
+		GUILayout.Label("Press \"△\" to exit to start screen");
+		GUILayout.Label("Press \"X\" to quit the game");
+		//GUILayout.BeginVertical();
+
+
+
+//		if (this.gs == gameState.leaderboard)
+//		{
+//			GUILayout.Label("High Scores:");
+//			List<dreamloLeaderBoard.Score> scoreList = dl.ToListHighToLow();
+//			
+//			if (scoreList == null) 
+//			{
+//				GUILayout.Label("(loading...)");
+//			} 
+//			else 
+//			{
+//				int maxToDisplay = 20;
+//				int count = 0;
+//
+//				foreach (dreamloLeaderBoard.Score currentScore in scoreList)
+//				{
+//					count++;
+//					GUILayout.BeginHorizontal();
+//					GUILayout.Label(currentScore.playerName, width200);
+//					GUILayout.Label(currentScore.score.ToString(), width200);
+//					GUILayout.EndHorizontal();
+//					
+//					if (count >= maxToDisplay) break;
+//				}
+//			}
+//		}
+		//GUILayout.EndArea();
 
 	}
 

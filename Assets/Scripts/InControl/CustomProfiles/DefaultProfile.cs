@@ -48,8 +48,20 @@ namespace InControl {
 				new InputControlMapping
 				{
 					Handle = "Jump",
-					Target = InputControlType.Action1,
+					Target = InputControlType.Action1,	// "X"
 					Source = KeyCodeButton(KeyCode.Space)
+				},
+				new InputControlMapping
+				{
+					Handle = "Quit",
+					Target = InputControlType.Action4,	// "△"
+					Source = KeyCodeButton(KeyCode.Backspace)
+				},
+				new InputControlMapping
+				{
+					Handle = "Select",
+					Target = InputControlType.Select,
+					Source = KeyCodeButton(KeyCode.LeftShift)
 				},
 				new InputControlMapping
 				{

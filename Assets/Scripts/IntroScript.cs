@@ -21,7 +21,6 @@ public class IntroScript : MonoBehaviour {
 	}
 
 	void Update(){
-
 		if(transform.position.z > 10)
 		{
 			float diff = (-10 - transform.position.z) * 0.005f;
@@ -31,8 +30,14 @@ public class IntroScript : MonoBehaviour {
 		//Check for press Start
 		InputDevice device = InputManager.ActiveDevice;
 		InputControl ctrl_Start = device.GetControl(InputControlType.Start);
-		if((ctrl_Start.IsPressed && ctrl_Start.LastValue == 0) || Input.GetKeyDown("space")) {
+		if((ctrl_Start.WasPressed)) {
 			Application.LoadLevel("NetworkSample");
 		}
 	}
+
+//	void OnGUI(){
+//		EZGUI.init();
+//
+//		EZGUI.placeTxt("Press \"Start\"", 51, EZGUI.HALFW, EZGUI.FULLH - 200);
+//	}
 }

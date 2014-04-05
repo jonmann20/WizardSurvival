@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		// leaderboard
-        if(ctrl_Select.IsPressed) {
+        if(ctrl_Select.WasPressed) {
 			hud.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
 		}
 	}
