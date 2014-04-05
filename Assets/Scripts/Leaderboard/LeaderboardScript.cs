@@ -23,12 +23,13 @@ public class LeaderboardScript : MonoBehaviour {
 	const float LEADERBOARD_WIDTH = .25f;
 	const float LEADERBOARD_HEIGHT = .70f;
 	
-
-	bool gameOver = true;
+	//public static LeaderboardScript that;
+	public static bool gameOver = false;
 
 	// Reference to the dreamloLeaderboard prefab in the scene
 	dreamloLeaderBoard dl;
-	
+
+
 	void Start () 
 	{
 		// get the reference here...
@@ -42,31 +43,20 @@ public class LeaderboardScript : MonoBehaviour {
 	
 	void Update () 
 	{
-		if (this.gs == gameState.running)
-		{
-			timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, this.startTime);
-
-			if (timeLeft == 0)
-			{
-				this.gs = gameState.enterscore;
-			}
-		}
-		else if (this.gs == gameState.leaderboard){
+		if(gameOver || this.gs == gameState.leaderboard){
 			InputDevice device = InputManager.ActiveDevice;
-
+			
 			InputControl ctrl_X = device.GetControl(InputControlType.Action1);
 			InputControl ctrl_T = device.GetControl(InputControlType.Action4);
-
+			
 			if(gameOver){
 				InputControl ctrl_Start = device.GetControl(InputControlType.Start);
-
+				
 				if(ctrl_Start.WasPressed || ctrl_T.WasPressed || ctrl_X.WasPressed){
 					Application.LoadLevel("Title");
 				}
 			}
 			else {
-
-				
 				if(ctrl_X.WasPressed){
 					Application.LoadLevel("Title");
 				}
@@ -75,12 +65,21 @@ public class LeaderboardScript : MonoBehaviour {
 				}
 			}
 		}
+		else if(this.gs == gameState.running)
+		{
+			timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, this.startTime);
+
+			if (timeLeft == 0)
+			{
+				this.gs = gameState.enterscore;
+			}
+		}
 	}
 
 
 	void OnGUI()
 	{
-		if(this.gs != gameState.leaderboard)
+		if(!gameOver && this.gs != gameState.leaderboard)
 		{
 			return;
 		}
@@ -136,6 +135,8 @@ public class LeaderboardScript : MonoBehaviour {
 
 	public void FlipGameState()
 	{
+		if(gameOver) return;
+
 		if( this.gs == gameState.leaderboard )
 		{
 			this.gs = gameState.running;
@@ -144,6 +145,11 @@ public class LeaderboardScript : MonoBehaviour {
 		{
 			this.gs = gameState.leaderboard;
 		}
+	}
+
+	public static void endGame(){
+		gameOver = true;
+		//gs = gameState.leaderboard;
 	}
 
 	public void AddScore()
