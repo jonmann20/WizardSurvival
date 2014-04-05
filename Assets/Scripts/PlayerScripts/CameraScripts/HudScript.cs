@@ -88,8 +88,7 @@ public class HudScript : MonoBehaviour {
 			Bouncy b = cube.AddComponent<Bouncy>() as Bouncy;
 			b.target = 0.2f;
 
-			Material mat;
-			mat = new Material(toonShaderLight);
+			Material mat = new Material(toonShaderLight);
 			mat.color = Color.Lerp(redColor, greenColor, fraction);
 			fraction += 1.0f / (float)NUMBER_OF_VOXELS;
 			cube.GetComponent<MeshRenderer>().material = mat;

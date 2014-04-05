@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour {
 		{
 			currentPlayerState = PlayerState.DOWN;
 			rigidbody.constraints = RigidbodyConstraints.None;
-			rigidbody.mass = 0.1f;
+			rigidbody.mass = 1.0f;
 			GLOBAL.health = 0;
 			TakeDamage(-100, transform);
 			
