@@ -13,19 +13,29 @@ public class PunchAbility : AbilityBase {
 	const float FIST_SCALE = 0.8f;
 
 	GameObject arm;
+	GameObject fakeArm;
 	Vector3 previousLocalPositionOnBody;
 	Vector3 previousScaleOnBody;
+
+	Material punchMat;
 
 	void Awake()
 	{
 		arm = transform.Find("ArmR").gameObject as GameObject;
-		previousLocalPositionOnBody = arm.transform.localPosition;
-		previousScaleOnBody = arm.transform.localScale;
+		punchMat = new Material(Shader.Find("Toon/Lighted Outline"));
+		punchMat.color = Color.white;
 	}
 
 	public override void fire()
 	{
-		GameAudio.playWind();
+		if(fakeArm == null)
+		{
+			arm.renderer.enabled = false;
+			fakeArm = GameObject.CreatePrimitive(PrimitiveType.Cube) as GameObject;
+			fakeArm.GetComponent<MeshRenderer>().material = punchMat;
+			fakeArm.tag = "PlayerBullet";
+		}
+		GameAudio.playJump();
 		lifeCounter = MAX_LIFE;
 	}
 	
@@ -34,7 +44,6 @@ public class PunchAbility : AbilityBase {
 
 		if(lifeCounter > 0)
 		{
-			arm.tag = "PlayerBullet";
 			lifeCounter --;
 		
 			Vector3 pos;
@@ -54,14 +63,13 @@ public class PunchAbility : AbilityBase {
 		
 			pos *= DISTANCE;
 
-			arm.transform.position = transform.position + pos + transform.forward * 0.1f;
-			arm.transform.localScale = previousScaleOnBody + new Vector3(val * FIST_SCALE, val * FIST_SCALE, val * FIST_SCALE);
+			fakeArm.transform.position = transform.position + pos + transform.forward * 0.1f;
+			fakeArm.transform.localScale = previousScaleOnBody + new Vector3(val * FIST_SCALE, val * FIST_SCALE, val * FIST_SCALE);
 		}
 		else
 		{
-			arm.tag = "Player";
-			arm.transform.localPosition = previousLocalPositionOnBody;
-			arm.transform.localScale = previousScaleOnBody;
+			Destroy(fakeArm);
+			arm.renderer.enabled = true;
 		}
 	}
 	
