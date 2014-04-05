@@ -283,7 +283,7 @@ public class HudScript : MonoBehaviour {
 		if(messageLife > 0)
 		{
 			messageLife --;
-			MessageText.transform.localPosition += (new Vector3(0.1f, -1.00f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
+			MessageText.transform.localPosition += (new Vector3(0.1f, -1.50f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
 		}
 		else
 		{
