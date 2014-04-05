@@ -54,4 +54,10 @@ public class GLOBAL : MonoBehaviour {
 		else
 			inventoryItem.GetComponent<CollectableBase>().setQuantity(quantity - 1);
 	}
+
+	public static void reset()
+	{
+		health = 100;
+		Inventory.Clear();
+	}
 }

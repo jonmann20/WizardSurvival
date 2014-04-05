@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using InControl;
+using ExitGames.Client.Photon;
 
 public class IntroScript : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class IntroScript : MonoBehaviour {
 	public GameObject MarchingObjectPrefab;
 
 	void Start(){
+		PhotonNetwork.Disconnect();
 		GameAudio.playIntro();
 
 		for(int i = 0; i < 15; i++)

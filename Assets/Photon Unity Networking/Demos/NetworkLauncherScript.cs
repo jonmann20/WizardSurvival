@@ -44,6 +44,9 @@ public class NetworkLauncherScript : MonoBehaviour {
 		//Game Over Timer -- when it reaches zero, boot players back to title screen.
 		if(gameOver) gameOverTimer --;
 		if(gameOverTimer <= 0)
+		{
+			PhotonNetwork.Disconnect();
 			Application.LoadLevel("Title");
+		}
 	}
 }
