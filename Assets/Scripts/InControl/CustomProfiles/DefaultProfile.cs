@@ -61,7 +61,7 @@ namespace InControl {
 				{
 					Handle = "Select",
 					Target = InputControlType.Select,
-					Source = KeyCodeButton(KeyCode.LeftShift)
+					Source = KeyCodeButton(KeyCode.Tab)
 				},
 				new InputControlMapping
 				{

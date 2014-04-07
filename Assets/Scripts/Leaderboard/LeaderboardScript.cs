@@ -97,7 +97,6 @@ public class LeaderboardScript : MonoBehaviour {
 			GUILayout.Label("Press \"X\" to quit the game");
 		}
 
-
 		//GUILayout.BeginVertical();
 
 //		if (this.gs == gameState.leaderboard)
