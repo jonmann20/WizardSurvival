@@ -2,19 +2,27 @@
 using System.Collections;
 
 using InControl;
+using System;
+
+public enum BaseAbility {FireballAbility, Forcefield, Levitation, Enchantment};
 
 public class Tome : MonoBehaviour {
 
 	public GameObject dialog;
+	public BaseAbility baseAbility;
 
 	void Update(){
 		InputDevice device = InputManager.ActiveDevice;
 		InputControl ctrl_Action = device.GetControl(InputControlType.Action3);
 
 		if(ctrl_Action.WasPressed){
-			// TODO: add base ability spell to player
-
-			Destroy(gameObject);
+			if(AbilityManagerScript.currentAbility){
+				// alert!! can't pickup more than one base ability
+			}
+			else {
+				AbilityManagerScript.that.changeAbility(Enum.GetName(typeof(BaseAbility), baseAbility));
+				Destroy(gameObject);
+			}
 		}
 	}
 

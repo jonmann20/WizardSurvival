@@ -6,13 +6,10 @@ using InControl;
 public class AbilityManagerScript : MonoBehaviour {
 
 	public static AbilityBase currentAbility;
+	public static AbilityManagerScript that;
 
-	void Start () {
-		changeAbility("FireballAbility");
-	}
-	
-	void Update(){
-
+	void Awake(){
+		that = this;
 	}
 
 	public void attemptFire()

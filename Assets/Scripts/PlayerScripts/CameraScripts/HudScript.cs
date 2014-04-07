@@ -67,8 +67,7 @@ public class HudScript : MonoBehaviour {
 	const float LEADERBOARD_Y = 0.85f;
 	const float LEADERBOARD_WIDTH = 0.18f;
 	const float LEADERBOARD_HEIGHT = 0.07f;
-	
-	// Use this for initialization
+
 	void Awake () {
 		healthPerVoxel = 100.0f / (float)NUMBER_OF_VOXELS;
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
@@ -137,14 +136,14 @@ public class HudScript : MonoBehaviour {
 			c.GetComponent<MeshRenderer>().material = mat;
 		}
 	}
-	
-	// Update is called once per frame
+
 	void FixedUpdate () {
 		sinCounter += HEALTHBAR_FLOAT_RATE;
-		if(sinCounter > Mathf.PI * healthVoxels.Count * 2)
+
+		if(sinCounter > Mathf.PI * healthVoxels.Count * 2){
 			sinCounter = 0;
-
-
+		}
+		
 
 		for(int i = 0; i < healthVoxels.Count; i++)
 		{
@@ -162,7 +161,7 @@ public class HudScript : MonoBehaviour {
 				b.target = 0.2f;
 		}
 
-        ////TEXT
+        // TEXT
         if(AbilityManagerScript.currentAbility != null)
         {
             AbilityNameText.GetComponent<TextMesh>().text = AbilityManagerScript.currentAbility.getAbilityName();
