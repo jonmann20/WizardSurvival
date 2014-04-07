@@ -22,13 +22,11 @@ public class LeaderboardScript : MonoBehaviour {
 
 	const float LEADERBOARD_WIDTH = .25f;
 	const float LEADERBOARD_HEIGHT = .70f;
-	
-
-	bool gameOver = true;
 
 	// Reference to the dreamloLeaderboard prefab in the scene
 	dreamloLeaderBoard dl;
-	
+
+
 	void Start () 
 	{
 		// get the reference here...
@@ -42,31 +40,20 @@ public class LeaderboardScript : MonoBehaviour {
 	
 	void Update () 
 	{
-		if (this.gs == gameState.running)
-		{
-			timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, this.startTime);
-
-			if (timeLeft == 0)
-			{
-				this.gs = gameState.enterscore;
-			}
-		}
-		else if (this.gs == gameState.leaderboard){
+		if(GLOBAL.gameOver || this.gs == gameState.leaderboard){
 			InputDevice device = InputManager.ActiveDevice;
-
+			
 			InputControl ctrl_X = device.GetControl(InputControlType.Action1);
 			InputControl ctrl_T = device.GetControl(InputControlType.Action4);
-
-			if(gameOver){
+			
+			if(GLOBAL.gameOver){
 				InputControl ctrl_Start = device.GetControl(InputControlType.Start);
-
+				
 				if(ctrl_Start.WasPressed || ctrl_T.WasPressed || ctrl_X.WasPressed){
 					Application.LoadLevel("Title");
 				}
 			}
 			else {
-
-				
 				if(ctrl_X.WasPressed){
 					Application.LoadLevel("Title");
 				}
@@ -75,12 +62,21 @@ public class LeaderboardScript : MonoBehaviour {
 				}
 			}
 		}
+		else if(this.gs == gameState.running)
+		{
+			timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, this.startTime);
+
+			if (timeLeft == 0)
+			{
+				this.gs = gameState.enterscore;
+			}
+		}
 	}
 
 
 	void OnGUI()
 	{
-		if(this.gs != gameState.leaderboard)
+		if(!GLOBAL.gameOver && this.gs != gameState.leaderboard)
 		{
 			return;
 		}
@@ -93,7 +89,7 @@ public class LeaderboardScript : MonoBehaviour {
 		Rect r = new Rect(Screen.width/2 + (Screen.width * LEADERBOARD_WIDTH), Screen.height/2 + (Screen.width * LEADERBOARD_HEIGHT)/2, Screen.width * LEADERBOARD_WIDTH, Screen.height * LEADERBOARD_HEIGHT);
 		GUILayout.BeginArea(r, new GUIStyle("box"));
 
-		if(gameOver){
+		if(GLOBAL.gameOver){
 			GUILayout.Label("Press \"Start\" to continue");
 		}
 		else {
@@ -131,11 +127,12 @@ public class LeaderboardScript : MonoBehaviour {
 //			}
 //		}
 		//GUILayout.EndArea();
-
 	}
 
 	public void FlipGameState()
 	{
+		if(GLOBAL.gameOver) return;
+
 		if( this.gs == gameState.leaderboard )
 		{
 			this.gs = gameState.running;

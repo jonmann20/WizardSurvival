@@ -70,7 +70,6 @@ public class HudScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Awake () {
-
 		healthPerVoxel = 100.0f / (float)NUMBER_OF_VOXELS;
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
 		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();

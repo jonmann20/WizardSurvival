@@ -15,6 +15,7 @@ public class GLOBAL : MonoBehaviour {
 
 	public static GameObject MainCamera;
 	public static string WizardName;
+	public static bool gameOver;
 
 	//returns false if inventory full.
 	public static bool addToInventory(GameObject g)
@@ -53,5 +54,12 @@ public class GLOBAL : MonoBehaviour {
 		}
 		else
 			inventoryItem.GetComponent<CollectableBase>().setQuantity(quantity - 1);
+	}
+
+	public static void reset()
+	{
+		health = 100;
+		gameOver = false;
+		Inventory.Clear();
 	}
 }

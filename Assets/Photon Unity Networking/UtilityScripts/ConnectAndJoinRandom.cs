@@ -17,7 +17,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 
     public virtual void Start()
     {
-		GLOBAL.health = 100;
+		GLOBAL.reset();
 		PhotonNetwork.Disconnect();
 		print("LAUNCHER LAUNCHING!!");
         PhotonNetwork.autoJoinLobby = false;    // we join randomly. always. no need to join a lobby to get the list of rooms.

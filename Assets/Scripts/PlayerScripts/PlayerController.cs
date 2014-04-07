@@ -5,7 +5,7 @@ using InControl;
 
 public class PlayerController : MonoBehaviour {
 
-	public GameObject head, hat, body, legL, legR, armL, armR;
+	public GameObject head, hat, brim, body, legL, legR, armL, armR;
 	Color initShaderColor;
 
 	public float movementSpeed = 10;
@@ -210,6 +210,7 @@ public class PlayerController : MonoBehaviour {
 	void swapShader(Color c){
 		head.renderer.materials[1].SetColor("_ReflectColor", c);
 		hat.renderer.materials[1].SetColor("_ReflectColor", c);
+		brim.renderer.materials[1].SetColor("_ReflectColor", c);
 		body.renderer.materials[1].SetColor("_ReflectColor", c);
 		legL.renderer.materials[1].SetColor("_ReflectColor", c);
 		legR.renderer.materials[1].SetColor("_ReflectColor", c);

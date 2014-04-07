@@ -37,13 +37,22 @@ public class NetworkLauncherScript : MonoBehaviour {
 
 		if(everyoneZeroHealth)
 		{
-			gameOver = true;
-			HudScript.setNewMessage("Game Over", 180);
+			//gameOver = true;
+			//HudScript.setNewMessage("Game Over", 180);
+			
+			PhotonNetwork.Disconnect();
+			GLOBAL.gameOver = true;
 		}
 
 		//Game Over Timer -- when it reaches zero, boot players back to title screen.
-		if(gameOver) gameOverTimer --;
-		if(gameOverTimer <= 0)
-			Application.LoadLevel("Title");
+//		if(gameOver) gameOverTimer --;
+//		if(gameOverTimer <= 0)
+//			Application.LoadLevel("Title");
+		//if(gameOver) gameOverTimer --;
+		//if(gameOverTimer <= 0)
+		//{
+			//PhotonNetwork.Disconnect();
+			//Application.LoadLevel("Title");
+		//}
 	}
 }
