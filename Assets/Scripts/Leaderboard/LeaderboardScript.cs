@@ -43,21 +43,21 @@ public class LeaderboardScript : MonoBehaviour {
 		if(GLOBAL.gameOver || this.gs == gameState.leaderboard){
 			InputDevice device = InputManager.ActiveDevice;
 			
-			InputControl ctrl_X = device.GetControl(InputControlType.Action1);
+			InputControl ctrl_O = device.GetControl(InputControlType.Action2);
 			InputControl ctrl_T = device.GetControl(InputControlType.Action4);
 			
 			if(GLOBAL.gameOver){
 				InputControl ctrl_Start = device.GetControl(InputControlType.Start);
 				
-				if(ctrl_Start.WasPressed || ctrl_T.WasPressed || ctrl_X.WasPressed){
+				if(ctrl_Start.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed){
 					Application.LoadLevel("Title");
 				}
 			}
 			else {
-				if(ctrl_X.WasPressed){
+				if(ctrl_T.WasPressed){
 					Application.LoadLevel("Title");
 				}
-				else if(ctrl_T.WasPressed){ // triangle
+				else if(ctrl_O.WasPressed){
 					Application.Quit();
 				}
 			}
@@ -84,7 +84,7 @@ public class LeaderboardScript : MonoBehaviour {
 		GUILayoutOption[] width200 = new GUILayoutOption[] {GUILayout.Width(200)};
 		
 		float width = 400;  // Make this wider to add more columns
-		float height = 200;
+		float height = 220;
 		
 		Rect r = new Rect(Screen.width/2 + (Screen.width * LEADERBOARD_WIDTH), Screen.height/2 + (Screen.width * LEADERBOARD_HEIGHT)/2, Screen.width * LEADERBOARD_WIDTH, Screen.height * LEADERBOARD_HEIGHT);
 		GUILayout.BeginArea(r, new GUIStyle("box"));
@@ -93,8 +93,8 @@ public class LeaderboardScript : MonoBehaviour {
 			GUILayout.Label("Press \"Start\" to continue");
 		}
 		else {
-			GUILayout.Label("Press \"△\" to exit to start screen");
-			GUILayout.Label("Press \"X\" to quit the game");
+			GUILayout.Label("Press \"△\" to return to the start screen");
+			GUILayout.Label("Press \"O\" to quit the game");
 		}
 
 
