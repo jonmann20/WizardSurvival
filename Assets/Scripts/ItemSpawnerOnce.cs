@@ -21,11 +21,11 @@ public class ItemSpawnerOnce : MonoBehaviour {
 			if(PhotonNetwork.connected)
 			{
 				//Only the master client can spawn scene objects
-				if(PhotonNetwork.isMasterClient)
-				{
-					spawn ();
+				//if(PhotonNetwork.isMasterClient)
+				//{
+					spawn();
 					spawned = true;
-				}
+				//}
 			}
 		}
 	}
@@ -36,7 +36,7 @@ public class ItemSpawnerOnce : MonoBehaviour {
 		if(ItemPrefab.name != "health_potion" && ItemPrefab.name != "BookNTomeFireball")
 		{
 			//item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, new Vector3(0, 0, 0), Quaternion.identity, 0, null) as GameObject;
-			item = Instantiate(ItemPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+			item = Instantiate(ItemPrefab, transform.position, Quaternion.identity) as GameObject;
 
 			print("spawned a " + ItemPrefab.tag);
 			if(ItemPrefab.tag == "Tome")
@@ -47,9 +47,9 @@ public class ItemSpawnerOnce : MonoBehaviour {
 			}
 		}
 		else if(ItemPrefab.name == "health_potion")
-			item = Instantiate(ItemPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+			item = Instantiate(ItemPrefab, transform.position, Quaternion.identity) as GameObject;
 		else if(ItemPrefab.name == "BookNTomeFireball")
-			item = Instantiate(ItemPrefab, new Vector3(0, 0, 0), Quaternion.Euler(-90, 0, 0)) as GameObject;
+			item = Instantiate(ItemPrefab, transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
 			//item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, new Vector3(0, 0, 0), Quaternion.Euler(-90, 0, 0), 0, null) as GameObject;
 
 		item.transform.parent = transform;
