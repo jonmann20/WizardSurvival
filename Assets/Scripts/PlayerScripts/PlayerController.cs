@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour {
 	InputControl ctrl_LeftStickY;
 	InputControl ctrl_Select;
 	InputControl ctrl_RightBumper;
-	InputControl ctrl_RightJoystickButton;
+	InputControl ctrl_RightJoystickButton, ctrl_O;
 
 	void Awake(){
 		refreshControls();
@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour {
 		ctrl_Select = idevice.GetControl(InputControlType.Select);
 		ctrl_RightBumper = idevice.GetControl(InputControlType.RightBumper);
 		ctrl_RightJoystickButton = idevice.GetControl(InputControlType.RightStickButton);
+		ctrl_O = idevice.GetControl(InputControlType.Action2);
 	}
 
 	//Control while the player is alive and kicking
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		//PUNCH
-		if(ctrl_RightJoystickButton.WasPressed){
+		if(ctrl_RightJoystickButton.WasPressed || ctrl_O.WasPressed){
 			GetComponent<PunchAbility>().fire();
 		}
 

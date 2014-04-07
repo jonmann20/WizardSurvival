@@ -83,7 +83,7 @@ namespace InControl {
 				},
 				new InputControlMapping
 				{
-					Handle = "RightJoystickClick",
+					Handle = "Melee",
 					Target = InputControlType.RightStickButton,
 					Source = KeyCodeButton(KeyCode.LeftShift)
 				}
