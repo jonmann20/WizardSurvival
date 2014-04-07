@@ -339,9 +339,10 @@ public class HudScript : MonoBehaviour {
 		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
     }
 
-	public static void setNewMessage(string strmessage, int duration)
+	public static void setNewMessage(string strmessage, int duration, Color c)
 	{
 		messageLife = duration;
 		messageString = strmessage;
+		MessageText.renderer.material.color = c;
 	}
 }

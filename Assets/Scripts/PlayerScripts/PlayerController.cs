@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour {
 		
 		if( GLOBAL.health <= 0 )
 		{
-			HudScript.setNewMessage("KO!", 120);
+			HudScript.setNewMessage("KO!", 120, Color.red);
 			currentPlayerState = PlayerState.DOWN;
 			rigidbody.constraints = RigidbodyConstraints.None;
 			GLOBAL.health = 0;

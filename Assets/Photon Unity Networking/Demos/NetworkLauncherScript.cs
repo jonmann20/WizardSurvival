@@ -35,7 +35,7 @@ public class NetworkLauncherScript : MonoBehaviour {
 
 		if(everyoneZeroHealth)
 		{
-			HudScript.setNewMessage("Game Over", 180);
+			HudScript.setNewMessage("Game Over", 180, Color.red);
 
 			GLOBAL.gameOver = true;
 		}
