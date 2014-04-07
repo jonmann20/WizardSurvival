@@ -4,7 +4,7 @@ using System.Collections;
 public class SampleAIController : MonoBehaviour {
 	
 	public float health = 100f;
-	public float speed = 2.0f;
+	public float speed = 5.0f;
 
 	private float deathTimer = 3.0f;
 	public float timeUntilRemove = 3.0f;
@@ -24,6 +24,11 @@ public class SampleAIController : MonoBehaviour {
 
 	void Start()
 	{
+		float ratio = Random.Range(0.8f, 2.0f);
+		health *= ratio;
+		transform.localScale *= ratio;
+		speed *= 1 / ratio;
+
 		skeleton = transform.Find("skeleton");
 		this.transform.rigidbody.freezeRotation = true;
 

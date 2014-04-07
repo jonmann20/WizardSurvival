@@ -189,7 +189,6 @@ public class HudScript : MonoBehaviour {
 			if(i == inventorySelectedIndex)
 			{
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getSelectedItemSizeInInventory() + 1;
-				print("current item quantity: " + g.GetComponent<CollectableBase>().getQuantity());
 				g.transform.Rotate(Vector3.up * Time.deltaTime * 55);
 			}
 			else
