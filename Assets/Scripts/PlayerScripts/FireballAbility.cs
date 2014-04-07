@@ -29,9 +29,6 @@ public class FireballAbility : AbilityBase {
 
 		//set life
 		projectile.GetComponent<FireballScript>().life = MAX_LIFE;
-
-        // keep Hierarchy clean
-        projectile.transform.parent = wizardHolder.transform;
 	}
 
 	public override string getAbilityName(){
