@@ -43,6 +43,7 @@ public abstract class CollectableBase : MonoBehaviour {
 			if(collision.gameObject.GetComponent<PhotonView>().isMine)
 			{
 				GameObject NewInventoryItem = Instantiate(gameObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+				Destroy(NewInventoryItem.GetComponent<PhotonView>());
 				NewInventoryItem.GetComponent<CollectableBase>().setQuantity(quantity);
 				if(GLOBAL.addToInventory(NewInventoryItem))
 					PhotonNetwork.Destroy(gameObject);

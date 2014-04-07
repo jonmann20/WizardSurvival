@@ -19,6 +19,7 @@ public class FireArcAbility : AbilityBase {
 	
 	public override void fire()
 	{
+		print("FIRE ARC");
 		GameAudio.playChain();
 
 		if(PhotonNetwork.playerList.Length > 1)
@@ -80,6 +81,7 @@ public class FireArcAbility : AbilityBase {
 		print("wizards length: " + wizards.Count);
 		foreach(GameObject g in wizards)
 		{
+			if(g.GetComponent<PhotonView>() == null) continue;
 			if(g.GetComponent<PhotonView>().isMine) continue;
 			float distance = Vector3.Distance(transform.position, g.transform.position);
 			if(distance < closestDistance)

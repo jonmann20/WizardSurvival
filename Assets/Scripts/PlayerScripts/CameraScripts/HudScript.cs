@@ -50,7 +50,7 @@ public class HudScript : MonoBehaviour {
 	const float INVENTORY_PANELS_Z_SCALE = 0.3f;
 	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
 	public float target = 1.0f;
-	int inventorySelectedIndex = -1;
+	int inventorySelectedIndex = 0;
 
 	//INVENTORY TEXTS
 	GameObject FirstItemQuantityText;
