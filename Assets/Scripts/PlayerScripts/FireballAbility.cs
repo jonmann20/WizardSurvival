@@ -20,7 +20,7 @@ public class FireballAbility : AbilityBase {
 
 		GameObject projectile = PhotonNetwork.Instantiate(
 			FireballPrefabString, 
-			gameObject.transform.position + (new Vector3(0, 0 ,0)) + (gameObject.transform.forward.normalized * 1), 
+			Wizard.myWizard.transform.position + (Wizard.myWizard.transform.forward.normalized * 1),  
 			gameObject.transform.rotation, 0
 		) as GameObject;
 
@@ -29,6 +29,9 @@ public class FireballAbility : AbilityBase {
 
 		//set life
 		projectile.GetComponent<FireballScript>().life = MAX_LIFE;
+
+        // keep Hierarchy clean
+		projectile.transform.parent = wizardHolder.transform;
 	}
 
 	public override string getAbilityName(){
