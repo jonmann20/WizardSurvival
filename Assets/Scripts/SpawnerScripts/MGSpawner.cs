@@ -228,7 +228,8 @@ public class MGSpawner : MonoBehaviour {
 		{
 			//print ("Timer started");
 			startedSpawn = true;
-			yield return new WaitForSeconds(5.0f);
+			float randomTime = Random.Range(0.0f, 10.0f);
+			yield return new WaitForSeconds(randomTime);
 			StartCoroutine("OpeningDelay");
 
 		}

@@ -16,8 +16,6 @@ public class ItemSpawnerOnce : MonoBehaviour {
 
 	void Update()
 	{
-		print("is master client: " + PhotonNetwork.isMasterClient);
-
 		if(!spawned)
 		{
 			if(PhotonNetwork.connected)
@@ -34,16 +32,27 @@ public class ItemSpawnerOnce : MonoBehaviour {
 
 	void spawn()
 	{
-		print("NAME:" + ItemPrefab.name + "photon view:" + ItemPrefab.GetComponent<PhotonView>());
-		GameObject item;
-		if(ItemPrefab.name != "health_potion")
+		GameObject item = new GameObject();
+		if(ItemPrefab.name != "health_potion" && ItemPrefab.name != "BookNTomeFireball")
+		{
 			item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, new Vector3(0, 0, 0), Quaternion.identity, 0, null) as GameObject;
-		else
+			print("spawned a " + ItemPrefab.tag);
+			if(ItemPrefab.tag == "Tome")
+			{
+				print("before");
+				//ItemPrefab.transform.Rotate(-90, 0, 0);
+				print("after");
+			}
+		}
+		else if(ItemPrefab.name == "health_potion")
 			item = Instantiate(ItemPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+		else if(ItemPrefab.name == "BookNTomeFireball")
+			item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, new Vector3(0, 0, 0), Quaternion.Euler(-90, 0, 0), 0, null) as GameObject;
 
 		item.transform.parent = transform;
 		item.transform.localPosition = new Vector3(0, 0, 0);
-		
-		item.GetComponent<CollectableBase>().setQuantity(ItemQuantity);
+
+		if(item.GetComponent<CollectableBase>() != null)
+			item.GetComponent<CollectableBase>().setQuantity(ItemQuantity);
 	}
 }
