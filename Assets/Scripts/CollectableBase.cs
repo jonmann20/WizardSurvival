@@ -34,21 +34,28 @@ public abstract class CollectableBase : MonoBehaviour {
 
 		if(collision.gameObject.tag == "Player")
 		{
-			string quantityString = "";
-			if(quantity > 1)
-				quantityString = "(" + quantity + ")";
-
-			HudScript.setNewMessage(getName() + " " + quantityString, 120, Color.white);
 
 			if(collision.gameObject.GetComponent<PhotonView>().isMine)
 			{
+				string quantityString = "";
+				if(quantity > 1)
+					quantityString = "(" + quantity + ")";
+				
+
+
 				GameObject NewInventoryItem = Instantiate(gameObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
 				Destroy(NewInventoryItem.GetComponent<PhotonView>());
 				NewInventoryItem.GetComponent<CollectableBase>().setQuantity(quantity);
 				if(GLOBAL.addToInventory(NewInventoryItem))
-					PhotonNetwork.Destroy(gameObject);
+				{
+					Destroy(gameObject);
+					HudScript.setNewMessage(getName() + " " + quantityString, 120, Color.white);
+				}
 				else
+				{
 					Destroy(NewInventoryItem);
+					HudScript.setNewMessage("Inventory full!", 120, Color.red);
+				}
 			}
 		}
 	}

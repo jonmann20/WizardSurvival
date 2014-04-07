@@ -238,7 +238,7 @@ public class HudScript : MonoBehaviour {
 		int numInventoryItems = GLOBAL.getInventoryCount();
 
 		if(ctrl_invL.WasPressed){
-			if(inventorySelectedIndex > -1){
+			if(inventorySelectedIndex > 0){
 				GameAudio.playInvMove();
 				--inventorySelectedIndex;
 			}
@@ -262,7 +262,6 @@ public class HudScript : MonoBehaviour {
 				GameAudio.playInvSelect();
 
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
-
 			}
 			else {
 				GameAudio.playMagicFail();
@@ -275,16 +274,14 @@ public class HudScript : MonoBehaviour {
 		seconds = timer - (minutes * 60);
 
 		//RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
-		//MESSAGE TEXT
 
+		// MESSAGE TEXT
 		MessageText.GetComponent<TextMesh>().text = messageString;
-		if(messageLife > 0)
-		{
-			messageLife --;
+		if(messageLife > 0){
+			--messageLife;
 			MessageText.transform.localPosition += (new Vector3(0.1f, -1.50f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
 		}
-		else
-		{
+		else{
 			MessageText.transform.localPosition += (new Vector3(0.1f, -2.05f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
 		}
 	}
@@ -331,8 +328,6 @@ public class HudScript : MonoBehaviour {
 				tempHealth = tempHealth/100;
 				GUI.DrawTexture(new Rect( Screen.width * .05f, 5 + Screen.height * .1f + (offset * i) + (Screen.height * .022f), (Screen.width * .16f) * tempHealth, Screen.height * .01f), healthBarTexture);
 			}
-
-
 
 			//GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
 		}
