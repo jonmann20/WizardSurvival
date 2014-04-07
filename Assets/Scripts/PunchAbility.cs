@@ -31,7 +31,8 @@ public class PunchAbility : AbilityBase {
 		if(fakeArm == null)
 		{
 			arm.renderer.enabled = false;
-			fakeArm = GameObject.CreatePrimitive(PrimitiveType.Cube) as GameObject;
+			fakeArm = PhotonNetwork.Instantiate("PunchCube", transform.position, Quaternion.identity, 0) as GameObject;
+				//GameObject.CreatePrimitive(PrimitiveType.Cube) as GameObject;
 			fakeArm.GetComponent<MeshRenderer>().material = punchMat;
 			fakeArm.tag = "PlayerBullet";
 		}
@@ -68,7 +69,7 @@ public class PunchAbility : AbilityBase {
 		}
 		else
 		{
-			Destroy(fakeArm);
+			PhotonNetwork.Destroy(fakeArm);
 			arm.renderer.enabled = true;
 		}
 	}

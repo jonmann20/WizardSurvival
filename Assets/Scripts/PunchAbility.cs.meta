@@ -2,7 +2,8 @@ fileFormatVersion: 2
 guid: 8425d01a99aef40daa0cfab2a7c85f60
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PunchCubePrefab: {fileID: 100000, guid: 59677b590bfbb4943bfa45add99a3132, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

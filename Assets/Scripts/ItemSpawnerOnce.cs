@@ -35,7 +35,11 @@ public class ItemSpawnerOnce : MonoBehaviour {
 	void spawn()
 	{
 		print("NAME:" + ItemPrefab.name + "photon view:" + ItemPrefab.GetComponent<PhotonView>());
-		GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, new Vector3(0, 0, 0), Quaternion.identity, 0, null) as GameObject;
+		GameObject item;
+		if(ItemPrefab.name != "health_potion")
+			item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, new Vector3(0, 0, 0), Quaternion.identity, 0, null) as GameObject;
+		item = Instantiate(ItemPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+
 		item.transform.parent = transform;
 		item.transform.localPosition = new Vector3(0, 0, 0);
 		
