@@ -88,6 +88,7 @@ public class HudScript : MonoBehaviour {
 		for(int i = 0; i < NUMBER_OF_VOXELS; i++)
 		{
 			GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
 			cube.layer = 9;
 			cube.transform.parent = hudCamera.transform;
 			cube.transform.position = new Vector3(i * VOXEL_WIDTH + 0.1f + HEALTHBAR_X_OFFSET, HEALTHBAR_Y_OFFSET, HEALTHBAR_Z_OFFSET);

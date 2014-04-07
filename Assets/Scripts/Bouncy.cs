@@ -11,7 +11,7 @@ public class Bouncy : MonoBehaviour {
 	float damping = 0.8f;
 	
 	void Start () {
-		transform.localScale = new Vector3(scale, scale, 1);
+		transform.localScale = new Vector3(scale, scale, scale);
 	}
 	
 	void Update () {
@@ -19,6 +19,6 @@ public class Bouncy : MonoBehaviour {
 		velocity = damping * (velocity + force);
 		scale += velocity;
 		
-		transform.localScale = new Vector3(scale, scale, 1);
+		transform.localScale = new Vector3(scale, scale, scale);
 	}
 }
