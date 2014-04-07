@@ -45,7 +45,7 @@ public abstract class CollectableBase : MonoBehaviour {
 				GameObject NewInventoryItem = Instantiate(gameObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
 				NewInventoryItem.GetComponent<CollectableBase>().setQuantity(quantity);
 				if(GLOBAL.addToInventory(NewInventoryItem))
-					Destroy(gameObject);
+					PhotonNetwork.Destroy(gameObject);
 				else
 					Destroy(NewInventoryItem);
 			}
