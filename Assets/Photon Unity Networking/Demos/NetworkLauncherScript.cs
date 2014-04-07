@@ -6,8 +6,6 @@ public class NetworkLauncherScript : MonoBehaviour {
 	
 	public GameObject WizardPrefab;
 	public GameObject DebugGroundPrefab;
-	public bool gameOver = false;
-	public int gameOverTimer = 180;
 	
 	void Start () {
 		GameObject wiz = PhotonNetwork.Instantiate("Wizard", new Vector3(0, 5, 0), Quaternion.identity, 0) as GameObject;
@@ -37,22 +35,9 @@ public class NetworkLauncherScript : MonoBehaviour {
 
 		if(everyoneZeroHealth)
 		{
-			//gameOver = true;
-			//HudScript.setNewMessage("Game Over", 180);
-			
-			PhotonNetwork.Disconnect();
+			HudScript.setNewMessage("Game Over", 180);
+
 			GLOBAL.gameOver = true;
 		}
-
-		//Game Over Timer -- when it reaches zero, boot players back to title screen.
-//		if(gameOver) gameOverTimer --;
-//		if(gameOverTimer <= 0)
-//			Application.LoadLevel("Title");
-		//if(gameOver) gameOverTimer --;
-		//if(gameOverTimer <= 0)
-		//{
-			//PhotonNetwork.Disconnect();
-			//Application.LoadLevel("Title");
-		//}
 	}
 }
