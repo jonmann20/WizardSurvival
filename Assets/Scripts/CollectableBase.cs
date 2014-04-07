@@ -38,7 +38,7 @@ public abstract class CollectableBase : MonoBehaviour {
 			if(quantity > 1)
 				quantityString = "(" + quantity + ")";
 
-			HudScript.setNewMessage(getName() + " " + quantityString, 120);
+			HudScript.setNewMessage(getName() + " " + quantityString, 120, Color.white);
 
 			if(collision.gameObject.GetComponent<PhotonView>().isMine)
 			{

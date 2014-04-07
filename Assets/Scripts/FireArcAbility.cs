@@ -45,6 +45,8 @@ public class FireArcAbility : AbilityBase {
 				projectile.transform.parent = wizardHolder.transform;
 			}
 		}
+		else
+			HudScript.setNewMessage("Arc needs more players!", 120, Color.red);
 	}
 
 	void Update()
