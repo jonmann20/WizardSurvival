@@ -67,7 +67,7 @@ public class PunchAbility : AbilityBase {
 			fakeArm.transform.position = transform.position + pos + transform.forward * 0.1f;
 			fakeArm.transform.localScale = previousScaleOnBody + new Vector3(val * FIST_SCALE, val * FIST_SCALE, val * FIST_SCALE);
 		}
-		else
+		else if(lifeCounter <= 0 && fakeArm != null)
 		{
 			PhotonNetwork.Destroy(fakeArm);
 			arm.renderer.enabled = true;
