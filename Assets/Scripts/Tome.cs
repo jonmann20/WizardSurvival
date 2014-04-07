@@ -28,7 +28,7 @@ public class Tome : MonoBehaviour {
 				}
 				else {
 					AbilityManagerScript.that.changeAbility(Enum.GetName(typeof(BaseAbility), baseAbility));
-					PhotonNetwork.Destroy(gameObject);
+					Destroy(gameObject);
 				}
 			}
 		}
