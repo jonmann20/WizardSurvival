@@ -8,7 +8,7 @@ public class HealthCollectableScript : CollectableBase {
 	public override void customUpdate() { }
 	public override void useItem() 
 	{ 
-		GLOBAL.health += 40;
+		GLOBAL.health += 60;
 		if(GLOBAL.health > 100)
 			GLOBAL.health = 100;
 	}
