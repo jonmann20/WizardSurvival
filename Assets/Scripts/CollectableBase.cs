@@ -21,41 +21,49 @@ public abstract class CollectableBase : MonoBehaviour {
 	
 	void Update()
 	{
-		sinCounter += 0.025f;
-		transform.position = new Vector3(transform.position.x, transform.position.y + Mathf.Sin(sinCounter) * 0.01f, transform.position.z);
+		if(GetComponent<PhotonView>() != null)
+		if(GetComponent<PhotonView>().isMine)
+		{
+			sinCounter += 0.025f;
+			transform.position = new Vector3(transform.position.x, transform.position.y + Mathf.Sin(sinCounter) * 0.01f, transform.position.z);
 
-		if(GetComponent<InventoryItemScript>() == null)
-			transform.Rotate(Vector3.up * Time.deltaTime * 55);
+			if(GetComponent<InventoryItemScript>() == null)
+				transform.Rotate(Vector3.up * Time.deltaTime * 55);
 
-		customUpdate();
+			customUpdate();
+		}
 	}
 	
 	public void OnCollisionEnter(Collision collision) {
 
 		if(collision.gameObject.tag == "Player")
 		{
-
-			if(collision.gameObject.GetComponent<PhotonView>().isMine)
+			if(collision.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine)
 			{
 				string quantityString = "";
 				if(quantity > 1)
 					quantityString = "(" + quantity + ")";
-				
 
+				Destroy(gameObject.GetComponent<SyncScript>());
+				Destroy(gameObject.GetComponent<PhotonView>());
 
-				GameObject NewInventoryItem = Instantiate(gameObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-				Destroy(NewInventoryItem.GetComponent<PhotonView>());
-				NewInventoryItem.GetComponent<CollectableBase>().setQuantity(quantity);
-				if(GLOBAL.addToInventory(NewInventoryItem))
+				gameObject.GetComponent<CollectableBase>().setQuantity(quantity);
+
+				if(!GLOBAL.isInventoryFull())
 				{
-					Destroy(gameObject);
+					GLOBAL.addToInventory(gameObject);
 					HudScript.setNewMessage(getName() + " " + quantityString, 120, Color.white);
 				}
 				else
 				{
-					Destroy(NewInventoryItem);
 					HudScript.setNewMessage("Inventory full!", 120, Color.red);
 				}
+			}
+			else
+			{
+				PhotonNetwork.Destroy(gameObject);
+				if(gameObject != null)
+					Destroy(gameObject);
 			}
 		}
 	}

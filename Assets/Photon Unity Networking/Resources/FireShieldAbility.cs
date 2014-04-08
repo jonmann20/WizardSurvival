@@ -9,7 +9,7 @@ public class FireShieldAbility : AbilityBase {
 	float sinCounter = 0.0f;
 	const float CIRCLE_RATE = 0.2f;
 	const float CIRCLE_RADIUS = 3.0f;
-	const int NUMBER_OF_FIREBALLS = 3;
+	const int NUMBER_OF_FIREBALLS = 5;
 	List<GameObject> shieldFlames = new List<GameObject>();
 	
 	public override void fire()
@@ -45,7 +45,7 @@ public class FireShieldAbility : AbilityBase {
 			}
 			float diff = (2.0f * Mathf.PI) / ((float)NUMBER_OF_FIREBALLS);
 			float sinValue = (diff * i) + sinCounter;
-			Vector3 pos = new Vector3(Mathf.Sin(sinValue), -0.25f, Mathf.Cos(sinValue));
+			Vector3 pos = new Vector3(Mathf.Sin(sinValue), 0, Mathf.Cos(sinValue));
 			pos.Normalize();
 			pos *= CIRCLE_RADIUS;
 
