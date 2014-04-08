@@ -84,7 +84,7 @@ public class LeaderboardScript : MonoBehaviour {
 		
 		float width = 400;  // Make this wider to add more columns
 		float height = 220;
-		print("GUI OMG!!!");
+		
 		Rect r = new Rect(400 + Screen.width/2 + (Screen.width * LEADERBOARD_WIDTH), Screen.height/2 + (Screen.width * LEADERBOARD_HEIGHT)/2, Screen.width * LEADERBOARD_WIDTH, Screen.height * LEADERBOARD_HEIGHT);
 		GUILayout.BeginArea(r, new GUIStyle("box"));
 
