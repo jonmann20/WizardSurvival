@@ -62,7 +62,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 	public GameObject NetworkLauncherPrefab;
     public void OnJoinedRoom()
     {
-
+		GLOBAL.inRoom = true;
         Debug.Log("OnJoinedRoom() called by PUN. Now this client is in a room. From here on, your game would be running. For reference, all callbacks are listed in enum: PhotonNetworkingMessage");
 		Instantiate(NetworkLauncherPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 	}

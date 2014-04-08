@@ -7,6 +7,7 @@ public class GLOBAL : MonoBehaviour {
 	public static int health = 100;
 	public static int maxInventory = 3;
 	public static List<GameObject> Inventory = new List<GameObject>();
+	public static bool inRoom = false;
 
 	void Awake()
 	{
@@ -18,15 +19,17 @@ public class GLOBAL : MonoBehaviour {
 	public static bool gameOver;
 
 	//returns false if inventory full.
-	public static bool addToInventory(GameObject g)
+	public static void addToInventory(GameObject g)
+	{
+		g.AddComponent<InventoryItemScript>();
+		Inventory.Add(g);
+	}
+
+	public static bool isInventoryFull()
 	{
 		if(Inventory.Count < maxInventory)
-		{
-			g.AddComponent<InventoryItemScript>();
-			Inventory.Add(g);
-			return true;
-		}
-		return false;
+			return false;
+		return true;
 	}
 
 	public static int getInventoryCount()
@@ -61,5 +64,6 @@ public class GLOBAL : MonoBehaviour {
 		health = 100;
 		gameOver = false;
 		Inventory.Clear();
+		inRoom = false;
 	}
 }
