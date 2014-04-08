@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour {
 
 	private GameObject hud;
 
+	public int health = 100;
+
 	int hitTimer = 0;
 
 	//CONTROLS
@@ -184,6 +186,7 @@ public class PlayerController : MonoBehaviour {
 	
 	void Update () {
 
+		health = GLOBAL.health;
 		//CONTROL STATE MACHINE
 		refreshControls();
 		if(currentPlayerState == PlayerState.ACTIVE)

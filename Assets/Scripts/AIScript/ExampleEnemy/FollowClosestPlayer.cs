@@ -19,26 +19,21 @@ public class FollowClosestPlayer : MonoBehaviour {
 
 		GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
 		
-		//if( playerList.Length > 1 )
-		//{
-			//Find closest player
-		float tempX= Mathf.Abs(Mathf.Abs(playerList[0].gameObject.transform.position.x) - Mathf.Abs(this.gameObject.transform.position.x));
-		float tempY= Mathf.Abs(Mathf.Abs(playerList[0].gameObject.transform.position.y) - Mathf.Abs(this.gameObject.transform.position.y));
-		float tempZ= Mathf.Abs(Mathf.Abs(playerList[0].gameObject.transform.position.z) - Mathf.Abs(this.gameObject.transform.position.z));
-		//Vector3 distanceToPlayer = playerList[0].gameObject.transform.position - this.gameObject.transform.position;
-		float closestDistance = Mathf.Abs(Vector3.Distance( playerList[0].gameObject.transform.position, this.gameObject.transform.position));
+
+		float closestDistance = float.MaxValue;
 		int closePlayerIdx = 0;
+
 		
-		for (int i = 1; i < playerList.Length - 1; i++)
+		for (int i = 0; i < playerList.Length - 1; i++)
 		{
-			tempX= Mathf.Abs(Mathf.Abs(playerList[i].gameObject.transform.position.x) - Mathf.Abs(this.gameObject.transform.position.x));
-			tempY= Mathf.Abs(Mathf.Abs(playerList[i].gameObject.transform.position.y) - Mathf.Abs(this.gameObject.transform.position.y));
-			tempZ= Mathf.Abs(Mathf.Abs(playerList[i].gameObject.transform.position.z) - Mathf.Abs(this.gameObject.transform.position.z));
-			float tempDistance = Mathf.Abs(Vector3.Distance( playerList[i].gameObject.transform.position, this.gameObject.transform.position));
-			if( tempDistance < closestDistance )
+			//if( playerList[i].gameObject.GetComponentInChildren<PlayerController>().health > 0 )
 			{
-				closestDistance = tempDistance;
-				closePlayerIdx = i;
+				float tempDistance = Mathf.Abs(Vector3.Distance( playerList[i].gameObject.transform.position, this.gameObject.transform.position));
+				if( tempDistance < closestDistance )
+				{
+					closestDistance = tempDistance;
+					closePlayerIdx = i;
+				}
 			}
 		}
 		this.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", playerList[closePlayerIdx]);
