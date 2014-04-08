@@ -8,14 +8,11 @@ public class PlayerController : MonoBehaviour {
 	public GameObject head, hat, brim, body, legL, legR, armL, armR;
 	Color initShaderColor;
 
-	public float movementSpeed = 10;
-	public float strafeSpeed = 8;
+	float movementSpeed = 13000; // 10
+	float strafeSpeed = 11000; // 8
+    float jumpSpeed = 1500;
 
-	public enum JumpState { IN_AIR, NOT_IN_AIR };
-	public JumpState currentJumpState = JumpState.IN_AIR;
-
-	public enum PlayerState { ACTIVE, DOWN, DEAD, RAGDOLL}
-	public PlayerState currentPlayerState = PlayerState.ACTIVE;
+    public bool isInAir = true;
 
 	public float fireRate = .11f;
 	private float lastShot = -10;
@@ -39,11 +36,13 @@ public class PlayerController : MonoBehaviour {
 
 	private GameObject hud;
 
-	public int health = 100;
-
+	//public int health = 100;
 	int hitTimer = 0;
 
-	//CONTROLS
+    bool isStepL = true;
+    bool isStepR = false;
+
+	// Controls
 	InputDevice idevice = InputManager.ActiveDevice;
 	InputControl ctrl_Jump;
 	InputControl ctrl_LeftStickX;
@@ -52,9 +51,17 @@ public class PlayerController : MonoBehaviour {
 	InputControl ctrl_RightBumper;
 	InputControl ctrl_RightJoystickButton, ctrl_O;
 
+    delegate void VoidDelegate();
+    VoidDelegate getInput, updatePlayer;
+
+    Vector3 forceMovement;
+
 	void Awake(){
 		refreshControls();
 		initShaderColor = body.renderer.materials[1].GetColor("_ReflectColor");
+
+        getInput = control_active;
+        updatePlayer = update_active;
 	}
 
 	void Start(){
@@ -74,15 +81,36 @@ public class PlayerController : MonoBehaviour {
 
 		hud = GameObject.Find("HudCamera");
 
-		if( hud == null )
-		{
-			print ("HudCamera Object not found for leaderboard");
+		if(hud == null){
+			print("HudCamera Object not found for leaderboard");
 		}
 	}
 
-	void refreshControls()
-	{
+    void Update(){
+        //health = GLOBAL.health;
+
+        // Input Controls
+        refreshControls();
+        getInput();
+
+        if(updatePlayer != null) {
+            updatePlayer();
+        }
+
+        if(ctrl_Select.WasPressed) {
+            hud.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
+        }
+    }
+
+    void FixedUpdate(){
+        float vY = (rigidbody.velocity.y > 0) ? rigidbody.velocity.y / 1.2f  : rigidbody.velocity.y;
+        rigidbody.velocity = new Vector3(0, vY, 0);
+        rigidbody.AddRelativeForce(forceMovement);
+    }
+
+    void refreshControls(){
 		idevice = InputManager.ActiveDevice;
+
 		ctrl_Jump = idevice.GetControl(InputControlType.Action1);
 		ctrl_LeftStickX = idevice.GetControl(InputControlType.LeftStickX);
 		ctrl_LeftStickY = idevice.GetControl(InputControlType.LeftStickY);
@@ -92,62 +120,69 @@ public class PlayerController : MonoBehaviour {
 		ctrl_O = idevice.GetControl(InputControlType.Action2);
 	}
 
-	//Control while the player is alive and kicking
+	// control while the player is alive and kicking
 	void control_active()
 	{
-		//FIRE
+		// fire
 		if(ctrl_RightBumper.WasPressed){
 			GetComponent<AbilityManagerScript>().attemptFire();
 		}
 
-		//PUNCH
+		// punch
 		if(ctrl_RightJoystickButton.WasPressed || ctrl_O.WasPressed){
 			GetComponent<PunchAbility>().fire();
 		}
 
+
 		// movement
-		if(ctrl_LeftStickX.IsPressed) {
-			float hor = ctrl_LeftStickX.LastValue * strafeSpeed * Time.deltaTime;
-			transform.Translate(hor, 0, 0);
-			//rigidbody.velocity = new Vector3(rigidbody.velocity.x + hor, rigidbody.velocity.y, rigidbody.velocity.z);
-			//rigidbody.MovePosition(transform.position + new Vector3(hor, 0, 0));
+        float fx = 0, fy = 0, fz = 0;
+		if(ctrl_LeftStickX.IsPressed){
+			//float hor = ctrl_LeftStickX.LastValue * strafeSpeed * Time.deltaTime;
+			//transform.Translate(hor, 0, 0);
+
+            fx = ctrl_LeftStickX.LastValue * Time.deltaTime * strafeSpeed;
 		}
-		
-		if(ctrl_LeftStickY.IsPressed) {
-			float vert = ctrl_LeftStickY.LastValue * movementSpeed * Time.deltaTime;
-			transform.Translate(0, 0, vert);
-			//rigidbody.velocity = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, rigidbody.velocity.z + vert);
-			//rigidbody.MovePosition(transform.position + new Vector3(0, 0, vert));
+
+        if(ctrl_Jump.WasPressed) {
+            fy = attemptJump();
+        }
+
+		if(ctrl_LeftStickY.IsPressed){
+			//float vert = ctrl_LeftStickY.LastValue * movementSpeed * Time.deltaTime;
+			//transform.Translate(0, 0, vert);
+
+            fz = ctrl_LeftStickY.LastValue * Time.deltaTime * movementSpeed;
 		}
-		
-		// jump
-		if(ctrl_Jump.WasPressed){
-			attemptJump();
-		}
+
+        forceMovement = new Vector3(fx, fy, fz);
 	}
 
-	//control while the player is down
+	// control while the player is down
 	void control_down()
 	{
 		if(ctrl_Jump)
 		{
 			GLOBAL.health = 100;
-			currentPlayerState = PlayerState.ACTIVE;
-			Vector3 newForward = new Vector3(thisCamera.transform.forward.x, 0, thisCamera.transform.forward.z);
+
+            getInput = control_active;
+            updatePlayer = update_active;
+
+            Vector3 newForward = new Vector3(thisCamera.transform.forward.x, 0, thisCamera.transform.forward.z);
 			transform.forward = newForward;
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 		}
 	}
 
-	//control while the player is dead
-	void control_dead()
-	{
+	// control while the player is dead
+    //void control_dead()
+    //{
 
-	}
+    //}
 
 	void update_active()
 	{
 		animate();
+
 		// health
 		if(--hitTimer < 0){									// reset color
 			swapShader(initShaderColor);
@@ -155,18 +190,21 @@ public class PlayerController : MonoBehaviour {
 		else if((hitTimer <= 18 && hitTimer > 15) ||		// blink color (init)
 		        (hitTimer <= 12 && hitTimer > 9) ||
 		        (hitTimer <= 6 && hitTimer > 3)
-		        ){		
+		){		
 			swapShader(initShaderColor);
 		}
 		else {
 			swapShader(Color.red);							// blink color (red)
 		}
 		
-		if( GLOBAL.health <= 0 )
+		if(GLOBAL.health <= 0)
 		{
 			HudScript.setNewMessage("KO!", 120, Color.red);
-			currentPlayerState = PlayerState.DOWN;
-			rigidbody.constraints = RigidbodyConstraints.None;
+			
+            getInput = control_down;
+            updatePlayer = null; // update_down
+            
+            rigidbody.constraints = RigidbodyConstraints.None;
 			GLOBAL.health = 0;
 			TakeDamage(-100, transform);
 			
@@ -174,42 +212,16 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void update_down()
-	{
+    //void update_down()
+    //{
 
-	}
+    //}
 
-	void update_dead()
-	{
+    //void update_dead()
+    //{
 
-	}
-	
-	void Update () {
+    //}
 
-		health = GLOBAL.health;
-		//CONTROL STATE MACHINE
-		refreshControls();
-		if(currentPlayerState == PlayerState.ACTIVE)
-		{
-			control_active();
-			update_active();
-		}
-		else if(currentPlayerState == PlayerState.DOWN)
-		{
-			control_down();
-			update_down();
-		}
-		else if(currentPlayerState == PlayerState.DEAD)
-		{
-			control_dead();
-			update_dead();
-		}
-
-		// leaderboard
-        if(ctrl_Select.WasPressed) {
-			hud.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
-		}
-	}
 
 	void swapShader(Color c){
 		head.renderer.materials[1].SetColor("_ReflectColor", c);
@@ -222,11 +234,7 @@ public class PlayerController : MonoBehaviour {
 		armR.renderer.materials[1].SetColor("_ReflectColor", c);
 	}
 
-    bool isStepL = true;
-    bool isStepR = false;
     void animate() {
-		//print (rigidbody.velocity.magnitude);
-
 		if(rigidbody.velocity.magnitude > 0.001f){
         	animateLeg(legL.transform, ref isStepL);
         	animateLeg(legR.transform, ref isStepR);
@@ -280,50 +288,32 @@ public class PlayerController : MonoBehaviour {
                 dtAngle = 42f;
             }
         }
-        //print(dtAngle);
 
         if(dtAngle != 0) {
-			// TODO: causing IN_AIR state
-            //leg.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
+            leg.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
+
+
+            //		Vector3 vel2d = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+            //		float velocityMagnitude = vel2d.magnitude;
+            //		if(velocityMagnitude < 1)
+            //			velocityMagnitude = 0;
+            //		//print(velocityMagnitude);
+            //		sinCounter += velocityMagnitude * 10 * Time.deltaTime;
+            //		//print(sinCounter);
+            //		if(isRightLeg)
+            //			legTran.localRotation = Quaternion.Euler(Mathf.Sin(sinCounter) * 45, 0, 0);
+            //		//else
+            //			//legTran.localRotation = Quaternion.Euler(Mathf.Cos(sinCounter) * 45, 0, 0);		
         }
     }
 
-//	void animateLeg2(Transform legTran, bool isRightLeg)
-//	{
-//		Vector3 vel2d = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-//		float velocityMagnitude = vel2d.magnitude;
-//		if(velocityMagnitude < 1)
-//			velocityMagnitude = 0;
-//		//print(velocityMagnitude);
-//		sinCounter += velocityMagnitude * 10 * Time.deltaTime;
-//		//print(sinCounter);
-//		if(isRightLeg)
-//			legTran.localRotation = Quaternion.Euler(Mathf.Sin(sinCounter) * 45, 0, 0);
-//		//else
-//			//legTran.localRotation = Quaternion.Euler(Mathf.Cos(sinCounter) * 45, 0, 0);		                                  
-//	}
-
-	void attemptJump(){
-		if(currentJumpState == JumpState.NOT_IN_AIR){
+	float attemptJump(){
+		if(!isInAir){
 			GameAudio.playJump();
-			rigidbody.AddForce(0, 635, 0);
+            return jumpSpeed;
 		}
-	}
-	
-	void OnCollisionEnter(Collision col){
-		if(col.gameObject.tag == "Ground"){
-			// TODO: fix coming off ground bug
-			//GameAudio.playJumpland();
-			currentJumpState = JumpState.NOT_IN_AIR;
-		}
-	}
-	void OnCollisionStay(Collision col){
-		if(col.gameObject.tag == "Ground"){
-			currentJumpState = JumpState.NOT_IN_AIR;
-		}
-	}
-	void OnCollisionExit(Collision col){
-		currentJumpState = JumpState.IN_AIR;
+
+        return 0;
 	}
 
 	public void IncrementPoints( int numToAdd )

@@ -30,7 +30,7 @@ public class IntroScript : MonoBehaviour {
 		InputDevice device = InputManager.ActiveDevice;
 		InputControl ctrl_Start = device.GetControl(InputControlType.Start);
 		if((ctrl_Start.WasPressed)) {
-			Application.LoadLevel("NetworkSample");
+			Application.LoadLevel("Main");
 		}
 	}
 }

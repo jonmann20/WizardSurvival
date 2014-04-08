@@ -5,9 +5,11 @@ public class Wizard : MonoBehaviour {
 
 	public static GameObject myWizard;
 
-	void Awake()
-	{
-		if(!GetComponent<PhotonView>().isMine)
+	void Awake(){
+
+        PhotonView pView = GetComponent<PhotonView>();
+
+		if(pView != null && !pView.isMine)
 		{
 			PlayerController p = GetComponent<PlayerController>();
 			Rigidbody r = GetComponent<Rigidbody>();

@@ -32,25 +32,27 @@ public class MouseCamera : MonoBehaviour {
 
 	public GUITexture reticle;
 
-	void Start () {
+	void Start(){
 		Screen.lockCursor = true;
 
-		Vector3 position = (this.target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (Vector3.left * horizontalDistance) + (Vector3.up * verticalDistance);
-		//position.y += .5f;
+        if(this.target != null) {
+            Vector3 position = (this.target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (Vector3.left * horizontalDistance) + (Vector3.up * verticalDistance);
+            transform.position = position;
+        }
 		
-		//transform.rotation = rotation;
-		transform.position = position;
+		
 
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
 		y = angles.x;
 		
 		// Make the rigid body not change rotation
-		if (rigidbody)
-			rigidbody.freezeRotation = true;
+        if(rigidbody){
+            rigidbody.freezeRotation = true;
+        }
 
 
-		//reticle
+		// reticle
 		reticle.pixelInset = new Rect (0 - (Screen.width /80), 0 - (Screen.width /80), Screen.width / 40, Screen.width / 40);
 		reticle.enabled = true;
 
