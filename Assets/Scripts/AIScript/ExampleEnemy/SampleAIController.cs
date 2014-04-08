@@ -74,7 +74,7 @@ public class SampleAIController : MonoBehaviour {
 
 			if( health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy") )
 			{
-				if( coll.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine )
+				if( coll.gameObject.GetPhotonView().isMine )
 				{
 					Wizard.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
 				}

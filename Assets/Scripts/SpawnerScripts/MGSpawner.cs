@@ -6,7 +6,8 @@ using RAIN.Core;
 using RAIN.Action;
 
 public class MGSpawner : MonoBehaviour {
-	
+
+	public string EnemyToSpawn = "Skeleton_Basic";
 	public SpawnMemberType unitLevel = SpawnMemberType.Easy;
 	public GameObject[] unitList = new GameObject[3];
 	
@@ -71,7 +72,7 @@ public class MGSpawner : MonoBehaviour {
 		if (unitList[(int)unitLevel] != null && PhotonNetwork.isMasterClient)
 		{
 			Object[] temp = new Object[0];
-			GameObject unit = (GameObject) PhotonNetwork.InstantiateSceneObject("EnemyWithAI 1", this.transform.position + Random.onUnitSphere, Quaternion.identity,0, null) as GameObject;
+			GameObject unit = (GameObject) PhotonNetwork.InstantiateSceneObject(EnemyToSpawn, this.transform.position + Random.onUnitSphere, Quaternion.identity,0, null) as GameObject;
 			unit.transform.FindChild("skeletonNormal").GetComponent<MGAISuperClass>().SetOwner(this);
 
             unit.transform.parent = enemyHolder.transform;
