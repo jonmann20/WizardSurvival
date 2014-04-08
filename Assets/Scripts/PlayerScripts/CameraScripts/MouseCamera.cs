@@ -86,8 +86,13 @@ public class MouseCamera : MonoBehaviour {
 	}
 
 	void holdPos(){
-		Vector3 position = (target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (target.transform.rotation * Vector3.left * horizontalDistance) + ( target.transform.rotation * Vector3.up * verticalDistance);
-
+		Vector3 position = new Vector3(0,0,0);
+		if( GLOBAL.health > 0 )
+			position = (target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (target.transform.rotation * Vector3.left * horizontalDistance) + ( target.transform.rotation * Vector3.up * verticalDistance);
+		else
+		{
+			position = (transform.rotation * Vector3.forward * (-distance * 10)) + target.transform.position;
+		}
 		transform.position = position;
 	}
 
@@ -107,8 +112,16 @@ public class MouseCamera : MonoBehaviour {
 			
 			Quaternion rotation = Quaternion.Euler(y, x, 0);
 			//Vector3 position = (rotation * Vector3.forward * -distance) + target.transform.position + (rotation * Vector3.left * -0.5f) + ( rotation * Vector3.up * 0.2f);
-			Vector3 position = (target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (target.transform.rotation * Vector3.left * horizontalDistance) + ( target.transform.rotation * Vector3.up * verticalDistance);
 
+			Vector3 position = new Vector3(0,0,0);
+
+			if( GLOBAL.health > 0 )
+				position = (target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (target.transform.rotation * Vector3.left * horizontalDistance) + ( target.transform.rotation * Vector3.up * verticalDistance);
+			else
+			{
+				position = (rotation * Vector3.forward * (-distance * 10)) + target.transform.position;
+
+			}
 			//position.y += .5f;
 			
 			transform.rotation = rotation;
