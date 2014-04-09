@@ -30,6 +30,11 @@ public class SampleAIController : MonoBehaviour {
 		speed *= 1 / ratio;
 
 		skeleton = transform.Find("skeleton");
+
+		if( skeleton == null )
+		{
+			skeleton = transform.Find("Ice Golem");
+		}
 		this.transform.rigidbody.freezeRotation = true;
 
 		initialMaterial = skeleton.renderer.material;
