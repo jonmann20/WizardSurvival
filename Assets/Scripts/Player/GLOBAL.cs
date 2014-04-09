@@ -2,21 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GLOBAL : MonoBehaviour {
+public class GLOBAL : Photon.MonoBehaviour {
 
 	public static int health = 100;
 	public static int maxInventory = 3;
 	public static List<GameObject> Inventory = new List<GameObject>();
 	public static bool inRoom = false;
 
-	void Awake()
-	{
-		MainCamera = GameObject.FindWithTag("MainCamera") as GameObject;
-	}
-
 	public static GameObject MainCamera;
 	public static string WizardName;
 	public static bool gameOver;
+
+	public static GLOBAL that;
+
+	void Awake()
+	{
+		MainCamera = GameObject.FindWithTag("MainCamera") as GameObject;
+		that = this;
+	}
+
+
 
 	//returns false if inventory full.
 	public static void addToInventory(GameObject g)
@@ -67,7 +72,7 @@ public class GLOBAL : MonoBehaviour {
 		inRoom = false;
 	}
 
-	public static void SuperDestroy(GameObject g)
+	public void SuperDestroy(GameObject g)
 	{
 		if(g.GetComponent<PhotonView>() == null)
 		{
@@ -84,14 +89,20 @@ public class GLOBAL : MonoBehaviour {
 		else
 		{
 			print("trying to destroy object with id: " + g.GetComponent<PhotonView>().viewID);
-			g.GetComponent<PhotonView>().RPC("networkDestroyOnMasterClient", PhotonTargets.All, g.GetComponent<PhotonView>().viewID);
+			print(that.GetComponent<PhotonView>());
+			print(g.GetComponent<PhotonView>());
+		
+			photonView.RPC("networkDestroyOnMasterClient", PhotonTargets.MasterClient, g.GetComponent<PhotonView>().viewID);
 		}
 	}
 
 	[RPC]
-	public static void networkDestroyOnMasterClient(PhotonView v)
+	public void networkDestroyOnMasterClient(int id)
 	{
-		print("DELETING OBJECT VIA RPC: " + v);
-		PhotonNetwork.Destroy(v.gameObject);
+		print("DELETING OBJECT WITH id " + id + " VIA RPC: " + id);
+		PhotonView view = PhotonView.Find(id);
+		PhotonNetwork.Destroy(view.gameObject);
 	}
+
+	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
 }
