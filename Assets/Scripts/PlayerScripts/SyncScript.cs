@@ -70,7 +70,10 @@ public class SyncScript : Photon.MonoBehaviour
 			stream.Serialize(ref scale);
 
 			if(debug)
+			{
 				print("pos: " + pos + " rot: " + rot + " scale: " + scale + "rand: " + Random.Range(0.1f, 5.0f));
+				print("timeout_timer: " + timeout_timer);
+			}
 
 			latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
 			latestCorrectRot = rot;
