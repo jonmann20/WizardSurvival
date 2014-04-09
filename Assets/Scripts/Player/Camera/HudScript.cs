@@ -58,9 +58,8 @@ public class HudScript : MonoBehaviour {
 	GameObject ThirdItemQuantityText;
 
 	//MESSAGE TEXT
-	static GameObject MessageText;
-	static string messageString = "";
-	static int messageLife = 0;
+	GameObject MessageText;
+	static Queue<Message> messageQueue = new Queue<Message>();
 
 	//Leaderboard Button
 	const float LEADERBOARD_X = 0.75f;
@@ -273,16 +272,23 @@ public class HudScript : MonoBehaviour {
 		minutes = (int)timer/60;
 		seconds = timer - (minutes * 60);
 
-		//RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("00");
-
 		// MESSAGE TEXT
-		MessageText.GetComponent<TextMesh>().text = messageString;
-		if(messageLife > 0){
-			--messageLife;
-			MessageText.transform.localPosition += (new Vector3(0.1f, -1.50f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
-		}
-		else{
-			MessageText.transform.localPosition += (new Vector3(0.1f, -2.05f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
+		if(messageQueue.Count > 0)
+		{
+			MessageText.GetComponent<TextMesh>().text = messageQueue.Peek().messageString;
+			if(messageQueue.Peek().life > 0){
+				--messageQueue.Peek().life;
+				MessageText.transform.localPosition += (new Vector3(0.1f, -1.50f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
+			}
+			else{
+				MessageText.transform.localPosition += (new Vector3(0.1f, -2.05f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
+
+				//Swap to new message
+				if(MessageText.transform.localPosition.y < 2.0f)
+				{
+					messageQueue.Dequeue();
+				}
+			}
 		}
 	}
 
@@ -335,10 +341,8 @@ public class HudScript : MonoBehaviour {
 		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
     }
 
-	public static void setNewMessage(string strmessage, int duration, Color c)
+	public static void addNewMessage(string strmessage, int duration, Color c)
 	{
-		messageLife = duration;
-		messageString = strmessage;
-		MessageText.renderer.material.color = c;
+		messageQueue.Enqueue(new Message(strmessage, duration, c));
 	}
 }

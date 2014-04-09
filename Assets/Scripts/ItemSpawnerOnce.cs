@@ -24,10 +24,9 @@ public class ItemSpawnerOnce : MonoBehaviour {
 	
 	void spawn()
 	{
-		GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, new Vector3(0, 0, 0), Quaternion.identity, 0, null) as GameObject;
+		GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, transform.position, Quaternion.identity, 0, null) as GameObject;
 		
 		item.transform.parent = transform;
-		item.transform.localPosition = new Vector3(0, 0, 0);
 		
 		//If the spawned item is a collectable, give it a quantity
 		if(item.GetComponent<CollectableBase>() != null)
