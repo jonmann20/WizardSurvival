@@ -167,9 +167,6 @@ public class PlayerController : MonoBehaviour {
 		animate();
 
 		// health
-		if(GLOBAL.health <= 0){
-			HudScript.setNewMessage("KO!", 120, Color.red);
-		
 		if(GLOBAL.health <= 0)
 		{
 			HudScript.addNewMessage("KO!", 120, Color.red);
@@ -312,8 +309,7 @@ public class PlayerController : MonoBehaviour {
 			bool b = false;
 
 			for(float i=d; i < time; i += d*2){
-
-				print (i + ", " + (i+d) + " ?? " + elapsedTime);
+				//print (i + ", " + (i+d) + " ?? " + elapsedTime);
 
 				if(elapsedTime > i && elapsedTime < (i+d)){
 					b = true;
