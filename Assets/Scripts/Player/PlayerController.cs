@@ -167,27 +167,12 @@ public class PlayerController : MonoBehaviour {
 		animate();
 
 		// health
-<<<<<<< HEAD:Assets/Scripts/Player/PlayerController.cs
 		if(GLOBAL.health <= 0){
 			HudScript.setNewMessage("KO!", 120, Color.red);
-=======
-		if(--hitTimer < 0){									// reset color
-			swapShader(initShaderColor);
-		}
-		else if((hitTimer <= 18 && hitTimer > 15) ||		// blink color (init)
-		        (hitTimer <= 12 && hitTimer > 9) ||
-		        (hitTimer <= 6 && hitTimer > 3)
-		){		
-			swapShader(initShaderColor);
-		}
-		else {
-			swapShader(Color.red);							// blink color (red)
-		}
 		
 		if(GLOBAL.health <= 0)
 		{
 			HudScript.addNewMessage("KO!", 120, Color.red);
->>>>>>> 09b363617b6020a264cb5e839f4278a575b1f6be:Assets/Scripts/PlayerScripts/PlayerController.cs
 			
             getInput = control_down;
             updatePlayer = null; // update_down
