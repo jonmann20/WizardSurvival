@@ -19,7 +19,6 @@ public class FireArcAbility : AbilityBase {
 	
 	public override void fire()
 	{
-		print("FIRE ARC");
 		GameAudio.playChain();
 
 		if(PhotonNetwork.playerList.Length > 1)
@@ -35,12 +34,9 @@ public class FireArcAbility : AbilityBase {
 			{
 				sum += fraction;
 			    Vector3 p = Vector3.Lerp(first, last, sum);
-				print("first: " + first.ToString() + "last: " + last.ToString() + "sum: " + sum + "p: " + p.ToString());
+				//print("first: " + first.ToString() + "last: " + last.ToString() + "sum: " + sum + "p: " + p.ToString());
 				GameObject projectile = PhotonNetwork.Instantiate("FireballPrefab", p, Quaternion.identity, 0) as GameObject;
 				projectiles.Add(projectile);
-
-				//set life
-				projectile.GetComponent<FireballScript>().life = MAX_LIFE;
 				
 				// keep Hierarchy clean
 				projectile.transform.parent = wizardHolder.transform;
@@ -78,7 +74,7 @@ public class FireArcAbility : AbilityBase {
 	{
 		float closestDistance = 999999;
 		GameObject closestWizard = wizards[0];
-		print("wizards length: " + wizards.Count);
+
 		foreach(GameObject g in wizards)
 		{
 			if(g.GetComponent<PhotonView>() == null) continue;

@@ -10,7 +10,6 @@ public class FireballAbility : AbilityBase {
     GameObject wizardHolder;
 
 	void Awake(){
-		//print ("NEW FireballAbility CREATED!");
         wizardHolder = GameObject.Find("_WizardHolder");
 	}
 
@@ -26,9 +25,6 @@ public class FireballAbility : AbilityBase {
 
 		//set initial velocity
 		projectile.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * SPEED;
-
-		//set life
-		projectile.GetComponent<FireballScript>().life = MAX_LIFE;
 
         // keep Hierarchy clean
 		projectile.transform.parent = wizardHolder.transform;

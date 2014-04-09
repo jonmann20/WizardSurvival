@@ -25,8 +25,6 @@ public class FireShieldAbility : AbilityBase {
 				gameObject.transform.rotation, 0
 			) as GameObject;
 
-			//set life.
-			projectile.GetComponent<FireballScript>().life = MAX_LIFE;
 			//Add to projectile list for movement.
 			shieldFlames.Add(projectile);
 		}

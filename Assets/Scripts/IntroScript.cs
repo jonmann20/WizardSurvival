@@ -7,9 +7,18 @@ public class IntroScript : MonoBehaviour {
 
 	const float RATE_OF_MARCH = 1;
 	public GameObject MarchingObjectPrefab;
+	public GameObject cta;
+	Bouncy bouncy;
+
+	bool hitStart = false;
+
+	void Awake(){
+		bouncy = cta.GetComponent<Bouncy>();
+	}
 
 	void Start(){
 		PhotonNetwork.Disconnect();
+
 		GameAudio.playIntro();
 
 		for(int i=0; i < 13; ++i){
@@ -22,15 +31,28 @@ public class IntroScript : MonoBehaviour {
 
 	void Update(){
 		if(transform.position.z > 10){
-			float diff = (-10 - transform.position.z) * 0.045f;//0.005f;
+			float diff = (-10 - transform.position.z) * 0.045f;
 			transform.Translate(0, 0, diff * Time.deltaTime);
-			//transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + diff);
 		}
 
-		InputDevice device = InputManager.ActiveDevice;
-		InputControl ctrl_Start = device.GetControl(InputControlType.Start);
-		if((ctrl_Start.WasPressed)) {
-			Application.LoadLevel("EugeneLevel");
+		if(!hitStart){
+			InputDevice device = InputManager.ActiveDevice;
+			InputControl ctrl_Start = device.GetControl(InputControlType.Start);
+
+			if((ctrl_Start.WasPressed)){
+				hitStart = true;
+
+				Invoke("startGame", 2f);
+
+				GameAudio.stopIntro();
+				GameAudio.playChimes();
+				GameAudio.playInvMove();
+				bouncy.reset();
+			}
 		}
+	}
+
+	void startGame(){
+		Application.LoadLevel("EugeneLevel");
 	}
 }

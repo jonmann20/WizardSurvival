@@ -71,22 +71,27 @@ public class GLOBAL : MonoBehaviour {
 	{
 		if(g.GetComponent<PhotonView>() == null)
 		{
+			print("destroying because it isn't networked.");
 			Destroy (g);
 			return;
 		}
 
 		if(PhotonNetwork.isMasterClient)
+		{
+			print("Destroying because I'm the master.");
 			PhotonNetwork.Destroy(g);
+		}
 		else
 		{
-			//print("trying to destroy object with id: " + g.GetComponent<PhotonView>().viewID)
-			g.GetComponent<PhotonView>().RPC("networkDestroyOnMasterClient", PhotonTargets.All, g.GetComponent<PhotonView>());
+			print("trying to destroy object with id: " + g.GetComponent<PhotonView>().viewID);
+			g.GetComponent<PhotonView>().RPC("networkDestroyOnMasterClient", PhotonTargets.All, g.GetComponent<PhotonView>().viewID);
 		}
 	}
 
 	[RPC]
 	public static void networkDestroyOnMasterClient(PhotonView v)
 	{
+		print("DELETING OBJECT VIA RPC: " + v);
 		PhotonNetwork.Destroy(v.gameObject);
 	}
 }

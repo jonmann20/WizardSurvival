@@ -31,19 +31,18 @@ public class AIShootProjectile : RAINAction
     {
 		Vector3 spawnLoc = ai.Body.transform.position + (ai.Body.transform.forward.normalized * 1.5f);
 		spawnLoc.y += 0.8f;
+
 		GameObject projectile = PhotonNetwork.Instantiate(
 			"MageOrb", 
 			spawnLoc,  
 			ai.Body.transform.rotation, 
-			0) as GameObject;
+			0
+		) as GameObject;
 
-		Vector3 vel = ai.Body.transform.forward *15;
-		vel.y = 0;
 		//set velocity
+		Vector3 vel = ai.Body.transform.forward * 15;
+		vel.y = 0;
 		projectile.rigidbody.velocity = vel;
-		
-		//set life
-		projectile.GetComponent<FireballScript>().life = 80;
 
         return ActionResult.SUCCESS;
     }
