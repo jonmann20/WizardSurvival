@@ -69,7 +69,7 @@ public class SampleAIController : MonoBehaviour {
 	}
 
 	void doDamage(Collider col){
-		if(invincibilityTimer <= 0 && col.collider.gameObject.tag == "PlayerBullet"){
+		if(invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 			
