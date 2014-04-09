@@ -38,7 +38,7 @@ public abstract class CollectableBase : MonoBehaviour {
 
 		if(collision.gameObject.tag == "Player")
 		{
-			if(collision.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine)
+			/*if(collision.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine)
 			{
 				string quantityString = "";
 				if(quantity > 1)
@@ -64,7 +64,9 @@ public abstract class CollectableBase : MonoBehaviour {
 				PhotonNetwork.Destroy(gameObject);
 				if(gameObject != null)
 					Destroy(gameObject);
-			}
+			}*/
+
+			PhotonNetwork.Destroy(gameObject);
 		}
 	}
 }
