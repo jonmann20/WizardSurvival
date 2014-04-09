@@ -353,4 +353,13 @@ public class PlayerController : MonoBehaviour {
 	{
 		return networkedProperties;
 	}
+
+
+	void OnCollisionEnter(Collision coll)
+	{
+		if( coll.collider.gameObject.tag == "EnemyBullet")
+		{
+			TakeDamage(20, coll.collider.transform);
+		}
+	}
 }
