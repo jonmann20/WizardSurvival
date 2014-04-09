@@ -2,27 +2,17 @@
 using System.Collections;
 
 public class FireballScript : MonoBehaviour {
-	
-	public int life = 0;
 
-	void Awake()
-	{
-		if(!GetComponent<PhotonView>().isMine)
+	void Awake(){
+		PhotonView pView = GetComponent<PhotonView>();
+
+		if(pView != null && pView.isMine){
 			this.enabled = false;
-		//print("Fireball CREATED");
+		}
 	}
 
-	void Update () {
-		--life;
-
-		float fraction = (float)life / 30.0f;
-		
-		if(fraction < 1.0f)
-		{
-			transform.localScale = new Vector3(fraction, fraction, fraction);
-		}
-		
-		if(life <= 0)
-			PhotonNetwork.Destroy(gameObject);
+	void OnTriggerEnter(){
+		PhotonNetwork.Instantiate("Fire", gameObject.transform.position, Quaternion.identity, 0);
+		PhotonNetwork.Destroy(gameObject);
 	}
 }

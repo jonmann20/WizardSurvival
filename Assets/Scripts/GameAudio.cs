@@ -6,11 +6,11 @@ public class GameAudio : MonoBehaviour {
 	static int NUM_FLAME = 7;
 
 	public static AudioSource[] jumpSrc, flameSrc;
-	public static AudioSource jumplandSrc, introSrc, spell0Src, lowHealthSrc, 
+	public static AudioSource chimesSrc, jumplandSrc, introSrc, spell0Src, lowHealthSrc, 
 		invSelectSrc, windSrc, magicFailSrc, invMoveSrc, chainSrc, invNoMoveSrc, painSrc;
 
 	GameObject[] jumpHolder, flameHolder;
-	GameObject audioHolder, jumplandHolder, introHolder, spell0Holder, lowHealthHolder, 
+	GameObject audioHolder, chimesHolder, jumplandHolder, introHolder, spell0Holder, lowHealthHolder, 
 		invSelectHolder, windHolder, magicFailHolder, invMoveHolder, invNoMoveHolder,
 		chainHolder, painHolder;
 
@@ -27,7 +27,7 @@ public class GameAudio : MonoBehaviour {
 		for(int i=0; i < NUM_FLAME; ++i){
 			setSoundEffect(ref flameHolder[i], ref flameSrc[i], "flame");
 		}
-
+	
 		setSoundEffect(ref jumpHolder[0], ref jumpSrc[0], "jump0");
 		setSoundEffect(ref jumpHolder[1], ref jumpSrc[1], "jump1");
 		setSoundEffect(ref jumpHolder[2], ref jumpSrc[2], "jump2");
@@ -43,8 +43,14 @@ public class GameAudio : MonoBehaviour {
 		setSoundEffect(ref invNoMoveHolder, ref invNoMoveSrc, "zap13");
 		setSoundEffect(ref chainHolder, ref chainSrc, "teleport");
 		setSoundEffect(ref painHolder, ref painSrc, "pain1");
+		setSoundEffect(ref chimesHolder, ref chimesSrc, "heal");
 	}
 
+	void Start(){
+		audioHolder.transform.localPosition = Vector3.zero;
+	}
+
+	// NOTE: loads all sounds objects into the scene
 	void setSoundEffect(ref GameObject holder, ref AudioSource src, string clip){
 		holder = new GameObject(clip);
 		holder.transform.parent = audioHolder.transform;
@@ -52,6 +58,14 @@ public class GameAudio : MonoBehaviour {
 		src = holder.AddComponent<AudioSource>();
 		src.playOnAwake = false;
 		src.clip = Resources.Load<AudioClip>("Audio/" + clip);
+	}
+
+	public static void playIntro(){
+		introSrc.audio.Play();
+	}
+
+	public static void stopIntro(){
+		introSrc.audio.Stop();
 	}
 
 	public static void playJump(){
@@ -65,10 +79,6 @@ public class GameAudio : MonoBehaviour {
 
 	public static void playPain(){
 		painSrc.audio.Play();
-	}
-
-	public static void playIntro(){
-		introSrc.audio.Play();
 	}
 
 	public static void playSpell0(){
@@ -118,6 +128,10 @@ public class GameAudio : MonoBehaviour {
 
 	public static void playInvNoMove(){
 		invNoMoveSrc.audio.Play();
+	}
+
+	public static void playChimes(){
+		chimesSrc.audio.Play();
 	}
 
 	public static void playChain(){
