@@ -24,7 +24,7 @@ public class NetworkLauncherScript : MonoBehaviour {
 		{
 			GLOBAL.gameOver = true;
 			GLOBAL.health = 0;
-			HudScript.addNewMessage("The Master Client Disconnected...", 180, Color.red);
+			HudScript.addNewMessage("The Host Disconnected...", 180, Color.red);
 		}
 
 		bool everyoneZeroHealth = true;

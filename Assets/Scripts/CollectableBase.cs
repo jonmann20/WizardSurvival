@@ -66,7 +66,7 @@ public abstract class CollectableBase : MonoBehaviour {
 					Destroy(gameObject);
 			}*/
 
-			PhotonNetwork.Destroy(gameObject);
+			GLOBAL.SuperDestroy(gameObject);
 		}
 	}
 }

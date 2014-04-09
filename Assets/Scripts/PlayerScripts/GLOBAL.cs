@@ -66,4 +66,27 @@ public class GLOBAL : MonoBehaviour {
 		Inventory.Clear();
 		inRoom = false;
 	}
+
+	public static void SuperDestroy(GameObject g)
+	{
+		if(g.GetComponent<PhotonView>() == null)
+		{
+			Destroy (g);
+			return;
+		}
+
+		if(PhotonNetwork.isMasterClient)
+			PhotonNetwork.Destroy(g);
+		else
+		{
+			//print("trying to destroy object with id: " + g.GetComponent<PhotonView>().viewID)
+			g.GetComponent<PhotonView>().RPC("networkDestroyOnMasterClient", PhotonTargets.All, g.GetComponent<PhotonView>());
+		}
+	}
+
+	[RPC]
+	public static void networkDestroyOnMasterClient(PhotonView v)
+	{
+		PhotonNetwork.Destroy(v.gameObject);
+	}
 }
