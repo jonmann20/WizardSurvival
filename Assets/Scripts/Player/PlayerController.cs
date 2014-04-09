@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 
 	float movementSpeed = 13000; // 10
 	float strafeSpeed = 11000; // 8
-    float jumpSpeed = 1500;
+    float jumpSpeed = 10000;
 
     public bool isInAir = true;
 
@@ -36,8 +36,9 @@ public class PlayerController : MonoBehaviour {
 
 	private GameObject hud;
 
-	//public int health = 100;
-	int hitTimer = 0;
+	bool invincible = false;
+	float hitAnimRate = 0;
+	float hitAnimTimer = 0.5f;
 
     bool isStepL = true;
     bool isStepR = false;
@@ -80,15 +81,9 @@ public class PlayerController : MonoBehaviour {
 		}*/
 
 		hud = GameObject.Find("HudCamera");
-
-		if(hud == null){
-			print("HudCamera Object not found for leaderboard");
-		}
 	}
 
     void Update(){
-        //health = GLOBAL.health;
-
         // Input Controls
         refreshControls();
         getInput();
@@ -121,8 +116,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	// control while the player is alive and kicking
-	void control_active()
-	{
+	void control_active(){
 		// fire
 		if(ctrl_RightBumper.WasPressed){
 			GetComponent<AbilityManagerScript>().attemptFire();
@@ -137,20 +131,15 @@ public class PlayerController : MonoBehaviour {
 		// movement
         float fx = 0, fy = 0, fz = 0;
 		if(ctrl_LeftStickX.IsPressed){
-			//float hor = ctrl_LeftStickX.LastValue * strafeSpeed * Time.deltaTime;
-			//transform.Translate(hor, 0, 0);
-
             fx = ctrl_LeftStickX.LastValue * Time.deltaTime * strafeSpeed;
 		}
 
-        if(ctrl_Jump.WasPressed) {
-            fy = attemptJump();
+		if(!isInAir && ctrl_Jump.WasPressed) {
+			GameAudio.playJump();
+			fy = jumpSpeed * Time.deltaTime;
         }
 
 		if(ctrl_LeftStickY.IsPressed){
-			//float vert = ctrl_LeftStickY.LastValue * movementSpeed * Time.deltaTime;
-			//transform.Translate(0, 0, vert);
-
             fz = ctrl_LeftStickY.LastValue * Time.deltaTime * movementSpeed;
 		}
 
@@ -173,32 +162,11 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	// control while the player is dead
-    //void control_dead()
-    //{
-
-    //}
-
-	void update_active()
-	{
+	void update_active(){
 		animate();
 
 		// health
-		if(--hitTimer < 0){									// reset color
-			swapShader(initShaderColor);
-		}
-		else if((hitTimer <= 18 && hitTimer > 15) ||		// blink color (init)
-		        (hitTimer <= 12 && hitTimer > 9) ||
-		        (hitTimer <= 6 && hitTimer > 3)
-		){		
-			swapShader(initShaderColor);
-		}
-		else {
-			swapShader(Color.red);							// blink color (red)
-		}
-		
-		if(GLOBAL.health <= 0)
-		{
+		if(GLOBAL.health <= 0){
 			HudScript.setNewMessage("KO!", 120, Color.red);
 			
             getInput = control_down;
@@ -211,17 +179,6 @@ public class PlayerController : MonoBehaviour {
 			score = 0;
 		}
 	}
-
-    //void update_down()
-    //{
-
-    //}
-
-    //void update_dead()
-    //{
-
-    //}
-
 
 	void swapShader(Color c){
 		head.renderer.materials[1].SetColor("_ReflectColor", c);
@@ -307,15 +264,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-	float attemptJump(){
-		if(!isInAir){
-			GameAudio.playJump();
-            return jumpSpeed;
-		}
-
-        return 0;
-	}
-
 	public void IncrementPoints( int numToAdd )
 	{
 		score += numToAdd;
@@ -334,23 +282,60 @@ public class PlayerController : MonoBehaviour {
 		//hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 	}
 	
-	public void TakeDamage(int damage, Transform t)
-	{
-		if(hitTimer < 0){
-			hitTimer = 21;
+	public void TakeDamage(int damage, Transform t){
+		if(!invincible){
+			invincible = true;
+			StartCoroutine("animDamage");
 
 			GameAudio.playPain();
 			swapShader(Color.red);
-
-			GLOBAL.health = Mathf.Clamp(GLOBAL.health - damage, 0 , 100 );
+			
+			GLOBAL.health = Mathf.Clamp(GLOBAL.health - damage, 0, 100);
 			networkedProperties["Health"] = GLOBAL.health;
 			
 			PhotonNetwork.player.SetCustomProperties(networkedProperties);
 		}
 	}
 
-	public ExitGames.Client.Photon.Hashtable GetNetworkedProperties()
-	{
+	IEnumerator animDamage(){
+		const int time = 3;
+		float elapsedTime = 0;
+
+		float d = 0.2f;
+
+		while(elapsedTime < time){
+			bool b = false;
+
+			for(float i=d; i < time; i += d*2){
+
+				print (i + ", " + (i+d) + " ?? " + elapsedTime);
+
+				if(elapsedTime > i && elapsedTime < (i+d)){
+					b = true;
+					break;
+				}
+			}
+
+			if(b){
+				swapShader(initShaderColor);	// blink color (init)
+			}
+			else {
+				swapShader(Color.red);			// blink color (red)
+			}
+
+			elapsedTime += Time.deltaTime;
+			yield return null;
+			
+			if(elapsedTime >= time){
+				invincible = false;
+				swapShader(initShaderColor);	// reset color
+			}
+		}
+
+
+	}
+
+	public ExitGames.Client.Photon.Hashtable GetNetworkedProperties(){
 		return networkedProperties;
 	}
 }
