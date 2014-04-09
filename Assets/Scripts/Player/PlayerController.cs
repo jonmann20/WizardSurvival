@@ -339,4 +339,13 @@ public class PlayerController : MonoBehaviour {
 	public ExitGames.Client.Photon.Hashtable GetNetworkedProperties(){
 		return networkedProperties;
 	}
+
+
+	void OnCollisionEnter(Collision coll)
+	{
+		if( coll.collider.gameObject.tag == "EnemyBullet")
+		{
+			TakeDamage(20, coll.collider.transform);
+		}
+	}
 }
