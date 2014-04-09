@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour {
 	public GameObject head, hat, brim, body, legL, legR, armL, armR;
 	Color initShaderColor;
 
-	float movementSpeed = 13000; // 10
-	float strafeSpeed = 11000; // 8
-    float jumpSpeed = 10000;
+	float movementSpeed = 500;
+	float strafeSpeed = 400;
+    float jumpSpeed = 700;
 
     public bool isInAir = true;
 
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour {
     delegate void VoidDelegate();
     VoidDelegate getInput, updatePlayer;
 
-    Vector3 forceMovement;
+    Vector3 velMovement;
 
 	void Awake(){
 		refreshControls();
@@ -98,9 +98,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate(){
-        float vY = (rigidbody.velocity.y > 0) ? rigidbody.velocity.y / 1.2f  : rigidbody.velocity.y;
-        rigidbody.velocity = new Vector3(0, vY, 0);
-        rigidbody.AddRelativeForce(forceMovement);
+        rigidbody.velocity = transform.TransformDirection(velMovement * Time.fixedDeltaTime);
     }
 
     void refreshControls(){
@@ -127,23 +125,34 @@ public class PlayerController : MonoBehaviour {
 			GetComponent<PunchAbility>().fire();
 		}
 
-
 		// movement
-        float fx = 0, fy = 0, fz = 0;
 		if(ctrl_LeftStickX.IsPressed){
-            fx = ctrl_LeftStickX.LastValue * Time.deltaTime * strafeSpeed;
+            velMovement.x = ctrl_LeftStickX.LastValue * strafeSpeed;
 		}
+        else {
+            velMovement.x = 0;
+        }
 
-		if(!isInAir && ctrl_Jump.WasPressed) {
-			GameAudio.playJump();
-			fy = jumpSpeed * Time.deltaTime;
+        velMovement.y += Physics.gravity.y * 1.4f;
+
+        if(ctrl_Jump.WasPressed){
+            if(!isInAir){
+                GameAudio.playJump();
+                velMovement.y = jumpSpeed;
+            }
+        }
+        else {
+            if(rigidbody.velocity.y > 0){
+                velMovement.y /= 1.12f;
+            }
         }
 
 		if(ctrl_LeftStickY.IsPressed){
-            fz = ctrl_LeftStickY.LastValue * Time.deltaTime * movementSpeed;
+            velMovement.z = ctrl_LeftStickY.LastValue * movementSpeed;
 		}
-
-        forceMovement = new Vector3(fx, fy, fz);
+        else {
+            velMovement.z = 0;
+        }
 	}
 
 	// control while the player is down
@@ -300,10 +309,10 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	IEnumerator animDamage(){
-		const int time = 3;
+		const int time = 2;
 		float elapsedTime = 0;
 
-		float d = 0.2f;
+		float d = 0.18f;
 
 		while(elapsedTime < time){
 			bool b = false;

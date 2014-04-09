@@ -13,6 +13,6 @@ public class FireballScript : MonoBehaviour {
 
 	void OnTriggerEnter(){
 		PhotonNetwork.Instantiate("Fire", gameObject.transform.position, Quaternion.identity, 0);
-		PhotonNetwork.Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
 	}
 }
