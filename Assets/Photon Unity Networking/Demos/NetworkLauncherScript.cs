@@ -6,18 +6,26 @@ public class NetworkLauncherScript : MonoBehaviour {
 	
 	public GameObject WizardPrefab;
 	public GameObject DebugGroundPrefab;
+	public int IDOfPreviousMasterClient = -1;
 	
 	void Start () {
+		IDOfPreviousMasterClient = PhotonNetwork.masterClient.ID;
 		GameObject wiz = PhotonNetwork.Instantiate("Wizard", new Vector3(0, 5, 0), Quaternion.identity, 0) as GameObject;
 		GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;
 		(mainCam.GetComponent<MouseCamera>() as MouseCamera).target = wiz;
-
 
         // keep Hierachy clean
         wiz.transform.parent = GameObject.Find("_WizardHolder").transform;
 	}
 	
 	void Update () {
+
+		if(hasMasterClientDisconnected() && !GLOBAL.gameOver)
+		{
+			GLOBAL.gameOver = true;
+			GLOBAL.health = 0;
+			HudScript.addNewMessage("The Master Client Disconnected...", 180, Color.red);
+		}
 
 		bool everyoneZeroHealth = true;
 		//CHECK IF EVERYONE IS DEAD
@@ -35,9 +43,16 @@ public class NetworkLauncherScript : MonoBehaviour {
 
 		if(everyoneZeroHealth)
 		{
-			HudScript.setNewMessage("Game Over", 180, Color.red);
+			HudScript.addNewMessage("Game Over", 180, Color.red);
 
 			GLOBAL.gameOver = true;
 		}
+	}
+
+	bool hasMasterClientDisconnected()
+	{
+		if(PhotonNetwork.masterClient.ID != IDOfPreviousMasterClient) 
+			return true;
+		return false;
 	}
 }

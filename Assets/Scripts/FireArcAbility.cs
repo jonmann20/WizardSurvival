@@ -47,7 +47,7 @@ public class FireArcAbility : AbilityBase {
 			}
 		}
 		else
-			HudScript.setNewMessage("Arc needs more players!", 120, Color.red);
+			HudScript.addNewMessage("Arc needs more players!", 120, Color.red);
 	}
 
 	void Update()

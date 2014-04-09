@@ -160,6 +160,7 @@ public class PlayerController : MonoBehaviour {
 	// control while the player is down
 	void control_down()
 	{
+		/*
 		if(ctrl_Jump)
 		{
 			GLOBAL.health = 100;
@@ -170,7 +171,7 @@ public class PlayerController : MonoBehaviour {
             Vector3 newForward = new Vector3(thisCamera.transform.forward.x, 0, thisCamera.transform.forward.z);
 			transform.forward = newForward;
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-		}
+		}*/
 	}
 
 	// control while the player is dead
@@ -199,7 +200,7 @@ public class PlayerController : MonoBehaviour {
 		
 		if(GLOBAL.health <= 0)
 		{
-			HudScript.setNewMessage("KO!", 120, Color.red);
+			HudScript.addNewMessage("KO!", 120, Color.red);
 			
             getInput = control_down;
             updatePlayer = null; // update_down
