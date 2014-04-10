@@ -214,6 +214,21 @@ public class EZGUI : MonoBehaviour {
 
     #endregion GUI.Label
 
+    #region GUI.Box
+
+    /// <summary>
+    /// Draws a colored rectangle.
+    /// </summary>
+    public static void drawBox(float x, float y, float w, float h, Color c){
+        Texture2D texture = new Texture2D(1, 1);
+        texture.SetPixel(0, 0, c);
+        texture.Apply();
+        GUI.skin.box.normal.background = texture;
+        GUI.Box(new Rect(x, y, w, h), GUIContent.none);
+    }
+
+    #endregion GUI.Box
+
     #region GUI.Button
 
     /// <summary>

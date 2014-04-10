@@ -71,78 +71,55 @@ public class Leaderboard : MonoBehaviour {
 		}
 	}
 
-
 	void OnGUI(){
 		if(!GLOBAL.gameOver && this.gs != gameState.leaderboard){
 			return;
 		}
 
-        //EZGUI.init();
+        EZGUI.init();
 
+        float startX = 210 + 30;
+        EZGUI.drawBox(startX - 30, 90, 1500, 900, new Color(0.09f, 0.09f, 0.09f, 0.44f));
 
-        //GUILayoutOption[] width200 = new GUILayoutOption[] {GUILayout.Width(200)};
-		
-        //float width = 400;  // Make this wider to add more columns
-        //float height = 220;
+        EZOpt e = new EZOpt();
+        e.dropShadow = new Color(0.1f, 0.1f, 0.1f);
+        e.leftJustify = false;
 
-        Rect r = new Rect(
-            400 + Screen.width/2 + (Screen.width * LEADERBOARD_WIDTH),
-            Screen.height/2 + (Screen.width * LEADERBOARD_HEIGHT)/2, 
-            Screen.width * LEADERBOARD_WIDTH,
-            Screen.height * LEADERBOARD_HEIGHT
-        );
+        EZGUI.placeTxt("Leaderboard", 50, EZGUI.HALFW, 170, e);
+        e.leftJustify = true;
 
-        GUILayout.BeginArea(r, new GUIStyle("box"));
+        List<dreamloLeaderBoard.Score> scoreList = null;//dl.ToListHighToLow();
+        if(scoreList != null) {
+            int i = 0;
+            foreach(dreamloLeaderBoard.Score s in scoreList) {
+                EZGUI.placeTxt(s.playerName, 35, startX, 230 + (i * 100), e);
+                EZGUI.placeTxt(s.score.ToString(), 35, startX, 230 + (i*100) + 50, e);
 
-        if(GLOBAL.gameOver) {
-            GUILayout.Label("Press \"Start\" to continue");
+                ++i;
+            }
         }
         else {
-            GUILayout.Label("Press \"△\" to return to the start screen");
-            GUILayout.Label("Press \"O\" to quit the game");
+            e.color = new Color(0.95f, 0.95f, 0.95f);
+            EZGUI.placeTxt("-No Entries-", 35, startX, 230, e);
         }
 
-		//GUILayout.BeginVertical();
-
-//		if (this.gs == gameState.leaderboard)
-//		{
-//			GUILayout.Label("High Scores:");
-//			List<dreamloLeaderBoard.Score> scoreList = dl.ToListHighToLow();
-//			
-//			if (scoreList == null) 
-//			{
-//				GUILayout.Label("(loading...)");
-//			} 
-//			else 
-//			{
-//				int maxToDisplay = 20;
-//				int count = 0;
-//
-//				foreach (dreamloLeaderBoard.Score currentScore in scoreList)
-//				{
-//					count++;
-//					GUILayout.BeginHorizontal();
-//					GUILayout.Label(currentScore.playerName, width200);
-//					GUILayout.Label(currentScore.score.ToString(), width200);
-//					GUILayout.EndHorizontal();
-//					
-//					if (count >= maxToDisplay) break;
-//				}
-//			}
-//		}
-		//GUILayout.EndArea();
+        e.color = new Color(0.95f, 0.95f, 0.95f);
+        if(GLOBAL.gameOver) {
+            EZGUI.placeTxt("Press \"Start\" to return to start screen", 33, startX, 990 - 20, e);
+        }
+        else {
+            EZGUI.placeTxt("Press \"△\" to return to start screen", 33, startX, 990 - 60, e);
+            EZGUI.placeTxt("Press \"○\" to quit game", 33, startX, 990 - 20, e);
+        }
 	}
 
-	public void FlipGameState()
-	{
+	public void FlipGameState(){
 		if(GLOBAL.gameOver) return;
 
-		if( this.gs == gameState.leaderboard )
-		{
+		if(this.gs == gameState.leaderboard){
 			this.gs = gameState.running;
 		}
-		else
-		{
+		else {
 			this.gs = gameState.leaderboard;
 		}
 	}
