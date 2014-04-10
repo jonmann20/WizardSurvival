@@ -284,9 +284,11 @@ public class HudScript : MonoBehaviour {
 				MessageText.transform.localPosition += (new Vector3(0.1f, -2.05f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
 
 				//Swap to new message
-				if(MessageText.transform.localPosition.y < 2.0f)
+				if(MessageText.transform.localPosition.y < -2.0f)
 				{
 					messageQueue.Dequeue();
+					if(messageQueue.Peek() != null)
+						MessageText.renderer.material.color = messageQueue.Peek().color;
 				}
 			}
 		}

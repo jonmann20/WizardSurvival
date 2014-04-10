@@ -36,37 +36,29 @@ public abstract class CollectableBase : MonoBehaviour {
 	
 	public void OnCollisionEnter(Collision collision) {
 
-		if(collision.gameObject.tag == "Player")
+		if(collision.gameObject.tag == "Player" && collision.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine)
 		{
-			/*if(collision.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine)
+			if(!GLOBAL.isInventoryFull())
 			{
 				string quantityString = "";
 				if(quantity > 1)
 					quantityString = "(" + quantity + ")";
+				HudScript.addNewMessage(getName() + " " + quantityString, 120, Color.white);
 
 				Destroy(gameObject.GetComponent<SyncScript>());
 				Destroy(gameObject.GetComponent<PhotonView>());
 
-				gameObject.GetComponent<CollectableBase>().setQuantity(quantity);
+				GameObject newItem = Instantiate(gameObject) as GameObject;
+				GLOBAL.addToInventory(newItem);
 
-				if(!GLOBAL.isInventoryFull())
-				{
-					GLOBAL.addToInventory(gameObject);
-					HudScript.setNewMessage(getName() + " " + quantityString, 120, Color.white);
-				}
-				else
-				{
-					HudScript.setNewMessage("Inventory full!", 120, Color.red);
-				}
+				newItem.GetComponent<CollectableBase>().setQuantity(quantity);
+
+				GLOBAL.that.SuperDestroy(gameObject);
 			}
 			else
 			{
-				PhotonNetwork.Destroy(gameObject);
-				if(gameObject != null)
-					Destroy(gameObject);
-			}*/
-
-			PhotonNetwork.Destroy(gameObject);
+				HudScript.addNewMessage("Inventory full!", 120, Color.red);
+			}
 		}
 	}
 }
