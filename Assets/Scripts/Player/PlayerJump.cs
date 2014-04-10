@@ -10,15 +10,15 @@ public class PlayerJump : MonoBehaviour {
         pController = wizard.GetComponent<PlayerController>();
     }
 
-    void OnTriggerEnter(Collider col){
-        //if(col.gameObject.tag == "Ground"){
-            pController.isInAir = false;
-        //}
+    void OnTriggerEnter(){
+        pController.isInAir = false;
     }
 
-    void OnTriggerExit(Collider col){
-        //if(col.gameObject.tag == "Ground"){
-            pController.isInAir = true;
-        //}
+    void OnTriggerStay(){
+        pController.isInAir = false;
+    }
+
+    void OnTriggerExit(){
+        pController.isInAir = true;
     }
 }

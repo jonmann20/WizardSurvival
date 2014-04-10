@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         if(ctrl_Select.WasPressed) {
-            hud.gameObject.GetComponent<LeaderboardScript>().FlipGameState();
+            hud.gameObject.GetComponent<Leaderboard>().FlipGameState();
         }
     }
 
@@ -202,8 +202,10 @@ public class PlayerController : MonoBehaviour {
 		armR.renderer.materials[1].SetColor("_ReflectColor", c);
 	}
 
-    void animate() {
-		if(rigidbody.velocity.magnitude > 0.001f){
+    void animate(){
+        Vector2 v = new Vector2(rigidbody.velocity.x, rigidbody.velocity.z);
+
+		if(v.magnitude > 0.3f){
         	animateLeg(legL.transform, ref isStepL);
         	animateLeg(legR.transform, ref isStepR);
 

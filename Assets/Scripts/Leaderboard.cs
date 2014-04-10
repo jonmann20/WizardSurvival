@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using InControl;
 
-public class LeaderboardScript : MonoBehaviour {
+public class Leaderboard : MonoBehaviour {
 	float startTime = 10.0f;
 	float timeLeft = 0.0f;
 	
@@ -26,8 +26,7 @@ public class LeaderboardScript : MonoBehaviour {
 	// Reference to the dreamloLeaderboard prefab in the scene
 	dreamloLeaderBoard dl;
 
-	void Start () 
-	{
+	void Start(){
 		// get the reference here...
 		this.dl = dreamloLeaderBoard.GetSceneDreamloLeaderboard();
 		
@@ -73,28 +72,35 @@ public class LeaderboardScript : MonoBehaviour {
 	}
 
 
-	void OnGUI()
-	{
-		if(!GLOBAL.gameOver && this.gs != gameState.leaderboard)
-		{
+	void OnGUI(){
+		if(!GLOBAL.gameOver && this.gs != gameState.leaderboard){
 			return;
 		}
 
-		GUILayoutOption[] width200 = new GUILayoutOption[] {GUILayout.Width(200)};
-		
-		float width = 400;  // Make this wider to add more columns
-		float height = 220;
-		
-		Rect r = new Rect(400 + Screen.width/2 + (Screen.width * LEADERBOARD_WIDTH), Screen.height/2 + (Screen.width * LEADERBOARD_HEIGHT)/2, Screen.width * LEADERBOARD_WIDTH, Screen.height * LEADERBOARD_HEIGHT);
-		GUILayout.BeginArea(r, new GUIStyle("box"));
+        //EZGUI.init();
 
-		if(GLOBAL.gameOver){
-			GUILayout.Label("Press \"Start\" to continue");
-		}
-		else {
-			GUILayout.Label("Press \"△\" to return to the start screen");
-			GUILayout.Label("Press \"O\" to quit the game");
-		}
+
+        //GUILayoutOption[] width200 = new GUILayoutOption[] {GUILayout.Width(200)};
+		
+        //float width = 400;  // Make this wider to add more columns
+        //float height = 220;
+
+        Rect r = new Rect(
+            400 + Screen.width/2 + (Screen.width * LEADERBOARD_WIDTH),
+            Screen.height/2 + (Screen.width * LEADERBOARD_HEIGHT)/2, 
+            Screen.width * LEADERBOARD_WIDTH,
+            Screen.height * LEADERBOARD_HEIGHT
+        );
+
+        GUILayout.BeginArea(r, new GUIStyle("box"));
+
+        if(GLOBAL.gameOver) {
+            GUILayout.Label("Press \"Start\" to continue");
+        }
+        else {
+            GUILayout.Label("Press \"△\" to return to the start screen");
+            GUILayout.Label("Press \"O\" to quit the game");
+        }
 
 		//GUILayout.BeginVertical();
 

@@ -22,15 +22,17 @@ public class ItemSpawnerOnce : MonoBehaviour {
 		}
 	}
 	
-	void spawn()
-	{
+	void spawn(){
 		GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, transform.position, Quaternion.identity, 0, null) as GameObject;
-		
-		item.transform.parent = transform;
-		
-		//If the spawned item is a collectable, give it a quantity
-		if(item.GetComponent<CollectableBase>() != null)
-			item.GetComponent<CollectableBase>().setQuantity(ItemQuantity);
+
+        //if(item != null) {
+            item.transform.parent = transform;
+
+            // If the spawned item is a collectable, give it a quantity
+            if(item.GetComponent<CollectableBase>() != null) {
+                item.GetComponent<CollectableBase>().setQuantity(ItemQuantity);
+            }
+        //}
 	}
 }
 

@@ -41,7 +41,7 @@ public class MGSpawner : MonoBehaviour {
     }
 
 	//Location of Spawner
-	void Start () {
+	void Start(){
 		StartCoroutine("OpeningDelay");
 		//StartSpawn();
 	}
@@ -54,7 +54,7 @@ public class MGSpawner : MonoBehaviour {
 	//for continous waves 
 	public void RemoveUnit()
 	{
-		numberOfUnits--;
+		--numberOfUnits;
 	}
 
 	//for continous waves (use if multiple spawners)
@@ -63,7 +63,7 @@ public class MGSpawner : MonoBehaviour {
 		// if the unit's spawnID is equal to this spawnersID then remove an unit count
 		if (spawnID == sID)
 		{
-			numberOfUnits--;
+			--numberOfUnits;
 		}
 	}
 
@@ -210,29 +210,23 @@ public class MGSpawner : MonoBehaviour {
 	public void StartSpawn()
 	{
 		//if( PhotonNetwork.isMasterClient )
-		{
+		//{
 			spawn = true;
 			StartCoroutine("DoSpawn");
-		}
+		//}
 	}
 
 	private IEnumerator OpeningDelay()
 	{
-		if( startedSpawn == true )
-		{
-			//print ("Starting spawn");
+		if(startedSpawn == true){
 			StartSpawn();
-
-			//return;
 		}
-		else
-		{
-			//print ("Timer started");
+		else {
 			startedSpawn = true;
 			float randomTime = Random.Range(0.0f, 10.0f);
+
 			yield return new WaitForSeconds(randomTime);
 			StartCoroutine("OpeningDelay");
-
 		}
 	}
 }

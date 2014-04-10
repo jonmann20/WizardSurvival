@@ -33,3 +33,9 @@ https://www.assetstore.unity3d.com/#/content/9831
 
 open book:
 http://opengameart.org/content/spell-book-of-fire
+
+Fire:
+http://opengameart.org/content/fire-evil-spell
+
+TailWhip:
+http://opengameart.org/content/fire-whip-hit-yo-frankie

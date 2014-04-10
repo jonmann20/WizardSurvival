@@ -42,12 +42,12 @@ public class HudScript : MonoBehaviour {
 	public Shader toonShaderLight;
 
 	//INVENTORY
-	const float INVENTORY_OFFSET_X = -3.75f;
-	const float INVENTORY_OFFSET_Y = -2.0f;
+	const float INVENTORY_OFFSET_X = -3.65f;
+	const float INVENTORY_OFFSET_Y = -2.1f;
 	const float INVENTORY_OFFSET_Z = 5;
 	const float INVENTORY_PANELS_X_SCALE = 0.3f;
-	const float INVENTORY_PANELS_Y_SCALE = 0.1f;
-	const float INVENTORY_PANELS_Z_SCALE = 0.3f;
+	const float INVENTORY_PANELS_Y_SCALE = 0.08f;
+	const float INVENTORY_PANELS_Z_SCALE = 0.08f;
 	const float INVENTORY_PANELS_X_SEPARATION = 0.3f;
 	public float target = 1.0f;
 	int inventorySelectedIndex = 0;
@@ -67,7 +67,7 @@ public class HudScript : MonoBehaviour {
 	const float LEADERBOARD_WIDTH = 0.18f;
 	const float LEADERBOARD_HEIGHT = 0.07f;
 
-	void Awake () {
+	void Awake(){
 		healthPerVoxel = 100.0f / (float)NUMBER_OF_VOXELS;
 		hudCamera = GameObject.FindWithTag("HudCamera") as GameObject;
 		hudLight = (GameObject.FindWithTag("HudLight") as GameObject).GetComponent<Light>();
@@ -77,7 +77,7 @@ public class HudScript : MonoBehaviour {
 		ThirdItemQuantityText = GameObject.Find("ThirdItemQuantityText") as GameObject;
 
 		MessageText = GameObject.Find("MessageText") as GameObject;
-		ScoreText.transform.localPosition = new Vector3(1.849f, -1.433f, 3.12f);
+		//ScoreText.transform.localPosition = new Vector3(1.849f, -1.433f, 3.12f);
 
 		//HEALTH
 		Color greenColor = Color.green;
@@ -137,7 +137,7 @@ public class HudScript : MonoBehaviour {
 		}
 	}
 
-	void FixedUpdate () {
+	void FixedUpdate(){
 		sinCounter += HEALTHBAR_FLOAT_RATE;
 
 		if(sinCounter > Mathf.PI * healthVoxels.Count * 2){

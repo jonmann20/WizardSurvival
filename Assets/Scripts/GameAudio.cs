@@ -3,15 +3,15 @@ using System.Collections;
 
 public class GameAudio : MonoBehaviour {
 
-	static int NUM_FLAME = 7;
+	static int NUM_FLAME = 1;
 
 	public static AudioSource[] jumpSrc, flameSrc;
 	public static AudioSource chimesSrc, jumplandSrc, introSrc, spell0Src, lowHealthSrc, 
-		invSelectSrc, windSrc, magicFailSrc, invMoveSrc, chainSrc, invNoMoveSrc, painSrc;
+		invSelectSrc, windSrc, magicFailSrc, invMoveSrc, chainSrc, invNoMoveSrc, painSrc, flameShootSrc;
 
 	GameObject[] jumpHolder, flameHolder;
 	GameObject audioHolder, chimesHolder, jumplandHolder, introHolder, spell0Holder, lowHealthHolder, 
-		invSelectHolder, windHolder, magicFailHolder, invMoveHolder, invNoMoveHolder,
+		invSelectHolder, windHolder, magicFailHolder, invMoveHolder, invNoMoveHolder, flameShootHolder,
 		chainHolder, painHolder;
 
 	void Awake(){
@@ -25,9 +25,11 @@ public class GameAudio : MonoBehaviour {
 		flameHolder = new GameObject[NUM_FLAME];
 
 		for(int i=0; i < NUM_FLAME; ++i){
-			setSoundEffect(ref flameHolder[i], ref flameSrc[i], "flame");
+			setSoundEffect(ref flameHolder[i], ref flameSrc[i], "Fire");
 		}
-	
+
+        setSoundEffect(ref flameShootHolder, ref flameShootSrc, "TailWhip");
+
 		setSoundEffect(ref jumpHolder[0], ref jumpSrc[0], "jump0");
 		setSoundEffect(ref jumpHolder[1], ref jumpSrc[1], "jump1");
 		setSoundEffect(ref jumpHolder[2], ref jumpSrc[2], "jump2");
@@ -59,6 +61,10 @@ public class GameAudio : MonoBehaviour {
 		src.playOnAwake = false;
 		src.clip = Resources.Load<AudioClip>("Audio/" + clip);
 	}
+
+    public static void playFlameShoot() {
+        flameShootSrc.audio.Play();
+    }
 
 	public static void playIntro(){
 		introSrc.audio.Play();

@@ -9,6 +9,8 @@ public class FireExplosion : MonoBehaviour {
         p0.Simulate(0.6f);
         p1.Simulate(0.8f);
 
+        GameAudio.playFlame();
+
         Invoke("destroy", 2);
     }
 

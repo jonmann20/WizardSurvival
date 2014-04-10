@@ -3,7 +3,7 @@ using System.Collections;
 using InControl;
 using ExitGames.Client.Photon;
 
-public class IntroScript : MonoBehaviour {
+public class Intro : MonoBehaviour {
 
 	const float RATE_OF_MARCH = 1;
 	public GameObject MarchingObjectPrefab;

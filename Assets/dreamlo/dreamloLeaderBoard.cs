@@ -44,9 +44,10 @@ public class dreamloLeaderBoard : MonoBehaviour {
 		
 		if (go == null) 
 		{
-			Debug.LogError("Could not find dreamloPrefab in the scene.");
+			Debug.LogWarning("Could not find dreamloPrefab in the scene.");
 			return null;
 		}
+
 		return go.GetComponent<dreamloLeaderBoard>();
 	}
 	

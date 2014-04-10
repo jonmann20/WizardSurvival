@@ -32,10 +32,11 @@ public class SampleAIController : MonoBehaviour {
 		if(skeleton == null){
 			skeleton = transform.Find("Ice Golem");
 		}
-		if( skeleton == null )
-		{
+
+		if(skeleton == null){
 			skeleton = transform.Find("demon");
 		}
+
 		this.transform.rigidbody.freezeRotation = true;
 
 		initialMaterial = skeleton.renderer.material;
@@ -61,10 +62,12 @@ public class SampleAIController : MonoBehaviour {
 		// invincible
 		if(invincibilityTimer > 0){
 			--invincibilityTimer;
-			skeleton.renderer.material = redMaterial; 
+			skeleton.renderer.material = redMaterial;
+            skeleton.renderer.materials[1].SetColor("_Color", Color.red);
 		}
 		else {
 			skeleton.renderer.material = initialMaterial;
+            skeleton.renderer.materials[1].SetColor("_Color", new Color(0.63529411764f, 0.63529411764f, 0.63529411764f));
 		}
 	}
 
