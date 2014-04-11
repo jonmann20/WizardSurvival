@@ -16,6 +16,6 @@ public class FireExplosion : MonoBehaviour {
 
 
     void destroy() {
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
     }
 }
