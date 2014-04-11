@@ -3,6 +3,8 @@ using System.Collections;
 
 public class FireballScript : MonoBehaviour {
 
+	public GameObject FirePrefab;
+
 	void Awake(){
 		PhotonView pView = GetComponent<PhotonView>();
 
@@ -14,7 +16,7 @@ public class FireballScript : MonoBehaviour {
 	void OnTriggerEnter(){
 		if(GetComponent<PhotonView>().isMine)
 		{
-			PhotonNetwork.Instantiate("Fire", gameObject.transform.position, Quaternion.identity, 0);
+			Instantiate(FirePrefab, gameObject.transform.position, Quaternion.identity);
 			GLOBAL.that.SuperDestroy(gameObject);
 		}
 	}

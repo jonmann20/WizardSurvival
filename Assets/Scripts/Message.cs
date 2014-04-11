@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Message : MonoBehaviour {
+public class Message {
 
 	public string messageString;
 	public int life;
