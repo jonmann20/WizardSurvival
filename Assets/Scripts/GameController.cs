@@ -54,23 +54,31 @@ public class GameController : MonoBehaviour {
 			}
 			else
 			{
-				connected = true;
+
 				print (PhotonNetwork.countOfPlayersInRooms);
 
 				if( PhotonNetwork.isMasterClient )
 				{
-					masterClientController = Wizard.myWizard.GetComponent<PlayerController>();
-					wave = (int) PhotonNetwork.player.customProperties["Wave"];
-					waveTimer = timeBetweenWaves;
-					spawners = GameObject.FindGameObjectsWithTag("Spawner");
-					if( spawners.Length == 0 )
+					if( Wizard.myWizard != null )
 					{
-						Debug.LogError("Make sure you make spawners with tag 'Spawner'");
+						masterClientController = Wizard.myWizard.GetComponent<PlayerController>();
+						wave = (int) PhotonNetwork.player.customProperties["Wave"];
+						waveTimer = timeBetweenWaves;
+						spawners = GameObject.FindGameObjectsWithTag("Spawner");
+						if( spawners.Length == 0 )
+						{
+							Debug.LogError("Make sure you make spawners with tag 'Spawner'");
+						}
+						
+						for(int i = 0; i < SpawnWeights.Length; i++ )
+						{
+							totalWeight += SpawnWeights[i];
+						}
+						connected = true;
 					}
-					
-					for(int i = 0; i < SpawnWeights.Length; i++ )
+					else
 					{
-						totalWeight += SpawnWeights[i];
+						return;
 					}
 				}
 				else
