@@ -10,7 +10,8 @@ public class NetworkLauncherScript : MonoBehaviour {
 	
 	void Start () {
 		IDOfPreviousMasterClient = PhotonNetwork.masterClient.ID;
-		GameObject wiz = PhotonNetwork.Instantiate("Wizard", new Vector3(0, 5, 0), Quaternion.identity, 0) as GameObject;
+		GameObject wiz = PhotonNetwork.Instantiate("Wizard", new Vector3(-189, 4.9f, 87.6f), Quaternion.identity, 0) as GameObject;
+		wiz.transform.position = new Vector3(-129, 8.71f, 87.3f);
 		GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;
 		(mainCam.GetComponent<MouseCamera>() as MouseCamera).target = wiz;
 

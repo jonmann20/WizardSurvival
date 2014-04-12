@@ -24,7 +24,7 @@ public class Intro : MonoBehaviour {
 		for(int i=0; i < 13; ++i){
 			for(int j= 0; j < 13; ++j){
 				Vector3 pos = new Vector3(i * 4 - 47, 1, j * 4 + 95);
-				GameObject newMarcher = Instantiate(MarchingObjectPrefab, pos, Quaternion.identity) as GameObject;
+				Instantiate(MarchingObjectPrefab, pos, Quaternion.identity);
 			}
 		}
 	}
