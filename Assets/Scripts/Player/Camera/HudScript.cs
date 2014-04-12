@@ -28,9 +28,11 @@ public class HudScript : MonoBehaviour {
     //public GameObject AbilityNameText;
     public GameObject ScoreText;
 	public GameObject RoundTimer;
+	public GameObject WaveText;
 	private float timer = 300f;
 	private float seconds = 0;
 	private int minutes = 0;
+	private int wave;
 
 	//HealthBar
 	public Texture healthBarTexture;
@@ -267,10 +269,59 @@ public class HudScript : MonoBehaviour {
 			}
 		}
 
-		// timer
-		timer -= Time.deltaTime;
+		/*// timer
+		if( PhotonNetwork.player.isMasterClient )
+		{
+			timer -= Time.deltaTime;
+			if( Wizard.myWizard != null )
+			{
+				Wizard.myWizard.GetComponent<PlayerController>().networkedProperties["Time"] = timer;
+				PhotonNetwork.player.SetCustomProperties(Wizard.myWizard.GetComponent<PlayerController>().GetNetworkedProperties());
+			}
+
+		}
+		else
+		{
+			if( PhotonNetwork.masterClient != null )
+			{
+				if( PhotonNetwork.masterClient.customProperties.ContainsKey("Time") )
+				{
+					timer = (float) PhotonNetwork.masterClient.customProperties["Time"];
+				}
+				else
+				{
+					timer -= Time.deltaTime;
+				}
+			}
+			else
+			{
+				timer -= Time.deltaTime;
+			}
+		}
 		minutes = (int)timer/60;
 		seconds = timer - (minutes * 60);
+
+		if( seconds > 9 )
+			RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + seconds.ToString("0");
+		else
+		{
+			RoundTimer.GetComponent<TextMesh>().text = minutes + ":" + "0" + seconds.ToString("0");
+		}*/
+
+		//WAVE TEXT
+		if( PhotonNetwork.masterClient != null )
+		{
+			if( PhotonNetwork.masterClient.customProperties.ContainsKey("Wave") )
+			{
+				wave = (int) PhotonNetwork.masterClient.customProperties["Wave"];
+			}
+			else
+			{
+				wave = -1;
+			}
+
+			WaveText.GetComponent<TextMesh>().text = "Wave: " + wave;
+		}
 
 		// MESSAGE TEXT
 		if(messageQueue.Count > 0)

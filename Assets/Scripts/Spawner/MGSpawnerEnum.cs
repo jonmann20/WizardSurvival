@@ -16,8 +16,10 @@ namespace MGSpawn.Spawn
 	public enum SpawnMemberType
 	{
 
-		Easy = 0,
-		Medium,
-		Hard
+		Skeleton_Basic = 0,
+		Skeleton_Spear,
+		Skeleton_Mage,
+		Ice_Golem,
+		Daemon
 	}
 }
