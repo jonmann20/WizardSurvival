@@ -8,7 +8,7 @@ using RAIN.Action;
 public class MGSpawner : MonoBehaviour {
 
 	public string EnemyToSpawn = "Skeleton_Basic";
-	public SpawnMemberType unitLevel = SpawnMemberType.Easy;
+	public SpawnMemberType unitLevel = SpawnMemberType.Skeleton_Basic;
 	public GameObject[] unitList = new GameObject[3];
 	
 	public int totalUnits = 10;
@@ -42,7 +42,7 @@ public class MGSpawner : MonoBehaviour {
 
 	//Location of Spawner
 	void Start(){
-		StartCoroutine("OpeningDelay");
+		//StartCoroutine("OpeningDelay");
 		//StartSpawn();
 	}
 
@@ -182,6 +182,14 @@ public class MGSpawner : MonoBehaviour {
 		get
 		{
 			return totalWaves - numWaves;
+		}
+	}
+
+	public int NumUnitsAlive
+	{
+		get
+		{
+			return numberOfUnits;
 		}
 	}
 

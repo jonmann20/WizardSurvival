@@ -71,6 +71,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 		Inventory.Clear();
 		inRoom = false;
 	}
+	
 
 	public void SuperDestroy(GameObject g)
 	{
@@ -105,4 +106,6 @@ public class GLOBAL : Photon.MonoBehaviour {
 	}
 
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
+
+
 }
