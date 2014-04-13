@@ -28,9 +28,6 @@ public class HudScript : MonoBehaviour {
     //public GameObject AbilityNameText;
     public GameObject ScoreText;
 	public GameObject RoundTimer;
-	private float timer = 300f;
-	private float seconds = 0;
-	private int minutes = 0;
 
 	//HealthBar
 	public Texture healthBarTexture;
@@ -267,15 +264,11 @@ public class HudScript : MonoBehaviour {
 			}
 		}
 
-		// timer
-		timer -= Time.deltaTime;
-		minutes = (int)timer/60;
-		seconds = timer - (minutes * 60);
-
 		// MESSAGE TEXT
 		if(messageQueue.Count > 0)
 		{
 			MessageText.GetComponent<TextMesh>().text = messageQueue.Peek().messageString;
+			MessageText.renderer.material.color = messageQueue.Peek().color;
 			if(messageQueue.Peek().life > 0){
 				--messageQueue.Peek().life;
 				MessageText.transform.localPosition += (new Vector3(0.1f, -1.50f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
@@ -287,8 +280,6 @@ public class HudScript : MonoBehaviour {
 				if(MessageText.transform.localPosition.y < -2.0f)
 				{
 					messageQueue.Dequeue();
-					if(messageQueue.Peek() != null)
-						MessageText.renderer.material.color = messageQueue.Peek().color;
 				}
 			}
 		}
