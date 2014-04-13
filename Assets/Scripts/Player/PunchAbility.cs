@@ -15,7 +15,6 @@ public class PunchAbility : AbilityBase {
 	GameObject arm;
 	GameObject fakeArm;
 	Vector3 previousLocalPositionOnBody;
-	Vector3 previousScaleOnBody;
 
 	Material punchMat;
 
@@ -65,7 +64,6 @@ public class PunchAbility : AbilityBase {
 			pos *= DISTANCE;
 
 			fakeArm.transform.position = transform.position + pos + transform.forward * 0.1f;
-			fakeArm.transform.localScale = previousScaleOnBody + new Vector3(val * FIST_SCALE, val * FIST_SCALE, val * FIST_SCALE);
 		}
 		else if(lifeCounter <= 0 && fakeArm != null)
 		{

@@ -14,9 +14,6 @@ public class SyncScript : Photon.MonoBehaviour
 
 	public bool debug = false;
 
-	const int TIMEOUT_MAX = 120;
-	int timeout_timer = TIMEOUT_MAX;
-	
 	public void Awake()
 	{
 		if (photonView.isMine)
@@ -72,7 +69,6 @@ public class SyncScript : Photon.MonoBehaviour
 			if(debug)
 			{
 				print("pos: " + pos + " rot: " + rot + " scale: " + scale + "rand: " + Random.Range(0.1f, 5.0f));
-				print("timeout_timer: " + timeout_timer);
 			}
 
 			latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
@@ -88,8 +84,6 @@ public class SyncScript : Photon.MonoBehaviour
 	
 	public void Update()
 	{
-		//timeout_timer --;
-
 		// We get 10 updates per sec. sometimes a few less or one or two more, depending on variation of lag.
 		// Due to that we want to reach the correct position in a little over 100ms. This way, we usually avoid a stop.
 		// Lerp() gets a fraction value between 0 and 1. This is how far we went from A to B.
@@ -97,12 +91,9 @@ public class SyncScript : Photon.MonoBehaviour
 		// Our fraction variable would reach 1 in 100ms if we multiply deltaTime by 10.
 		// We want it to take a bit longer, so we multiply with 9 instead.
 
-		//if(timeout_timer > 0)
-		//{
-			fraction = fraction + Time.deltaTime * 9;
-			transform.position = Vector3.Lerp(onUpdatePos, latestCorrectPos, fraction);    // set our pos between A and B
-			transform.rotation = Quaternion.Lerp(onUpdateRot, latestCorrectRot, fraction);
-			transform.localScale = Vector3.Lerp(onUpdateScale, latestCorrectScale, fraction);
-		//}
+		fraction = fraction + Time.deltaTime * 9;
+		transform.position = Vector3.Lerp(onUpdatePos, latestCorrectPos, fraction);    // set our pos between A and B
+		transform.rotation = Quaternion.Lerp(onUpdateRot, latestCorrectRot, fraction);
+		transform.localScale = Vector3.Lerp(onUpdateScale, latestCorrectScale, fraction);
 	}
 }

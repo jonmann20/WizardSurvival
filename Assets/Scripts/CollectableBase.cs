@@ -14,11 +14,7 @@ public abstract class CollectableBase : MonoBehaviour {
 	public int getQuantity() { return quantity; }
 	
 	float sinCounter = 0.0f;
-	Vector3 initialPosition;
-	void Awake () {
-		initialPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-	}
-	
+
 	void Update()
 	{
 		if(GetComponent<PhotonView>() != null)

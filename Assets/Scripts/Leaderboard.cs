@@ -48,15 +48,22 @@ public class Leaderboard : MonoBehaviour {
 				InputControl ctrl_Start = device.GetControl(InputControlType.Start);
 				
 				if(ctrl_Start.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed){
-					Application.LoadLevel("Title");
+					Logger.that.write();
+					StartCoroutine(GLOBAL.ChangeSceneWithDelay("Title", 1));
 				}
 			}
 			else {
 				if(ctrl_T.WasPressed){
-					Application.LoadLevel("Title");
+					Logger.that.write();
+					print("trying to changescene");
+					StartCoroutine(GLOBAL.ChangeSceneWithDelay("Title", 1));
+					print("did changescene");
 				}
 				else if(ctrl_O.WasPressed){
-					Application.Quit();
+					Logger.that.write();
+					print("trying to quit");
+					StartCoroutine(GLOBAL.QuitWithDelay(1));
+					print("did quit");
 				}
 			}
 		}
