@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour {
 				}
 				else
 				{
-					print ("This is not the master client");
+					//print ("This is not the master client");
 				}
 			}
 		}
