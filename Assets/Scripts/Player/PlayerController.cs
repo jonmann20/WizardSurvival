@@ -352,11 +352,12 @@ public class PlayerController : MonoBehaviour {
 	}
 
 
-	void OnCollisionEnter(Collision coll)
+	void OnTriggerEnter(Collider coll)
 	{
-		if( coll.collider.gameObject.tag == "EnemyBullet")
+		if( coll.gameObject.tag == "EnemyBullet")
 		{
 			TakeDamage(20, coll.collider.transform);
+			GLOBAL.that.SuperDestroy(coll.gameObject);
 		}
 	}
 }
