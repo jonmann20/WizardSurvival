@@ -81,15 +81,15 @@ public class GLOBAL : Photon.MonoBehaviour {
 			return;
 		}
 
+		if(g.GetComponent<PhotonView>().isMine)
+			PhotonNetwork.Destroy(g);
+
 		if(PhotonNetwork.isMasterClient)
 		{
 			PhotonNetwork.Destroy(g);
 		}
 		else
 		{
-			print(that.GetComponent<PhotonView>());
-			print(g.GetComponent<PhotonView>());
-		
 			photonView.RPC("networkDestroyOnMasterClient", PhotonTargets.MasterClient, g.GetComponent<PhotonView>().viewID);
 		}
 	}

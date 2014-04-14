@@ -20,10 +20,10 @@ public class FireShieldAbility : AbilityBase {
 		{
 			Vector3 pos = new Vector3(0, 0, 0);
 
-			GameObject projectile = PhotonNetwork.InstantiateSceneObject(
+			GameObject projectile = PhotonNetwork.Instantiate(
 				ProjectilePrefabString, 
 				pos, 
-				gameObject.transform.rotation, 0, null
+				gameObject.transform.rotation, 0
 			) as GameObject;
 
 			//Add to projectile list for movement.

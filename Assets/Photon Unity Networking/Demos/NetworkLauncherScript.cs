@@ -51,6 +51,8 @@ public class NetworkLauncherScript : MonoBehaviour {
 
 	bool hasMasterClientDisconnected()
 	{
+		if(PhotonNetwork.masterClient == null)
+			return false;
 		if(PhotonNetwork.masterClient.ID != IDOfPreviousMasterClient) 
 			return true;
 		return false;
