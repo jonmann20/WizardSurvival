@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 
 	float movementSpeed = 500;
 	float strafeSpeed = 400;
-    float jumpSpeed = 700;
+    float jumpSpeed = 500;
 
     public bool isInAir = true;
 
