@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour {
 	private int numUnitsStillinScene = 0;
 
 	private bool WaveOver = true;
-	public float timeBetweenWaves = 15;
+	public float timeBetweenWaves = 7;
 	private float waveTimer; 
 
 	private float totalWeight;
@@ -87,6 +87,13 @@ public class GameController : MonoBehaviour {
 				}
 			}
 		}
+		else
+		{
+			if( PhotonNetwork.isMasterClient != true )
+			{
+				return;
+			}
+		}
 
 		//In between waves
 		if( WaveOver == true )
@@ -122,7 +129,15 @@ public class GameController : MonoBehaviour {
 		//check to see if wave is over
 		if( spawning == false && doneSpawning == true )
 		{
-			numUnitsStillinScene = 0;
+			GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+			print ( enemies.Length );
+			if ( enemies.Length <= 0 )
+			{
+				WaveOver = true;
+				doneSpawning = false;
+			}
+			/*numUnitsStillinScene = 0;
 			for( int i = 0; i < spawners.Length; i++ )
 			{
 				numUnitsStillinScene += spawners[i].GetComponent<MGSpawner>().numberOfUnits;
@@ -132,7 +147,7 @@ public class GameController : MonoBehaviour {
 			{
 				WaveOver = true;
 				doneSpawning = false;
-			}
+			}*/
 
 		}
 

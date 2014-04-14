@@ -74,6 +74,7 @@ public class MGSpawner : MonoBehaviour {
 			//Object[] temp = new Object[0];
 			GameObject unit = (GameObject) PhotonNetwork.InstantiateSceneObject(EnemyToSpawn, this.transform.position + Random.onUnitSphere, Quaternion.identity,0, null) as GameObject;
 			unit.transform.FindChild("skeletonNormal").GetComponent<MGAISuperClass>().SetOwner(this);
+			unit.tag = "Enemy";
 
             unit.transform.parent = enemyHolder.transform;
 
