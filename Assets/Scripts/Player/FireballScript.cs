@@ -8,7 +8,7 @@ public class FireballScript : MonoBehaviour {
 	void Awake(){
 		PhotonView pView = GetComponent<PhotonView>();
 
-		if(pView != null && pView.isMine){
+		if(pView != null && !pView.isMine){
 			this.enabled = false;
 		}
 	}

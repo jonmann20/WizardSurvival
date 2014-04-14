@@ -4,7 +4,14 @@ using System.Collections;
 public class LimitedLife : MonoBehaviour {
 	
 	public int life = 180;
-	
+
+	void Start()
+	{
+		if(GetComponent<PhotonView>() != null && !GetComponent<PhotonView>().isMine){
+			this.enabled = false;
+		}
+	}
+
 	void Update()
 	{
 		life --;
