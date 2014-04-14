@@ -28,13 +28,14 @@ public class MouseLook : MonoBehaviour {
 	public float minimumY = -60F;
 	public float maximumY = 60F;
 
-	float rotationY = 0F;
+	public float rotationY = 0F;
+	public float rotationX = 0F;
 
 	void Update ()
 	{
 		if (axes == RotationAxes.MouseXAndY)
 		{
-			float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
+			rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
 			
 			rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
 			rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);

@@ -266,6 +266,7 @@ public class HudScript : MonoBehaviour {
 				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
 			}
 			else {
+				HudScript.addNewMessage("No Item Selected!", 60, Color.red);
 				GameAudio.playMagicFail();
 			}
 		}

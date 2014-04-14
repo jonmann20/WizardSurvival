@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class FireShieldAbility : AbilityBase {
 	
-	string FireballPrefabString = "FireballPrefab";
+	string ProjectilePrefabString = "InvisibleProjectile";
 	const int MAX_LIFE = 90;
 	float sinCounter = 0.0f;
 	const float CIRCLE_RATE = 0.2f;
@@ -21,7 +21,7 @@ public class FireShieldAbility : AbilityBase {
 			Vector3 pos = new Vector3(0, 0, 0);
 
 			GameObject projectile = PhotonNetwork.InstantiateSceneObject(
-				FireballPrefabString, 
+				ProjectilePrefabString, 
 				pos, 
 				gameObject.transform.rotation, 0, null
 			) as GameObject;

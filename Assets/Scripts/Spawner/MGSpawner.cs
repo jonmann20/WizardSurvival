@@ -143,6 +143,7 @@ public class MGSpawner : MonoBehaviour {
 						{
 							if (numberOfUnits <= 0)
 							{
+								HudScript.addNewMessage("Wave " + numWaves + " Complete!", 120, Color.green);
 								numWaves++;
 								checkEnemyLevel = false;
 								numberOfUnits = 0;
