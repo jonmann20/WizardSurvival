@@ -7,12 +7,6 @@ public class Door : MonoBehaviour {
 	private bool doorOpen = false;
 	private int count = 0;
 	// Use this for initialization
-	void playDoorAnim () {
-		if (door_LastIndex == 0) {
-			animation.Play("DoorLeftOpen");
-			animation.Play("DoorRightOpen");
-		}
-	}
 
 	void Update () {
 		if (doorOpen == false) {
