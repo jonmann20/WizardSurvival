@@ -31,7 +31,6 @@ public class PunchAbility : AbilityBase {
 		{
 			arm.renderer.enabled = false;
 			fakeArm = PhotonNetwork.Instantiate("PunchCube", transform.position, Quaternion.identity, 0) as GameObject;
-				//GameObject.CreatePrimitive(PrimitiveType.Cube) as GameObject;
 			fakeArm.GetComponent<MeshRenderer>().material = punchMat;
 			fakeArm.tag = "PlayerBullet";
 		}
@@ -41,7 +40,6 @@ public class PunchAbility : AbilityBase {
 	
 	void Update()
 	{
-
 		if(lifeCounter > 0)
 		{
 			lifeCounter --;
@@ -64,6 +62,7 @@ public class PunchAbility : AbilityBase {
 			pos *= DISTANCE;
 
 			fakeArm.transform.position = transform.position + pos + transform.forward * 0.1f;
+			fakeArm.transform.localScale = new Vector3(1, 1, 1) * val;
 		}
 		else if(lifeCounter <= 0 && fakeArm != null)
 		{
