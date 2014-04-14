@@ -16,7 +16,7 @@ public class MGAISuperClass : MonoBehaviour {
 	{
 		if(mOwner != null)
 		{
-			mOwner.RemoveUnit(mOwner.spawnID);
+			mOwner.RemoveUnit();
 		}
 
 		GLOBAL.that.SuperDestroy(this.transform.parent.transform.gameObject);

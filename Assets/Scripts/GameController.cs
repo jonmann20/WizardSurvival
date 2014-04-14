@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour {
 
 	private PlayerController masterClientController;
 
-	private int numUnitstoSpawn = 5;
+	public int numUnitstoSpawn = 5;
 	private int SpawnedUnits = 0;
 	private int numUnitsStillinScene = 0;
 
@@ -97,11 +97,13 @@ public class GameController : MonoBehaviour {
 			{
 				wave++;
 				masterClientController.networkedProperties["Wave"] = wave;
+				PhotonNetwork.player.SetCustomProperties(masterClientController.networkedProperties);
 				waveTimer = timeBetweenWaves;
 				WaveOver = false;
 				doneSpawning = false;
 				spawning = false;
 				SpawnedUnits = 0;
+				numUnitsStillinScene = 0;
 				numUnitstoSpawn = numUnitstoSpawn + (int)((float)numUnitstoSpawn * 0.2f);
 			}
 			return;
@@ -123,11 +125,13 @@ public class GameController : MonoBehaviour {
 			numUnitsStillinScene = 0;
 			for( int i = 0; i < spawners.Length; i++ )
 			{
-				numUnitsStillinScene += spawners[i].GetComponent<MGSpawner>().NumUnitsAlive;
+				numUnitsStillinScene += spawners[i].GetComponent<MGSpawner>().numberOfUnits;
 			}
+			print (numUnitsStillinScene);
 			if( numUnitsStillinScene <= 0 )
 			{
 				WaveOver = true;
+				doneSpawning = false;
 			}
 
 		}
@@ -157,7 +161,7 @@ public class GameController : MonoBehaviour {
 			}
 			if( index == -1 )
 			{
-				index = SpawnWeights.Length-1;
+				index = SpawnWeights.Length-2;
 			}
 
 			switch (index)
@@ -182,7 +186,7 @@ public class GameController : MonoBehaviour {
 			}
 
 
-
+			spawners[spawnerIdx].GetComponent<MGSpawner>().Reset();
 			spawners[spawnerIdx].GetComponent<MGSpawner>().StartSpawn();
 			
 			SpawnedUnits++;

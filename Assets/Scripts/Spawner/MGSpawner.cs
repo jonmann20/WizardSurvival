@@ -12,7 +12,7 @@ public class MGSpawner : MonoBehaviour {
 	public GameObject[] unitList = new GameObject[3];
 	
 	public int totalUnits = 10;
-	private int numberOfUnits = 0;
+	public int numberOfUnits = 0;
 	private int totalSpawnedUnits = 0;
 
 	public int spawnID = 0;
@@ -172,6 +172,7 @@ public class MGSpawner : MonoBehaviour {
 	{
 		waveSpawn = false;
 		checkEnemyLevel = true;
+		startedSpawn = false;
 		numWaves = 0;
 		totalSpawnedUnits = 0;
 		lastWaveSpawnTime = Time.time;

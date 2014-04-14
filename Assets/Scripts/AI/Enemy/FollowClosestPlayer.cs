@@ -21,7 +21,7 @@ public class FollowClosestPlayer : MonoBehaviour {
 		
 
 		float closestDistance = float.MaxValue;
-		int closePlayerIdx = 0;
+		int closePlayerIdx = -1;
 
 		
 		for (int i = 0; i < playerList.Length - 1; i++)
