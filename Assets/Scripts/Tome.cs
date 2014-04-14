@@ -10,6 +10,10 @@ public class Tome : MonoBehaviour {
 
 	public GameObject dialog;
 	public BaseAbility baseAbility;
+	/*GameObject doorLeft = GameObject.Find ("DoorLeftPivot");
+	DoorLeft doorLscript = doorLeft.GetComponent(typeof(DoorLeft));
+	GameObject doorRight = GameObject.Find ("DoorRightPivot");
+	DoorRight doorRscript = doorRight.GetComponent(typeof(DoorRight));*/
 
 	bool dialogVisible = false;
 
@@ -25,6 +29,11 @@ public class Tome : MonoBehaviour {
 				if(AbilityManagerScript.currentAbility){
 					// alert!! can't pickup more than one base ability
 					GameAudio.playInvNoMove();
+					/*
+					if (doorLscript.doorOpen == false && doorRscript.doorOpen == false) {
+						doorLscript.playDoorAnim();
+						doorRscript.playDoorAnim();
+					}*/
 				}
 				else {
 					AbilityManagerScript.that.changeAbility(Enum.GetName(typeof(BaseAbility), baseAbility));
