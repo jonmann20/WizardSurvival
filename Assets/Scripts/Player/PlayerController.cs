@@ -57,6 +57,9 @@ public class PlayerController : MonoBehaviour {
 
     Vector3 velMovement;
 
+	//JUMPING
+	public float plusY = 0;
+
 	void Awake(){
 		refreshControls();
 		initShaderColor = body.renderer.materials[1].GetColor("_ReflectColor");
@@ -66,6 +69,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Start(){
+		plusY = Physics.gravity.y * 1.4f;
 		thisCamera = (GameObject.FindWithTag("MainCamera") as GameObject).transform;
 		spawnPoint = (GameObject.Find("SpawnPoint") as GameObject);
 
@@ -133,7 +137,7 @@ public class PlayerController : MonoBehaviour {
             velMovement.x = 0;
         }
 
-        velMovement.y += Physics.gravity.y * 1.4f;
+        velMovement.y += plusY;
 
         if(ctrl_Jump.WasPressed){
             if(!isInAir){
