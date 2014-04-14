@@ -17,10 +17,10 @@ public class FireballAbility : AbilityBase {
 	{
 		GameAudio.playFlameShoot();
 
-		GameObject projectile = PhotonNetwork.InstantiateSceneObject(
+		GameObject projectile = PhotonNetwork.Instantiate(
 			FireballPrefabString, 
 			Wizard.myWizard.transform.position + (Wizard.myWizard.transform.forward.normalized * 1),  
-			gameObject.transform.rotation, 0, null
+			gameObject.transform.rotation, 0
 		) as GameObject;
 
 		//set initial velocity
