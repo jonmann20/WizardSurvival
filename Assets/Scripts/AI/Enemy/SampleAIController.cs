@@ -19,7 +19,7 @@ public class SampleAIController : MonoBehaviour {
 	MeshRenderer renderer;
 	
 	Transform skeleton;
-
+	private bool speedIsSet = false;
 	public int scoreValue = 10;
 	public Shader toonShader;
 
@@ -46,11 +46,12 @@ public class SampleAIController : MonoBehaviour {
 		redMaterial = new Material(Shader.Find("Toon/Basic Outline"));
 		redMaterial.color = Color.red;
 
-		this.transform.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
+		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.Speed = speed;
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
 
 	void Update(){
+	
 		if(health <= 0){
 			//transform.GetComponent<BoxCollider>().enabled = false;
 			gameObject.layer = LayerMask.NameToLayer("Dead Enemy");
