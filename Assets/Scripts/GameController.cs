@@ -32,17 +32,12 @@ public class GameController : MonoBehaviour {
 
 	private bool connected = false;
 	
-
-	// Use this for initialization
-	void Start () {
+	void Start(){
 		waveTimer = timeBetweenWaves;
-
 	}
 	
-	// Update is called once per frame
-	void Update () {
-
-		if( connected == false )
+	void Update(){
+		if(connected == false)
 		{
 			if( PhotonNetwork.isNonMasterClientInRoom == true )
 			{
@@ -55,7 +50,7 @@ public class GameController : MonoBehaviour {
 			else
 			{
 
-				print (PhotonNetwork.countOfPlayersInRooms);
+				//print (PhotonNetwork.countOfPlayersInRooms);
 
 				if( PhotonNetwork.isMasterClient )
 				{
@@ -156,61 +151,59 @@ public class GameController : MonoBehaviour {
 
 	private IEnumerator WaveSpawn()
 	{
-
-		//still some units to spawn
-		while( numUnitstoSpawn > SpawnedUnits )
+		// still some units to spawn
+		while(numUnitstoSpawn > SpawnedUnits)
 		{
 			yield return new WaitForSeconds(timeBetweenSpawns);
+
 			int spawnerIdx = Random.Range(0,spawners.Length-1);
 			float randomWeight = Random.Range(0,totalWeight);
 
 			int index = -1;
-			for(int i = 0; i < SpawnWeights.Length; i++ )
+			for(int i = 0; i < SpawnWeights.Length; ++i)
 			{
-				if( randomWeight < SpawnWeights[i] )
+				if(randomWeight < SpawnWeights[i])
 				{
 					index = i;
 					break;
 				}
+
 				randomWeight -= SpawnWeights[i];
 			}
-			if( index == -1 )
+
+			if(index == -1)
 			{
 				index = SpawnWeights.Length-2;
 			}
 
 			switch (index)
 			{
-			case 0:
-				spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Skeleton_Basic";
-				break;
-			case 1:
-				spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Skeleton_Spear";
-				break;
-			case 2:
-				spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Skeleton_Mage";
-				break;
-			case 3:
-				spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Ice_Golem";
-				break;
-			case 4:
-				spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Daemon";
-				break;
-			default:
-				break;
+			    case 0:
+				    spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Skeleton_Basic";
+				    break;
+			    case 1:
+				    spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Skeleton_Spear";
+				    break;
+			    case 2:
+				    spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Skeleton_Mage";
+				    break;
+			    case 3:
+				    spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Ice_Golem";
+				    break;
+			    case 4:
+				    spawners[spawnerIdx].GetComponent<MGSpawner>().EnemyToSpawn = "Daemon";
+				    break;
+			    default:
+				    break;
 			}
-
 
 			spawners[spawnerIdx].GetComponent<MGSpawner>().Reset();
 			spawners[spawnerIdx].GetComponent<MGSpawner>().SpawnUnit();
 			
-			SpawnedUnits++;
-			
+			++SpawnedUnits;
 		}
 
 		spawning = false;
 		doneSpawning = true;
-
-
 	}
 }

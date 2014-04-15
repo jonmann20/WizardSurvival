@@ -14,7 +14,7 @@ using System.Collections;
     2) Make a call to init() at the start of your OnGUI() function.
 
 
-    TODO: btnBackground
+    TODO: btnBackground, custom font
 */
 
 public struct EZOpt {   

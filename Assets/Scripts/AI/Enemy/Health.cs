@@ -3,24 +3,19 @@ using System.Collections;
 using RAIN.Core;
 
 public class Health : MonoBehaviour {
-	public float health = 100f;
-	public AIRig aiRig = null;
+    SampleAIController aiController;
+	AIRig aiRig = null;
 
-	// Use this for initialization
 	void Start(){
-		aiRig = gameObject.GetComponentInChildren<AIRig>();
-		health = this.transform.GetComponentInChildren<SampleAIController>().health;
+		aiRig = GetComponentInChildren<AIRig>();
+        aiController = transform.GetComponentInChildren<SampleAIController>();
 	}
 	
-	// Update is called once per frame
 	void Update(){
-		health = this.transform.GetComponentInChildren<SampleAIController>().health;
-	
-		aiRig.AI.WorkingMemory.SetItem("health", health);
+        aiRig.AI.WorkingMemory.SetItem("health", aiController.health);
 	}
 
 	public void Damage(float damage){
-		this.transform.GetComponentInChildren<SampleAIController>().health = Mathf.Clamp(health-damage,0,health);
-	}
-	
+        this.transform.GetComponentInChildren<SampleAIController>().health = Mathf.Clamp(aiController.health - damage, 0, aiController.health);
+	}	
 }

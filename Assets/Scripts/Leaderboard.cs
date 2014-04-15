@@ -9,7 +9,7 @@ public class Leaderboard : MonoBehaviour {
 	
 	int totalScore = 0;
 	string playerName = "";
-	string code = "";
+	//string code = "";
 	
 	public enum gameState {
 		waiting,

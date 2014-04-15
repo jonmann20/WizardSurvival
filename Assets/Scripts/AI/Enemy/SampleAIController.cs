@@ -40,7 +40,7 @@ public class SampleAIController : MonoBehaviour {
 		this.transform.rigidbody.freezeRotation = true;
 
 		initialMaterial = skeleton.renderer.material;
-		redMaterial = new Material(Shader.Find("Toon/Basic Outline"));
+		redMaterial = new Material(Shader.Find("Toon/Basic"));
 		redMaterial.color = Color.red;
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}

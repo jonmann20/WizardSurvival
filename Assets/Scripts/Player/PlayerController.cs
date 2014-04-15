@@ -25,9 +25,10 @@ public class PlayerController : MonoBehaviour {
 	public static Transform playerSingleton;
 	public float sinCounter = 0;
 
-	private PlayerAbility playerAbility;
-
-	private GameObject spawnPoint; 
+    PunchAbility punch;
+    AbilityManagerScript ams;
+	PlayerAbility playerAbility;
+	GameObject spawnPoint; 
 
 	public ExitGames.Client.Photon.Hashtable networkedProperties;
 
@@ -66,12 +67,15 @@ public class PlayerController : MonoBehaviour {
 
         getInput = control_active;
         updatePlayer = update_active;
+
+        ams = GetComponent<AbilityManagerScript>();
+        punch = GetComponent<PunchAbility>();
 	}
 
 	void Start(){
 		plusY = Physics.gravity.y * 1.4f;
 		thisCamera = (GameObject.FindWithTag("MainCamera") as GameObject).transform;
-		spawnPoint = (GameObject.Find("SpawnPoint") as GameObject);
+		spawnPoint = GameObject.Find("SpawnPoint") as GameObject;
 
 		playerSingleton = this.transform;
 		playerAbility = this.GetComponent<PlayerAbility>();
@@ -102,6 +106,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate(){
+        velMovement.y += plusY;
+
         rigidbody.velocity = transform.TransformDirection(velMovement * Time.fixedDeltaTime);
     }
 
@@ -121,12 +127,12 @@ public class PlayerController : MonoBehaviour {
 	void control_active(){
 		// fire
 		if(ctrl_RightBumper.WasPressed){
-			GetComponent<AbilityManagerScript>().attemptFire();
+			ams.attemptFire();
 		}
 
 		// punch
 		if(ctrl_RightJoystickButton.WasPressed || ctrl_O.WasPressed){
-			GetComponent<PunchAbility>().fire();
+			punch.fire();
 		}
 
 		// movement
@@ -136,8 +142,6 @@ public class PlayerController : MonoBehaviour {
         else {
             velMovement.x = 0;
         }
-
-        velMovement.y += plusY;
 
         if(ctrl_Jump.WasPressed){
             if(!isInAir){
@@ -218,24 +222,6 @@ public class PlayerController : MonoBehaviour {
 		}
     }
 
-    void animateArm(Transform arm, bool isStep) {
-        float dtAngle = 0;
-        float normalizedAngle = arm.localEulerAngles.x;
-
-        if(normalizedAngle > 300) {
-            normalizedAngle -= 360;
-        }
-
-        if(isStep) {
-            dtAngle = -42f;
-        }
-        else {
-            dtAngle = 42f;
-        }
-
-        arm.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
-    }
-
     void animateLeg(Transform leg, ref bool isStep) {
         float dtAngle = 0;
         float normalizedAngle = leg.localEulerAngles.x;
@@ -244,9 +230,7 @@ public class PlayerController : MonoBehaviour {
             normalizedAngle -= 360;
         }
 
-       // print(legL.transform.localEulerAngles.x + ", " + normalizedAngle);
-
-        if(isStep){
+        if(isStep) {
             if(normalizedAngle < -20) {
                 isStep = false;
             }
@@ -265,27 +249,34 @@ public class PlayerController : MonoBehaviour {
 
         if(dtAngle != 0) {
             leg.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
-
-
-            //		Vector3 vel2d = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-            //		float velocityMagnitude = vel2d.magnitude;
-            //		if(velocityMagnitude < 1)
-            //			velocityMagnitude = 0;
-            //		//print(velocityMagnitude);
-            //		sinCounter += velocityMagnitude * 10 * Time.deltaTime;
-            //		//print(sinCounter);
-            //		if(isRightLeg)
-            //			legTran.localRotation = Quaternion.Euler(Mathf.Sin(sinCounter) * 45, 0, 0);
-            //		//else
-            //			//legTran.localRotation = Quaternion.Euler(Mathf.Cos(sinCounter) * 45, 0, 0);		
         }
     }
 
-	public void IncrementPoints( int numToAdd )
+    void animateArm(Transform arm, bool isStep) {
+        float dtAngle = 0;
+        float normalizedAngle = arm.localEulerAngles.x;
+
+        if(normalizedAngle > 300) {
+            normalizedAngle -= 360;
+        }
+
+        if(isStep) {
+            dtAngle = -42f;
+        }
+        else {
+            dtAngle = 42f;
+        }
+
+        arm.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
+    }
+
+
+
+	public void IncrementPoints(int numToAdd)
 	{
 		score += numToAdd;
 
-		if( networkedProperties.ContainsKey("Score") )
+		if(networkedProperties.ContainsKey("Score"))
 		{
 			networkedProperties["Score"] = score;
 		}
@@ -294,7 +285,7 @@ public class PlayerController : MonoBehaviour {
 			networkedProperties.Add("Score", score);
 		}
 
-		PhotonNetwork.player.SetCustomProperties( networkedProperties );
+		PhotonNetwork.player.SetCustomProperties(networkedProperties);
 
 		//hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 	}
@@ -358,7 +349,7 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll)
 	{
-		if( coll.gameObject.tag == "EnemyBullet")
+		if(coll.gameObject.tag == "EnemyBullet")
 		{
 			TakeDamage(20, coll.collider.transform);
 			GLOBAL.that.SuperDestroy(coll.gameObject);
