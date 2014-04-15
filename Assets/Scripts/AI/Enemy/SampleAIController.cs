@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RAIN.Core;
+using RAIN.Action;
 
 public class SampleAIController : MonoBehaviour {
 	
@@ -17,24 +19,25 @@ public class SampleAIController : MonoBehaviour {
 	MeshRenderer renderer;
 	
 	Transform skeleton;
-
+	private bool speedIsSet = false;
 	public int scoreValue = 10;
 	public Shader toonShader;
 
 	void Start(){
 		float ratio = Random.Range(0.8f, 2.0f);
 		health *= ratio;
-		transform.localScale *= ratio;
+
 		speed *= 1 / ratio;
 
 		skeleton = transform.Find("skeleton");
 
 		if(skeleton == null){
 			skeleton = transform.Find("Ice Golem");
+			//transform.localScale *= ratio;
 		}
-
-		if(skeleton == null){
-			skeleton = transform.Find("demon");
+		else
+		{
+			transform.localScale *= (ratio + .5f);
 		}
 
 		this.transform.rigidbody.freezeRotation = true;
@@ -42,10 +45,13 @@ public class SampleAIController : MonoBehaviour {
 		initialMaterial = skeleton.renderer.material;
 		redMaterial = new Material(Shader.Find("Toon/Basic"));
 		redMaterial.color = Color.red;
+
+		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.Speed = speed;
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
 
 	void Update(){
+	
 		if(health <= 0){
 			//transform.GetComponent<BoxCollider>().enabled = false;
 			gameObject.layer = LayerMask.NameToLayer("Dead Enemy");
