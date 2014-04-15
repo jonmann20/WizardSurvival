@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RAIN.Core;
+using RAIN.Action;
 
 public class SampleAIController : MonoBehaviour {
 	
@@ -24,17 +26,18 @@ public class SampleAIController : MonoBehaviour {
 	void Start(){
 		float ratio = Random.Range(0.8f, 2.0f);
 		health *= ratio;
-		transform.localScale *= ratio;
+
 		speed *= 1 / ratio;
 
 		skeleton = transform.Find("skeleton");
 
 		if(skeleton == null){
 			skeleton = transform.Find("Ice Golem");
+			//transform.localScale *= ratio;
 		}
-
-		if(skeleton == null){
-			skeleton = transform.Find("demon");
+		else
+		{
+			transform.localScale *= (ratio + .5f);
 		}
 
 		this.transform.rigidbody.freezeRotation = true;
@@ -42,6 +45,8 @@ public class SampleAIController : MonoBehaviour {
 		initialMaterial = skeleton.renderer.material;
 		redMaterial = new Material(Shader.Find("Toon/Basic Outline"));
 		redMaterial.color = Color.red;
+
+		this.transform.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
 
