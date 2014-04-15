@@ -67,7 +67,7 @@ public class MGSpawner : MonoBehaviour {
 		}
 	}
 
-	private void SpawnUnit()
+	public void SpawnUnit()
 	{
 		if (unitList[(int)unitLevel] != null && PhotonNetwork.isMasterClient)
 		{
