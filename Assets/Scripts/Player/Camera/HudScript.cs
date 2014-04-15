@@ -62,7 +62,7 @@ public class HudScript : MonoBehaviour {
 
 	//MESSAGE TEXT
 	GameObject MessageText;
-	static Queue<Message> messageQueue = new Queue<Message>();
+	public static Queue<Message> messageQueue = new Queue<Message>();
 
 	//Leaderboard Button
 	const float LEADERBOARD_X = 0.75f;
@@ -87,7 +87,7 @@ public class HudScript : MonoBehaviour {
 		Color redColor = Color.red;
 		float fraction = 0.0f;
 		
-		for(int i = 0; i < NUMBER_OF_VOXELS; i++)
+		for(int i = 0; i < NUMBER_OF_VOXELS; ++i)
 		{
 			GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -123,7 +123,7 @@ public class HudScript : MonoBehaviour {
         //textMesh.fontSize = 31;
 
 		//INVENTORY
-		for(int i = 0; i < GLOBAL.maxInventory; i++)
+		for(int i = 0; i < GLOBAL.maxInventory; ++i)
 		{
 			GameObject c = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			c.layer = 9;
@@ -148,7 +148,7 @@ public class HudScript : MonoBehaviour {
 		}
 		
 
-		for(int i = 0; i < healthVoxels.Count; i++)
+		for(int i=0; i < healthVoxels.Count; ++i)
 		{
 			float bonusHeight = 0;
 
@@ -183,7 +183,7 @@ public class HudScript : MonoBehaviour {
 
 		//INVENTORY
 		int numInventoryItems = GLOBAL.getInventoryCount();
-		for(int i = 0; i < numInventoryItems; i++)
+		for(int i=0; i < numInventoryItems; ++i)
 		{
 			GameObject g = GLOBAL.getInventoryItemAt(i);
 			g.layer = 9;

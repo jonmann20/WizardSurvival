@@ -6,16 +6,8 @@ using InControl;
 public class PlayerController : MonoBehaviour {
 
 	public GameObject head, hat, brim, body, legL, legR, armL, armR;
-	Color initShaderColor;
-
-	float movementSpeed = 500;
-	float strafeSpeed = 400;
-    float jumpSpeed = 500;
 
     public bool isInAir = true;
-
-	public float fireRate = .11f;
-	private float lastShot = -10;
 
 	public float fireSpeed = 4;
 	public GameObject fireProj;
@@ -25,17 +17,26 @@ public class PlayerController : MonoBehaviour {
 	public static Transform playerSingleton;
 	public float sinCounter = 0;
 
+    public ExitGames.Client.Photon.Hashtable networkedProperties;
+
+    float movementSpeed = 500;
+    float strafeSpeed = 400;
+    float jumpSpeed = 550;
+
+    float fireRate = .11f;
+    float lastShot = -10;
+
+    public float plusY = 0; // for jumping
+
     PunchAbility punch;
     AbilityManagerScript ams;
 	PlayerAbility playerAbility;
 	GameObject spawnPoint; 
 
-	public ExitGames.Client.Photon.Hashtable networkedProperties;
+	int score = 0;
+	int Teamscore = 0;
 
-	private int score = 0;
-	private int Teamscore = 0;
-
-	private GameObject hud;
+	Leaderboard leaderboard;
 
 	bool invincible = false;
 	float hitAnimRate = 0;
@@ -46,20 +47,13 @@ public class PlayerController : MonoBehaviour {
 
 	// Controls
 	InputDevice idevice = InputManager.ActiveDevice;
-	InputControl ctrl_Jump;
-	InputControl ctrl_LeftStickX;
-	InputControl ctrl_LeftStickY;
-	InputControl ctrl_Select;
-	InputControl ctrl_RightBumper;
-	InputControl ctrl_RightJoystickButton, ctrl_O;
+	InputControl ctrl_Jump, ctrl_LeftStickX, ctrl_LeftStickY, ctrl_Select, ctrl_Start, ctrl_RightBumper, ctrl_RightJoystickButton, ctrl_O;
 
     delegate void VoidDelegate();
     VoidDelegate getInput, updatePlayer;
 
     Vector3 velMovement;
-
-	//JUMPING
-	public float plusY = 0;
+    Color initShaderColor;
 
 	void Awake(){
 		refreshControls();
@@ -88,20 +82,24 @@ public class PlayerController : MonoBehaviour {
 			PhotonNetwork.player.SetCustomProperties(networkedProperties);
 		}*/
 
-		hud = GameObject.Find("HudCamera");
+		GameObject hud = GameObject.Find("HudCamera");
+        leaderboard = hud.GetComponent<Leaderboard>();
 	}
 
     void Update(){
         // Input Controls
         refreshControls();
-        getInput();
 
-        if(updatePlayer != null) {
+        if(getInput != null){
+            getInput();
+        }
+
+        if(updatePlayer != null){
             updatePlayer();
         }
 
-        if(ctrl_Select.WasPressed) {
-            hud.gameObject.GetComponent<Leaderboard>().FlipGameState();
+        if(ctrl_Select.WasPressed || ctrl_Start.WasPressed){
+            leaderboard.FlipGameState();
         }
     }
 
@@ -118,6 +116,7 @@ public class PlayerController : MonoBehaviour {
 		ctrl_LeftStickX = idevice.GetControl(InputControlType.LeftStickX);
 		ctrl_LeftStickY = idevice.GetControl(InputControlType.LeftStickY);
 		ctrl_Select = idevice.GetControl(InputControlType.Select);
+		ctrl_Start = idevice.GetControl(InputControlType.Start);
 		ctrl_RightBumper = idevice.GetControl(InputControlType.RightBumper);
 		ctrl_RightJoystickButton = idevice.GetControl(InputControlType.RightStickButton);
 		ctrl_O = idevice.GetControl(InputControlType.Action2);
@@ -164,32 +163,30 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	// control while the player is down
-	void control_down()
-	{
-		/*
-		if(ctrl_Jump)
-		{
-			GLOBAL.health = 100;
+    //void control_down()
+    //{
+    //    if(ctrl_Jump)
+    //    {
+    //        GLOBAL.health = 100;
 
-            getInput = control_active;
-            updatePlayer = update_active;
+    //        getInput = control_active;
+    //        updatePlayer = update_active;
 
-            Vector3 newForward = new Vector3(thisCamera.transform.forward.x, 0, thisCamera.transform.forward.z);
-			transform.forward = newForward;
-			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-		}*/
-	}
+    //        Vector3 newForward = new Vector3(thisCamera.transform.forward.x, 0, thisCamera.transform.forward.z);
+    //        transform.forward = newForward;
+    //        rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+    //    }
+    //}
 
 	void update_active(){
 		animate();
 
 		// health
-		if(GLOBAL.health <= 0)
-		{
+		if(GLOBAL.health <= 0){
 			HudScript.addNewMessage("KO!", 120, Color.red);
-			
-            getInput = control_down;
-            updatePlayer = null; // update_down
+
+            getInput = null;        // control_down;
+            updatePlayer = null;    // update_down
             
             rigidbody.constraints = RigidbodyConstraints.None;
 			GLOBAL.health = 0;
@@ -272,22 +269,17 @@ public class PlayerController : MonoBehaviour {
 
 
 
-	public void IncrementPoints(int numToAdd)
-	{
+	public void IncrementPoints(int numToAdd){
 		score += numToAdd;
 
-		if(networkedProperties.ContainsKey("Score"))
-		{
+		if(networkedProperties.ContainsKey("Score")){
 			networkedProperties["Score"] = score;
 		}
-		else
-		{
+		else {
 			networkedProperties.Add("Score", score);
 		}
 
 		PhotonNetwork.player.SetCustomProperties(networkedProperties);
-
-		//hud.GetComponent<HudScript>().ScoreText.GetComponent<TextMesh>().text = "Score: " + score.ToString();
 	}
 	
 	public void TakeDamage(int damage, Transform t){
@@ -345,7 +337,6 @@ public class PlayerController : MonoBehaviour {
 	public ExitGames.Client.Photon.Hashtable GetNetworkedProperties(){
 		return networkedProperties;
 	}
-
 
 	void OnTriggerEnter(Collider coll)
 	{

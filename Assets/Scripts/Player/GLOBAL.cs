@@ -15,12 +15,10 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 	public static GLOBAL that;
 
-	void Awake()
-	{
+	void Awake(){
 		MainCamera = GameObject.FindWithTag("MainCamera") as GameObject;
 		that = this;
 	}
-
 
 
 	//returns false if inventory full.
@@ -30,66 +28,62 @@ public class GLOBAL : Photon.MonoBehaviour {
 		Inventory.Add(g);
 	}
 
-	public static bool isInventoryFull()
-	{
-		if(Inventory.Count < maxInventory)
-			return false;
-		return true;
+	public static bool isInventoryFull(){
+		return Inventory.Count >= maxInventory;
 	}
 
 	public static int getInventoryCount()
 	{
 		return Inventory.Count;
 	}
+
 	public static GameObject getInventoryItemAt(int i)
 	{
 		return Inventory[i];
 	}
-	public static void useInventoryItemAt(int i)
-	{
-		//Use item
+
+	public static void useInventoryItemAt(int i){
+		// Use item
 		GameObject inventoryItem = Inventory[i];
+		CollectableBase cb = inventoryItem.GetComponent<CollectableBase>();
+		cb.useItem();
 
-		inventoryItem.GetComponent<CollectableBase>().useItem();
+		// Adjust remaining quantity of item.
+		int quantity = cb.getQuantity();
 
-		//Adjust remaining quantity of item.
-		int quantity = inventoryItem.GetComponent<CollectableBase>().getQuantity();
-
-		if(quantity - 1 <= 0)
-		{
+		if(quantity - 1 <= 0){
 			Inventory.RemoveAt(i);
 			Destroy(inventoryItem);
 		}
-		else
-			inventoryItem.GetComponent<CollectableBase>().setQuantity(quantity - 1);
+		else{
+			cb.setQuantity(quantity - 1);
+		}
 	}
 
-	public static void reset()
-	{
+	public static void reset(){
 		health = 100;
 		gameOver = false;
 		Inventory.Clear();
 		inRoom = false;
+
+		HudScript.messageQueue.Clear();
 	}
 	
 
-	public void SuperDestroy(GameObject g)
-	{
-		if(g.GetComponent<PhotonView>() == null)
-		{
+	public void SuperDestroy(GameObject g){
+		if(g.GetComponent<PhotonView>() == null){
 			Destroy (g);
 			return;
 		}
 
-		if(g.GetComponent<PhotonView>().isMine)
-			PhotonNetwork.Destroy(g);
-
-		if(PhotonNetwork.isMasterClient)
-		{
+		if(g.GetComponent<PhotonView>().isMine){
 			PhotonNetwork.Destroy(g);
 		}
-		else
-		{
+
+		if(PhotonNetwork.isMasterClient){
+			PhotonNetwork.Destroy(g);
+		}
+		else{
 			photonView.RPC("networkDestroyOnMasterClient", PhotonTargets.MasterClient, g.GetComponent<PhotonView>().viewID);
 		}
 	}
@@ -105,12 +99,15 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 	public static IEnumerator ChangeSceneWithDelay(string sceneName, int delay)
 	{
+		//Logger.that.write();
+
 		yield return new WaitForSeconds(delay);
 		Application.LoadLevel(sceneName);
 	}
 
-	public static IEnumerator QuitWithDelay(int delay)
-	{
+	public static IEnumerator QuitWithDelay(int delay){
+		//Logger.that.write();
+
 		yield return new WaitForSeconds(delay);
 		Application.Quit();
 	}

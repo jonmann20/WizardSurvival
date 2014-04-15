@@ -20,24 +20,15 @@ public class Leaderboard : MonoBehaviour {
 	
 	public gameState gs;
 
-	const float LEADERBOARD_WIDTH = .25f;
-	const float LEADERBOARD_HEIGHT = .70f;
-
-	// Reference to the dreamloLeaderboard prefab in the scene
 	dreamloLeaderBoard dl;
 
 	void Start(){
-		// get the reference here...
 		this.dl = dreamloLeaderBoard.GetSceneDreamloLeaderboard();
-		
-		// get the other reference hereß
-		
 		this.timeLeft = startTime;
 		this.gs = gameState.waiting;
 	}
 	
-	void Update () 
-	{
+	void Update(){
 		if(GLOBAL.gameOver || this.gs == gameState.leaderboard){
 			InputDevice device = InputManager.ActiveDevice;
 			
@@ -45,34 +36,25 @@ public class Leaderboard : MonoBehaviour {
 			InputControl ctrl_T = device.GetControl(InputControlType.Action4);
 			
 			if(GLOBAL.gameOver){
-				InputControl ctrl_Start = device.GetControl(InputControlType.Start);
+				InputControl ctrl_X = device.GetControl(InputControlType.Action1);
 				
-				if(ctrl_Start.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed){
-					Logger.that.write();
-					StartCoroutine(GLOBAL.ChangeSceneWithDelay("Title", 1));
+				if(ctrl_X.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed){
+					StartCoroutine(GLOBAL.ChangeSceneWithDelay("Title", 1));			// NOTE: why delaying??? also deleted Logger, it should not be obtrusive
 				}
 			}
 			else {
 				if(ctrl_T.WasPressed){
-					Logger.that.write();
-					print("trying to changescene");
 					StartCoroutine(GLOBAL.ChangeSceneWithDelay("Title", 1));
-					print("did changescene");
 				}
 				else if(ctrl_O.WasPressed){
-					Logger.that.write();
-					print("trying to quit");
 					StartCoroutine(GLOBAL.QuitWithDelay(1));
-					print("did quit");
 				}
 			}
 		}
-		else if(this.gs == gameState.running)
-		{
+		else if(this.gs == gameState.running){
 			timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, this.startTime);
 
-			if (timeLeft == 0)
-			{
+			if(timeLeft == 0){
 				this.gs = gameState.enterscore;
 			}
 		}
@@ -96,27 +78,27 @@ public class Leaderboard : MonoBehaviour {
         e.leftJustify = true;
 
         List<dreamloLeaderBoard.Score> scoreList = null;//dl.ToListHighToLow();
-        if(scoreList != null) {
+        if(scoreList != null){
             int i = 0;
-            foreach(dreamloLeaderBoard.Score s in scoreList) {
+            foreach(dreamloLeaderBoard.Score s in scoreList){
                 EZGUI.placeTxt(s.playerName, 35, startX, 230 + (i * 100), e);
                 EZGUI.placeTxt(s.score.ToString(), 35, startX, 230 + (i*100) + 50, e);
 
                 ++i;
             }
         }
-        else {
+        else{
             e.color = new Color(0.95f, 0.95f, 0.95f);
             EZGUI.placeTxt("-No Entries-", 35, startX, 230, e);
         }
 
         e.color = new Color(0.95f, 0.95f, 0.95f);
-        if(GLOBAL.gameOver) {
-            EZGUI.placeTxt("Press \"Start\" to return to start screen", 33, startX, 990 - 20, e);
+        if(GLOBAL.gameOver){
+            EZGUI.pulseTxt("Press \"X\" for start screen", 35, startX, 990 - 20, e);
         }
-        else {
-            EZGUI.placeTxt("Press \"△\" to return to start screen", 33, startX, 990 - 60, e);
-            EZGUI.placeTxt("Press \"○\" to quit game", 33, startX, 990 - 20, e);
+        else{
+            EZGUI.placeTxt("Press \"△\" for start screen", 35, startX, 990 - 60, e);
+            EZGUI.placeTxt("Press \"○\" to quit game", 35, startX, 990 - 20, e);
         }
 	}
 
@@ -126,16 +108,14 @@ public class Leaderboard : MonoBehaviour {
 		if(this.gs == gameState.leaderboard){
 			this.gs = gameState.running;
 		}
-		else {
+		else{
 			this.gs = gameState.leaderboard;
 		}
 	}
 
-	public void AddScore()
-	{
-		// add the score...
-		if (dl.publicCode == "") Debug.LogError("You forgot to set the publicCode variable");
-		if (dl.privateCode == "") Debug.LogError("You forgot to set the privateCode variable");
+	public void AddScore(){
+		if(dl.publicCode == "") Debug.LogError("You forgot to set the publicCode variable");
+		if(dl.privateCode == "") Debug.LogError("You forgot to set the privateCode variable");
 		
 		dl.AddScore(this.playerName, totalScore);
 		
