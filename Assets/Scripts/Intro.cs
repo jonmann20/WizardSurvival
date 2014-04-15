@@ -53,6 +53,6 @@ public class Intro : MonoBehaviour {
 	}
 
 	void startGame(){
-		Application.LoadLevel("EugeneLevel");
+		Application.LoadLevel("MattScene");
 	}
 }

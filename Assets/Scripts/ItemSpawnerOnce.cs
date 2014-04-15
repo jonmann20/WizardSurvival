@@ -18,12 +18,13 @@ public class ItemSpawnerOnce : MonoBehaviour {
 			if(PhotonNetwork.isMasterClient)
 				spawn();
 			else
-				Destroy(gameObject);
+				GLOBAL.that.SuperDestroy(gameObject);
 		}
 	}
 	
 	void spawn(){
-		GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, transform.position, Quaternion.identity, 0, null) as GameObject;
+		GameObject item = GLOBAL.that.SuperInstantiate(ItemPrefab, transform.position, Quaternion.identity);
+		//GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, transform.position, Quaternion.identity, 0, null) as GameObject;
 
         //if(item != null) {
             item.transform.parent = transform;

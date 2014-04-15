@@ -73,6 +73,18 @@ public class GLOBAL : Photon.MonoBehaviour {
 	}
 	
 
+	public GameObject SuperInstantiate(GameObject prefab, Vector3 pos, Quaternion rot)
+	{
+		if(prefab.GetComponent<PhotonView>() != null)
+		{
+			return (GameObject)PhotonNetwork.InstantiateSceneObject(prefab.name, pos, rot, 0, null);
+		}
+		else
+			return (GameObject)Instantiate(prefab, pos, rot);
+
+		return new GameObject();
+	}
+
 	public void SuperDestroy(GameObject g)
 	{
 		if(g.GetComponent<PhotonView>() == null)

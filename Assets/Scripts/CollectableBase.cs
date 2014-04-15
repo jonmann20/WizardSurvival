@@ -9,6 +9,9 @@ public abstract class CollectableBase : MonoBehaviour {
 	public abstract void customUpdate();
 	public abstract void useItem();
 
+	public GameObject InventoryVersion;
+	GameObject getInventoryVersion() { return InventoryVersion; }
+
 	int quantity = 1;
 	public void setQuantity(int n) { quantity = n; }
 	public int getQuantity() { return quantity; }
@@ -41,10 +44,9 @@ public abstract class CollectableBase : MonoBehaviour {
 					quantityString = "(" + quantity + ")";
 				HudScript.addNewMessage(getName() + " " + quantityString, 120, Color.white);
 
-				Destroy(gameObject.GetComponent<SyncScript>());
-				Destroy(gameObject.GetComponent<PhotonView>());
 
-				GameObject newItem = Instantiate(gameObject) as GameObject;
+
+				GameObject newItem = Instantiate(getInventoryVersion()) as GameObject;
 				GLOBAL.addToInventory(newItem);
 
 				newItem.GetComponent<CollectableBase>().setQuantity(quantity);
