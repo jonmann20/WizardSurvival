@@ -4,6 +4,7 @@ using System.Collections;
 public class ItemSpawnerOnce : MonoBehaviour {
 	
 	public GameObject ItemPrefab;
+	public bool addItemPosition = false;
 	public int ItemQuantity;
 	
 	bool attemptedSpawn = false;
@@ -23,7 +24,12 @@ public class ItemSpawnerOnce : MonoBehaviour {
 	}
 	
 	void spawn(){
-		GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, transform.position, Quaternion.identity, 0, null) as GameObject;
+		Vector3 pos = transform.position;
+		if(addItemPosition){
+			pos += ItemPrefab.transform.position;
+		}
+
+		GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, pos, Quaternion.identity, 0, null) as GameObject;
 
         //if(item != null) {
             item.transform.parent = transform;

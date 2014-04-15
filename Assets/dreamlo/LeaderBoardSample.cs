@@ -64,7 +64,7 @@ public class LeaderBoardSample : MonoBehaviour {
 		{
 			if (GUILayout.Button("Click me as much as you can in " + this.startTime.ToString("0") + " seconds!"))
 			{
-				this.totalScore++;
+				++this.totalScore;
 				this.gs = gameState.running;
 			}
 			
@@ -108,13 +108,14 @@ public class LeaderBoardSample : MonoBehaviour {
 				int count = 0;
 				foreach (dreamloLeaderBoard.Score currentScore in scoreList)
 				{
-					count++;
+					++count;
 					GUILayout.BeginHorizontal();
 					GUILayout.Label(currentScore.playerName, width200);
 					GUILayout.Label(currentScore.score.ToString(), width200);
 					GUILayout.EndHorizontal();
 
-					if (count >= maxToDisplay) break;
+					if(count >= maxToDisplay)
+						break;
 				}
 			}
 		}

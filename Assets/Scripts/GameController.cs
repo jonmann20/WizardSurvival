@@ -31,7 +31,11 @@ public class GameController : MonoBehaviour {
 	private bool doneSpawning = false;
 
 	private bool connected = false;
-	
+
+	void Awake(){
+		transform.localRotation = Quaternion.identity;
+	}
+
 	void Start(){
 		waveTimer = timeBetweenWaves;
 	}

@@ -21,12 +21,13 @@ public class PlayerController : MonoBehaviour {
 
     float movementSpeed = 500;
     float strafeSpeed = 400;
-    float jumpSpeed = 550;
+    float jumpSpeed = 555;
 
     float fireRate = .11f;
     float lastShot = -10;
 
     public float plusY = 0; // for jumping
+	public Vector3 velMovement;
 
     PunchAbility punch;
     AbilityManagerScript ams;
@@ -51,8 +52,6 @@ public class PlayerController : MonoBehaviour {
 
     delegate void VoidDelegate();
     VoidDelegate getInput, updatePlayer;
-
-    Vector3 velMovement;
     Color initShaderColor;
 
 	void Awake(){
@@ -87,7 +86,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
     void Update(){
-        // Input Controls
         refreshControls();
 
         if(getInput != null){
@@ -104,7 +102,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate(){
-        velMovement.y += plusY;
+		velMovement.y += plusY;
 
         rigidbody.velocity = transform.TransformDirection(velMovement * Time.fixedDeltaTime);
     }
@@ -196,6 +194,8 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	#region Animation
+
 	void swapShader(Color c){
 		head.renderer.materials[1].SetColor("_ReflectColor", c);
 		hat.renderer.materials[1].SetColor("_ReflectColor", c);
@@ -267,7 +267,44 @@ public class PlayerController : MonoBehaviour {
         arm.Rotate(new Vector3(dtAngle * Time.deltaTime, 0));
     }
 
+	IEnumerator animDamage() {
+		const int time = 2;
+		float elapsedTime = 0;
 
+		float d = 0.18f;
+
+		while(elapsedTime < time) {
+			bool b = false;
+
+			for(float i=d; i < time; i += d*2) {
+				//print (i + ", " + (i+d) + " ?? " + elapsedTime);
+
+				if(elapsedTime > i && elapsedTime < (i+d)) {
+					b = true;
+					break;
+				}
+			}
+
+			if(b) {
+				swapShader(initShaderColor);	// blink color (init)
+			}
+			else {
+				swapShader(Color.red);			// blink color (red)
+			}
+
+			elapsedTime += Time.deltaTime;
+			yield return null;
+
+			if(elapsedTime >= time) {
+				invincible = false;
+				swapShader(initShaderColor);	// reset color
+			}
+		}
+
+
+	}
+
+	#endregion Animation
 
 	public void IncrementPoints(int numToAdd){
 		score += numToAdd;
@@ -297,51 +334,12 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	IEnumerator animDamage(){
-		const int time = 2;
-		float elapsedTime = 0;
-
-		float d = 0.18f;
-
-		while(elapsedTime < time){
-			bool b = false;
-
-			for(float i=d; i < time; i += d*2){
-				//print (i + ", " + (i+d) + " ?? " + elapsedTime);
-
-				if(elapsedTime > i && elapsedTime < (i+d)){
-					b = true;
-					break;
-				}
-			}
-
-			if(b){
-				swapShader(initShaderColor);	// blink color (init)
-			}
-			else {
-				swapShader(Color.red);			// blink color (red)
-			}
-
-			elapsedTime += Time.deltaTime;
-			yield return null;
-			
-			if(elapsedTime >= time){
-				invincible = false;
-				swapShader(initShaderColor);	// reset color
-			}
-		}
-
-
-	}
-
 	public ExitGames.Client.Photon.Hashtable GetNetworkedProperties(){
 		return networkedProperties;
 	}
 
-	void OnTriggerEnter(Collider coll)
-	{
-		if(coll.gameObject.tag == "EnemyBullet")
-		{
+	void OnTriggerEnter(Collider coll){
+		if(coll.gameObject.tag == "EnemyBullet"){
 			TakeDamage(20, coll.collider.transform);
 			GLOBAL.that.SuperDestroy(coll.gameObject);
 		}
