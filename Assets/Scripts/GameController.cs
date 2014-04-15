@@ -202,7 +202,7 @@ public class GameController : MonoBehaviour {
 
 
 			spawners[spawnerIdx].GetComponent<MGSpawner>().Reset();
-			spawners[spawnerIdx].GetComponent<MGSpawner>().StartSpawn();
+			spawners[spawnerIdx].GetComponent<MGSpawner>().SpawnUnit();
 			
 			SpawnedUnits++;
 			
