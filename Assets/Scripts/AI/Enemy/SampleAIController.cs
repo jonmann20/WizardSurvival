@@ -6,7 +6,9 @@ using RAIN.Action;
 public class SampleAIController : MonoBehaviour {
 	
 	public float health = 100f;
-	public float speed = 5.0f;
+	public float speed = 7.0f;
+
+	private int damageToApply = 15;
 
 	private float deathTimer = 3.0f;
 	public float timeUntilRemove = 3.0f;
@@ -25,28 +27,34 @@ public class SampleAIController : MonoBehaviour {
 
 	void Start(){
 		float ratio = Random.Range(0.8f, 2.0f);
-		health *= ratio;
-
-		speed *= 1 / ratio;
 
 		skeleton = transform.Find("skeleton");
 
 		if(skeleton == null){
 			skeleton = transform.Find("Ice Golem");
-			//transform.localScale *= ratio;
+			damageToApply = (int)((float)damageToApply * (ratio + (1f)));
+			health *= ratio;
+			health *= 10;
+			speed *= speed * (ratio);
+			speed *= .8f;
 		}
 		else
 		{
 			transform.localScale *= (ratio + .5f);
+			damageToApply = (int) (damageToApply * ratio) ;
+			health *= ratio;
+			speed *= speed * (ratio);
 		}
-
+		
 		this.transform.rigidbody.freezeRotation = true;
-
+		
 		initialMaterial = skeleton.renderer.material;
+
 		redMaterial = new Material(Shader.Find("Toon/Basic"));
 		redMaterial.color = Color.red;
-
-		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.Speed = speed;
+		
+		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
+		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("damageToApply", damageToApply);
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
 

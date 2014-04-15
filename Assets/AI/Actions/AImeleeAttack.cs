@@ -34,7 +34,7 @@ public class AImeleeAttack : RAINAction
 		if( enemyObject != null )
 		{
 
-			enemyObject.GetComponent<PlayerController>().TakeDamage(20,ai.Body.transform);
+			enemyObject.GetComponent<PlayerController>().TakeDamage((int)ai.WorkingMemory.GetItem("damageToApply").GetValue<int>(),ai.Body.transform);
 
 		}
 		if( enemyObject == null )
