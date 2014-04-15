@@ -44,6 +44,8 @@ public class AIShootProjectile : RAINAction
 		vel.y = 0;
 		projectile.rigidbody.velocity = vel;
 
+		projectile.GetComponent<MageOrbScript>().damageToApply = (int) ai.WorkingMemory.GetItem("damageToApply").GetValue<int>(); 
+
         return ActionResult.SUCCESS;
     }
 

@@ -6,7 +6,9 @@ using RAIN.Action;
 public class SampleAIController : MonoBehaviour {
 	
 	public float health = 100f;
-	public float speed = 5.0f;
+	public float speed = 7.0f;
+
+	private int damageToApply = 15;
 
 	private float deathTimer = 3.0f;
 	public float timeUntilRemove = 3.0f;
@@ -24,29 +26,38 @@ public class SampleAIController : MonoBehaviour {
 	public Shader toonShader;
 
 	void Start(){
-		float ratio = Random.Range(0.8f, 2.0f);
-		health *= ratio;
-
-		speed *= 1 / ratio;
+		float ratio = Random.Range(1.0f, 2.5f);
 
 		skeleton = transform.Find("skeleton");
 
 		if(skeleton == null){
 			skeleton = transform.Find("Ice Golem");
-			//transform.localScale *= ratio;
+			damageToApply = (int)((float)damageToApply * (ratio + (1f)));
+			health *= ratio;
+			health *= 10;
+			speed *= speed * (ratio);
+			speed *= .8f;
+
+			speed = Mathf.Clamp(speed,4,7);
 		}
 		else
 		{
 			transform.localScale *= (ratio + .5f);
+			damageToApply = (int) (damageToApply * ratio) ;
+			health *= ratio;
+			speed *= (ratio);
+			speed = Mathf.Clamp(speed,5,9);
 		}
-
+		
 		this.transform.rigidbody.freezeRotation = true;
-
+		
 		initialMaterial = skeleton.renderer.material;
+
 		redMaterial = new Material(Shader.Find("Toon/Basic"));
 		redMaterial.color = Color.red;
-
-		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.Speed = speed;
+		
+		//this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
+		//this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("damageToApply", damageToApply);
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
 
@@ -91,11 +102,17 @@ public class SampleAIController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		doDamage(col);
+		if( health > 0 )
+		{
+			doDamage(col);
+		}
 	}
 
 	void OnTriggerStay(Collider col){
-		doDamage(col);
+		if( health > 0 )
+		{
+			doDamage(col);
+		}
 	}
 
 	void OnCollisionStay(Collision col){
