@@ -89,7 +89,10 @@ public class SampleAIController : MonoBehaviour {
 	}
 
 	void doDamage(Collider col){
-		if(invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
+
+		// TODO: check if Ice Blast, and slow enemy down
+
+		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 			
@@ -102,17 +105,11 @@ public class SampleAIController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		if( health > 0 )
-		{
-			doDamage(col);
-		}
+		doDamage(col);
 	}
 
 	void OnTriggerStay(Collider col){
-		if( health > 0 )
-		{
-			doDamage(col);
-		}
+		doDamage(col);
 	}
 
 	void OnCollisionStay(Collision col){

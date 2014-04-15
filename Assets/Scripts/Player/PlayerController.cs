@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour {
 
     PunchAbility punch;
     AbilityManagerScript ams;
-	PlayerAbility playerAbility;
+	//PlayerAbility playerAbility;
 	GameObject spawnPoint; 
 
 	int score = 0;
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour {
 		spawnPoint = GameObject.Find("SpawnPoint") as GameObject;
 
 		playerSingleton = this.transform;
-		playerAbility = this.GetComponent<PlayerAbility>();
+		//playerAbility = this.GetComponent<PlayerAbility>();
 
 		networkedProperties = PhotonNetwork.player.customProperties;
 
@@ -123,7 +123,15 @@ public class PlayerController : MonoBehaviour {
 	// control while the player is alive and kicking
 	void control_active(){
 		// fire
-		if(ctrl_RightBumper.WasPressed){
+		bool doFire = false;
+		if(ams.isAbilityName("Ice Blast")){
+			doFire = ctrl_RightBumper.IsPressed;
+		}
+		else {
+			doFire = ctrl_RightBumper.WasPressed;
+		}
+
+		if(doFire){
 			ams.attemptFire();
 		}
 
