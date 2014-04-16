@@ -19,7 +19,7 @@ public class HudScript : MonoBehaviour {
 	float sinCounter = 0.0f;
 
 	List<GameObject> healthVoxels = new List<GameObject>();
-	GameObject hudCamera;
+	public static GameObject hudCamera;
 
 	//TEXT
     public GameObject AbilityNameText;
@@ -350,9 +350,9 @@ public class HudScript : MonoBehaviour {
 		//Scores (TEMP)
 		
 		int offset = 20;
-		//GUI.Label( new Rect( Screen.width/2 , Screen.height/2, 300,25 ), "Number of Players");
 		int teamScore = 0;
-		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
+
+		for(int i=0; i < PhotonNetwork.playerList.Length; ++i)
 		{
 			//Don't list duplicate information about the current player.
 			if(Wizard.myWizard != null)

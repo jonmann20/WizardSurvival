@@ -94,7 +94,10 @@ public class Leaderboard : MonoBehaviour {
 
         e.color = new Color(0.95f, 0.95f, 0.95f);
         if(GLOBAL.gameOver){
-            EZGUI.pulseTxt("Press \"X\" for start screen", 35, startX, 990 - 20, e);
+			e.hoverColor = new Color(1, 1, 0);
+			e.activeColor = new Color(0.8f, 0.8f, 0);
+			e.leftJustify = false;
+            EZGUI.pulseBtn("Press \"X\" for start screen", 35, EZGUI.HALFW, 990 - 23, e);
         }
         else{
             EZGUI.placeTxt("Press \"△\" for start screen", 35, startX, 990 - 60, e);

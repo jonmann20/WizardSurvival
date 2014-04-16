@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour {
 
     float movementSpeed = 500;
     float strafeSpeed = 400;
-    float jumpSpeed = 555;
+    float jumpSpeed = 565;
 
     float fireRate = .11f;
     float lastShot = -10;
@@ -328,7 +328,7 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	public void TakeDamage(int damage, Transform t){
-		if(!invincible){
+		if(!invincible && !GLOBAL.gameOver){
 			invincible = true;
 			StartCoroutine("animDamage");
 

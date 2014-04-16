@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MarchingEnemyScript : MonoBehaviour {
 
-	void Update(){
-		transform.Translate(0, 0, 0.6f * Time.deltaTime);
+	void FixedUpdate(){
+		transform.Translate(0, 0, 0.95f * Time.deltaTime);
 	}
 }

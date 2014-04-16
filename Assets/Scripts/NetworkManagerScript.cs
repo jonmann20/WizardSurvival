@@ -18,11 +18,8 @@ public class NetworkManagerScript : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(hasMasterClientDisconnected() && !GLOBAL.gameOver)
-		{
-			GLOBAL.gameOver = true;
-			GLOBAL.health = 0;
-			HudScript.addNewMessage("The Host Disconnected...", 180, Color.red);
+		if(hasMasterClientDisconnected() && !GLOBAL.gameOver){
+			GLOBAL.GameOver("The Host Disconnected...");
 		}
 		
 		bool everyoneZeroHealth = true;
@@ -41,19 +38,19 @@ public class NetworkManagerScript : MonoBehaviour {
 		
 		if(everyoneZeroHealth && previousMasterDelay <= 0)
 		{
-			HudScript.addNewMessage("Game Over", 180, Color.red);
-			
-			GLOBAL.gameOver = true;
+			GLOBAL.GameOver("Game Over");
 		}
 	}
 	
 	bool hasMasterClientDisconnected()
 	{
-		if(previousMasterDelay > 0)
+		if(previousMasterDelay > 0) {
 			--previousMasterDelay;
+		}
 
-		if(previousMasterDelay <= 0 && PhotonNetwork.masterClient.ID != IDOfPreviousMasterClient) 
+		if(previousMasterDelay <= 0 && PhotonNetwork.masterClient.ID != IDOfPreviousMasterClient){
 			return true;
+		}
 
 		return false;
 	}

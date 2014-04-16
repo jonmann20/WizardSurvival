@@ -8,17 +8,16 @@ public class Intro : MonoBehaviour {
 	const float RATE_OF_MARCH = 1;
 	public GameObject MarchingObjectPrefab;
 	public GameObject cta;
-	Bouncy bouncy;
+	BouncyTitle bouncy;
 
 	bool hitStart = false;
 
 	void Awake(){
-		bouncy = cta.GetComponent<Bouncy>();
+		bouncy = cta.GetComponent<BouncyTitle>();
 	}
 
 	void Start(){
 		PhotonNetwork.Disconnect();
-
 		GameAudio.playIntro();
 
 		for(int i=0; i < 13; ++i){
@@ -42,12 +41,12 @@ public class Intro : MonoBehaviour {
 			if((ctrl_Start.WasPressed)){
 				hitStart = true;
 
-				Invoke("startGame", 2f);
+				Invoke("startGame", 2.1f);
 
 				GameAudio.stopIntro();
 				GameAudio.playChimes();
 				GameAudio.playInvMove();
-				bouncy.reset();
+				bouncy.active = true;
 			}
 		}
 	}

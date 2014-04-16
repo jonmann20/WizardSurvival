@@ -4,7 +4,7 @@ using System.Collections;
 public class IceAbility : AbilityBase {
 
 	public override void fire(){
-		GameAudio.playSpell0();
+		GameAudio.playFreezeSpell();
 
 		Transform w = Wizard.myWizard.transform;
 

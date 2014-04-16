@@ -31,19 +31,18 @@ public class FireShieldAbility : AbilityBase {
 		}
 	}
 
-	void Update()
-	{
-
+	void FixedUpdate(){
 		sinCounter += CIRCLE_RATE;
-		for(int i = 0; i < shieldFlames.Count; i++)
-		{
-			if(shieldFlames[i] == null)
-			{
+
+		for(int i=0; i < shieldFlames.Count; ++i){
+			if(shieldFlames[i] == null){
 				shieldFlames.RemoveAt(i);
 				continue;
 			}
+
 			float diff = (2.0f * Mathf.PI) / ((float)NUMBER_OF_FIREBALLS);
 			float sinValue = (diff * i) + sinCounter;
+
 			Vector3 pos = new Vector3(Mathf.Sin(sinValue), 0, Mathf.Cos(sinValue));
 			pos.Normalize();
 			pos *= CIRCLE_RADIUS;
@@ -56,6 +55,7 @@ public class FireShieldAbility : AbilityBase {
 	{
 		return "Wind";
 	}
+
 	public override string getAbilityDescription()
 	{
 		return "On nights like tonight, legend has it the air carries a vaunted flame to aid the innocent.";

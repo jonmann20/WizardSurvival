@@ -15,11 +15,12 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 	public static GLOBAL that;
 
+	static string gameOverTxt;
+
 	void Awake(){
 		MainCamera = GameObject.FindWithTag("MainCamera") as GameObject;
 		that = this;
 	}
-
 
 	//returns false if inventory full.
 	public static void addToInventory(GameObject g)
@@ -67,6 +68,17 @@ public class GLOBAL : Photon.MonoBehaviour {
 		inRoom = false;
 
 		HudScript.messageQueue.Clear();
+		HudScript.hudCamera.SetActive(true);
+	}
+
+	public static void GameOver(string s){
+		GameAudio.playGameOver();
+		GLOBAL.gameOver = true;
+		GLOBAL.health = 0;
+
+		HudScript.hudCamera.SetActive(false);
+		gameOverTxt = s;
+		//HudScript.addNewMessage("The Host Disconnected...", 180, Color.red);
 	}
 	
 
@@ -85,6 +97,17 @@ public class GLOBAL : Photon.MonoBehaviour {
 		}
 		else{
 			photonView.RPC("networkDestroyOnMasterClient", PhotonTargets.MasterClient, g.GetComponent<PhotonView>().viewID);
+		}
+	}
+
+	void OnGUI(){
+		if(gameOver){
+			EZGUI.init();
+			EZOpt e = new EZOpt(Color.red, new Color(0.1f, 0.1f, 0.1f));
+			e.leftJustify = true;
+			e.dropShadowX = e.dropShadowY = 3;
+
+			EZGUI.placeTxt(gameOverTxt, 35, 230, 73, e);
 		}
 	}
 

@@ -7,8 +7,6 @@ public class IceCollider : MonoBehaviour {
 		Destroy(gameObject, 2);
 	}
 
-
-
 	void OnTriggerEnter(){
 		Destroy(gameObject);
 	}
