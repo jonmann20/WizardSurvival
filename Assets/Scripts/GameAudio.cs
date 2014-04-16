@@ -103,7 +103,9 @@ public class GameAudio : MonoBehaviour {
 	}
 
 	public static void playSpell0(){
-		spell0Src.audio.Play();
+		if(!spell0Src.isPlaying){
+			spell0Src.audio.Play();
+		}
 	}
 	public static void playWind(){
 		if(!windSrc.isPlaying){

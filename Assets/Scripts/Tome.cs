@@ -4,7 +4,7 @@ using System.Collections;
 using InControl;
 using System;
 
-public enum BaseAbility {FireballAbility, IceAbility};
+public enum BaseAbility {FireballAbility, IceAbility, ForcefieldAbility};
 
 public class Tome : MonoBehaviour {
 

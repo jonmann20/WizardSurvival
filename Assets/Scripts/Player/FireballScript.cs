@@ -18,6 +18,7 @@ public class FireballScript : ProjectileBase {
 		{
 			GameObject fire = Instantiate(FirePrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
 			fire.GetComponent<ProjectileBase>().wizard = this.wizard;
+
 			GLOBAL.that.SuperDestroy(gameObject);
 		}
 	}
