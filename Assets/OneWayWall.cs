@@ -3,14 +3,18 @@ using System.Collections;
 
 public class OneWayWall : MonoBehaviour {
 
-	void OnCollisionEnter (Collision collision) {
-
-	}
+	public bool closeDoor = false;
 
 	void OnTriggerExit(Collider collider) {
 		gameObject.collider.isTrigger = false;
 		MeshRenderer m = gameObject.GetComponent<MeshRenderer> ();
 		m.enabled = true;
+		if (closeDoor == true) {
+			DoorLeft doorleft = (DoorLeft) GameObject.Find("DoorLeftPivot").GetComponent(typeof(DoorLeft));
+			DoorRight doorright = (DoorRight) GameObject.Find("DoorRightPivot").GetComponent(typeof(DoorRight));
+			doorleft.playDoorAnim ();
+			doorright.playDoorAnim ();
+		}
 	}
 
 	void OnTriggerEnter(Collider collider) {

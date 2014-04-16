@@ -11,8 +11,8 @@ public class DoorRight : MonoBehaviour {
 			gameObject.animation.Play ("DoorRightOpen");
 			door_LastIndex = 1;
 		} else {
-			//gameObject.animation.Play ("DoorRightClose");
-			//door_LastIndex = 0;
+			gameObject.animation.Play ("DoorRightClose");
+			door_LastIndex = 2;
 		}
 	}
 	
@@ -29,6 +29,9 @@ public class DoorRight : MonoBehaviour {
 			if (count == 0) {
 				playDoorAnim ();
 			}
+		} else if (door_LastIndex == 1) {
+			OneWayWall onewaywall = (OneWayWall) GameObject.Find("OneWayWallThrone").GetComponent(typeof(OneWayWall));
+			onewaywall.closeDoor = true;
 		}
 	}
 }
