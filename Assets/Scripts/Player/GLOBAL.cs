@@ -80,14 +80,25 @@ public class GLOBAL : Photon.MonoBehaviour {
 		gameOverTxt = s;
 		//HudScript.addNewMessage("The Host Disconnected...", 180, Color.red);
 	}
-	
 
-	public void SuperDestroy(GameObject g){
-		if(g.GetComponent<PhotonView>() == null){
+	public GameObject SuperInstantiate(GameObject prefab, Vector3 pos, Quaternion rot)
+	{
+		if(prefab.GetComponent<PhotonView>() != null)
+		{
+			return (GameObject)PhotonNetwork.InstantiateSceneObject(prefab.name, pos, rot, 0, null);
+		}
+		else
+			return (GameObject)Instantiate(prefab, pos, rot);
+	}
+
+	public void SuperDestroy(GameObject g)
+	{
+		if(g.GetComponent<PhotonView>() == null)
+		{
+
 			Destroy (g);
 			return;
 		}
-
 		if(g.GetComponent<PhotonView>().isMine){
 			PhotonNetwork.Destroy(g);
 		}

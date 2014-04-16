@@ -80,7 +80,6 @@ public class Logger : MonoBehaviour {
 		switch(obj.type){
 			case JSONObject.Type.OBJECT:
 				for(int i = 0; i < obj.list.Count; ++i){
-					string key = (string)obj.keys[i];
 					JSONObject j = (JSONObject)obj.list[i];
 					accessData(j);
 				}
@@ -179,7 +178,7 @@ public class Logger : MonoBehaviour {
 		// check for errors
 		if (www.error == null)
 		{
-			callback(www.data);
+			callback(www.text);
 		}
 	}
 

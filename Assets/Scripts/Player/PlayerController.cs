@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour {
     float strafeSpeed = 400;
     float jumpSpeed = 565;
 
-    float fireRate = .11f;
-    float lastShot = -10;
+    //float fireRate = .11f;
+    //float lastShot = -10;
 
     public float plusY = 0; // for jumping
 	public Vector3 velMovement;
@@ -33,13 +33,13 @@ public class PlayerController : MonoBehaviour {
 	GameObject spawnPoint; 
 
 	int score = 0;
-	int Teamscore = 0;
+	//int Teamscore = 0;
 
 	Leaderboard leaderboard;
 
 	bool invincible = false;
-	float hitAnimRate = 0;
-	float hitAnimTimer = 0.5f;
+	//float hitAnimRate = 0;
+	//float hitAnimTimer = 0.5f;
 
     bool isStepL = true;
     bool isStepR = false;

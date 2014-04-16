@@ -19,26 +19,24 @@ public class ItemSpawnerOnce : MonoBehaviour {
 			if(PhotonNetwork.isMasterClient)
 				spawn();
 			else
-				Destroy(gameObject);
+				GLOBAL.that.SuperDestroy(gameObject);
 		}
 	}
 	
 	void spawn(){
+
 		Vector3 pos = transform.position;
 		if(addItemPosition){
 			pos += ItemPrefab.transform.position;
 		}
+		GameObject item = GLOBAL.that.SuperInstantiate(ItemPrefab, transform.position, Quaternion.identity);
 
-		GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, pos, Quaternion.identity, 0, null) as GameObject;
-
-        //if(item != null) {
-            item.transform.parent = transform;
+        item.transform.parent = transform;
 
             // If the spawned item is a collectable, give it a quantity
             if(item.GetComponent<CollectableBase>() != null) {
                 item.GetComponent<CollectableBase>().setQuantity(ItemQuantity);
-            }
-        //}
+			}
 	}
 }
 
