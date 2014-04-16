@@ -58,9 +58,9 @@ public class GameController : MonoBehaviour {
 
 				if( PhotonNetwork.isMasterClient )
 				{
-					if( Wizard.myWizard != null )
+					if( GLOBAL.myWizard != null )
 					{
-						masterClientController = Wizard.myWizard.GetComponent<PlayerController>();
+						masterClientController = GLOBAL.myWizard.GetComponent<PlayerController>();
 						wave = (int) PhotonNetwork.player.customProperties["Wave"];
 						waveTimer = timeBetweenWaves;
 						spawners = GameObject.FindGameObjectsWithTag("Spawner");

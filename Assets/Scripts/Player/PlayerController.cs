@@ -64,6 +64,13 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Start(){
+
+		if(!GetComponent<PhotonView>().isMine)
+		{
+			Destroy(GetComponent<PlayerController>());
+			Destroy(GetComponent<Rigidbody>());
+		}
+
 		plusY = Physics.gravity.y * 1.4f;
 		spawnPoint = GameObject.Find("SpawnPoint") as GameObject;
 

@@ -41,9 +41,9 @@ public class Logger : MonoBehaviour {
 		if(movementCaptureTimer <= 0)
 		{
 			movementCaptureTimer = MOVEMENT_CAPTURE_INTERVAL;
-			if(GLOBAL.MainCamera != null && Wizard.myWizard != null)
+			if(GLOBAL.MainCamera != null && GLOBAL.myWizard != null)
 			{
-				Vector3 pos = Wizard.myWizard.transform.position;
+				Vector3 pos = GLOBAL.myWizard.transform.position;
 				Vector3 rot = GLOBAL.MainCamera.transform.forward;
 				CurrentDatums.Add(new LogElement(pos, rot, randomSessionIdentifier));
 			}

@@ -8,7 +8,7 @@ public class ForcefieldCollider : MonoBehaviour {
 	}
 
 	void Update(){
-		transform.position = Wizard.myWizard.transform.position;
+		transform.position = GLOBAL.myWizard.transform.position;
 	}
 
 	void destory(){

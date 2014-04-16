@@ -143,7 +143,7 @@ public class Leaderboard : MonoBehaviour {
 			}
 
 			// Active Player Indicator
-			if(Wizard.myWizard != null && p == Wizard.myWizard.GetComponent<PhotonView>().owner){
+			if(GLOBAL.myWizard != null && p == GLOBAL.myWizard.GetComponent<PhotonView>().owner){
 				e.color = Color.green;
 				EZGUI.placeTxt("(you)", 40, 1400, startY + lineHeight/2 + (i * padBot), e);
 			}

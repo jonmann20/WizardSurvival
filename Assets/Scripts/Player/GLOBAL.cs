@@ -17,6 +17,8 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 	static string gameOverTxt;
 
+	public static GameObject myWizard;
+
 	void Awake(){
 		MainCamera = GameObject.FindWithTag("MainCamera") as GameObject;
 		that = this;

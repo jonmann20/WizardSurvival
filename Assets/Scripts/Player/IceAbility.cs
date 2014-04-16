@@ -6,7 +6,7 @@ public class IceAbility : AbilityBase {
 	public override void fire(){
 		GameAudio.playFreezeSpell();
 
-		Transform w = Wizard.myWizard.transform;
+		Transform w = GLOBAL.myWizard.transform;
 
 		GameObject ice = PhotonNetwork.InstantiateSceneObject(
 			"IcePrefab",

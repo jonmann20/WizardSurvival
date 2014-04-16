@@ -21,7 +21,7 @@ public class ForcefieldAbility : AbilityBase {
 			canFire = false;
 			GameAudio.playSpell0();
 			
-			Transform w = Wizard.myWizard.transform;
+			Transform w = GLOBAL.myWizard.transform;
 			
 			GameObject ff = PhotonNetwork.InstantiateSceneObject(
 				"ForcefieldPrefab",
