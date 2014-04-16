@@ -358,9 +358,8 @@ public class HudScript : MonoBehaviour {
 			}
 			teamScore += tempScore;
 
-			ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore;
-
 		}
+		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore;
 
 	}
 
