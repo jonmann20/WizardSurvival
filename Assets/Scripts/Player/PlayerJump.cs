@@ -10,20 +10,12 @@ public class PlayerJump : MonoBehaviour {
         pController = wizard.GetComponent<PlayerController>();
     }
 
-    void OnTriggerEnter(Collider coll){
-		if(coll.gameObject.tag == "Ground")
-		{
-			pController.plusY = 0;
-        	pController.isInAir = false;
-		}
+    void OnTriggerEnter(Collider col){
+		ground(col.gameObject.tag);
     }
 
-    void OnTriggerStay(Collider coll){
-		if(coll.gameObject.tag == "Ground")
-		{
-			pController.plusY = 0;
-        	pController.isInAir = false;
-		}
+    void OnTriggerStay(Collider col){
+		ground(col.gameObject.tag);
     }
 
     void OnTriggerExit(Collider coll){
@@ -33,4 +25,15 @@ public class PlayerJump : MonoBehaviour {
         	pController.isInAir = true;
 		}
     }
+
+
+	void ground(string t){
+		if(t == "Ground"){
+			if(pController.velMovement.y < 0){		// fixes sliding without input bug
+				pController.velMovement.y = 0;
+			}
+			pController.plusY = 0;
+			pController.isInAir = false;
+		}
+	}
 }

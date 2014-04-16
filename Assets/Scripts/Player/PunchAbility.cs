@@ -16,13 +16,12 @@ public class PunchAbility : AbilityBase {
 	GameObject fakeArm;
 	Vector3 previousLocalPositionOnBody;
 
-	Material punchMat;
+	Material[] punchMat;
 
 	void Awake()
 	{
 		arm = transform.Find("ArmR").gameObject as GameObject;
-		punchMat = new Material(Shader.Find("Toon/Lighted Outline"));
-		punchMat.color = Color.white;
+		punchMat = arm.renderer.materials;
 	}
 
 	public override void fire()
@@ -31,9 +30,10 @@ public class PunchAbility : AbilityBase {
 		{
 			arm.renderer.enabled = false;
 			fakeArm = PhotonNetwork.Instantiate("PunchCube", transform.position, Quaternion.identity, 0) as GameObject;
-			fakeArm.GetComponent<MeshRenderer>().material = punchMat;
+			fakeArm.GetComponent<MeshRenderer>().materials = punchMat;
 			fakeArm.tag = "PlayerBullet";
 		}
+
 		GameAudio.playJump();
 		lifeCounter = MAX_LIFE;
 	}
@@ -42,7 +42,7 @@ public class PunchAbility : AbilityBase {
 	{
 		if(lifeCounter > 0)
 		{
-			lifeCounter --;
+			--lifeCounter;
 		
 			Vector3 pos;
 			float val = 0.0f;
@@ -75,6 +75,7 @@ public class PunchAbility : AbilityBase {
 	{
 		return "Melee";
 	}
+
 	public override string getAbilityDescription()
 	{
 		return "FALCAWNNNN! PAAAAWWWNCCHHHHH!";

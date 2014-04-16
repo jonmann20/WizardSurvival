@@ -20,11 +20,8 @@ public class NetworkLauncherScript : MonoBehaviour {
 	
 	void Update () {
 
-		if(hasMasterClientDisconnected() && !GLOBAL.gameOver)
-		{
-			GLOBAL.gameOver = true;
-			GLOBAL.health = 0;
-			HudScript.addNewMessage("The Host Disconnected...", 180, Color.red);
+		if(hasMasterClientDisconnected() && !GLOBAL.gameOver){
+			GLOBAL.GameOver("The Host Disconnected...");
 		}
 
 		bool everyoneZeroHealth = true;
@@ -41,11 +38,8 @@ public class NetworkLauncherScript : MonoBehaviour {
 			}
 		}
 
-		if(everyoneZeroHealth)
-		{
-			HudScript.addNewMessage("Game Over", 180, Color.red);
-
-			GLOBAL.gameOver = true;
+		if(everyoneZeroHealth){
+			GLOBAL.GameOver("Game Over");
 		}
 	}
 

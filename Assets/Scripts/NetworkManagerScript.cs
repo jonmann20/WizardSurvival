@@ -3,14 +3,13 @@ using System.Collections;
 
 public class NetworkManagerScript : MonoBehaviour {
 	
-	
-	public GameObject WizardPrefab;
+	//public GameObject WizardPrefab;
 	public int IDOfPreviousMasterClient = -1;
 	int previousMasterDelay = 60;
 
-	void Start () {
+	void Start(){
 		IDOfPreviousMasterClient = PhotonNetwork.masterClient.ID;
-		GameObject wiz = PhotonNetwork.Instantiate("Wizard", new Vector3(1.577f, 9.592f, -61.181f), Quaternion.identity, 0) as GameObject;
+		GameObject wiz = PhotonNetwork.Instantiate("Wizard", new Vector3(-5.6f, 8.2f, -55.5f), Quaternion.Euler(-5.6f, 8.2f, -55.5f), 0) as GameObject;
 		GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;
 		(mainCam.GetComponent<MouseCamera>() as MouseCamera).target = wiz;
 		
@@ -18,18 +17,14 @@ public class NetworkManagerScript : MonoBehaviour {
 		wiz.transform.parent = GameObject.Find("_WizardHolder").transform;
 	}
 	
-	void Update () {
-		
-		if(hasMasterClientDisconnected() && !GLOBAL.gameOver)
-		{
-			GLOBAL.gameOver = true;
-			GLOBAL.health = 0;
-			HudScript.addNewMessage("The Host Disconnected...", 180, Color.red);
+	void Update(){
+		if(hasMasterClientDisconnected() && !GLOBAL.gameOver){
+			GLOBAL.GameOver("The Host Disconnected...");
 		}
 		
 		bool everyoneZeroHealth = true;
 		//CHECK IF EVERYONE IS DEAD
-		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
+		for(int i=0; i < PhotonNetwork.playerList.Length; ++i)
 		{
 			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health"))
 			{
@@ -43,19 +38,19 @@ public class NetworkManagerScript : MonoBehaviour {
 		
 		if(everyoneZeroHealth && previousMasterDelay <= 0)
 		{
-			HudScript.addNewMessage("Game Over", 180, Color.red);
-			
-			GLOBAL.gameOver = true;
+			GLOBAL.GameOver("Game Over");
 		}
 	}
 	
 	bool hasMasterClientDisconnected()
 	{
-		if(previousMasterDelay > 0)
-			previousMasterDelay --;
+		if(previousMasterDelay > 0) {
+			--previousMasterDelay;
+		}
 
-		if(previousMasterDelay <= 0 && PhotonNetwork.masterClient.ID != IDOfPreviousMasterClient) 
+		if(previousMasterDelay <= 0 && PhotonNetwork.masterClient.ID != IDOfPreviousMasterClient){
 			return true;
+		}
 
 		return false;
 	}

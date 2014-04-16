@@ -7,18 +7,19 @@ public class MouseCamera : MonoBehaviour {
 
 	public GameObject target;
 	public GameObject playerPrefab;
-	public float distance = 10.0f;
+	
+	float distance = 0.9f;
 	public float verticalDistance = 0.3f;
 	public float horizontalDistance = -0.7f;
 	public float maxDistance = 13.0f;
 	public float minDistance = 8.0f;
 	public float zoomSpeed = 1;
 
-	public float xSpeed = 250.0f;
-	public float ySpeed = 120.0f;
+	float xSpeed = 135;
+	float ySpeed = 120.0f;
 	
-	public float yMinLimit = -20f;
-	public float yMaxLimit = 80f;
+	float yMinLimit = -23f;
+	float yMaxLimit = 33.5f;
 
 	public float rotationThreshold = 20;
 
@@ -27,10 +28,10 @@ public class MouseCamera : MonoBehaviour {
 	public float distanceUpdateSpeed = 30;
 	public float targetDistance = 6;
 
-	private float x = 0.0f;
-	private float y = 0.0f;
-
 	public GUITexture reticle;
+
+	float x = 0.0f;
+	float y = 0.0f;
 
 	void Start(){
 		Screen.lockCursor = true;
@@ -40,8 +41,6 @@ public class MouseCamera : MonoBehaviour {
             transform.position = position;
         }
 		
-		
-
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
 		y = angles.x;
@@ -51,7 +50,6 @@ public class MouseCamera : MonoBehaviour {
             rigidbody.freezeRotation = true;
         }
 
-
 		// reticle
 		reticle.pixelInset = new Rect (0 - (Screen.width /80), 0 - (Screen.width /80), Screen.width / 40, Screen.width / 40);
 		reticle.enabled = true;
@@ -60,7 +58,6 @@ public class MouseCamera : MonoBehaviour {
 	}
 
 	void Update(){
-
         InputDevice device = InputManager.ActiveDevice;
         
 		distance = (float) Mathf.Clamp (
@@ -69,11 +66,6 @@ public class MouseCamera : MonoBehaviour {
 			maxDistance
 		);
 	}
-
-    //void OnCollisionEnter(Collision col){
-    //    print("col");
-    //}
-
 
 	void LateUpdate () {
 		if (target){
@@ -86,14 +78,12 @@ public class MouseCamera : MonoBehaviour {
 	}
 
 	void holdPos(){
-		Vector3 position = new Vector3(0,0,0);
-		if( GLOBAL.health > 0 )
-			position = (target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (target.transform.rotation * Vector3.left * horizontalDistance) + ( target.transform.rotation * Vector3.up * verticalDistance);
-		else
-		{
-			position = (transform.rotation * Vector3.forward * (-distance * 10)) + target.transform.position;
+		if(GLOBAL.health > 0){
+			transform.position = (target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (target.transform.rotation * Vector3.left * horizontalDistance) + (target.transform.rotation * Vector3.up * verticalDistance);
 		}
-		transform.position = position;
+		else{
+			transform.position = (transform.rotation * Vector3.forward * (-distance * 10)) + target.transform.position;
+		}
 	}
 
 	bool rightStickIn(){
@@ -115,14 +105,13 @@ public class MouseCamera : MonoBehaviour {
 
 			Vector3 position = new Vector3(0,0,0);
 
-			if( GLOBAL.health > 0 )
-				position = (target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (target.transform.rotation * Vector3.left * horizontalDistance) + ( target.transform.rotation * Vector3.up * verticalDistance);
-			else
-			{
+			if(GLOBAL.health > 0){
+				position = (target.transform.rotation * Vector3.forward * -distance) + target.transform.position + (target.transform.rotation * Vector3.left * horizontalDistance) + (target.transform.rotation * Vector3.up * verticalDistance);
+			}
+			else{
 				position = (rotation * Vector3.forward * (-distance * 10)) + target.transform.position;
 
 			}
-			//position.y += .5f;
 			
 			transform.rotation = rotation;
 			transform.position = position;

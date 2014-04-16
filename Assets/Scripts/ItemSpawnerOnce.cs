@@ -4,6 +4,7 @@ using System.Collections;
 public class ItemSpawnerOnce : MonoBehaviour {
 	
 	public GameObject ItemPrefab;
+	public bool addItemPosition = false;
 	public int ItemQuantity;
 	
 	bool attemptedSpawn = false;
@@ -23,17 +24,19 @@ public class ItemSpawnerOnce : MonoBehaviour {
 	}
 	
 	void spawn(){
-		GameObject item = GLOBAL.that.SuperInstantiate(ItemPrefab, transform.position, Quaternion.identity);
-		//GameObject item = PhotonNetwork.InstantiateSceneObject(ItemPrefab.name, transform.position, Quaternion.identity, 0, null) as GameObject;
 
-        //if(item != null) {
-            item.transform.parent = transform;
+		Vector3 pos = transform.position;
+		if(addItemPosition){
+			pos += ItemPrefab.transform.position;
+		}
+		GameObject item = GLOBAL.that.SuperInstantiate(ItemPrefab, transform.position, Quaternion.identity);
+
+        item.transform.parent = transform;
 
             // If the spawned item is a collectable, give it a quantity
             if(item.GetComponent<CollectableBase>() != null) {
                 item.GetComponent<CollectableBase>().setQuantity(ItemQuantity);
-            }
-        //}
+			}
 	}
 }
 

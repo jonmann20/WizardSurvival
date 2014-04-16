@@ -36,7 +36,8 @@ public class Logger : MonoBehaviour {
 
 	void Update()
 	{
-		movementCaptureTimer --;
+		--movementCaptureTimer;
+
 		if(movementCaptureTimer <= 0)
 		{
 			movementCaptureTimer = MOVEMENT_CAPTURE_INTERVAL;
@@ -77,43 +78,41 @@ public class Logger : MonoBehaviour {
 
 	void accessData(JSONObject obj){
 		switch(obj.type){
-		case JSONObject.Type.OBJECT:
-			for(int i = 0; i < obj.list.Count; i++){
-				string key = (string)obj.keys[i];
-				JSONObject j = (JSONObject)obj.list[i];
-				accessData(j);
-			}
-			break;
-		case JSONObject.Type.ARRAY:
-			float x = float.Parse(obj.list[0].ToString());
-			float y = float.Parse(obj.list[1].ToString());
-			float z = float.Parse(obj.list[2].ToString());
+			case JSONObject.Type.OBJECT:
+				for(int i = 0; i < obj.list.Count; ++i){
+					JSONObject j = (JSONObject)obj.list[i];
+					accessData(j);
+				}
+				break;
+			case JSONObject.Type.ARRAY:
+				float x = float.Parse(obj.list[0].ToString());
+				float y = float.Parse(obj.list[1].ToString());
+				float z = float.Parse(obj.list[2].ToString());
 
-			float rx = float.Parse (obj.list[3].ToString());
-			float ry = float.Parse (obj.list[4].ToString());
-			float rz = float.Parse (obj.list[5].ToString());
+				float rx = float.Parse (obj.list[3].ToString());
+				float ry = float.Parse (obj.list[4].ToString());
+				float rz = float.Parse (obj.list[5].ToString());
 
-			int id = int.Parse (obj.list[6].ToString());
+				int id = int.Parse (obj.list[6].ToString());
 
-			Vector3 pos = new Vector3(x, y, z);
-			Vector3 rot = new Vector3(rx, ry, rz);
+				Vector3 pos = new Vector3(x, y, z);
+				Vector3 rot = new Vector3(rx, ry, rz);
 
-			ReceivedDatums.Add (new LogElement(pos, rot, id));
-			//LoggerPoints.Add(Instantiate(LoggerPointPrefab, new Vector3(x, y, z), Quaternion.identity) as GameObject);
-			break;
-		case JSONObject.Type.STRING:
-			Debug.Log(obj.str);
-			break;
-		case JSONObject.Type.NUMBER:
-			Debug.Log(obj.n);
-			break;
-		case JSONObject.Type.BOOL:
-			Debug.Log(obj.b);
-			break;
-		case JSONObject.Type.NULL:
-			Debug.Log("NULL");
-			break;
-			
+				ReceivedDatums.Add (new LogElement(pos, rot, id));
+				//LoggerPoints.Add(Instantiate(LoggerPointPrefab, new Vector3(x, y, z), Quaternion.identity) as GameObject);
+				break;
+			case JSONObject.Type.STRING:
+				Debug.Log(obj.str);
+				break;
+			case JSONObject.Type.NUMBER:
+				Debug.Log(obj.n);
+				break;
+			case JSONObject.Type.BOOL:
+				Debug.Log(obj.b);
+				break;
+			case JSONObject.Type.NULL:
+				Debug.Log("NULL");
+				break;	
 		}
 	}
 
@@ -179,7 +178,7 @@ public class Logger : MonoBehaviour {
 		// check for errors
 		if (www.error == null)
 		{
-			callback(www.data);
+			callback(www.text);
 		}
 	}
 

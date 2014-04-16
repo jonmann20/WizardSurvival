@@ -39,3 +39,12 @@ http://opengameart.org/content/fire-evil-spell
 
 TailWhip:
 http://opengameart.org/content/fire-whip-hit-yo-frankie
+
+Spell icons:
+http://opengameart.org/content/spell-icon-collection-part-2
+
+Game Over Song:
+http://opengameart.org/content/winter-feeling
+
+Freeze Spell:
+http://opengameart.org/content/freeze-spell-0

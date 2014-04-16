@@ -7,12 +7,13 @@ public class GameAudio : MonoBehaviour {
 
 	public static AudioSource[] jumpSrc, flameSrc;
 	public static AudioSource chimesSrc, jumplandSrc, introSrc, spell0Src, lowHealthSrc, 
-		invSelectSrc, windSrc, magicFailSrc, invMoveSrc, chainSrc, invNoMoveSrc, painSrc, flameShootSrc;
+		invSelectSrc, windSrc, magicFailSrc, invMoveSrc, chainSrc, invNoMoveSrc, painSrc, flameShootSrc,
+		gameOverSrc, freezeSpellSrc;
 
 	GameObject[] jumpHolder, flameHolder;
 	GameObject audioHolder, chimesHolder, jumplandHolder, introHolder, spell0Holder, lowHealthHolder, 
 		invSelectHolder, windHolder, magicFailHolder, invMoveHolder, invNoMoveHolder, flameShootHolder,
-		chainHolder, painHolder;
+		chainHolder, painHolder, gameOverHolder, freezeSpellHolder;
 
 	void Awake(){
 		audioHolder = new GameObject("_AudioHolder");
@@ -46,6 +47,8 @@ public class GameAudio : MonoBehaviour {
 		setSoundEffect(ref chainHolder, ref chainSrc, "teleport");
 		setSoundEffect(ref painHolder, ref painSrc, "pain1");
 		setSoundEffect(ref chimesHolder, ref chimesSrc, "heal");
+		setSoundEffect(ref gameOverHolder, ref gameOverSrc, "WinterSnow");
+		setSoundEffect(ref freezeSpellHolder, ref freezeSpellSrc, "freeze");
 	}
 
 	void Start(){
@@ -62,7 +65,19 @@ public class GameAudio : MonoBehaviour {
 		src.clip = Resources.Load<AudioClip>("Audio/" + clip);
 	}
 
-    public static void playFlameShoot() {
+	public static void playGameOver(){
+		if(!gameOverSrc.isPlaying){
+			gameOverSrc.audio.Play();
+		}
+	}
+
+	public static void playFreezeSpell(){
+		if(!freezeSpellSrc.isPlaying){
+			freezeSpellSrc.audio.Play();
+		}
+	}
+
+    public static void playFlameShoot(){
         flameShootSrc.audio.Play();
     }
 

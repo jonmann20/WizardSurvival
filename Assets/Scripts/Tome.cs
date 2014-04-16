@@ -4,7 +4,7 @@ using System.Collections;
 using InControl;
 using System;
 
-public enum BaseAbility {FireballAbility, Forcefield, Levitation, Enchantment};
+public enum BaseAbility {FireballAbility, IceAbility};
 
 public class Tome : MonoBehaviour {
 
@@ -35,8 +35,15 @@ public class Tome : MonoBehaviour {
 						doorRscript.playDoorAnim();
 					}*/
 				}
-				else {
-					AbilityManagerScript.that.changeAbility(Enum.GetName(typeof(BaseAbility), baseAbility));
+				else{
+					GameAudio.playChimes();
+
+					string bName = Enum.GetName(typeof(BaseAbility), baseAbility);
+
+					HudScript.addNewMessage("Base ability chosen.", 160, Color.white);
+					HudScript.addNewMessage("Press \"R1\" to Fire!", 180, Color.white);
+
+					AbilityManagerScript.that.changeAbility(bName);
 					GLOBAL.that.SuperDestroy(gameObject);
 				}
 			}

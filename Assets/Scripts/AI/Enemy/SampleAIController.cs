@@ -26,7 +26,7 @@ public class SampleAIController : MonoBehaviour {
 	public Shader toonShader;
 
 	void Start(){
-		float ratio = Random.Range(0.8f, 2.0f);
+		float ratio = Random.Range(1.0f, 2.5f);
 
 		skeleton = transform.Find("skeleton");
 
@@ -37,13 +37,16 @@ public class SampleAIController : MonoBehaviour {
 			health *= 10;
 			speed *= speed * (ratio);
 			speed *= .8f;
+
+			speed = Mathf.Clamp(speed,4,7);
 		}
 		else
 		{
 			transform.localScale *= (ratio + .5f);
 			damageToApply = (int) (damageToApply * ratio) ;
 			health *= ratio;
-			speed *= speed * (ratio);
+			speed *= (ratio);
+			speed = Mathf.Clamp(speed,5,9);
 		}
 		
 		this.transform.rigidbody.freezeRotation = true;
@@ -53,8 +56,8 @@ public class SampleAIController : MonoBehaviour {
 		redMaterial = new Material(Shader.Find("Toon/Basic"));
 		redMaterial.color = Color.red;
 		
-		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
-		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("damageToApply", damageToApply);
+		//this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
+		//this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("damageToApply", damageToApply);
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
 
@@ -86,7 +89,10 @@ public class SampleAIController : MonoBehaviour {
 	}
 
 	void doDamage(Collider col){
-		if(invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
+
+		// TODO: check if Ice Blast, and slow enemy down
+
+		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 			

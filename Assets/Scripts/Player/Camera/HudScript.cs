@@ -19,7 +19,7 @@ public class HudScript : MonoBehaviour {
 	float sinCounter = 0.0f;
 
 	List<GameObject> healthVoxels = new List<GameObject>();
-	GameObject hudCamera;
+	public static GameObject hudCamera;
 
 	//TEXT
     public GameObject AbilityNameText;
@@ -62,7 +62,7 @@ public class HudScript : MonoBehaviour {
 
 	//MESSAGE TEXT
 	GameObject MessageText;
-	static Queue<Message> messageQueue = new Queue<Message>();
+	public static Queue<Message> messageQueue = new Queue<Message>();
 
 	//Leaderboard Button
 	const float LEADERBOARD_X = 0.75f;
@@ -87,7 +87,7 @@ public class HudScript : MonoBehaviour {
 		Color redColor = Color.red;
 		float fraction = 0.0f;
 		
-		for(int i = 0; i < NUMBER_OF_VOXELS; i++)
+		for(int i = 0; i < NUMBER_OF_VOXELS; ++i)
 		{
 			GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -123,7 +123,7 @@ public class HudScript : MonoBehaviour {
         //textMesh.fontSize = 31;
 
 		//INVENTORY
-		for(int i = 0; i < GLOBAL.maxInventory; i++)
+		for(int i = 0; i < GLOBAL.maxInventory; ++i)
 		{
 			GameObject c = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			c.layer = 9;
@@ -148,7 +148,7 @@ public class HudScript : MonoBehaviour {
 		}
 		
 
-		for(int i = 0; i < healthVoxels.Count; i++)
+		for(int i=0; i < healthVoxels.Count; ++i)
 		{
 			float bonusHeight = 0;
 
@@ -183,7 +183,7 @@ public class HudScript : MonoBehaviour {
 
 		//INVENTORY
 		int numInventoryItems = GLOBAL.getInventoryCount();
-		for(int i = 0; i < numInventoryItems; i++)
+		for(int i=0; i < numInventoryItems; ++i)
 		{
 			GameObject g = GLOBAL.getInventoryItemAt(i);
 			g.layer = 9;
@@ -346,57 +346,7 @@ public class HudScript : MonoBehaviour {
 		}
 	}
 
-    void OnGUI(){
-		//Scores (TEMP)
-		
-		int offset = 20;
-		//GUI.Label( new Rect( Screen.width/2 , Screen.height/2, 300,25 ), "Number of Players");
-		int teamScore = 0;
-		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
-		{
-			//Don't list duplicate information about the current player.
-			if(Wizard.myWizard != null)
-			if(PhotonNetwork.playerList[i] == Wizard.myWizard.GetComponent<PhotonView>().owner)
-			{
-				teamScore += (int)PhotonNetwork.playerList[i].customProperties["Score"];
-				continue;
-			}
-
-			//Object key = "String";
-			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Score") )
-			{
-				int tempScore = (int) PhotonNetwork.playerList[i].customProperties["Score"];
-				teamScore += tempScore;
-				if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Ability") )
-				{
-					string abilityName = (string) PhotonNetwork.playerList[i].customProperties["Ability"];
-					GUI.Label(new Rect( Screen.width * .05f, Screen.height * .1f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " +  abilityName + " Score: " + tempScore.ToString() );
-				}
-				else
-				{
-					GUI.Label(new Rect( Screen.width * .05f, Screen.height * .1f + (offset * (i)), (Screen.width * .16f), 25f), "Player " + PhotonNetwork.playerList[i].ID + ": " + tempScore.ToString() );
-				}
-			}
-			else
-			{
-				GUI.Label(new Rect( Screen.width * .05f, Screen.height * .1f + (offset * (i) ), (Screen.width * .16f), Screen.height * .03f), "Player " + PhotonNetwork.playerList[i].ID + ": does not have score property" );
-			}
-			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health"))
-			{
-				float tempHealth = (int) PhotonNetwork.playerList[i].customProperties["Health"];
-				//print (tempHealth);
-				tempHealth = tempHealth/100;
-				GUI.DrawTexture(new Rect( Screen.width * .05f, 5 + Screen.height * .1f + (offset * i) + (Screen.height * .022f), (Screen.width * .16f) * tempHealth, Screen.height * .01f), healthBarTexture);
-			}
-
-			//GUI.Label(new Rect( Screen.width * .8f, Screen.height * .8f + (offset * i), 300f, 25f), "Player " + PhotonNetwork.otherPlayers[i].ID + ": " + tempScore );
-		}
-
-		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore.ToString();
-    }
-
-	public static void addNewMessage(string strmessage, int duration, Color c)
-	{
+	public static void addNewMessage(string strmessage, int duration, Color c){
 		messageQueue.Enqueue(new Message(strmessage, duration, c));
 	}
 }
