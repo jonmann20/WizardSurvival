@@ -344,6 +344,24 @@ public class HudScript : MonoBehaviour {
 				}
 			}
 		}
+
+		int teamScore = 0;
+		
+		for(int i=0; i < PhotonNetwork.playerList.Length; ++i) {
+			PhotonPlayer p = PhotonNetwork.playerList[i];
+
+			// Score
+			int tempScore = 0;
+			if(p.customProperties.ContainsKey("Score")) 
+			{
+				tempScore = (int)p.customProperties["Score"];
+			}
+			teamScore += tempScore;
+
+			ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore;
+
+		}
+
 	}
 
 	public static void addNewMessage(string strmessage, int duration, Color c){

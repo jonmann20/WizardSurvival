@@ -23,11 +23,12 @@ public class ForcefieldAbility : AbilityBase {
 			
 			Transform w = Wizard.myWizard.transform;
 			
-			GameObject ff = PhotonNetwork.Instantiate(
+			GameObject ff = PhotonNetwork.InstantiateSceneObject(
 				"ForcefieldPrefab",
 				w.position, //+ w.forward.normalized,
 				Quaternion.identity,//gameObject.transform.rotation,
-				0
+				0,
+				null
 			) as GameObject;
 
 			ff.transform.parent = w.parent;

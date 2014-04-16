@@ -130,7 +130,7 @@ public class GameController : MonoBehaviour {
 		{
 			GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-			print ( enemies.Length );
+			//print ( enemies.Length );
 			if ( enemies.Length <= 0 )
 			{
 				WaveOver = true;

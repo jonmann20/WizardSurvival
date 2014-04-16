@@ -13,6 +13,6 @@ public class ForcefieldCollider : MonoBehaviour {
 
 	void destory(){
 		ForcefieldAbility.that.startCooldown();
-		Destroy(gameObject);
+		GLOBAL.that.SuperDestroy(gameObject);
 	}
 }
