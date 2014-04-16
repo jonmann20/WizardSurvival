@@ -4,10 +4,14 @@ using System.Collections;
 public class IceCollider : MonoBehaviour {
 
 	void Update(){
-		Destroy(gameObject, 2);
+		Invoke("destory", 2);
 	}
 
 	void OnTriggerEnter(){
-		Destroy(gameObject);
+		GLOBAL.that.SuperDestroy(gameObject);
+	}
+
+	void destroy(){
+		GLOBAL.that.SuperDestroy(gameObject);
 	}
 }
