@@ -97,7 +97,11 @@ public class SampleAIController : MonoBehaviour {
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 			
 			if(health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy")){
-				if(col.gameObject.GetPhotonView().isMine){
+				print("col: " + col);
+				print("col.gameObject: " + col.gameObject.transform.parent);
+				print("Photon view: " + col.gameObject.GetPhotonView());
+
+				if(col.gameObject.transform.parent.GetComponent<PhotonView>().isMine){
 					Wizard.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
 				}
 			}
