@@ -14,9 +14,8 @@ public class OneWayWall : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collider) {
-		Debug.Log ("Enter");
 		if (AbilityManagerScript.currentAbility == null) {
 			HudScript.addNewMessage("Get a spell!", 120, Color.red);
-		}
+		} 
 	}
 }
