@@ -5,9 +5,6 @@ public class DoorLeft : MonoBehaviour {
 
 	private int door_LastIndex;
 	public bool doorOpen = false;
-	private Animation animation;
-	private Animator animator;
-	private int count = 0;
 	// Use this for initialization
 
 	private void playDoorAnim () {
@@ -16,8 +13,8 @@ public class DoorLeft : MonoBehaviour {
 	}
 
 	void Start () {
-		animator = (Animator) gameObject.GetComponentInChildren (typeof(Animator));
-		animation = (Animation) gameObject.GetComponentInChildren (typeof(Animation));
+		//animator = (Animator) gameObject.GetComponentInChildren (typeof(Animator));
+		//animation = (Animation) gameObject.GetComponentInChildren (typeof(Animation));
 	}
 
 	void Update () {
@@ -33,7 +30,7 @@ public class DoorLeft : MonoBehaviour {
 			doorOpen = true;
 			//playDoorAnim(); 
 			//animation.Play ();
-			animator.SetBool("dooropen", doorOpen);
+			//animator.SetBool("dooropen", doorOpen);
 		}
 	}
 }

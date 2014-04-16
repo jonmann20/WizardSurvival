@@ -23,6 +23,7 @@ public class FireballAbility : AbilityBase {
 			gameObject.transform.rotation, 0
 		) as GameObject;
 
+		projectile.GetComponent<ProjectileBase>().wizard = gameObject;
 		//set initial velocity
 		projectile.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * SPEED;
 

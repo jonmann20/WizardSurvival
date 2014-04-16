@@ -30,6 +30,7 @@ public class PunchAbility : AbilityBase {
 		{
 			arm.renderer.enabled = false;
 			fakeArm = PhotonNetwork.Instantiate("PunchCube", transform.position, Quaternion.identity, 0) as GameObject;
+			fakeArm.GetComponent<ProjectileBase>().wizard = gameObject;
 			fakeArm.GetComponent<MeshRenderer>().materials = punchMat;
 			fakeArm.tag = "PlayerBullet";
 		}

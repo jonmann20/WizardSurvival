@@ -13,7 +13,6 @@ public class Logger : MonoBehaviour {
 
 	List<LogElement> CurrentDatums = new List<LogElement>();
 	List<LogElement> ReceivedDatums = new List<LogElement>();
-	List<GameObject> LoggerPoints = new List<GameObject>();
 	public GameObject LoggerPointPrefab;
 
 	//We can keep track of datums with the same session (indicates an individual player)
@@ -99,7 +98,7 @@ public class Logger : MonoBehaviour {
 				Vector3 rot = new Vector3(rx, ry, rz);
 
 				ReceivedDatums.Add (new LogElement(pos, rot, id));
-				//LoggerPoints.Add(Instantiate(LoggerPointPrefab, new Vector3(x, y, z), Quaternion.identity) as GameObject);
+				
 				break;
 			case JSONObject.Type.STRING:
 				Debug.Log(obj.str);
