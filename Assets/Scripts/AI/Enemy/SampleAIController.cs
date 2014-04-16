@@ -18,10 +18,10 @@ public class SampleAIController : MonoBehaviour {
 
 	public Material initialMaterial;
 	public Material redMaterial;
-	MeshRenderer renderer;
+	//MeshRenderer renderer;
 	
 	Transform skeleton;
-	private bool speedIsSet = false;
+	//private bool speedIsSet = false;
 	public int scoreValue = 10;
 	public Shader toonShader;
 
@@ -95,9 +95,11 @@ public class SampleAIController : MonoBehaviour {
 		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
-			
+
+
 			if(health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy")){
-				if(col.gameObject.GetPhotonView().isMine){
+
+				if(col.gameObject.GetComponent<ProjectileBase>().wizard.GetComponent<PhotonView>().isMine){
 					GLOBAL.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
 				}
 			}

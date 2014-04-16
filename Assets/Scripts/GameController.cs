@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
 
 	public int numUnitstoSpawn = 5;
 	private int SpawnedUnits = 0;
-	private int numUnitsStillinScene = 0;
+	//private int numUnitsStillinScene = 0;
 
 	private bool WaveOver = true;
 	public float timeBetweenWaves = 7;
@@ -109,7 +109,7 @@ public class GameController : MonoBehaviour {
 				doneSpawning = false;
 				spawning = false;
 				SpawnedUnits = 0;
-				numUnitsStillinScene = 0;
+				//numUnitsStillinScene = 0;
 				numUnitstoSpawn = numUnitstoSpawn + (int)((float)numUnitstoSpawn * 0.2f);
 			}
 			return;

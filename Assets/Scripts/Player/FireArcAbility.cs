@@ -35,7 +35,8 @@ public class FireArcAbility : AbilityBase {
 				sum += fraction;
 			    Vector3 p = Vector3.Lerp(first, last, sum);
 				//print("first: " + first.ToString() + "last: " + last.ToString() + "sum: " + sum + "p: " + p.ToString());
-				GameObject projectile = PhotonNetwork.Instantiate("FireballPrefab", p, Quaternion.identity, 0) as GameObject;
+				GameObject projectile = PhotonNetwork.Instantiate("InvisibleProjectile", p, Quaternion.identity, 0) as GameObject;
+				projectile.GetComponent<ProjectileBase>().wizard = gameObject;
 				projectiles.Add(projectile);
 				
 				// keep Hierarchy clean

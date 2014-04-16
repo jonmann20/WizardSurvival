@@ -30,9 +30,9 @@ public class HudScript : MonoBehaviour {
 	public GameObject RoundTimer;
 
 	public GameObject WaveText;
-	private float timer = 300f;
-	private float seconds = 0;
-	private int minutes = 0;
+	//private float timer = 300f;
+	//private float seconds = 0;
+	//private int minutes = 0;
 	private int wave;
 
 	//HealthBar
@@ -358,9 +358,8 @@ public class HudScript : MonoBehaviour {
 			}
 			teamScore += tempScore;
 
-			ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore;
-
 		}
+		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore;
 
 	}
 

@@ -5,7 +5,7 @@ public class DoorRight : MonoBehaviour {
 	
 	private int door_LastIndex;
 	public bool doorOpen = false;
-	private int count = 0;
+	//private int count = 0;
 	// Use this for initialization
 	
 	public void playDoorAnim () {
