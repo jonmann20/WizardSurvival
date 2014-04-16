@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class FireExplosion : MonoBehaviour {
+public class FireExplosion : ProjectileBase {
 
     public ParticleEmitter p0;
 

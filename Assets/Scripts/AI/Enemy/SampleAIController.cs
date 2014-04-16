@@ -95,13 +95,14 @@ public class SampleAIController : MonoBehaviour {
 		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
-			
+
 			if(health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy")){
 				print("col: " + col);
-				print("col.gameObject: " + col.gameObject.transform.parent);
+				print("col.gameObject: " + col.gameObject);
 				print("Photon view: " + col.gameObject.GetPhotonView());
 
-				if(col.gameObject.transform.parent.GetComponent<PhotonView>().isMine){
+
+				if(col.gameObject.GetComponent<ProjectileBase>().wizard.GetComponent<PhotonView>().isMine){
 					Wizard.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
 				}
 			}

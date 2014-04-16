@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FireballScript : MonoBehaviour {
+public class FireballScript : ProjectileBase {
 
 	public GameObject FirePrefab;
 
@@ -16,7 +16,8 @@ public class FireballScript : MonoBehaviour {
 	void OnTriggerEnter(){
 		if(GetComponent<PhotonView>().isMine)
 		{
-			Instantiate(FirePrefab, gameObject.transform.position, Quaternion.identity);
+			GameObject fire = Instantiate(FirePrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+			fire.GetComponent<ProjectileBase>().wizard = this.wizard;
 			GLOBAL.that.SuperDestroy(gameObject);
 		}
 	}
