@@ -18,7 +18,7 @@ public class Leaderboard : MonoBehaviour {
 		leaderboard
 	};
 	
-	public gameState gs;
+	public static gameState gs;
 
 	dreamloLeaderBoard dl;
 
@@ -101,7 +101,7 @@ public class Leaderboard : MonoBehaviour {
 	void printPlayers(float startX, EZOpt e){
 		float startY = 250;
 		float lineHeight = 45;
-		float padBot = 140;
+		float padBot = 155;
 
 		int teamScore = 0;
 

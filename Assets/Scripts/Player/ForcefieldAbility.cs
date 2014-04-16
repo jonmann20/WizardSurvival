@@ -75,8 +75,6 @@ public class ForcefieldAbility : AbilityBase {
 		EZOpt e = new EZOpt(Color.cyan, new Color(0.1f, 0.1f, 0.1f));
 		e.dropShadowX = e.dropShadowX = 1;
 
-		print ("canFire: " + canFire + ", " + cooldownTimeLeft);
-
 		// forcefield is active
 		if(spellDurationLeft > 0){
 			EZGUI.placeTxt("Forcefield time remaining: " + spellDurationLeft + "s", 42, EZGUI.FULLW - 330, 150, e);

@@ -78,6 +78,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 		HudScript.hudCamera.SetActive(false);
 		gameOverTxt = s;
+		Leaderboard.gs = Leaderboard.gameState.leaderboard;
 		//HudScript.addNewMessage("The Host Disconnected...", 180, Color.red);
 	}
 
@@ -95,7 +96,6 @@ public class GLOBAL : Photon.MonoBehaviour {
 	{
 		if(g.GetComponent<PhotonView>() == null)
 		{
-
 			Destroy (g);
 			return;
 		}
