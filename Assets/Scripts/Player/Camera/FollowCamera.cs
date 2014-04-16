@@ -4,7 +4,7 @@ using System.Collections;
 public class FollowCamera : MonoBehaviour {
 
 	public GameObject target;
-	Vector3 offset;
+	//Vector3 offset;
 
 	public float damping = 1;
 
@@ -18,7 +18,7 @@ public class FollowCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		offset = target.transform.position - transform.position;
+		//offset = target.transform.position - transform.position;
 	}
 
 

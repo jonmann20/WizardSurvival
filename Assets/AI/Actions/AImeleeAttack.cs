@@ -9,7 +9,7 @@ using RAIN.Representation;
 public class AImeleeAttack : RAINAction
 {
 	public Expression enemy;
-	private Health enemyHealth = null;
+	//private Health enemyHealth = null;
 	private GameObject enemyObject = null;
 	
 	public AImeleeAttack()

@@ -3,8 +3,6 @@ using System.Collections;
 
 public class InventoryItemScript : MonoBehaviour {
 
-	string itemName = "...";
-
 	float scale = 0.0f;
 
 	public float target = 4.0f;
@@ -23,10 +21,5 @@ public class InventoryItemScript : MonoBehaviour {
 		scale += velocity;
 
 		transform.localScale = new Vector3(scale, scale, scale);
-	}
-
-	void setName(string n)
-	{
-		itemName = n;
 	}
 }

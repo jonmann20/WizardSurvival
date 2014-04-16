@@ -10,14 +10,14 @@ public class BouncyTitle : MonoBehaviour {
 	float velocity = 0.0f;
 	float damping = 0.8f;
 
-	public bool active = false;
+	public bool isActive = false;
 
 	void Awake(){
 		//transform.localScale = new Vector3(scale, scale, scale);
 	}
 
 	void FixedUpdate(){
-		if(active){
+		if(isActive){
 			float force = (target - scale) * stiffness;
 			velocity = damping * (velocity + force);
 			scale += velocity;

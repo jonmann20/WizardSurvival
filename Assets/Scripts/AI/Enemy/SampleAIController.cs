@@ -18,10 +18,10 @@ public class SampleAIController : MonoBehaviour {
 
 	public Material initialMaterial;
 	public Material redMaterial;
-	MeshRenderer renderer;
+	//MeshRenderer renderer;
 	
 	Transform skeleton;
-	private bool speedIsSet = false;
+	//private bool speedIsSet = false;
 	public int scoreValue = 10;
 	public Shader toonShader;
 

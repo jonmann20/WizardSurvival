@@ -46,7 +46,7 @@ public class Intro : MonoBehaviour {
 				GameAudio.stopIntro();
 				GameAudio.playChimes();
 				GameAudio.playInvMove();
-				bouncy.active = true;
+				bouncy.isActive = true;
 			}
 		}
 	}

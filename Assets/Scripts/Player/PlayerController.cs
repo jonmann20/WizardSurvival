@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     PunchAbility punch;
     AbilityManagerScript ams;
 	//PlayerAbility playerAbility;
-	GameObject spawnPoint; 
+	//GameObject spawnPoint; 
 
 	int score = 0;
 	//int Teamscore = 0;
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Start(){
 		plusY = Physics.gravity.y * 1.4f;
-		spawnPoint = GameObject.Find("SpawnPoint") as GameObject;
+		//spawnPoint = GameObject.Find("SpawnPoint") as GameObject;
 
 		playerSingleton = this.transform;
 		//playerAbility = this.GetComponent<PlayerAbility>();
