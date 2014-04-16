@@ -72,18 +72,16 @@ public class ForcefieldAbility : AbilityBase {
 
 	void OnGUI(){
 		EZGUI.init();
-		EZOpt e = new EZOpt(Color.cyan, Color.black);
+		EZOpt e = new EZOpt(Color.cyan, new Color(0.1f, 0.1f, 0.1f));
 		e.dropShadowX = e.dropShadowX = 1;
-
-		print ("canFire: " + canFire + ", " + cooldownTimeLeft);
 
 		// forcefield is active
 		if(spellDurationLeft > 0){
-			EZGUI.placeTxt("Forcefield time remaining: " + spellDurationLeft + "s", 43, EZGUI.FULLW - 330, 150, e);
+			EZGUI.placeTxt("Forcefield time remaining: " + spellDurationLeft + "s", 42, EZGUI.FULLW - 330, 150, e);
 		}
 		else if(!canFire && cooldownTimeLeft != COOLDOWN_TIME){
 			e.color = Color.red;
-			EZGUI.placeTxt("Forcefield cooldown: " + cooldownTimeLeft + "s", 43, EZGUI.FULLW - 300, 150, e);
+			EZGUI.placeTxt("Forcefield cooldown: " + cooldownTimeLeft + "s", 42, EZGUI.FULLW - 300, 150, e);
 		}
 	}
 }

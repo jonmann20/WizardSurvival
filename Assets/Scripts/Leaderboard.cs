@@ -18,7 +18,7 @@ public class Leaderboard : MonoBehaviour {
 		leaderboard
 	};
 	
-	public gameState gs;
+	public static gameState gs;
 
 	dreamloLeaderBoard dl;
 
@@ -101,7 +101,7 @@ public class Leaderboard : MonoBehaviour {
 	void printPlayers(float startX, EZOpt e){
 		float startY = 250;
 		float lineHeight = 45;
-		float padBot = 110;
+		float padBot = 155;
 
 		int teamScore = 0;
 
@@ -109,6 +109,7 @@ public class Leaderboard : MonoBehaviour {
 			PhotonPlayer p = PhotonNetwork.playerList[i];
 
 			// Name
+			e.color = Color.white;
 			EZGUI.placeTxt("Player " + p.ID, 35, startX, startY + (i * padBot), e);
 
 			// Health
