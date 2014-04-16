@@ -14,8 +14,7 @@ public class FireballScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(){
-		if(GetComponent<PhotonView>().isMine)
-		{
+		if(GetComponent<PhotonView>().isMine){
 			Instantiate(FirePrefab, gameObject.transform.position, Quaternion.identity);
 			GLOBAL.that.SuperDestroy(gameObject);
 		}
