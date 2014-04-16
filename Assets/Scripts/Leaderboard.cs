@@ -29,7 +29,7 @@ public class Leaderboard : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(GLOBAL.gameOver || this.gs == gameState.leaderboard){
+		if(GLOBAL.gameOver || gs == gameState.leaderboard){
 			InputDevice device = InputManager.ActiveDevice;
 			
 			InputControl ctrl_O = device.GetControl(InputControlType.Action2);
@@ -52,7 +52,7 @@ public class Leaderboard : MonoBehaviour {
 			}
 		}
 		else if(gs == gameState.running){
-			timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, this.startTime);
+			timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, startTime);
 
 			if(timeLeft == 0){
 				gs = gameState.enterscore;
