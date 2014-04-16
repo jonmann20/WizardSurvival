@@ -349,8 +349,11 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll){
 		if(coll.gameObject.tag == "EnemyBullet"){
-			TakeDamage(coll.gameObject.GetComponent<MageOrbScript>().damageToApply, coll.collider.transform);
-			GLOBAL.that.SuperDestroy(coll.gameObject);
+			if( this.gameObject.GetPhotonView().isMine )
+			{
+				TakeDamage(coll.gameObject.GetComponent<MageOrbScript>().damageToApply, coll.collider.transform);
+				GLOBAL.that.SuperDestroy(coll.gameObject);
+			}
 		}
 	}
 }
