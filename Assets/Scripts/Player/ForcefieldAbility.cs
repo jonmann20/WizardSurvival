@@ -49,6 +49,7 @@ public class ForcefieldAbility : AbilityBase {
 	}
 
 	public void startCooldown(){
+		cooldownTimeLeft = COOLDOWN_TIME;
 		StartCoroutine(canFireChargeup());
 	}
 
@@ -61,7 +62,6 @@ public class ForcefieldAbility : AbilityBase {
 	IEnumerator canFireChargeup(){
 		while(--cooldownTimeLeft >= 0){
 			if(cooldownTimeLeft <= 0){
-				cooldownTimeLeft = COOLDOWN_TIME;
 				canFire = true;
 			}
 			else {
@@ -74,6 +74,8 @@ public class ForcefieldAbility : AbilityBase {
 		EZGUI.init();
 		EZOpt e = new EZOpt(Color.cyan, Color.black);
 		e.dropShadowX = e.dropShadowX = 1;
+
+		print ("canFire: " + canFire + ", " + cooldownTimeLeft);
 
 		// forcefield is active
 		if(spellDurationLeft > 0){
