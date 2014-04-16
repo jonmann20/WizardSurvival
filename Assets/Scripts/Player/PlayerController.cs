@@ -12,8 +12,6 @@ public class PlayerController : MonoBehaviour {
 	public float fireSpeed = 4;
 	public GameObject fireProj;
 
-	public Transform thisCamera;
-
 	public static Transform playerSingleton;
 	public float sinCounter = 0;
 
@@ -67,7 +65,6 @@ public class PlayerController : MonoBehaviour {
 
 	void Start(){
 		plusY = Physics.gravity.y * 1.4f;
-		thisCamera = (GameObject.FindWithTag("MainCamera") as GameObject).transform;
 		spawnPoint = GameObject.Find("SpawnPoint") as GameObject;
 
 		playerSingleton = this.transform;
@@ -81,8 +78,7 @@ public class PlayerController : MonoBehaviour {
 			PhotonNetwork.player.SetCustomProperties(networkedProperties);
 		}*/
 
-		GameObject hud = GameObject.Find("HudCamera");
-        leaderboard = hud.GetComponent<Leaderboard>();
+        leaderboard = GLOBAL.MainCamera.GetComponent<Leaderboard>();
 	}
 
     void Update(){
