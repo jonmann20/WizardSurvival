@@ -332,7 +332,12 @@ public class PlayerController : MonoBehaviour {
 			swapShader(Color.red);
 			
 			GLOBAL.health = Mathf.Clamp(GLOBAL.health - damage, 0, 100);
-			networkedProperties["Health"] = GLOBAL.health;
+			if( networkedProperties.ContainsKey("Health") )
+				networkedProperties["Health"] = GLOBAL.health;
+			else
+			{
+				networkedProperties.Add("Health", GLOBAL.health);
+			}
 			
 			PhotonNetwork.player.SetCustomProperties(networkedProperties);
 		}
@@ -344,7 +349,7 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll){
 		if(coll.gameObject.tag == "EnemyBullet"){
-			TakeDamage(20, coll.collider.transform);
+			TakeDamage(coll.gameObject.GetComponent<MageOrbScript>().damageToApply, coll.collider.transform);
 			GLOBAL.that.SuperDestroy(coll.gameObject);
 		}
 	}
