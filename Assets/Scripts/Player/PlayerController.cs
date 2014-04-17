@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 
     float movementSpeed = 500;
     float strafeSpeed = 400;
-    float jumpSpeed = 565;
+    float jumpSpeed = 700;
 
     //float fireRate = .11f;
     //float lastShot = -10;
@@ -343,7 +343,7 @@ public class PlayerController : MonoBehaviour {
 		{
 			if(!invincible && !GLOBAL.gameOver){
 				invincible = true;
-				StartCoroutine("animDamage");
+				StartCoroutine(animDamage());
 
 				GameAudio.playPain();
 				swapShader(Color.red);

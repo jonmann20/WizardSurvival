@@ -8,9 +8,10 @@ public class MouseCamera : MonoBehaviour {
 	public GameObject target;
 	public GameObject playerPrefab;
 	
-	float distance = 0.9f;
-	public float verticalDistance = 0.3f;
-	public float horizontalDistance = -0.7f;
+	float distance = 2.63f;
+	float horizontalDistance = -1.65f;
+	float verticalDistance = 1.29f;
+
 	public float maxDistance = 13.0f;
 	public float minDistance = 8.0f;
 	public float zoomSpeed = 1;

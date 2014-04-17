@@ -41,8 +41,10 @@ public class SampleAIController : MonoBehaviour {
 		}
 		else
 		{
-			transform.localScale *= (ratio + .5f);
-			damageToApply = (int) (damageToApply * ratio) ;
+			float sc = Random.Range(3.8f, 4.5f);
+
+			transform.localScale = new Vector3(sc, sc, sc);
+			damageToApply = (int)(damageToApply * ratio);
 			health *= ratio;
 			speed *= (ratio);
 			speed = Mathf.Clamp(speed,5,9);
