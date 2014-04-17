@@ -72,6 +72,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 	}
 
 	public static void GameOver(string s){
+		GameAudio.stopBattleMusic();
 		GameAudio.playGameOver();
 		GLOBAL.gameOver = true;
 		GLOBAL.health = 0;

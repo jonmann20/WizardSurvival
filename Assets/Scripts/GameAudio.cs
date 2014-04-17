@@ -8,12 +8,12 @@ public class GameAudio : MonoBehaviour {
 	public static AudioSource[] jumpSrc, flameSrc;
 	public static AudioSource chimesSrc, jumplandSrc, introSrc, spell0Src, lowHealthSrc, 
 		invSelectSrc, windSrc, magicFailSrc, invMoveSrc, chainSrc, invNoMoveSrc, painSrc, flameShootSrc,
-		gameOverSrc, freezeSpellSrc;
+		gameOverSrc, freezeSpellSrc, freezeSpellCollisionSrc, battleMusicSrc;
 
 	GameObject[] jumpHolder, flameHolder;
 	GameObject audioHolder, chimesHolder, jumplandHolder, introHolder, spell0Holder, lowHealthHolder, 
 		invSelectHolder, windHolder, magicFailHolder, invMoveHolder, invNoMoveHolder, flameShootHolder,
-		chainHolder, painHolder, gameOverHolder, freezeSpellHolder;
+		chainHolder, painHolder, gameOverHolder, freezeSpellHolder, freezeSpellCollisionHolder, battleMusicHolder;
 
 	void Awake(){
 		audioHolder = new GameObject("_AudioHolder");
@@ -37,7 +37,7 @@ public class GameAudio : MonoBehaviour {
 		setSoundEffect(ref jumpHolder[3], ref jumpSrc[3], "jump3");
 		setSoundEffect(ref jumplandHolder, ref jumplandSrc, "jumpLand");
 		setSoundEffect(ref introHolder, ref introSrc, "HeavenSings");
-		setSoundEffect(ref spell0Holder, ref spell0Src, "warp3");
+		//setSoundEffect(ref spell0Holder, ref spell0Src, "warp3");
 		setSoundEffect(ref lowHealthHolder, ref lowHealthSrc, "lowhealth");
 		setSoundEffect(ref invSelectHolder, ref invSelectSrc, "enchant");
 		setSoundEffect(ref windHolder, ref windSrc, "wind");
@@ -48,7 +48,16 @@ public class GameAudio : MonoBehaviour {
 		setSoundEffect(ref painHolder, ref painSrc, "pain1");
 		setSoundEffect(ref chimesHolder, ref chimesSrc, "heal");
 		setSoundEffect(ref gameOverHolder, ref gameOverSrc, "WinterSnow");
-		setSoundEffect(ref freezeSpellHolder, ref freezeSpellSrc, "freeze");
+		setSoundEffect(ref freezeSpellHolder, ref freezeSpellSrc, "loudstream");
+		//setSoundEffect(ref freezeSpellCollisionHolder, ref freezeSpellCollisionSrc, "freeze");
+		setSoundEffect(ref battleMusicHolder, ref battleMusicSrc, "ColdHeartedv1");
+
+		freezeSpellSrc.playOnAwake = true;
+		freezeSpellSrc.audio.enabled = false;
+
+		introSrc.loop = true;
+		battleMusicSrc.loop = true;
+		gameOverSrc.loop = true;
 	}
 
 	void Start(){
@@ -67,13 +76,32 @@ public class GameAudio : MonoBehaviour {
 
 	public static void playGameOver(){
 		if(!gameOverSrc.isPlaying){
+			gameOverSrc.audio.time = 2.3f;
 			gameOverSrc.audio.Play();
 		}
 	}
 
-	public static void playFreezeSpell(){
-		if(!freezeSpellSrc.isPlaying){
-			freezeSpellSrc.audio.Play();
+	public static void playBattleMusic(){
+		battleMusicSrc.audio.Play();
+	}
+
+	public static void stopBattleMusic(){
+		battleMusicSrc.audio.Stop();
+	}
+
+	public static void playFreezeSpell() {
+		freezeSpellSrc.audio.enabled = true;
+		freezeSpellSrc.audio.loop = true;
+	}
+
+	public static void stopFreezeSpell() {
+		freezeSpellSrc.audio.enabled = false;
+		freezeSpellSrc.audio.loop = false;
+	}
+
+	public static void playFreezeSpellCollision(){
+		if(!freezeSpellCollisionSrc.isPlaying){
+			freezeSpellCollisionSrc.audio.Play();
 		}
 	}
 
@@ -114,7 +142,10 @@ public class GameAudio : MonoBehaviour {
 	}
 
 	public static void playLowHP(){
-		lowHealthSrc.audio.Play();
+		if(!lowHealthSrc.isPlaying) {
+			lowHealthSrc.volume = 2;
+			lowHealthSrc.audio.Play();
+		}
 	}
 
 	public static void playInvSelect(){

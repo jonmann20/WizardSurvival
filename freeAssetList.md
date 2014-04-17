@@ -17,4 +17,7 @@ Free Asset List
 * [TailWhip](http://opengameart.org/content/fire-whip-hit-yo-frankie)
 * [Spell icons](http://opengameart.org/content/spell-icon-collection-part-2)
 * [Game Over Song](http://opengameart.org/content/winter-feeling)
-* [Freeze Spell](http://opengameart.org/content/freeze-spell-0)
+* [Freeze Spell Collision](http://opengameart.org/content/freeze-spell-0)
+* [Battle Music v1](http://opengameart.org/content/cold-hearted-ver1)
+* [Battle Music v2](http://opengameart.org/content/cold-hearted-ver2)
+* [Freeze Spell](http://opengameart.org/content/stream-sounds)

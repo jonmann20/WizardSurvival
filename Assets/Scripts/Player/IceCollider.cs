@@ -4,10 +4,11 @@ using System.Collections;
 public class IceCollider : MonoBehaviour {
 
 	void Update(){
-		Invoke("destory", 2);
+		Invoke("destroy", 2);
 	}
 
 	void OnTriggerEnter(){
+		//GameAudio.playFreezeSpellCollision();
 		GLOBAL.that.SuperDestroy(gameObject);
 	}
 

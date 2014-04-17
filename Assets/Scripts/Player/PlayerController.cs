@@ -122,6 +122,11 @@ public class PlayerController : MonoBehaviour {
 		bool doFire = false;
 		if(ams.isAbilityName("Ice Blast")){
 			doFire = ctrl_RightBumper.IsPressed;
+
+			if(!doFire) {
+				GameAudio.stopFreezeSpell();
+			}
+
 		}
 		else {
 			doFire = ctrl_RightBumper.WasPressed;

@@ -29,7 +29,8 @@ public class ItemSpawnerOnce : MonoBehaviour {
 		if(addItemPosition){
 			pos += ItemPrefab.transform.position;
 		}
-		GameObject item = GLOBAL.that.SuperInstantiate(ItemPrefab, transform.position, Quaternion.identity);
+
+		GameObject item = GLOBAL.that.SuperInstantiate(ItemPrefab, pos, Quaternion.identity);
 
         item.transform.parent = transform;
 
