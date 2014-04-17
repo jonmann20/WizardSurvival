@@ -364,6 +364,14 @@ public class HudScript : MonoBehaviour {
 	}
 
 	public static void addNewMessage(string strmessage, int duration, Color c){
+
+		//Don't enque message if it's already in the queue!
+		foreach(Message m in messageQueue)
+		{
+			if(m.messageString == strmessage)
+				return;
+		}
+
 		messageQueue.Enqueue(new Message(strmessage, duration, c));
 	}
 }

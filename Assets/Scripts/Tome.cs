@@ -43,7 +43,7 @@ public class Tome : MonoBehaviour {
 					HudScript.addNewMessage("Base ability chosen.", 160, Color.white);
 					HudScript.addNewMessage("Press \"R1\" to Fire!", 180, Color.white);
 
-					AbilityManagerScript.that.changeAbility(bName);
+					GLOBAL.myWizard.GetComponent<AbilityManagerScript>().changeAbility(bName);
 					GLOBAL.that.SuperDestroy(gameObject);
 				}
 			}

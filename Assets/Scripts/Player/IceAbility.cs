@@ -8,12 +8,11 @@ public class IceAbility : AbilityBase {
 
 		Transform w = GLOBAL.myWizard.transform;
 
-		GameObject ice = PhotonNetwork.InstantiateSceneObject(
+		GameObject ice = PhotonNetwork.Instantiate(
 			"IcePrefab",
 			w.position + w.forward.normalized,
 			gameObject.transform.rotation,
-			0,
-			null
+			0
 		) as GameObject;
 
 		ice.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * 20;

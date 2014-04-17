@@ -17,10 +17,10 @@ public class FireballAbility : AbilityBase {
 	{
 		GameAudio.playFlameShoot();
 
-		GameObject projectile = PhotonNetwork.InstantiateSceneObject(
+		GameObject projectile = PhotonNetwork.Instantiate(
 			FireballPrefabString, 
 			GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized,  
-			gameObject.transform.rotation, 0, null
+			gameObject.transform.rotation, 0
 		) as GameObject;
 
 		projectile.GetComponent<ProjectileBase>().wizard = gameObject;

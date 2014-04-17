@@ -6,19 +6,7 @@ using InControl;
 public class AbilityManagerScript : MonoBehaviour {
 
 	public static AbilityBase currentAbility;
-	public static AbilityManagerScript that;
 
-	void Start()
-	{
-		if(!GetComponent<PhotonView>().isMine)
-		{
-			Destroy(GetComponent<PlayerController>());
-			Destroy(GetComponent<Rigidbody>());
-			Destroy(this);
-		}
-		else
-			that = this;
-	}
 
 	public void attemptFire(){
 		if(currentAbility != null &&

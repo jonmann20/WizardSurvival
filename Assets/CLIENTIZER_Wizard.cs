@@ -7,7 +7,7 @@ public class CLIENTIZER_Wizard : MonoBehaviour {
 	void Start () {
 		if(GetComponent<PhotonView>().isMine)
 		{
-			Destroy(GetComponent<SyncScript>());
+			GetComponent<SyncScript>().enabled = false;
 			GLOBAL.myWizard = gameObject;
 		}
 		else

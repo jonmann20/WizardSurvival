@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class DebugDisplayScript : MonoBehaviour {
 
 	delegate List<string> StringListReturningDelegate();
-	List<StringListReturningDelegate> ThingsToDisplay = new List<StringListReturningDelegate>();
+	List<StringListReturningDelegate> PlayerThingsToDisplay = new List<StringListReturningDelegate>();
+	List<StringListReturningDelegate> PhotonViewThingsToDisplay = new List<StringListReturningDelegate>();
 
 	//FPS STUFF
 	int m_frameCounter = 0;
@@ -18,9 +19,9 @@ public class DebugDisplayScript : MonoBehaviour {
 	//(2) Add a StringReturningDelegate for that function to ThingsToDisplay in Awake()
 	void Awake()
 	{
-		ThingsToDisplay.Add(new StringListReturningDelegate(fps));
-		ThingsToDisplay.Add(new StringListReturningDelegate(numberOfConnectedPlayers));
-		ThingsToDisplay.Add(new StringListReturningDelegate(playerListInformation));
+		PlayerThingsToDisplay.Add(new StringListReturningDelegate(fps));
+		PlayerThingsToDisplay.Add(new StringListReturningDelegate(numberOfConnectedPlayers));
+		PlayerThingsToDisplay.Add(new StringListReturningDelegate(playerListInformation));
 	}
 
 	List<string> numberOfConnectedPlayers()
@@ -51,6 +52,13 @@ public class DebugDisplayScript : MonoBehaviour {
 		return output;
 	}
 
+	List<string> PhotonViewInformation()
+	{
+		List<string> output = new List<string>();
+
+		return output;
+	}
+
 	List<string> fps()
 	{
 		List<string> output = new List<string>();
@@ -62,9 +70,9 @@ public class DebugDisplayScript : MonoBehaviour {
 	void OnGUI(){
         EZGUI.init();
 
-		for(int i = 0; i < ThingsToDisplay.Count; i++)
+		for(int i = 0; i < PlayerThingsToDisplay.Count; i++)
 		{
-			List<string> currentThingList = ThingsToDisplay[i]();
+			List<string> currentThingList = PlayerThingsToDisplay[i]();
 
 			for(int j = 0; j < currentThingList.Count; j++)
 			{
@@ -76,6 +84,8 @@ public class DebugDisplayScript : MonoBehaviour {
                 EZGUI.placeTxt(thingToDisplay, 23, 10, i * 31 + j * 31 + 33, e);
 			}
 		}
+
+
 	}
 
 	void Update()
