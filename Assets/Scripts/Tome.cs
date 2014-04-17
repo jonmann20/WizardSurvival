@@ -44,7 +44,6 @@ public class Tome : MonoBehaviour {
 					HudScript.addNewMessage("Base ability chosen.", 150, Color.white);
 					HudScript.addNewMessage("Press \"R1\" to Fire!", 180, Color.white);
 
-
 					PlayerController p = GLOBAL.myWizard.GetComponent<PlayerController>();
 					p.swapMat(mat);
 
