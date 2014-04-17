@@ -8,7 +8,7 @@ public class FireShieldCollectableScript : CollectableBase {
 	public override void customUpdate() { }
 	public override void useItem()
 	{ 
-		AbilityBase ability = Wizard.myWizard.AddComponent<FireShieldAbility>() as AbilityBase;
+		AbilityBase ability = GLOBAL.myWizard.AddComponent<FireShieldAbility>() as AbilityBase;
 		ability.fire();
 	}
 	public override string getName() { return "Wind Book"; }

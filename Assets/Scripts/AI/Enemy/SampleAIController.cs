@@ -97,13 +97,10 @@ public class SampleAIController : MonoBehaviour {
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 
 			if(health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy")){
-				//print("col: " + col);
-				//print("col.gameObject: " + col.gameObject);
-				//print("Photon view: " + col.gameObject.GetPhotonView());
 
-				//if(col.gameObject.GetComponent<ProjectileBase>().wizard.GetComponent<PhotonView>().isMine){
-					Wizard.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
-				//}
+				if(col.gameObject.GetComponent<ProjectileBase>().wizard.GetComponent<PhotonView>().isMine){
+					GLOBAL.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
+				}
 			}
 		}
 	}

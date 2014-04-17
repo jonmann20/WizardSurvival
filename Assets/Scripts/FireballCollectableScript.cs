@@ -8,7 +8,7 @@ public class FireballCollectableScript : CollectableBase {
 	public override void customUpdate() { }
 	public override void useItem() 
 	{ 
-		AbilityBase ability = Wizard.myWizard.AddComponent<FireballAbility>() as AbilityBase;
+		AbilityBase ability = GLOBAL.myWizard.AddComponent<FireballAbility>() as AbilityBase;
 		ability.fire();
 	}
 	public override string getName() { return "Fire Book"; }

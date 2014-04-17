@@ -6,11 +6,7 @@ using InControl;
 public class AbilityManagerScript : MonoBehaviour {
 
 	public static AbilityBase currentAbility;
-	public static AbilityManagerScript that;
 
-	void Awake(){
-		that = this;
-	}
 
 	public void attemptFire(){
 		if(currentAbility != null &&
@@ -28,12 +24,12 @@ public class AbilityManagerScript : MonoBehaviour {
 
 		currentAbility = gameObject.AddComponent(abilityName) as AbilityBase;
 
-		if(Wizard.myWizard != null &&
-		   Wizard.myWizard.GetComponent<PlayerController>() != null &&
-		   Wizard.myWizard.GetComponent<PlayerController>().networkedProperties.ContainsKey("Ability")
+		if(GLOBAL.myWizard != null &&
+		   GLOBAL.myWizard.GetComponent<PlayerController>() != null &&
+		   GLOBAL.myWizard.GetComponent<PlayerController>().networkedProperties.ContainsKey("Ability")
 		){
-			Wizard.myWizard.GetComponent<PlayerController>().networkedProperties["Ability"] = AbilityManagerScript.currentAbility.getAbilityName();
-			PhotonNetwork.player.SetCustomProperties(Wizard.myWizard.GetComponent<PlayerController>().networkedProperties);
+			GLOBAL.myWizard.GetComponent<PlayerController>().networkedProperties["Ability"] = AbilityManagerScript.currentAbility.getAbilityName();
+			PhotonNetwork.player.SetCustomProperties(GLOBAL.myWizard.GetComponent<PlayerController>().networkedProperties);
 		}
 	}
 

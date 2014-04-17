@@ -6,14 +6,13 @@ public class IceAbility : AbilityBase {
 	public override void fire(){
 		GameAudio.playFreezeSpell();
 
-		Transform w = Wizard.myWizard.transform;
+		Transform w = GLOBAL.myWizard.transform;
 
-		GameObject ice = PhotonNetwork.InstantiateSceneObject(
+		GameObject ice = PhotonNetwork.Instantiate(
 			"IcePrefab",
 			w.position + w.forward.normalized,
 			gameObject.transform.rotation,
-			0,
-			null
+			0
 		) as GameObject;
 
 		ice.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * 20;
