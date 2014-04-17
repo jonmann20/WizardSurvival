@@ -74,6 +74,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 	}
 
 	public static void GameOver(string s){
+		GameAudio.stopBattleMusic();
 		GameAudio.playGameOver();
 		GLOBAL.gameOver = true;
 		GLOBAL.health = 0;
@@ -134,19 +135,4 @@ public class GLOBAL : Photon.MonoBehaviour {
 	}
 
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
-
-	public static IEnumerator ChangeSceneWithDelay(string sceneName, int delay)
-	{
-		//Logger.that.write();
-
-		yield return new WaitForSeconds(delay);
-		Application.LoadLevel(sceneName);
-	}
-
-	public static IEnumerator QuitWithDelay(int delay){
-		//Logger.that.write();
-
-		yield return new WaitForSeconds(delay);
-		Application.Quit();
-	}
 }

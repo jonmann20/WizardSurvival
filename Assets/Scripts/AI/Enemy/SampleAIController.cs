@@ -14,11 +14,10 @@ public class SampleAIController : MonoBehaviour {
 	public float timeUntilRemove = 3.0f;
 
 	const int MAX_INVINCIBILITY_TIMER = 5;
-	public int invincibilityTimer = 0;
+	int invincibilityTimer = 0;
 
 	public Material initialMaterial;
 	public Material redMaterial;
-	//MeshRenderer renderer;
 	
 	Transform skeleton;
 	//private bool speedIsSet = false;
@@ -54,7 +53,7 @@ public class SampleAIController : MonoBehaviour {
 		initialMaterial = skeleton.renderer.material;
 
 		redMaterial = new Material(Shader.Find("Toon/Basic"));
-		redMaterial.color = Color.red;
+		redMaterial.color = new Color(1, 0, 0, 0.7f);
 		
 		//this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
 		//this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("damageToApply", damageToApply);
@@ -62,9 +61,7 @@ public class SampleAIController : MonoBehaviour {
 	}
 
 	void Update(){
-	
 		if(health <= 0){
-			//transform.GetComponent<BoxCollider>().enabled = false;
 			gameObject.layer = LayerMask.NameToLayer("Dead Enemy");
 			deathTimer -= Time.deltaTime;
 
@@ -75,12 +72,15 @@ public class SampleAIController : MonoBehaviour {
 		else {
 			deathTimer = timeUntilRemove;
 		}
+	}
 
+	void FixedUpdate(){
 		// invincible
 		if(invincibilityTimer > 0){
 			--invincibilityTimer;
+
 			skeleton.renderer.material = redMaterial;
-            skeleton.renderer.materials[1].SetColor("_Color", Color.red);
+			skeleton.renderer.materials[1].SetColor("_Color", Color.red);
 		}
 		else {
 			skeleton.renderer.material = initialMaterial;
@@ -95,7 +95,6 @@ public class SampleAIController : MonoBehaviour {
 		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
-
 
 			if(health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy")){
 
@@ -114,13 +113,13 @@ public class SampleAIController : MonoBehaviour {
 		doDamage(col);
 	}
 
-	void OnCollisionStay(Collision col){
-		/*if(col.collider.gameObject.tag == "Player"){
-			if(col.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine){
-				col.collider.gameObject.transform.parent.GetComponent<PlayerController>().TakeDamage(20, transform);
-			}
-		}*/
-	}
+	//void OnCollisionStay(Collision col){
+	//	/*if(col.collider.gameObject.tag == "Player"){
+	//		if(col.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine){
+	//			col.collider.gameObject.transform.parent.GetComponent<PlayerController>().TakeDamage(20, transform);
+	//		}
+	//	}*/
+	//}
 
 	public void Remove(){
 		this.gameObject.GetComponent<MGAISuperClass>().Remove();

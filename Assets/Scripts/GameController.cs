@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour {
 
 	void Start(){
 		waveTimer = timeBetweenWaves;
+		GameAudio.playBattleMusic();
 	}
 	
 	void Update(){

@@ -27,6 +27,7 @@ public class HudScript : MonoBehaviour {
     //public Font font;
     //public GameObject AbilityNameText;
     public GameObject ScoreText;
+	TextMesh scoreTxtMesh;
 	public GameObject RoundTimer;
 
 	public GameObject WaveText;
@@ -79,8 +80,8 @@ public class HudScript : MonoBehaviour {
 		SecondItemQuantityText = GameObject.Find("SecondItemQuantityText") as GameObject;
 		ThirdItemQuantityText = GameObject.Find("ThirdItemQuantityText") as GameObject;
 
+		scoreTxtMesh = ScoreText.GetComponent<TextMesh>();
 		MessageText = GameObject.Find("MessageText") as GameObject;
-		//ScoreText.transform.localPosition = new Vector3(1.849f, -1.433f, 3.12f);
 
 		//HEALTH
 		Color greenColor = Color.green;
@@ -345,22 +346,20 @@ public class HudScript : MonoBehaviour {
 			}
 		}
 
-		int teamScore = 0;
 		
-		for(int i=0; i < PhotonNetwork.playerList.Length; ++i) {
+		// update score
+		for(int i=0; i < PhotonNetwork.playerList.Length; ++i){
 			PhotonPlayer p = PhotonNetwork.playerList[i];
 
-			// Score
-			int tempScore = 0;
-			if(p.customProperties.ContainsKey("Score")) 
-			{
-				tempScore = (int)p.customProperties["Score"];
+			if(GLOBAL.myWizard != null && p == GLOBAL.myWizard.GetComponent<PhotonView>().owner) {
+				if(p.customProperties.ContainsKey("Score")){
+					int s = (int)p.customProperties["Score"];
+					scoreTxtMesh.text = "Score: " + s.ToString();
+				}
+
+				break;
 			}
-			teamScore += tempScore;
-
 		}
-		ScoreText.GetComponent<TextMesh>().text = "Score: " + teamScore;
-
 	}
 
 	public static void addNewMessage(string strmessage, int duration, Color c){
