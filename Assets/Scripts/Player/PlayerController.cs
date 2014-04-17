@@ -2,10 +2,13 @@
 using System.Collections;
 
 using InControl;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
 
-	public GameObject head, hat, brim, body, legL, legR, armL, armR;
+	//    0,   1,    2,   3,    4,    5,     6
+	// head, hat, body, legL, legR, armL, armR;
+	public GameObject[] parts;
 
     public bool isInAir = true;
 
@@ -54,7 +57,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Awake(){
 		refreshControls();
-		initShaderColor = body.renderer.materials[1].GetColor("_ReflectColor");
+		initShaderColor = parts[0].renderer.materials[1].GetColor("_ReflectColor");
 
         getInput = control_active;
         updatePlayer = update_active;
@@ -206,25 +209,29 @@ public class PlayerController : MonoBehaviour {
 	#region Animation
 
 	void swapShader(Color c){
-		head.renderer.materials[1].SetColor("_ReflectColor", c);
-		hat.renderer.materials[1].SetColor("_ReflectColor", c);
-		brim.renderer.materials[1].SetColor("_ReflectColor", c);
-		body.renderer.materials[1].SetColor("_ReflectColor", c);
-		legL.renderer.materials[1].SetColor("_ReflectColor", c);
-		legR.renderer.materials[1].SetColor("_ReflectColor", c);
-		armL.renderer.materials[1].SetColor("_ReflectColor", c);
-		armR.renderer.materials[1].SetColor("_ReflectColor", c);
+		foreach(GameObject p in parts) {
+			p.renderer.materials[1].SetColor("_ReflectColor", c);
+		}
+	}
+
+	// Used for initial tome pickup
+	public void swapMat(Material m){
+		foreach(GameObject p in parts){
+			Material[] mats = p.renderer.materials;
+			mats[1] = m;
+			p.renderer.materials = mats;
+		}
 	}
 
     void animate(){
         Vector2 v = new Vector2(rigidbody.velocity.x, rigidbody.velocity.z);
 
 		if(v.magnitude > 0.3f){
-        	animateLeg(legL.transform, ref isStepL);
-        	animateLeg(legR.transform, ref isStepR);
+        	animateLeg(parts[3].transform, ref isStepL);	// legL
+        	animateLeg(parts[4].transform, ref isStepR);	// legR
 
-            animateArm(armL.transform, isStepL);
-            animateArm(armR.transform, isStepR);
+            animateArm(parts[5].transform, isStepL);	// armL
+            animateArm(parts[6].transform, isStepR);	// armR
 		}
     }
 

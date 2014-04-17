@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using InControl;
 
 public class Leaderboard : MonoBehaviour {
+
 	float startTime = 10.0f;
 	float timeLeft = 0.0f;
 	
@@ -39,15 +40,15 @@ public class Leaderboard : MonoBehaviour {
 				InputControl ctrl_X = device.GetControl(InputControlType.Action1);
 				
 				if(ctrl_X.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed){
-					StartCoroutine(GLOBAL.ChangeSceneWithDelay("Title", 1));			// NOTE: why delaying??? also deleted Logger, it should not be obtrusive
+					Application.LoadLevel("Title");
 				}
 			}
 			else {
 				if(ctrl_T.WasPressed){
-					StartCoroutine(GLOBAL.ChangeSceneWithDelay("Title", 1));
+					Application.LoadLevel("Title");
 				}
 				else if(ctrl_O.WasPressed){
-					StartCoroutine(GLOBAL.QuitWithDelay(1));
+					Application.Quit();
 				}
 			}
 		}
@@ -68,6 +69,8 @@ public class Leaderboard : MonoBehaviour {
         EZGUI.init();
 
         float startX = 220 + 30;
+		float startY = 270;
+
         EZGUI.drawBox(startX - 30, 90, 1500, 900, new Color(0.09f, 0.09f, 0.09f, 0.44f));
 
         EZOpt e = new EZOpt();
@@ -78,11 +81,11 @@ public class Leaderboard : MonoBehaviour {
         e.leftJustify = true;
 
 		if(PhotonNetwork.playerList.Length > 0){
-			printPlayers(startX, e);
+			printPlayers(startX, startY, e);
         }
         else{
             e.color = new Color(0.95f, 0.95f, 0.95f);
-            EZGUI.placeTxt("-No Entries-", 35, startX, 230, e);
+			EZGUI.placeTxt("-No Entries-", 35, startX, startY, e);
         }
 
         e.color = new Color(0.95f, 0.95f, 0.95f);
@@ -98,10 +101,9 @@ public class Leaderboard : MonoBehaviour {
         }
 	}
 
-	void printPlayers(float startX, EZOpt e){
-		float startY = 250;
+	void printPlayers(float startX, float startY, EZOpt e){
 		float lineHeight = 45;
-		float padBot = 155;
+		float padBot = 165;
 
 		int teamScore = 0;
 
@@ -120,37 +122,36 @@ public class Leaderboard : MonoBehaviour {
 
 			// Score
 			e.color = new Color(0.85f, 0.85f, 0.85f);
-			int tempScore = (int)p.customProperties["Score"];
-			teamScore += tempScore;
-			EZGUI.placeTxt(tempScore.ToString() + " points", 35, startX, startY + (i*padBot) + lineHeight, e);
-			e.color = Color.white;
+			int yourScore = (int)p.customProperties["Score"];
+			teamScore += yourScore;
+			EZGUI.placeTxt(yourScore.ToString() + " points", 35, startX, startY + (i*padBot) + lineHeight, e);
 
 			// Ability Name
+			e.leftJustify = false;
 			if(p.customProperties.ContainsKey("Ability")) {
 				string abilityName = (string)p.customProperties["Ability"];
 
 				if(abilityName == "none"){
-					e.color = new Color(0.75f, 0.75f, 0.75f);
-					EZGUI.placeTxt("no ability chosen", 40, startX + 500, startY + lineHeight/2 + (i * padBot), e);
+					EZGUI.placeTxt("no ability chosen", 40, EZGUI.HALFW, startY + lineHeight/2 + (i * padBot), e);
 				}
 				else{
-					EZGUI.placeTxt(abilityName, 40, startX + 500, startY + lineHeight/2 + (i * padBot), e);
+					e.color = Color.white;
+					EZGUI.placeTxt(abilityName, 40, EZGUI.HALFW, startY + lineHeight/2 + (i * padBot), e);
 				}
 			}
 			else{
-				e.color = new Color(0.75f, 0.75f, 0.75f);
-				EZGUI.placeTxt("no ability chosen", 40, startX + 500, startY + lineHeight/2 + (i * padBot), e);
+				EZGUI.placeTxt("no ability chosen", 40, EZGUI.HALFW, startY + lineHeight/2 + (i * padBot), e);
 			}
 
 			// Active Player Indicator
 			if(Wizard.myWizard != null && p == Wizard.myWizard.GetComponent<PhotonView>().owner){
 				e.color = Color.green;
-				EZGUI.placeTxt("(you)", 40, 1400, startY + lineHeight/2 + (i * padBot), e);
+				EZGUI.placeTxt("(you)", 40, 1450, startY + lineHeight/2 + (i * padBot), e);
 			}
 		}
 
-		e.color = new Color(0, 0.8f, 0.9f);
-		EZGUI.placeTxt("Team Score: " + teamScore.ToString(), 35, 1400, 990 - 40, e);
+		e.color = new Color(0.85f, 0.85f, 0.85f);
+		EZGUI.placeTxt("Team Score: " + teamScore.ToString(), 35, 1450, 990 - 40, e);
 	}
 
 	public void FlipGameState(){

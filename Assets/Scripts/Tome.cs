@@ -10,6 +10,7 @@ public class Tome : MonoBehaviour {
 
 	public GameObject dialog;
 	public BaseAbility baseAbility;
+	public Material mat;
 	/*GameObject doorLeft = GameObject.Find ("DoorLeftPivot");
 	DoorLeft doorLscript = doorLeft.GetComponent(typeof(DoorLeft));
 	GameObject doorRight = GameObject.Find ("DoorRightPivot");
@@ -40,8 +41,12 @@ public class Tome : MonoBehaviour {
 
 					string bName = Enum.GetName(typeof(BaseAbility), baseAbility);
 
-					HudScript.addNewMessage("Base ability chosen.", 160, Color.white);
+					HudScript.addNewMessage("Base ability chosen.", 150, Color.white);
 					HudScript.addNewMessage("Press \"R1\" to Fire!", 180, Color.white);
+
+					PlayerController p = Wizard.myWizard.GetComponent<PlayerController>();
+					p.swapMat(mat);
+					
 
 					AbilityManagerScript.that.changeAbility(bName);
 					GLOBAL.that.SuperDestroy(gameObject);
