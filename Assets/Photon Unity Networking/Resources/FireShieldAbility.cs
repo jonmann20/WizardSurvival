@@ -18,15 +18,14 @@ public class FireShieldAbility : AbilityBase {
 
 		for(int i = 0; i < NUMBER_OF_FIREBALLS; i++)
 		{
-			Vector3 pos = new Vector3(0, 0, 0);
-
 			GameObject projectile = PhotonNetwork.Instantiate(
 				ProjectilePrefabString, 
-				pos, 
+				GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized, 
 				gameObject.transform.rotation, 0
 			) as GameObject;
 
 			projectile.GetComponent<ProjectileBase>().wizard = gameObject;
+			projectile.GetComponent<LimitedLife>().life = 300;
 			//Add to projectile list for movement.
 			shieldFlames.Add(projectile);
 		}
@@ -48,7 +47,7 @@ public class FireShieldAbility : AbilityBase {
 			pos.Normalize();
 			pos *= CIRCLE_RADIUS;
 
-			shieldFlames[i].transform.position = gameObject.transform.position + pos;
+			shieldFlames[i].transform.position = GLOBAL.myWizard.transform.position + pos;
 		}
 	}
 

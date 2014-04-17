@@ -25,7 +25,7 @@ public class FireArcAbility : AbilityBase {
 		{
 			otherWizard = getClosestWizard(new List<GameObject>(GameObject.FindGameObjectsWithTag("Player")));
 
-			Vector3 first = transform.position;
+			Vector3 first = GLOBAL.myWizard.transform.position;
 			Vector3 last = otherWizard.transform.position;
 
 			float fraction = 1.0f / (float)numberOfFireballs;
@@ -37,8 +37,10 @@ public class FireArcAbility : AbilityBase {
 				//print("first: " + first.ToString() + "last: " + last.ToString() + "sum: " + sum + "p: " + p.ToString());
 				GameObject projectile = PhotonNetwork.Instantiate("InvisibleProjectile", p, Quaternion.identity, 0) as GameObject;
 				projectile.GetComponent<ProjectileBase>().wizard = gameObject;
+				projectile.GetComponent<LimitedLife>().life = 400;
+				projectile.renderer.enabled = true;
 				projectiles.Add(projectile);
-				
+
 				// keep Hierarchy clean
 				projectile.transform.parent = wizardHolder.transform;
 			}
@@ -51,7 +53,7 @@ public class FireArcAbility : AbilityBase {
 	{
 		if(otherWizard != null)
 		{
-			Vector3 first = transform.position;
+			Vector3 first = GLOBAL.myWizard.transform.position;
 			Vector3 last = otherWizard.transform.position;
 		
 			float fraction = 1.0f / (float)numberOfFireballs;
