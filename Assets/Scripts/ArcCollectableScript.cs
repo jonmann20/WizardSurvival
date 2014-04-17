@@ -8,7 +8,7 @@ public class ArcCollectableScript : CollectableBase {
 	public override void customUpdate() { }
 	public override void useItem() 
 	{ 
-		AbilityBase ability = Wizard.myWizard.AddComponent<FireArcAbility>() as AbilityBase;
+		AbilityBase ability = GLOBAL.myWizard.AddComponent<FireArcAbility>() as AbilityBase;
 		ability.fire();
 	}
 	public override string getName() { return "Arc Book"; }

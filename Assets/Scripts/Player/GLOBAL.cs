@@ -17,6 +17,8 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 	static string gameOverTxt;
 
+	public static GameObject myWizard;
+
 	void Awake(){
 		MainCamera = GameObject.FindWithTag("MainCamera") as GameObject;
 		that = this;
@@ -102,6 +104,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 		}
 		if(g.GetComponent<PhotonView>().isMine){
 			PhotonNetwork.Destroy(g);
+			return;
 		}
 
 		if(PhotonNetwork.isMasterClient){
@@ -127,6 +130,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 	public void networkDestroyOnMasterClient(int id)
 	{
 		PhotonView view = PhotonView.Find(id);
+		print("trying to destroy via RPC view: " + view + " id: " + id);
 		PhotonNetwork.Destroy(view.gameObject);
 	}
 

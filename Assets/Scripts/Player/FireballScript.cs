@@ -6,10 +6,8 @@ public class FireballScript : ProjectileBase {
 	public GameObject FirePrefab;
 
 	void Awake(){
-		PhotonView pView = GetComponent<PhotonView>();
-
-		if(pView != null && !pView.isMine){
-			this.enabled = false;
+		if(!GetComponent<PhotonView>().isMine){
+			Destroy(this);
 		}
 	}
 
@@ -18,7 +16,7 @@ public class FireballScript : ProjectileBase {
 		{
 			GameObject fire = Instantiate(FirePrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
 			fire.GetComponent<ProjectileBase>().wizard = this.wizard;
-
+		
 			GLOBAL.that.SuperDestroy(gameObject);
 		}
 	}

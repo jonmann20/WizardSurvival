@@ -1551,7 +1551,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             case PunEvent.Destroy:
                 evData = (Hashtable)photonEvent[ParameterCode.Data];
                 int instantiationId = (int)evData[(byte)0];
-                Debug.Log("Ev Destroy for viewId: " + instantiationId + " sent by owner: " + (instantiationId / PhotonNetwork.MAX_VIEW_IDS == actorNr) + " this client is owner: " + (instantiationId / PhotonNetwork.MAX_VIEW_IDS == this.mLocalActor.ID));
+                //Debug.Log("Ev Destroy for viewId: " + instantiationId + " sent by owner: " + (instantiationId / PhotonNetwork.MAX_VIEW_IDS == actorNr) + " this client is owner: " + (instantiationId / PhotonNetwork.MAX_VIEW_IDS == this.mLocalActor.ID));
                 
                 GameObject goToDestroyLocally = null;
                 this.instantiatedObjects.TryGetValue(instantiationId, out goToDestroyLocally);

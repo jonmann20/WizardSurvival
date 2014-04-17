@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Start(){
+
 		plusY = Physics.gravity.y * 1.4f;
 		//spawnPoint = GameObject.Find("SpawnPoint") as GameObject;
 

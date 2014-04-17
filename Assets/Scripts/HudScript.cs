@@ -351,7 +351,7 @@ public class HudScript : MonoBehaviour {
 		for(int i=0; i < PhotonNetwork.playerList.Length; ++i){
 			PhotonPlayer p = PhotonNetwork.playerList[i];
 
-			if(Wizard.myWizard != null && p == Wizard.myWizard.GetComponent<PhotonView>().owner) {
+			if(GLOBAL.myWizard != null && p == GLOBAL.myWizard.GetComponent<PhotonView>().owner) {
 				if(p.customProperties.ContainsKey("Score")){
 					int s = (int)p.customProperties["Score"];
 					scoreTxtMesh.text = "Score: " + s.ToString();
@@ -363,6 +363,14 @@ public class HudScript : MonoBehaviour {
 	}
 
 	public static void addNewMessage(string strmessage, int duration, Color c){
+
+		//Don't enque message if it's already in the queue!
+		foreach(Message m in messageQueue)
+		{
+			if(m.messageString == strmessage)
+				return;
+		}
+
 		messageQueue.Enqueue(new Message(strmessage, duration, c));
 	}
 }

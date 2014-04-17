@@ -19,7 +19,7 @@ public class FireballAbility : AbilityBase {
 
 		GameObject projectile = PhotonNetwork.Instantiate(
 			FireballPrefabString, 
-			Wizard.myWizard.transform.position + Wizard.myWizard.transform.forward.normalized,  
+			GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized,  
 			gameObject.transform.rotation, 0
 		) as GameObject;
 
