@@ -311,35 +311,41 @@ public class PlayerController : MonoBehaviour {
 	#endregion Animation
 
 	public void IncrementPoints(int numToAdd){
-		score += numToAdd;
+		if( this.gameObject.GetComponent<PhotonView>().isMine )
+		{
+			score += numToAdd;
 
-		if(networkedProperties.ContainsKey("Score")){
-			networkedProperties["Score"] = score;
-		}
-		else {
-			networkedProperties.Add("Score", score);
-		}
-
-		PhotonNetwork.player.SetCustomProperties(networkedProperties);
-	}
-	
-	public void TakeDamage(int damage, Transform t){
-		if(!invincible && !GLOBAL.gameOver){
-			invincible = true;
-			StartCoroutine("animDamage");
-
-			GameAudio.playPain();
-			swapShader(Color.red);
-			
-			GLOBAL.health = Mathf.Clamp(GLOBAL.health - damage, 0, 100);
-			if( networkedProperties.ContainsKey("Health") )
-				networkedProperties["Health"] = GLOBAL.health;
-			else
-			{
-				networkedProperties.Add("Health", GLOBAL.health);
+			if(networkedProperties.ContainsKey("Score")){
+				networkedProperties["Score"] = score;
 			}
-			
+			else {
+				networkedProperties.Add("Score", score);
+			}
+
 			PhotonNetwork.player.SetCustomProperties(networkedProperties);
+		}
+	}
+
+	public void TakeDamage(int damage, Transform t){
+		if( this.gameObject.GetComponent<PhotonView>().isMine )
+		{
+			if(!invincible && !GLOBAL.gameOver){
+				invincible = true;
+				StartCoroutine("animDamage");
+
+				GameAudio.playPain();
+				swapShader(Color.red);
+				
+				GLOBAL.health = Mathf.Clamp(GLOBAL.health - damage, 0, 100);
+				if( networkedProperties.ContainsKey("Health") )
+					networkedProperties["Health"] = GLOBAL.health;
+				else
+				{
+					networkedProperties.Add("Health", GLOBAL.health);
+				}
+				
+				PhotonNetwork.player.SetCustomProperties(networkedProperties);
+			}
 		}
 	}
 

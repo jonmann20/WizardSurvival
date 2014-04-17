@@ -102,9 +102,9 @@ public class SampleAIController : MonoBehaviour {
 				print("Photon view: " + col.gameObject.GetPhotonView());
 
 
-				if(col.gameObject.GetComponent<ProjectileBase>().wizard.GetComponent<PhotonView>().isMine){
+				//if(col.gameObject.GetComponent<ProjectileBase>().wizard.GetComponent<PhotonView>().isMine){
 					Wizard.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
-				}
+				//}
 			}
 		}
 	}
