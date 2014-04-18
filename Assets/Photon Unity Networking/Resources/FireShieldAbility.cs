@@ -24,7 +24,7 @@ public class FireShieldAbility : AbilityBase {
 				gameObject.transform.rotation, 0
 			) as GameObject;
 
-			projectile.GetComponent<ProjectileBase>().wizard = gameObject;
+			projectile.GetComponent<ProjectileBase>().wizard = GLOBAL.myWizard;
 			projectile.GetComponent<LimitedLife>().life = 300;
 			//Add to projectile list for movement.
 			shieldFlames.Add(projectile);

@@ -41,6 +41,8 @@ public class NetworkLauncherScript : MonoBehaviour {
 		if(everyoneZeroHealth){
 			GLOBAL.GameOver("Game Over");
 		}
+
+		print("Photonnetwork.connected: " + PhotonNetwork.connected);
 	}
 
 	bool hasMasterClientDisconnected()
