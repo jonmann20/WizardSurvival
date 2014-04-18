@@ -80,7 +80,7 @@ public class MGSpawner : MonoBehaviour {
             unit.transform.parent = enemyHolder.transform;
 
 			unitTrans.GetComponent<SampleAIController>().health *= 1f + ((float)totalWaves/10f);
-			unitTrans.GetComponent<SampleAIController>().scoreValue = (int)( ((float)unitTrans.GetComponent<SampleAIController>().scoreValue) * (1f + ((float)totalWaves/10f)));
+			unitTrans.GetComponent<SampleAIController>().scoreValue = (int)( ((float)unitTrans.GetComponent<SampleAIController>().scoreValue) * (1f + ((float)(totalWaves-1)/10f)));
 
 			//print("Spawn");
 			//print(PhotonNetwork.playerList[0].ID);

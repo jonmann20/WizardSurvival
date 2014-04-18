@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour {
 
 	private bool connected = false;
 
+	private bool doorHasBeenClosed = false;
+
 	void Awake(){
 		transform.localRotation = Quaternion.identity;
 	}
@@ -95,8 +97,13 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
+		if( doorHasBeenClosed == false )
+		{
+			return;
+		}
+
 		//In between waves
-		if( WaveOver == true )
+		else if( WaveOver == true )
 		{
 			waveTimer -= Time.deltaTime;
 
@@ -211,5 +218,10 @@ public class GameController : MonoBehaviour {
 
 		spawning = false;
 		doneSpawning = true;
+	}
+
+	public void Begin()
+	{
+		doorHasBeenClosed = true;
 	}
 }
