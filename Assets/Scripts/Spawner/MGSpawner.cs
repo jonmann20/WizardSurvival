@@ -73,10 +73,14 @@ public class MGSpawner : MonoBehaviour {
 		{
 			//Object[] temp = new Object[0];
 			GameObject unit = (GameObject) PhotonNetwork.InstantiateSceneObject(EnemyToSpawn, this.transform.position + Random.onUnitSphere, Quaternion.identity,0, null) as GameObject;
-			unit.transform.FindChild("skeletonNormal").GetComponent<MGAISuperClass>().SetOwner(this);
+			Transform unitTrans = unit.transform.FindChild("skeletonNormal");
+			unitTrans.GetComponent<MGAISuperClass>().SetOwner(this);
 			unit.tag = "Enemy";
 
             unit.transform.parent = enemyHolder.transform;
+
+			unitTrans.GetComponent<SampleAIController>().health *= 1f + ((float)totalWaves/10f);
+			unitTrans.GetComponent<SampleAIController>().scoreValue = (int)( ((float)unitTrans.GetComponent<SampleAIController>().scoreValue) * (1f + ((float)totalWaves/10f)));
 
 			//print("Spawn");
 			//print(PhotonNetwork.playerList[0].ID);
