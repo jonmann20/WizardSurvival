@@ -18,23 +18,30 @@ public class FollowClosestPlayer : MonoBehaviour {
 	{
 
 		GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-		
 
 		float closestDistance = float.MaxValue;
-		int closePlayerIdx = -1;
+		int closePlayerIdx = 0;
 
 		
 		for (int i = 0; i < playerList.Length - 1; i++)
 		{
-			//if( playerList[i].gameObject.GetComponentInChildren<PlayerController>().health > 0 )
+			if( playerList[i].gameObject.transform.parent == null )
 			{
-				float tempDistance = Mathf.Abs(Vector3.Distance( playerList[i].gameObject.transform.position, this.gameObject.transform.position));
-				if( tempDistance < closestDistance )
+				if( playerList[i].gameObject.GetComponent<PlayerController>().getHealth() > 0 )
 				{
-					closestDistance = tempDistance;
-					closePlayerIdx = i;
+					float tempDistance = Mathf.Abs(Vector3.Distance( playerList[i].gameObject.transform.position, this.gameObject.transform.position));
+					if( tempDistance < closestDistance)
+					{
+						closestDistance = tempDistance;
+						closePlayerIdx = i;
+					}
 				}
 			}
+		}
+
+		if( playerList[closePlayerIdx] == null )
+		{
+			Debug.LogError("No players for AI to find");
 		}
 		this.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", playerList[closePlayerIdx]);
 		/*if( closestDistance < meleeDistance )

@@ -323,6 +323,11 @@ public class PlayerController : MonoBehaviour {
 
 	#endregion Animation
 
+	public int getHealth()
+	{
+		return (int) PhotonNetwork.player.customProperties["Health"];
+	}
+
 	public void IncrementPoints(int numToAdd){
 		if( this.gameObject.GetComponent<PhotonView>().isMine )
 		{
