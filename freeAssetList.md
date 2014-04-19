@@ -23,3 +23,5 @@ Free Asset List
 * [Freeze Spell](http://opengameart.org/content/stream-sounds)
 * [PS square](http://img2.wikia.nocookie.net/__cb20120325215237/evangelion/images/e/e3/PS_Square_Icon.png)
 * [Spell Set icons](http://opengameart.org/content/spell-set)
+* [ceptor](http://opengameart.org/content/basic-wand)
+* [chair](http://opengameart.org/content/wooden-furniture)
