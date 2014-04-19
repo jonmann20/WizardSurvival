@@ -22,11 +22,13 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 	public GameObject _invH;
 	static GameObject _InventoryHolder;
+	public static Font spookyMagic;
 
 	void Awake(){
 		MainCamera = GameObject.FindWithTag("MainCamera") as GameObject;
 		that = this;
 		_InventoryHolder = _invH;
+		spookyMagic = Resources.Load<Font>("SpookyMagic");
 	}
 
 	//returns false if inventory full.

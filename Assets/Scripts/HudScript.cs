@@ -96,7 +96,7 @@ public class HudScript : MonoBehaviour {
 			cube.transform.parent = hudCamera.transform;
 			cube.transform.position = new Vector3(i * VOXEL_WIDTH + 0.1f + HEALTHBAR_X_OFFSET, HEALTHBAR_Y_OFFSET, HEALTHBAR_Z_OFFSET);
 			Bouncy b = cube.AddComponent<Bouncy>() as Bouncy;
-			b.target = 0.2f;
+			b.target = 0.15f;
 
 			Material mat = new Material(toonShaderLight);
 			mat.color = Color.Lerp(redColor, greenColor, fraction);
@@ -145,7 +145,7 @@ public class HudScript : MonoBehaviour {
 			if(GLOBAL.health < (i + 1) * healthPerVoxel)
 				b.target = 0.1f;
 			else
-				b.target = 0.2f;
+				b.target = 0.15f;
 		}
 
         // TEXT

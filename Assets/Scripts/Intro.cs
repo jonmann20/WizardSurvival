@@ -61,7 +61,7 @@ public class Intro : MonoBehaviour {
 		EZGUI.init();
 
 		EZOpt e = new EZOpt();
-		e.font = Resources.Load<Font>("SpookyMagic");
+		e.font = GLOBAL.spookyMagic;
 
 		// title
 		EZGUI.placeTxt("Defend Thy Kingdom", 90, EZGUI.HALFW, 220, e);

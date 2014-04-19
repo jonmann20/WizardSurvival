@@ -12,7 +12,7 @@ public class Leaderboard : MonoBehaviour {
 	string playerName = "";
 	//string code = "";
 
-	Font spookyMagic, arial;
+	Font arial;
 	
 	public enum gameState {
 		waiting,
@@ -26,7 +26,6 @@ public class Leaderboard : MonoBehaviour {
 	dreamloLeaderBoard dl;
 
 	void Awake() {
-		spookyMagic = Resources.Load<Font>("SpookyMagic");
 		arial = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
 	}
 
@@ -84,7 +83,7 @@ public class Leaderboard : MonoBehaviour {
         e.dropShadow = new Color(0.1f, 0.1f, 0.1f);
         e.leftJustify = false;
 
-		e.font = spookyMagic;
+		e.font = GLOBAL.spookyMagic;
         EZGUI.placeTxt("Leaderboard", 50, EZGUI.HALFW, 190, e);
 		e.font = arial;
         e.leftJustify = true;

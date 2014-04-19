@@ -9,12 +9,38 @@ public class FireballAbility : AbilityBase {
 
     GameObject wizardHolder;
 
+	int delayTimer = 180;
+	int delayTimerInit = 180;
+	int cooldownResolution = 60;		// assumping 60fps here (could use Time.fixedTime)
+
 	void Awake(){
         wizardHolder = GameObject.Find("_WizardHolder");
 	}
 
-	public override void fire()
-	{
+	void FixedUpdate(){
+		++delayTimer;
+	}
+
+	void OnGUI() {
+		if(delayTimer < delayTimerInit){
+			EZGUI.init();
+
+			EZOpt e = new EZOpt(Color.red, new Color(0.1f, 0.1f, 0.1f));
+			e.dropShadowX = e.dropShadowY = 1;
+			e.font = GLOBAL.spookyMagic;
+		
+			EZGUI.placeTxt("cooldown " + (delayTimerInit/cooldownResolution - (delayTimer / cooldownResolution)) + "s", 25, EZGUI.FULLW - 170, 130, e);
+		}
+	}
+
+	public override void fire(){
+		print(delayTimer);
+		if(delayTimer < delayTimerInit) {
+			GameAudio.playMagicFail();
+			return;
+		}
+
+		delayTimer = 0;
 		GameAudio.playFlameShoot();
 
 		GameObject projectile = PhotonNetwork.Instantiate(
