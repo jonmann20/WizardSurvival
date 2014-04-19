@@ -49,7 +49,7 @@ public class Intro : MonoBehaviour {
 			InputDevice device = InputManager.ActiveDevice;
 			InputControl ctrl_Start = device.GetControl(InputControlType.Start);
 
-			if(ctrl_Start.WasPressed) {
+			if(ctrl_Start.WasPressed) {	// NOTE: doesn't seem to work when active in TextField
 				initStartGame();
 			}
 		}

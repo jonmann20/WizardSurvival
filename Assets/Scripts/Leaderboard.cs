@@ -11,6 +11,8 @@ public class Leaderboard : MonoBehaviour {
 	int totalScore = 0;
 	string playerName = "";
 	//string code = "";
+
+	Font spookyMagic, arial;
 	
 	public enum gameState {
 		waiting,
@@ -22,6 +24,11 @@ public class Leaderboard : MonoBehaviour {
 	public static gameState gs;
 
 	dreamloLeaderBoard dl;
+
+	void Awake() {
+		spookyMagic = Resources.Load<Font>("SpookyMagic");
+		arial = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+	}
 
 	void Start(){
 		dl = dreamloLeaderBoard.GetSceneDreamloLeaderboard();
@@ -68,8 +75,8 @@ public class Leaderboard : MonoBehaviour {
 
         EZGUI.init();
 
-        float startX = 220 + 30;
-		float startY = 270;
+        float startX = 222 + 30;
+		float startY = 265;
 
         EZGUI.drawBox(startX - 30, 90, 1500, 900, new Color(0.09f, 0.09f, 0.09f, 0.44f));
 
@@ -77,7 +84,9 @@ public class Leaderboard : MonoBehaviour {
         e.dropShadow = new Color(0.1f, 0.1f, 0.1f);
         e.leftJustify = false;
 
-        EZGUI.placeTxt("Leaderboard", 50, EZGUI.HALFW, 170, e);
+		e.font = spookyMagic;
+        EZGUI.placeTxt("Leaderboard", 50, EZGUI.HALFW, 190, e);
+		e.font = arial;
         e.leftJustify = true;
 
 		if(PhotonNetwork.playerList.Length > 0){
@@ -102,30 +111,38 @@ public class Leaderboard : MonoBehaviour {
 	}
 
 	void printPlayers(float startX, float startY, EZOpt e){
-		float lineHeight = 45;
-		float padBot = 168;
+		float lineHeight = 41;
+		float padBot = 172;
 
 		int teamScore = 0;
 
 		for(int i=0; i < PhotonNetwork.playerList.Length; ++i) {
 			PhotonPlayer p = PhotonNetwork.playerList[i];
 
+			bool isYourWizard = (GLOBAL.myWizard != null && p == GLOBAL.myWizard.GetComponent<PhotonView>().owner);
+
 			// Name
 			e.leftJustify = true;
 			e.color = Color.white;
-			EZGUI.placeTxt("Player " + p.ID, 35, startX, startY + (i * padBot), e);
+			if(isYourWizard){
+				EZGUI.placeTxt(BETWEEN_SCENES.player_name, 35, startX, startY + (i * padBot), e);
+			}
+			else {
+				EZGUI.placeTxt("Player " + p.ID, 35, startX, startY + (i * padBot), e);
+			}
 
 			// Health
+			e.color = new Color(0.85f, 0.85f, 0.85f);
 			if(p.customProperties.ContainsKey("Health")) {
 				float tempHealth = (int)p.customProperties["Health"];
-				EZGUI.drawBox(startX + 150, startY + (i * padBot) - 30, 1.7f * tempHealth, 20, Color.red);
+				EZGUI.placeTxt("health: ", 35, startX + 50, startY + (i*padBot) + lineHeight, e);
+				EZGUI.drawBox(startX + 164, startY + (i * padBot) + 14, 1.7f * tempHealth, 20, Color.red);
 			}
 
 			// Score
-			e.color = new Color(0.85f, 0.85f, 0.85f);
 			int yourScore = (int)p.customProperties["Score"];
 			teamScore += yourScore;
-			EZGUI.placeTxt(yourScore.ToString() + " points", 35, startX, startY + (i*padBot) + lineHeight, e);
+			EZGUI.placeTxt("points: " + yourScore.ToString(), 35, startX + 50, startY + (i*padBot) + lineHeight*2, e);
 
 			// Ability Name
 			e.leftJustify = false;
@@ -133,26 +150,26 @@ public class Leaderboard : MonoBehaviour {
 				string abilityName = (string)p.customProperties["Ability"];
 
 				if(abilityName == "none"){
-					EZGUI.placeTxt("no ability chosen", 40, EZGUI.HALFW, startY + lineHeight/2 + (i * padBot), e);
+					EZGUI.placeTxt("no base ability chosen", 35, EZGUI.HALFW, startY + lineHeight + (i * padBot), e);
 				}
 				else{
 					e.color = Color.white;
-					EZGUI.placeTxt(abilityName, 40, EZGUI.HALFW, startY + lineHeight/2 + (i * padBot), e);
+					EZGUI.placeTxt(abilityName, 35, EZGUI.HALFW, startY + lineHeight + (i * padBot), e);
 				}
 			}
 			else{
-				EZGUI.placeTxt("no ability chosen", 40, EZGUI.HALFW, startY + lineHeight/2 + (i * padBot), e);
+				EZGUI.placeTxt("no base ability chosen", 35, EZGUI.HALFW, startY + lineHeight/2 + (i * padBot), e);
 			}
 
 			// Active Player Indicator
-			if(GLOBAL.myWizard != null && p == GLOBAL.myWizard.GetComponent<PhotonView>().owner){
-				e.color = Color.green;
-				EZGUI.placeTxt("(you)", 40, 1450, startY + lineHeight/2 + (i * padBot), e);
+			if(isYourWizard) {
+				e.color = new Color(0, 0.9f, 0);
+				EZGUI.placeTxt("(you)", 40, 1530, startY + lineHeight + (i * padBot), e);
 			}
 		}
 
 		e.color = new Color(0.85f, 0.85f, 0.85f);
-		EZGUI.placeTxt("Team Score: " + teamScore.ToString(), 35, 1450, 990 - 35, e);
+		EZGUI.placeTxt("Team Score: " + teamScore.ToString(), 35, 1530, 990 - 28, e);
 	}
 
 	public void FlipGameState(){
