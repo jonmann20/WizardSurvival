@@ -51,6 +51,11 @@ public class SyncScript : Photon.MonoBehaviour
 			Quaternion rot = transform.rotation;
 			Vector3 scale = transform.localScale;
 
+			if(debug)
+			{
+				print("sending pos: " + pos.ToString() + " rot: " + rot.ToString() + " scale: " + scale.ToString() + "rand: " + Random.Range(0.1f, 100.0f));
+			}
+
 			stream.Serialize(ref pos);
 			stream.Serialize(ref rot);
 			stream.Serialize(ref scale);
@@ -68,7 +73,7 @@ public class SyncScript : Photon.MonoBehaviour
 
 			if(debug)
 			{
-				print("pos: " + pos + " rot: " + rot + " scale: " + scale + "rand: " + Random.Range(0.1f, 5.0f));
+				print("receiving pos: " + pos.ToString() + " rot: " + rot.ToString() + " scale: " + scale.ToString() + "rand: " + Random.Range(0.1f, 100.0f));
 			}
 
 			latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()

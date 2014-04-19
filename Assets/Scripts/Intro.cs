@@ -57,7 +57,8 @@ public class Intro : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		BETWEEN_SCENES.player_name = GUI.TextField(new Rect(Screen.width / 2 - 50, Screen.height / 2, 100, 20), BETWEEN_SCENES.player_name);
+		GUI.Label(new Rect(Screen.width / 2 - 80, Screen.height / 2, 200, 20), "What do you go by Stranger?");
+		BETWEEN_SCENES.player_name = GUI.TextField(new Rect(Screen.width / 2 - 80, Screen.height / 2 + 20, 200, 20), BETWEEN_SCENES.player_name);
 	}
 
 	void startGame(){
