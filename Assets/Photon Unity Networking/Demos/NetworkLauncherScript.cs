@@ -19,14 +19,18 @@ public class NetworkLauncherScript : MonoBehaviour {
 	}
 	
 	void Update () {
+		if(GLOBAL.gameOver) {
+			return;
+		}
 
-		if(hasMasterClientDisconnected() && !GLOBAL.gameOver){
+
+		if(hasMasterClientDisconnected()){
 			GLOBAL.GameOver("The Host Disconnected...");
 		}
 
 		bool everyoneZeroHealth = true;
 		//CHECK IF EVERYONE IS DEAD
-		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
+		for(int i=0; i < PhotonNetwork.playerList.Length; ++i)
 		{
 			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health"))
 			{

@@ -79,6 +79,8 @@ public class GLOBAL : Photon.MonoBehaviour {
 		Inventory.Clear();
 		inRoom = false;
 
+		Leaderboard.gs = Leaderboard.gameState.waiting;
+
 		HudScript.messageQueue.Clear();
 		HudScript.hudCamera.SetActive(true);
 	}

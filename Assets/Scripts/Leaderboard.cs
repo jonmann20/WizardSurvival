@@ -34,46 +34,52 @@ public class Leaderboard : MonoBehaviour {
 	void Start(){
 		dl = dreamloLeaderBoard.GetSceneDreamloLeaderboard();
 		timeLeft = startTime;
-		//gs = gameState.waiting;
-		gs = gameState.highscore;
+		gs = gameState.waiting;
+		//gs = gameState.highscore;
 	}
 	
 	void Update(){
-		if(GLOBAL.gameOver || gs == gameState.leaderboard){
-			InputDevice device = InputManager.ActiveDevice;
-			
-			InputControl ctrl_O = device.GetControl(InputControlType.Action2);
-			InputControl ctrl_T = device.GetControl(InputControlType.Action4);
-			
-			if(GLOBAL.gameOver){
-				InputControl ctrl_X = device.GetControl(InputControlType.Action1);
+		InputDevice device = InputManager.ActiveDevice;
 
-				if(gs == gameState.leaderboard){
-					if(ctrl_X.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed) {
+		InputControl ctrl_X = device.GetControl(InputControlType.Action1);
+		InputControl ctrl_O = device.GetControl(InputControlType.Action2);
+		InputControl ctrl_T = device.GetControl(InputControlType.Action4);
+
+		switch(gs){
+			case gameState.leaderboard:
+				if(GLOBAL.gameOver){
+					//print("whyyy");
+
+					if(ctrl_X.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed){
 						gs = gameState.highscore;
 					}
+
+					print("gs: " + gs);
 				}
-				else {// highscore
-					if(ctrl_X.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed) {
+				else {
+					if(ctrl_T.WasPressed){
 						Application.LoadLevel("Title");
 					}
+					else if(ctrl_O.WasPressed){
+						Application.Quit();
+					}
 				}
-			}
-			else {
-				if(ctrl_T.WasPressed){
+
+				break;
+			case gameState.highscore:
+				if(ctrl_X.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed){
 					Application.LoadLevel("Title");
 				}
-				else if(ctrl_O.WasPressed){
-					Application.Quit();
-				}
-			}
-		}
-		else if(gs == gameState.running){
-			timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, startTime);
 
-			if(timeLeft == 0){
-				gs = gameState.enterscore;
-			}
+				break;
+			case gameState.running:
+					timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, startTime);
+
+					if(timeLeft == 0){
+						gs = gameState.enterscore;
+					}
+
+				break;
 		}
 	}
 
@@ -109,7 +115,7 @@ public class Leaderboard : MonoBehaviour {
 			}
 
 			e.color = new Color(0.95f, 0.95f, 0.95f);
-			if(GLOBAL.gameOver) {
+			if(GLOBAL.gameOver){
 				e.hoverColor = new Color(1, 1, 0);
 				e.activeColor = new Color(0.8f, 0.8f, 0);
 				e.leftJustify = false;
@@ -218,12 +224,12 @@ public class Leaderboard : MonoBehaviour {
 
 		string longestWaveName = PlayerPrefs.GetString("LongestWaveName");
 		int longestWaveNum = PlayerPrefs.GetInt("LongestWaveNum");
-		if(String.IsNullOrEmpty(longestWaveName)) {
+		if(String.IsNullOrEmpty(longestWaveName)){
 			e.color = new Color(0.95f, 0.95f, 0.95f);
 			EZGUI.placeTxt("-No Entry-", 35, startX + 50, startY + 540 + lineHeight, e);
 		}
 		else {
-			EZGUI.placeTxt(longestWaveName + ": " + longestWaveNum + "th wave reached", 35, startX + 50, startY + 540 + lineHeight, e);
+			EZGUI.placeTxt(longestWaveName + ": wave " + longestWaveNum + " reached", 35, startX + 50, startY + 540 + lineHeight, e);
 		}
 	}
 
