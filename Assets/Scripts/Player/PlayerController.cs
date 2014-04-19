@@ -216,15 +216,6 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	// Used for initial tome pickup
-	public void swapMat(Material m){
-		foreach(GameObject p in parts){
-			Material[] mats = p.renderer.materials;
-			mats[1] = m;
-			p.renderer.materials = mats;
-		}
-	}
-
     void animate(){
         Vector2 v = new Vector2(rigidbody.velocity.x, rigidbody.velocity.z);
 
