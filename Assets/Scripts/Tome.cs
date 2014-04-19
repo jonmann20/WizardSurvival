@@ -45,12 +45,12 @@ public class Tome : MonoBehaviour {
 					HudScript.addNewMessage("Press \"R1\" to Fire!", 180, Color.white);
 
 					// update player color
-					PlayerController p = GLOBAL.myWizard.GetComponent<PlayerController>();
-					p.swapMat(mat);
+					Wizard w = GLOBAL.myWizard.GetComponent<Wizard>();
+					w.swapMat(mat);
 
 					// update's punch color
 					PunchAbility pa = GLOBAL.myWizard.GetComponent<PunchAbility>();
-					pa.punchMat = p.parts[0].renderer.materials;
+					pa.punchMat = w.parts[0].renderer.materials;
 
 					GLOBAL.myWizard.GetComponent<AbilityManagerScript>().changeAbility(bName);
 

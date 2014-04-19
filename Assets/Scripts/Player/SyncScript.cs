@@ -89,8 +89,6 @@ public class SyncScript : Photon.MonoBehaviour
 	
 	public void Update()
 	{
-
-		print("am I connected: " + PhotonNetwork.connected);
 		// We get 10 updates per sec. sometimes a few less or one or two more, depending on variation of lag.
 		// Due to that we want to reach the correct position in a little over 100ms. This way, we usually avoid a stop.
 		// Lerp() gets a fraction value between 0 and 1. This is how far we went from A to B.
