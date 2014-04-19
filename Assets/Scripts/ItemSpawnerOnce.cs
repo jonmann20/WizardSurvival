@@ -4,7 +4,7 @@ using System.Collections;
 public class ItemSpawnerOnce : MonoBehaviour {
 	
 	public GameObject ItemPrefab;
-	public bool addItemPosition = false;
+	public bool addItemPosNRot = false;
 	public int ItemQuantity;
 	
 	bool attemptedSpawn = false;
@@ -26,11 +26,13 @@ public class ItemSpawnerOnce : MonoBehaviour {
 	void spawn(){
 
 		Vector3 pos = transform.position;
-		if(addItemPosition){
+		Quaternion quat = transform.rotation;
+		if(addItemPosNRot) {
 			pos += ItemPrefab.transform.position;
+			quat *= Quaternion.Euler(ItemPrefab.transform.localEulerAngles);
 		}
 
-		GameObject item = GLOBAL.that.SuperInstantiate(ItemPrefab, pos, Quaternion.identity);
+		GameObject item = GLOBAL.that.SuperInstantiate(ItemPrefab, pos, quat);
 
         item.transform.parent = transform;
 
