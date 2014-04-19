@@ -20,28 +20,35 @@ public class FollowClosestPlayer : MonoBehaviour {
 		GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
 
 		float closestDistance = float.MaxValue;
-		int closePlayerIdx = 0;
+		int closePlayerIdx = -1;
 
-		for (int i = 0; i < playerList.Length - 1; i++)
+		for (int i = 0; i < playerList.Length ; i++)
 		{
-			if( playerList[i].gameObject.transform.parent == null )
+			if( playerList[i].GetComponent<PhotonView>() == null )
 			{
+				continue;
+			}
 
-				PhotonPlayer p = playerList[i].GetComponent<PhotonView>().owner;
+			PhotonPlayer p = playerList[i].GetComponent<PhotonView>().owner;
 
-				if(p.customProperties.ContainsKey("Health") && ((int)p.customProperties["Health"]) > 0)
+			if( p == null ) 
+			{
+				continue;
+			}
+
+			if(p.customProperties.ContainsKey("Health") && ((int)p.customProperties["Health"]) > 0)
+			{
+				float tempDistance = Mathf.Abs(Vector3.Distance( playerList[i].gameObject.transform.position, this.gameObject.transform.position));
+				if( tempDistance < closestDistance)
 				{
-					float tempDistance = Mathf.Abs(Vector3.Distance( playerList[i].gameObject.transform.position, this.gameObject.transform.position));
-					if( tempDistance < closestDistance)
-					{
-						closestDistance = tempDistance;
-						closePlayerIdx = i;
-					}
+					closestDistance = tempDistance;
+					closePlayerIdx = i;
 				}
 			}
+
 		}
 
-		if( playerList[closePlayerIdx] == null )
+		if( closePlayerIdx == -1 )
 		{
 			Debug.LogError("No players for AI to find");
 		}
