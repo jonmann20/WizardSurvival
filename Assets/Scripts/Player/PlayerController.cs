@@ -55,6 +55,10 @@ public class PlayerController : MonoBehaviour {
     VoidDelegate getInput, updatePlayer;
     Color initShaderColor;
 
+
+	//RESPAWN
+	private GameObject respawnArea;
+
 	void Awake(){
 		refreshControls();
 		initShaderColor = parts[0].renderer.materials[1].GetColor("_ReflectColor");
@@ -83,6 +87,8 @@ public class PlayerController : MonoBehaviour {
 		}*/
 
         leaderboard = GLOBAL.MainCamera.GetComponent<Leaderboard>();
+
+		respawnArea = GameObject.Find("Respawn Area");
 	}
 
     void Update(){
@@ -207,8 +213,29 @@ public class PlayerController : MonoBehaviour {
 			rigidbody.velocity = new Vector3(0, 10, 0);
 			rigidbody.angularVelocity = Random.onUnitSphere * 10;
 			print("BLOW UP!");
+
+		}
+	}
+
+	public void Respawn()
+	{
+		if( GLOBAL.health <= 0 )
+		{
+
+			print ( "Respawning this player ");
+			getInput = control_active;
+			updatePlayer = update_active;
+
+			TakeDamage(-100, transform);
+
+			Vector3 resLoc = respawnArea.transform.position;
 			
-			score = 0;
+			GLOBAL.myWizard.transform.position = resLoc;
+
+			IncrementPoints(-((int)( (float)score * 0.1f )));
+
+			GLOBAL.reset();
+			
 		}
 	}
 

@@ -32,7 +32,7 @@ public class Wizard : MonoBehaviour {
 		}
 
 		int netHealth = (int)ownerPhotonPlayer.customProperties["Health"];
-		print("network health: " + netHealth);
+		//print("network health: " + netHealth);
 	}
 
 	public void swapMat(Material m){
