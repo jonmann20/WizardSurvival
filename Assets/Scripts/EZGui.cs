@@ -21,6 +21,7 @@ public struct EZOpt {
     public Color? color, hoverColor, activeColor, dropShadow;
     public bool bold, italic, leftJustify;
     public int dropShadowX, dropShadowY;
+	public Font font;
 
     public EZOpt(Color color){
         this.color = color;
@@ -28,6 +29,7 @@ public struct EZOpt {
         this.hoverColor = this.activeColor = this.dropShadow = null;
         this.bold = this.italic = this.leftJustify = false;
         this.dropShadowX = this.dropShadowY = 5;
+		this.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
     }
 
     public EZOpt(Color color, Color dropShadow) : this(color){
@@ -39,6 +41,16 @@ public struct EZOpt {
         this.activeColor = activeColor;
     }
 };
+
+public struct EZButton {
+	public bool btn, hover, active;
+
+	public EZButton(bool b, bool h, bool a) {
+		this.btn = b;
+		this.hover = h;
+		this.active = a;
+	}
+}
 
 public class EZGUI : MonoBehaviour {
 
@@ -72,6 +84,10 @@ public class EZGUI : MonoBehaviour {
         gObj.cnt = new GUIContent(str);
 
         gObj.style = new GUIStyle();
+		if(e.font) {
+			gObj.style.font = e.font;
+		}
+
         gObj.style.fontSize = fontSize;
         gObj.style.normal.textColor = e.color ?? Color.white;
 
@@ -109,7 +125,10 @@ public class EZGUI : MonoBehaviour {
         }
     }
 
-    static bool checkMouse(GUIObject g, Color? hoverColor, Color? activeColor){
+	// 0 ==> no hover/active
+	// 1 ==> hover
+	// 2 ==> active
+    static int checkMouse(GUIObject g, Color? hoverColor, Color? activeColor){
         if(hoverColor != null) {
             Vector2 mousePos = GUIUtility.ScreenToGUIPoint(Input.mousePosition);
             mousePos.y = FULLH - mousePos.y;
@@ -117,16 +136,16 @@ public class EZGUI : MonoBehaviour {
             if(g.rect.Contains(mousePos)){
                 if(activeColor != null && Input.GetMouseButton(0)) {
                     g.style.normal.textColor = (Color)activeColor;
+					return 2;
                 }
                 else {
                     g.style.normal.textColor = (Color)hoverColor;
+					return 1;
                 }
-
-                return true;
             }
         }
 
-        return false;
+        return 0;
     }
 
     #region GUI.Label
@@ -235,14 +254,14 @@ public class EZGUI : MonoBehaviour {
     /// Draws str with center at (x, y).
     /// </summary>
     /// <returns>True if button was clicked.</returns>
-    public static bool placeBtn(string str, int fontSize, float x, float y, EZOpt? opt=null) {
+    public static EZButton placeBtn(string str, int fontSize, float x, float y, EZOpt? opt=null) {
         EZOpt e = opt ?? new EZOpt();
         GUIObject g = getGUIObject(str, fontSize, x, y, e);
 
-        checkMouse(g, e.hoverColor, e.activeColor);
+        int cm = checkMouse(g, e.hoverColor, e.activeColor);
         addDropShadow(g, e);
         
-        return GUI.Button(g.rect, g.cnt, g.style);
+        return new EZButton(GUI.Button(g.rect, g.cnt, g.style), cm == 1, cm == 2);
     }
 
     /// <summary>
@@ -289,7 +308,7 @@ public class EZGUI : MonoBehaviour {
         EZOpt e = opt ?? new EZOpt();
 
         GUIObject g = getGUIObject(str, fontSize, x, y, e);
-        bool isHover = checkMouse(g, e.hoverColor, e.activeColor);
+        bool isHover = checkMouse(g, e.hoverColor, e.activeColor) == 1;
 
         if(!isHover){
             float pp = Mathf.PingPong(Time.time, 0.9f);
@@ -339,7 +358,8 @@ public class EZGUI : MonoBehaviour {
 
         GUI.Window(0, new Rect(x, y, height, height), cb, str, style);//, g.style);
 
-        return placeBtn("Close", 25, x + height, y, new EZOpt(Color.white, Color.red, new Color(0.9f, 0, 0), new Color(0.1f, 0.1f, 0.1f)));
+		EZButton b = placeBtn("Close", 25, x + height, y, new EZOpt(Color.white, Color.red, new Color(0.9f, 0, 0), new Color(0.1f, 0.1f, 0.1f)));
+		return b.btn;
     }
 
     #endregion GUI.Window
