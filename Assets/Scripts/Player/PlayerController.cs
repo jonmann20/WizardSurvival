@@ -203,6 +203,10 @@ public class PlayerController : MonoBehaviour {
             rigidbody.constraints = RigidbodyConstraints.None;
 			GLOBAL.health = 0;
 			TakeDamage(-100, transform);
+			rigidbody.mass = 1;
+			rigidbody.velocity = new Vector3(0, 10, 0);
+			rigidbody.angularVelocity = Random.onUnitSphere * 10;
+			print("BLOW UP!");
 			
 			score = 0;
 		}
@@ -347,6 +351,9 @@ public class PlayerController : MonoBehaviour {
 				swapShader(Color.red);
 				
 				GLOBAL.health = Mathf.Clamp(GLOBAL.health - damage, 0, 100);
+				if(GLOBAL.health > 100)
+					GLOBAL.health = 100;
+
 				if( networkedProperties.ContainsKey("Health") )
 					networkedProperties["Health"] = GLOBAL.health;
 				else
