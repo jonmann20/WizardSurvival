@@ -10,7 +10,7 @@ public class IceAbility : AbilityBase {
 
 		GameObject ice = PhotonNetwork.Instantiate(
 			"IcePrefab",
-			w.position + w.forward.normalized,
+			w.position + w.forward.normalized + new Vector3(0, 1, 0),
 			gameObject.transform.rotation,
 			0
 		) as GameObject;
