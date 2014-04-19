@@ -124,9 +124,16 @@ public class SampleAIController : MonoBehaviour {
 				if( iceTimer <= 0 )
 					speedReduced = true;
 				iceTimer = speedRecutionTimer;
+
+				health = Mathf.Clamp(health-5,0,health);
+
 			}
 
-			health = Mathf.Clamp(health-25,0,health);
+			else
+			{
+				health = Mathf.Clamp(health-25,0,health);
+
+			}
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 
 			if(health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy")){
