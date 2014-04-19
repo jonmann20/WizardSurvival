@@ -8,9 +8,7 @@ public class HealthCollectableScript : CollectableBase {
 	public override void customUpdate() { }
 	public override void useItem() 
 	{ 
-		GLOBAL.health += 60;
-		if(GLOBAL.health > 100)
-			GLOBAL.health = 100;
+		GLOBAL.myWizard.GetComponent<PlayerController>().TakeDamage(-60, transform);
 	}
 	public override string getName() { return "Surgeon's Delight"; }
 }
