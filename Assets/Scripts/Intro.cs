@@ -7,12 +7,17 @@ public class Intro : MonoBehaviour {
 
 	const float RATE_OF_MARCH = 1;
 	public GameObject MarchingObjectPrefab;
+	public GameObject Between_Scenes_Prefab;
 	public GameObject cta;
 	BouncyTitle bouncy;
 
 	bool hitStart = false;
 
 	void Awake(){
+
+		GameObject between_scenes_object = GameObject.FindWithTag("Between_Scenes");
+		if(between_scenes_object == null)
+			Instantiate(Between_Scenes_Prefab, new Vector3(0, 0, 0), Quaternion.identity);
 		bouncy = cta.GetComponent<BouncyTitle>();
 	}
 
