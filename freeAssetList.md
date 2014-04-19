@@ -22,3 +22,4 @@ Free Asset List
 * [Battle Music v2](http://opengameart.org/content/cold-hearted-ver2)
 * [Freeze Spell](http://opengameart.org/content/stream-sounds)
 * [PS square](http://img2.wikia.nocookie.net/__cb20120325215237/evangelion/images/e/e3/PS_Square_Icon.png)
+* [Spell Set icons](http://opengameart.org/content/spell-set)
