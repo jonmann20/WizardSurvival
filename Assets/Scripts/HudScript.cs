@@ -350,13 +350,22 @@ public class HudScript : MonoBehaviour {
 		{
 			if( PhotonNetwork.masterClient.customProperties.ContainsKey("Wave") )
 			{
-				wave = (int) PhotonNetwork.masterClient.customProperties["Wave"];
+				int tempWave = (int) PhotonNetwork.masterClient.customProperties["Wave"];
+				if( wave != tempWave )
+				{
+					wave = tempWave;
+					if( this.gameObject.GetComponent<PlayerController>() != null )
+					{
+						this.gameObject.GetComponent<PlayerController>().Respawn();
+						print ( "calling respawn");
+					}
+				}
 			}
 			else
 			{
 				wave = -1;
 			}
-
+			
 			WaveText.GetComponent<TextMesh>().text = "Wave: " + wave;
 		}
 
