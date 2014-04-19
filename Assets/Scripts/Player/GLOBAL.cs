@@ -8,6 +8,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 	public static int maxInventory = 3;
 	public static List<GameObject> Inventory = new List<GameObject>();
 	public static bool inRoom = false;
+	public static bool objectiveMet = false;
 
 	public static GameObject MainCamera;
 	public static string WizardName;
