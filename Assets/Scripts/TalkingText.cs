@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TalkingText : MonoBehaviour {
 
-	public float MAX_DISTANCE = 15;
+	public float MAX_DISTANCE = 18;
 
 	const int CHARACTER_RATE = 3;
 	int character_timer = CHARACTER_RATE;
@@ -11,6 +11,8 @@ public class TalkingText : MonoBehaviour {
 	string desiredText = "";
 	string desiredTextCopy = "";
 	string currentText = "";
+	public string[] manyStrings;
+	float temp;
 
 	TextMesh tm;
 
@@ -19,10 +21,12 @@ public class TalkingText : MonoBehaviour {
 	void Start () {
 		MainCamera = GameObject.Find("MainCamera");
 		tm = GetComponent<TextMesh>();
-		desiredText = tm.text;
+		desiredText = manyStrings[0];
 		desiredTextCopy = desiredText;
 		tm.text = "";
 		currentText = "";
+
+		//manyStrings [1] = "";
 	}
 	
 	// Update is called once per frame
@@ -59,6 +63,8 @@ public class TalkingText : MonoBehaviour {
 	public void reset()
 	{
 		currentText = "";
+		temp = Random.Range (0.0f, manyStrings.Length - 1);
+		desiredText = manyStrings[(int) Mathf.Round(temp)];
 		desiredTextCopy = desiredText;
 		tm.text = "";
 		character_timer = CHARACTER_RATE;

@@ -92,7 +92,33 @@ public class GLOBAL : Photon.MonoBehaviour {
 		HudScript.hudCamera.SetActive(false);
 		gameOverTxt = s;
 		Leaderboard.gs = Leaderboard.gameState.leaderboard;
-		//HudScript.addNewMessage("The Host Disconnected...", 180, Color.red);
+
+		// save high scores
+		// TODO: need to be networked
+		// best individual score
+		PlayerPrefs.SetString("BestIndividualName", "Tim");
+		PlayerPrefs.SetInt("BestIndividualPoints", 1000);
+		PlayerPrefs.SetInt("BestIndividualTeamPoints", 2000);
+		PlayerPrefs.SetInt("BestIndividualNum", 10);
+
+		// best team score
+		PlayerPrefs.SetInt("BestTeam", 3000);
+			// player 0
+			PlayerPrefs.SetString("BestTeamName_0", "Tim");
+			PlayerPrefs.SetInt("BestTeamScore_0", 100);
+			// player 1
+			PlayerPrefs.SetString("BestTeamName_1", "Bill");
+			PlayerPrefs.SetInt("BestTeamScore_1", 200);
+			// player 2
+			PlayerPrefs.SetString("BestTeamName_2", "Smith");
+			PlayerPrefs.SetInt("BestTeamScore_2", 200);
+			// player 3
+			PlayerPrefs.SetString("BestTeamName_3", "Ihavealongname");
+			PlayerPrefs.SetInt("BestTeamScore_4", 1200);
+
+		// longest wave
+		PlayerPrefs.SetString("LongestWaveName", "Tim");
+		PlayerPrefs.SetInt("LongestWaveNum", 12);
 	}
 
 	public GameObject SuperInstantiate(GameObject prefab, Vector3 pos, Quaternion rot)
