@@ -3,18 +3,13 @@ using System.Collections;
 
 public class BouncyTitle : MonoBehaviour {
 
-	float scale = 0.0f;
-
-	public float target = 1;
+	float scale = 0;
+	float target = 1;
 	float stiffness = 1.0f;
 	float velocity = 0.0f;
 	float damping = 0.8f;
 
 	public bool isActive = false;
-
-	void Awake(){
-		//transform.localScale = new Vector3(scale, scale, scale);
-	}
 
 	void FixedUpdate(){
 		if(isActive){

@@ -14,10 +14,12 @@ public class Intro : MonoBehaviour {
 	bool hitStart = false;
 
 	void Awake(){
-
 		GameObject between_scenes_object = GameObject.FindWithTag("Between_Scenes");
-		if(between_scenes_object == null)
+
+		if(between_scenes_object == null){
 			Instantiate(Between_Scenes_Prefab, new Vector3(0, 0, 0), Quaternion.identity);
+		}
+		
 		bouncy = cta.GetComponent<BouncyTitle>();
 	}
 
