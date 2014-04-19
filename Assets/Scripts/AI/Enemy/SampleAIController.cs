@@ -18,6 +18,11 @@ public class SampleAIController : MonoBehaviour {
 
 	public Material initialMaterial;
 	public Material redMaterial;
+
+	private bool speedReduced = false;
+	public float speedReduction = 0.6f;
+	public float speedRecutionTimer = 4.0f;
+	private float iceTimer = 0.0f;
 	
 	Transform skeleton;
 	//private bool speedIsSet = false;
@@ -56,9 +61,10 @@ public class SampleAIController : MonoBehaviour {
 
 		redMaterial = new Material(Shader.Find("Toon/Basic"));
 		redMaterial.color = new Color(1, 0, 0, 0.7f);
-		
-		//this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
-		//this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("damageToApply", damageToApply);
+
+		//for balance
+		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
+		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("damageToApply", damageToApply);
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
 
@@ -73,6 +79,24 @@ public class SampleAIController : MonoBehaviour {
 		}
 		else {
 			deathTimer = timeUntilRemove;
+		}
+
+		//for iceblast speed reduction
+		if( iceTimer > 0 )
+		{
+			iceTimer -= Time.deltaTime;
+			if( speedReduced )
+			{
+				this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed * speedReduction;
+				speedReduced = false;
+			}
+
+			//print ( this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed );
+		}
+		else
+		{
+			this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
+			speedReduced = false;
 		}
 	}
 
@@ -92,9 +116,16 @@ public class SampleAIController : MonoBehaviour {
 
 	void doDamage(Collider col){
 
-		// TODO: check if Ice Blast, and slow enemy down
+		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet")
+		{
+			// TODO: check if Ice Blast, and slow enemy down
+			if( col.gameObject.GetComponent<IceballScript>() != null )
+			{
+				if( iceTimer <= 0 )
+					speedReduced = true;
+				iceTimer = speedRecutionTimer;
+			}
 
-		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
 			health = Mathf.Clamp(health-25,0,health);
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 
