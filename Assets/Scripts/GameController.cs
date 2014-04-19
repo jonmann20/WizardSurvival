@@ -118,7 +118,19 @@ public class GameController : MonoBehaviour {
 				spawning = false;
 				SpawnedUnits = 0;
 				//numUnitsStillinScene = 0;
-				numUnitstoSpawn = numUnitstoSpawn + (int)((float)numUnitstoSpawn * 0.2f);
+
+				if( wave < 7 )
+				{
+					numUnitstoSpawn = numUnitstoSpawn + (int)((float)numUnitstoSpawn * 0.5f);
+				}
+				else if( wave < 12 )
+				{
+					numUnitstoSpawn = numUnitstoSpawn + (int)((float)numUnitstoSpawn * 0.1f);
+				}
+				else
+				{
+					numUnitstoSpawn += 10;
+				}
 			}
 			return;
 		}
@@ -186,6 +198,11 @@ public class GameController : MonoBehaviour {
 			if(index == -1)
 			{
 				index = SpawnWeights.Length-2;
+			}
+
+			if( index == 3 && wave < 5 )
+			{
+				index = 1;
 			}
 
 			switch (index)
