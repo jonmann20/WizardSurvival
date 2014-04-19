@@ -42,8 +42,9 @@ public class Intro : MonoBehaviour {
 		if(!hitStart){
 			InputDevice device = InputManager.ActiveDevice;
 			InputControl ctrl_Start = device.GetControl(InputControlType.Start);
+			InputControl ctrl_rb = device.GetControl(InputControlType.RightBumper);	// allows left click to work
 
-			if((ctrl_Start.WasPressed)){
+			if(ctrl_Start.WasPressed || ctrl_rb.WasPressed) {
 				hitStart = true;
 
 				Invoke("startGame", 2.1f);
