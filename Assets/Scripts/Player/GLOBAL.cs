@@ -94,31 +94,52 @@ public class GLOBAL : Photon.MonoBehaviour {
 		Leaderboard.gs = Leaderboard.gameState.leaderboard;
 
 		// save high scores
-		// TODO: need to be networked
+		// TODO: needs to be networked
+
 		// best individual score
-		PlayerPrefs.SetString("BestIndividualName", "Tim");
-		PlayerPrefs.SetInt("BestIndividualPoints", 1000);
-		PlayerPrefs.SetInt("BestIndividualTeamPoints", 2000);
-		PlayerPrefs.SetInt("BestIndividualNum", 10);
+		string newBestIndividualName = "";
+		int newBestIndividualPoints = 0;
+		int newBestTeamPoints = 0;
+		int newBestWaveNum = GameController.that.wave;
+
+		for(int i=0; i < PhotonNetwork.playerList.Length; ++i){
+			PhotonPlayer p = PhotonNetwork.playerList[i];
+			int score = (int)p.customProperties["Score"];
+
+			if(score > newBestIndividualPoints) {
+				newBestIndividualPoints = score;
+				newBestIndividualName = "TODO: network names"; // (int)p.customProperties["Name"];
+			}
+
+			newBestTeamPoints += score; 
+		}
+
+		int bestIndividualPoints = PlayerPrefs.GetInt("BestIndividualPoints");
+		if(newBestIndividualPoints > bestIndividualPoints){
+			PlayerPrefs.SetString("BestIndividualName", newBestIndividualName);
+			PlayerPrefs.SetInt("BestIndividualPoints", newBestTeamPoints);
+			PlayerPrefs.SetInt("BestIndividualTeamPoints", newBestIndividualPoints);
+			PlayerPrefs.SetInt("BestIndividualNum", newBestWaveNum);
+		}
+
 
 		// best team score
-		PlayerPrefs.SetInt("BestTeam", 3000);
-			// player 0
-			PlayerPrefs.SetString("BestTeamName_0", "Tim");
-			PlayerPrefs.SetInt("BestTeamScore_0", 100);
-			// player 1
-			PlayerPrefs.SetString("BestTeamName_1", "Bill");
-			PlayerPrefs.SetInt("BestTeamScore_1", 200);
-			// player 2
-			PlayerPrefs.SetString("BestTeamName_2", "Smith");
-			PlayerPrefs.SetInt("BestTeamScore_2", 200);
-			// player 3
-			PlayerPrefs.SetString("BestTeamName_3", "Ihavealongname");
-			PlayerPrefs.SetInt("BestTeamScore_4", 1200);
+		int bestTeam = PlayerPrefs.GetInt("BestTeam");
+		if(newBestTeamPoints > bestTeam){
+			PlayerPrefs.SetInt("BestTeam", newBestTeamPoints);
+
+			for(int i=0; i < PhotonNetwork.playerList.Length; ++i){
+				PlayerPrefs.SetString("BestTeamName_" + i, "TODO: network names");
+				PlayerPrefs.SetInt("BestTeamScore_" + i, (int)PhotonNetwork.playerList[i].customProperties["Score"]);
+			}
+		}
 
 		// longest wave
-		PlayerPrefs.SetString("LongestWaveName", "Tim");
-		PlayerPrefs.SetInt("LongestWaveNum", 12);
+		int longestWave = PlayerPrefs.GetInt("LogenstWaveNum");
+		if(newBestWaveNum > longestWave){
+			PlayerPrefs.SetString("LongestWaveName", "TODO: network names");
+			PlayerPrefs.SetInt("LongestWaveNum", newBestWaveNum);
+		}
 	}
 
 	public GameObject SuperInstantiate(GameObject prefab, Vector3 pos, Quaternion rot)

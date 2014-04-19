@@ -6,7 +6,9 @@ using System.Xml;
 using MGSpawn.Spawn;
 
 public class GameController : MonoBehaviour {
-	
+
+	public static GameController that;
+
 	public int wave;
 
 	private GameObject[] spawners;
@@ -35,6 +37,7 @@ public class GameController : MonoBehaviour {
 	private bool doorHasBeenClosed = false;
 
 	void Awake(){
+		that = this;
 		transform.localRotation = Quaternion.identity;
 	}
 
