@@ -50,24 +50,13 @@ public class FollowClosestPlayer : MonoBehaviour {
 
 		if( closePlayerIdx == -1 )
 		{
-			Debug.LogError("No players for AI to find");
-		}
-		this.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", playerList[closePlayerIdx]);
-		/*if( closestDistance < meleeDistance )
-		{
-			print ("close enough to melee");
-			this.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("attackPlayer", playerList[closePlayerIdx]);
+			this.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", null);
+
 		}
 		else
 		{
-			this.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("attackPlayer", null);
-		}*/
-
-		//}
-		/*else if ( playerList.Length == 1 )
-		{
-			this.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", playerList[0]);
-		}*/
+			this.transform.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("detectObject2", playerList[closePlayerIdx]);
+		}
 
 		yield return new WaitForSeconds(howOftenToCheckForClosestPlayer);
 		StartCoroutine("FindClosestPlayer");
