@@ -14,13 +14,15 @@ public class Nametag : MonoBehaviour {
 			transform.rotation = Quaternion.LookRotation(MainCamera.transform.forward);
 			PhotonPlayer p = transform.parent.gameObject.GetComponent<PhotonView>().owner;
 
-		if(transform.parent.gameObject.GetComponent<PhotonView>().isMine)
-		{
-			PhotonNetwork.playerName = BETWEEN_SCENES.player_name;
-			GetComponent<TextMesh>().text = "";
-		}
-		else
-			GetComponent<TextMesh>().text = p.name;
+			if(transform.parent.gameObject.GetComponent<PhotonView>().isMine)
+			{
+				PhotonNetwork.playerName = BETWEEN_SCENES.player_name;
+				GetComponent<TextMesh>().text = "";
+			}
+			else
+			{
+				GetComponent<TextMesh>().text = p.name;
+			}
 		}
 	}
 }

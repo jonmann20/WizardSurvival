@@ -9,8 +9,6 @@ public class CLIENTIZER_Wizard : MonoBehaviour {
 		{
 			GetComponent<SyncScript>().enabled = false;
 			GLOBAL.myWizard = gameObject;
-			//GLOBAL.myWizard.transform.FindChild("NameText").gameObject.SetActive(false);	// trying to turn off name for just yourself
-			transform.FindChild("NameText").gameObject.SetActive(false);	// trying to turn off name for just yourself
 		}
 		else
 		{
