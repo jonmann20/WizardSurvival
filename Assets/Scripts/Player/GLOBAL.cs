@@ -20,14 +20,21 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 	public static GameObject myWizard;
 
+	public GameObject _invH;
+	static GameObject _InventoryHolder;
+
 	void Awake(){
 		MainCamera = GameObject.FindWithTag("MainCamera") as GameObject;
 		that = this;
+		_InventoryHolder = _invH;
 	}
 
 	//returns false if inventory full.
 	public static void addToInventory(GameObject g)
 	{
+		// don't show till first item pickup
+		_InventoryHolder.SetActive(true);
+
 		g.AddComponent<InventoryItemScript>();
 		Inventory.Add(g);
 	}

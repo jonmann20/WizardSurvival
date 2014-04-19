@@ -20,28 +20,31 @@ public abstract class CollectableBase : MonoBehaviour {
 
 	void Update()
 	{
-		if(GetComponent<PhotonView>() != null)
-		if(GetComponent<PhotonView>().isMine)
-		{
+		if(GetComponent<PhotonView>() != null &&
+		   GetComponent<PhotonView>().isMine
+		){
 			sinCounter += 0.025f;
 			transform.position = new Vector3(transform.position.x, transform.position.y + Mathf.Sin(sinCounter) * 0.01f, transform.position.z);
 
-			if(GetComponent<InventoryItemScript>() == null)
+			if(GetComponent<InventoryItemScript>() == null){
 				transform.Rotate(Vector3.up * Time.deltaTime * 55);
+			}
 
 			customUpdate();
 		}
 	}
 	
-	public void OnCollisionEnter(Collision collision) {
+	public void OnCollisionEnter(Collision collision){
 
 		if(collision.gameObject.tag == "Player" && collision.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine)
 		{
 			if(!GLOBAL.isInventoryFull())
 			{
 				string quantityString = "";
-				if(quantity > 1)
+				if(quantity > 1){
 					quantityString = "(" + quantity + ")";
+				}
+
 				HudScript.addNewMessage(getName() + " " + quantityString, 120, Color.white);
 
 

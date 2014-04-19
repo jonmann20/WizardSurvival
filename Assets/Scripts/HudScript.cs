@@ -173,6 +173,7 @@ public class HudScript : MonoBehaviour {
 			GameObject g = GLOBAL.getInventoryItemAt(i);
 			g.layer = 9;
 			g.transform.parent = hudCamera.transform;
+
 			if(i == inventorySelectedIndex)
 			{
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getSelectedItemSizeInInventory() + 1;
@@ -183,6 +184,7 @@ public class HudScript : MonoBehaviour {
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getNonSelectedItemSizeInInventory();
 				g.transform.rotation = Quaternion.identity;
 			}
+
 			if(i == 0 || i == 2)
 			{
 				g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
@@ -386,7 +388,12 @@ public class HudScript : MonoBehaviour {
 			if(GLOBAL.myWizard != null && p == GLOBAL.myWizard.GetComponent<PhotonView>().owner) {
 				if(p.customProperties.ContainsKey("Score")){
 					int s = (int)p.customProperties["Score"];
-					scoreTxtMesh.text = "Score: " + s.ToString();
+
+					// don't show until first score
+					if(s != 0) {
+						scoreTxtMesh.GetComponent<MeshRenderer>().enabled = true;
+						scoreTxtMesh.text = "Score: " + s.ToString();
+					}
 				}
 
 				break;

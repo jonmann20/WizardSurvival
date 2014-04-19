@@ -10,10 +10,11 @@ public class FireExplosion : ProjectileBase {
 
         GameAudio.playFlame();
 
-        Invoke("destroy", 2);
+		Destroy(gameObject, 2);
+        //Invoke("destroy", 2);
     }
 
-    void destroy() {
-        Destroy(gameObject);
-    }
+	//void destroy() {
+	//	Destroy(gameObject);
+	//}
 }
