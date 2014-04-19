@@ -37,7 +37,7 @@ public class GameAudio : MonoBehaviour {
 		setSoundEffect(ref jumpHolder[3], ref jumpSrc[3], "jump3");
 		setSoundEffect(ref jumplandHolder, ref jumplandSrc, "jumpLand");
 		setSoundEffect(ref introHolder, ref introSrc, "HeavenSings");
-		//setSoundEffect(ref spell0Holder, ref spell0Src, "warp3");
+		setSoundEffect(ref spell0Holder, ref spell0Src, "warp3");
 		setSoundEffect(ref lowHealthHolder, ref lowHealthSrc, "lowhealth");
 		setSoundEffect(ref invSelectHolder, ref invSelectSrc, "enchant");
 		setSoundEffect(ref windHolder, ref windSrc, "wind");
