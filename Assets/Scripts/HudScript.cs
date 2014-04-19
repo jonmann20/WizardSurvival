@@ -122,23 +122,6 @@ public class HudScript : MonoBehaviour {
         //textMesh.characterSize = 0.1f;
         //textMesh.tabSize = 4;
         //textMesh.fontSize = 31;
-
-		//INVENTORY
-		for(int i = 0; i < GLOBAL.maxInventory; ++i)
-		{
-			GameObject c = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			c.layer = 9;
-			c.transform.parent = hudCamera.transform;
-			c.transform.localScale = new Vector3(INVENTORY_PANELS_X_SCALE, INVENTORY_PANELS_Y_SCALE, INVENTORY_PANELS_Z_SCALE);
-			c.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
-			                                   INVENTORY_OFFSET_Y,
-			                                   4);
-
-			Material mat;
-			mat = new Material(toonShader);
-			mat.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-			c.GetComponent<MeshRenderer>().material = mat;
-		}
 	}
 
 	void FixedUpdate(){
@@ -184,6 +167,7 @@ public class HudScript : MonoBehaviour {
 
 		//INVENTORY
 		int numInventoryItems = GLOBAL.getInventoryCount();
+
 		for(int i=0; i < numInventoryItems; ++i)
 		{
 			GameObject g = GLOBAL.getInventoryItemAt(i);
@@ -199,9 +183,18 @@ public class HudScript : MonoBehaviour {
 				g.GetComponent<InventoryItemScript>().target = g.GetComponent<CollectableBase>().getNonSelectedItemSizeInInventory();
 				g.transform.rotation = Quaternion.identity;
 			}
-			g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
+			if(i == 0 || i == 2)
+			{
+				g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
 			                                        INVENTORY_OFFSET_Y + 0.1f,
 			                                        4);
+			}
+			else
+			{
+				g.transform.localPosition = new Vector3(INVENTORY_OFFSET_X + i * (INVENTORY_PANELS_X_SCALE + INVENTORY_PANELS_X_SEPARATION),
+				                                         INVENTORY_OFFSET_Y + 0.4f,
+				                                         4);
+			}
 
 			//Quantity text
 			//Workaround for the generally poor process of creating 3D texts dynamically.
@@ -238,6 +231,14 @@ public class HudScript : MonoBehaviour {
 		InputControl ctrl_invL = device.GetControl(InputControlType.LeftTrigger);
 		InputControl ctrl_invR = device.GetControl(InputControlType.RightTrigger);
 		InputControl ctrl_special = device.GetControl(InputControlType.LeftBumper);
+
+		InputControl ctrl_DpadLeft = device.GetControl(InputControlType.DPadLeft);
+		InputControl ctrl_DpadUp = device.GetControl(InputControlType.DPadUp);
+		InputControl ctrl_DpadRight = device.GetControl(InputControlType.DPadRight);
+		InputControl ctrl_Triangle = device.GetControl(InputControlType.Action4);
+
+		print(device.GetControl(InputControlType.Action4).WasPressed);
+
 		int numInventoryItems = GLOBAL.getInventoryCount();
 
 		if(ctrl_invL.WasPressed){
@@ -260,7 +261,40 @@ public class HudScript : MonoBehaviour {
 			}
 		}
 
-		if(ctrl_special.WasPressed){
+		if(ctrl_DpadLeft.WasPressed)
+		{
+			if(inventorySelectedIndex != 0){
+				GameAudio.playInvMove();
+				inventorySelectedIndex = 0;
+			}
+			else {
+				GameAudio.playInvNoMove();
+			}
+		}
+
+		if(ctrl_DpadUp.WasPressed)
+		{
+			if(inventorySelectedIndex != 1){
+				GameAudio.playInvMove();
+				inventorySelectedIndex = 1;
+			}
+			else {
+				GameAudio.playInvNoMove();
+			}
+		}
+
+		if(ctrl_DpadRight.WasPressed)
+		{
+			if(inventorySelectedIndex != 2){
+				GameAudio.playInvMove();
+				inventorySelectedIndex = 2;
+			}
+			else {
+				GameAudio.playInvNoMove();
+			}
+		}
+
+		if(ctrl_special.WasPressed || ctrl_Triangle.WasPressed){
 			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
 				GameAudio.playInvSelect();
 

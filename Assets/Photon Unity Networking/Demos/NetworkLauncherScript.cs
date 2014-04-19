@@ -42,7 +42,9 @@ public class NetworkLauncherScript : MonoBehaviour {
 			GLOBAL.GameOver("Game Over");
 		}
 
-		print("Photonnetwork.connected: " + PhotonNetwork.connected);
+		if(PhotonNetwork.connected == false) {
+			GLOBAL.GameOver("Online Connection Lost...");
+		}
 	}
 
 	bool hasMasterClientDisconnected()

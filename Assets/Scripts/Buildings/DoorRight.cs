@@ -32,6 +32,12 @@ public class DoorRight : MonoBehaviour {
 		} else if (door_LastIndex == 1) {
 			OneWayWall onewaywall = (OneWayWall) GameObject.Find("OneWayWallThrone").GetComponent(typeof(OneWayWall));
 			onewaywall.closeDoor = true;
+
+		}
+		else if ( door_LastIndex == 2 )
+		{
+			GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;
+			mainCam.GetComponent<GameController>().Begin();
 		}
 	}
 }

@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour {
 
 	// control while the player is alive and kicking
 	void control_active(){
+
 		// fire
 		bool doFire = false;
 		if(ams.isAbilityName("Ice Blast")){
@@ -322,6 +323,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	#endregion Animation
+
+	public int getHealth()
+	{
+		return (int) PhotonNetwork.player.customProperties["Health"];
+	}
 
 	public void IncrementPoints(int numToAdd){
 		if( this.gameObject.GetComponent<PhotonView>().isMine )

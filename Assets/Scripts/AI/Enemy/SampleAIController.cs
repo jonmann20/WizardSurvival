@@ -100,9 +100,9 @@ public class SampleAIController : MonoBehaviour {
 
 			if(health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy")){
 
-				if(col.gameObject.GetComponent<ProjectileBase>().wizard.GetComponent<PhotonView>().isMine){
+				//if(col.gameObject.GetComponent<ProjectileBase>().wizard.GetComponent<PhotonView>().isMine){
 					GLOBAL.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
-				}
+				//}
 			}
 		}
 	}
