@@ -78,6 +78,7 @@ public class ForcefieldAbility : AbilityBase {
 
 		// forcefield is active
 		if(spellDurationLeft > 0){
+			EZGUI.drawBox(0, 0, EZGUI.FULLW, EZGUI.FULLH, new Color(0, 0.8f + Mathf.PingPong(Time.time/2, 0.14f), 0, 0.18f));
 			EZGUI.placeTxt("Forcefield time remaining: " + spellDurationLeft + "s", 42, EZGUI.FULLW - 330, 150, e);
 		}
 		else if(!canFire && cooldownTimeLeft != COOLDOWN_TIME){
