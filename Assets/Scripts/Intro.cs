@@ -51,6 +51,10 @@ public class Intro : MonoBehaviour {
 		}
 	}
 
+	void OnGUI(){
+		BETWEEN_SCENES.player_name = GUI.TextField(new Rect(Screen.width / 2 - 50, Screen.height / 2, 100, 20), BETWEEN_SCENES.player_name);
+	}
+
 	void startGame(){
 		Application.LoadLevel("MattScene");
 	}
