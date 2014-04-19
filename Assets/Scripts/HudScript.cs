@@ -237,8 +237,6 @@ public class HudScript : MonoBehaviour {
 		InputControl ctrl_DpadRight = device.GetControl(InputControlType.DPadRight);
 		InputControl ctrl_Triangle = device.GetControl(InputControlType.Action4);
 
-		print(device.GetControl(InputControlType.Action4).WasPressed);
-
 		int numInventoryItems = GLOBAL.getInventoryCount();
 
 		if(ctrl_invL.WasPressed){

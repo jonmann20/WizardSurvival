@@ -2,9 +2,25 @@
 using System.Collections;
 
 public class Nametag : MonoBehaviour {
-	void Start () {
-		PhotonNetwork.player.name = BETWEEN_SCENES.player_name;
-		GetComponent<TextMesh>().text = PhotonNetwork.player.name;
-		print(GetComponent<TextMesh>() + "set to " + PhotonNetwork.player.name);
+
+	GameObject MainCamera;
+
+	void Update () {
+
+		if(MainCamera == null)
+			MainCamera = GameObject.Find("MainCamera");
+		else
+		{
+			transform.rotation = Quaternion.LookRotation(MainCamera.transform.forward);
+			PhotonPlayer p = transform.parent.gameObject.GetComponent<PhotonView>().owner;
+
+		if(transform.parent.gameObject.GetComponent<PhotonView>().isMine)
+		{
+			PhotonNetwork.playerName = BETWEEN_SCENES.player_name;
+			GetComponent<TextMesh>().text = "";
+		}
+		else
+			GetComponent<TextMesh>().text = p.name;
+		}
 	}
 }

@@ -51,6 +51,8 @@ public class SyncScript : Photon.MonoBehaviour
 			Quaternion rot = transform.rotation;
 			Vector3 scale = transform.localScale;
 
+			//print("sending pos: " + pos.ToString() + " rot: " + rot.ToString() + " scale: " + scale.ToString() + "rand: " + Random.Range(0.1f, 100.0f));
+
 			stream.Serialize(ref pos);
 			stream.Serialize(ref rot);
 			stream.Serialize(ref scale);
@@ -61,6 +63,8 @@ public class SyncScript : Photon.MonoBehaviour
 			Vector3 pos = Vector3.zero;
 			Quaternion rot = Quaternion.identity;
 			Vector3 scale = Vector3.zero;
+
+			//print("receiving pos: " + pos.ToString() + " rot: " + rot.ToString() + " scale: " + scale.ToString() + "rand: " + Random.Range(0.1f, 100.0f));
 
 			stream.Serialize(ref pos);
 			stream.Serialize(ref rot);
