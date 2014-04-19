@@ -93,7 +93,7 @@ public class Leaderboard : MonoBehaviour {
 			e.hoverColor = new Color(1, 1, 0);
 			e.activeColor = new Color(0.8f, 0.8f, 0);
 			e.leftJustify = false;
-            EZGUI.pulseBtn("Press \"X\" for start screen", 36, EZGUI.HALFW, 990 - 23, e);
+            EZGUI.pulseBtn("Press \"X\" for start screen", 36, EZGUI.HALFW, 990 - 28, e);
         }
         else{
             EZGUI.placeTxt("Press \"△\" for start screen", 36, startX, 990 - 60, e);
@@ -103,7 +103,7 @@ public class Leaderboard : MonoBehaviour {
 
 	void printPlayers(float startX, float startY, EZOpt e){
 		float lineHeight = 45;
-		float padBot = 165;
+		float padBot = 168;
 
 		int teamScore = 0;
 
@@ -111,6 +111,7 @@ public class Leaderboard : MonoBehaviour {
 			PhotonPlayer p = PhotonNetwork.playerList[i];
 
 			// Name
+			e.leftJustify = true;
 			e.color = Color.white;
 			EZGUI.placeTxt("Player " + p.ID, 35, startX, startY + (i * padBot), e);
 
@@ -151,7 +152,7 @@ public class Leaderboard : MonoBehaviour {
 		}
 
 		e.color = new Color(0.85f, 0.85f, 0.85f);
-		EZGUI.placeTxt("Team Score: " + teamScore.ToString(), 35, 1450, 990 - 40, e);
+		EZGUI.placeTxt("Team Score: " + teamScore.ToString(), 35, 1450, 990 - 35, e);
 	}
 
 	public void FlipGameState(){

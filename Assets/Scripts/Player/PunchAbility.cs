@@ -16,7 +16,7 @@ public class PunchAbility : AbilityBase {
 	GameObject fakeArm;
 	Vector3 previousLocalPositionOnBody;
 
-	Material[] punchMat;
+	public Material[] punchMat;
 
 	void Awake()
 	{
