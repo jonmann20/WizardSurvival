@@ -31,6 +31,7 @@ public class HudScript : MonoBehaviour {
 	public GameObject RoundTimer;
 
 	public GameObject WaveText;
+	public GameObject OrbText;
 	//private float timer = 300f;
 	//private float seconds = 0;
 	//private int minutes = 0;
@@ -371,8 +372,11 @@ public class HudScript : MonoBehaviour {
 			{
 				wave = -1;
 			}
-			
+
+			int orbs = (int) PhotonNetwork.masterClient.customProperties["Orbs"];
+
 			WaveText.GetComponent<TextMesh>().text = "Wave: " + wave;
+			OrbText.GetComponent<TextMesh>().text = "Orbs: " + (5 - orbs) + " / 5";
 		}
 
 		// MESSAGE TEXT

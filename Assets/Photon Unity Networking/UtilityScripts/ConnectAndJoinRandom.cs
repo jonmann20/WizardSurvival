@@ -38,6 +38,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 		customPlayerProps.Add("Ability", "none");
 		customPlayerProps.Add("Time", 300.0);
 		customPlayerProps.Add("Wave", 0);
+		customPlayerProps.Add("Orbs", 5);
 		PhotonNetwork.player.SetCustomProperties(customPlayerProps);
         PhotonNetwork.JoinRandomRoom();
     }
