@@ -8,21 +8,19 @@ public class Intro : MonoBehaviour {
 	const float RATE_OF_MARCH = 1;
 	public GameObject MarchingObjectPrefab;
 	public GameObject Between_Scenes_Prefab;
-	public GameObject cta;
-	BouncyTitle bouncy;
 
 	bool hitStart = false;
 
 	Color btnColor, btnColorInit;
+	Font spookyMagic;
 
 	void Awake(){
+		spookyMagic = Resources.Load<Font>("SpookyMagic");
 		GameObject between_scenes_object = GameObject.FindWithTag("Between_Scenes");
 
 		if(between_scenes_object == null){
 			Instantiate(Between_Scenes_Prefab, new Vector3(0, 0, 0), Quaternion.identity);
 		}
-		
-		bouncy = cta.GetComponent<BouncyTitle>();
 
 		btnColorInit = btnColor = new Color(11, 1, 1, 0.85f);
 	}
@@ -61,7 +59,7 @@ public class Intro : MonoBehaviour {
 		EZGUI.init();
 
 		EZOpt e = new EZOpt();
-		e.font = GLOBAL.spookyMagic;
+		e.font = spookyMagic;
 
 		// title
 		EZGUI.placeTxt("Defend Thy Kingdom", 90, EZGUI.HALFW, 220, e);
@@ -105,9 +103,6 @@ public class Intro : MonoBehaviour {
 		else {
 			btnColor = btnColorInit;
 		}
-
-		//GUI.Label(new Rect(Screen.width / 2 - 80, Screen.height / 2, 200, 20), "What do you go by Stranger?");
-		//BETWEEN_SCENES.player_name = GUI.TextField(new Rect(Screen.width / 2 - 80, Screen.height / 2 + 20, 200, 20), BETWEEN_SCENES.player_name);
 	}
 
 	void initStartGame() {
@@ -118,7 +113,6 @@ public class Intro : MonoBehaviour {
 		GameAudio.stopIntro();
 		GameAudio.playChimes();
 		GameAudio.playInvMove();
-		//bouncy.isActive = true;
 	}
 
 	void startGame(){
