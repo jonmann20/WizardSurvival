@@ -43,20 +43,20 @@ public class Leaderboard : MonoBehaviour {
 
 		InputControl ctrl_X = device.GetControl(InputControlType.Action1);
 		InputControl ctrl_O = device.GetControl(InputControlType.Action2);
+		InputControl ctrl_Sq = device.GetControl(InputControlType.Action3);
 		InputControl ctrl_T = device.GetControl(InputControlType.Action4);
 
 		switch(gs){
 			case gameState.leaderboard:
 				if(GLOBAL.gameOver){
-					//print("whyyy");
-
 					if(ctrl_X.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed){
 						gs = gameState.highscore;
 					}
-
-					print("gs: " + gs);
 				}
 				else {
+					if(ctrl_Sq.WasPressed){
+						gs = gameState.highscore;
+					}
 					if(ctrl_T.WasPressed){
 						Application.LoadLevel("Title");
 					}
@@ -67,10 +67,13 @@ public class Leaderboard : MonoBehaviour {
 
 				break;
 			case gameState.highscore:
-				if(ctrl_X.WasPressed || ctrl_T.WasPressed || ctrl_O.WasPressed){
+				if(ctrl_X.WasPressed || ctrl_T.WasPressed){
 					Application.LoadLevel("Title");
 				}
-
+				else if(ctrl_O.WasPressed){
+					gs = gameState.leaderboard;
+				}
+				
 				break;
 			case gameState.running:
 					timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, startTime);
@@ -116,12 +119,11 @@ public class Leaderboard : MonoBehaviour {
 
 			e.color = new Color(0.95f, 0.95f, 0.95f);
 			if(GLOBAL.gameOver){
-				e.hoverColor = new Color(1, 1, 0);
-				e.activeColor = new Color(0.8f, 0.8f, 0);
 				e.leftJustify = false;
-				EZGUI.pulseBtn("Press \"X\" to continue", 36, EZGUI.HALFW, 990 - 28, e);
+				EZGUI.pulseTxt("Press \"x\" to continue", 36, EZGUI.HALFW, 990 - 28, e);
 			}
 			else {
+				EZGUI.placeTxt("Press \"□\" for high scores", 36, startX, 990 - 100, e);
 				EZGUI.placeTxt("Press \"△\" for start screen", 36, startX, 990 - 60, e);
 				EZGUI.placeTxt("Press \"○\" to quit game", 36, startX, 990 - 20, e);
 			}
@@ -131,13 +133,13 @@ public class Leaderboard : MonoBehaviour {
 			e.font = arial;
 			e.leftJustify = true;
 
-			printHighScores(startX, startY, e);
+			printHighScores(startX + 75, startY, e);
 
 			e.color = new Color(0.95f, 0.95f, 0.95f);
-			e.hoverColor = new Color(1, 1, 0);
-			e.activeColor = new Color(0.8f, 0.8f, 0);
 			e.leftJustify = false;
-			EZGUI.pulseBtn("Press \"X\" for start screen", 36, EZGUI.HALFW, 990 - 28, e);
+
+			EZGUI.placeTxt("Press \"x\" for start screen", 36, EZGUI.HALFW + 300, EZGUI.HALFH - 100, e);
+			EZGUI.placeTxt("Press \"○\" for leaderboard", 36, EZGUI.HALFW + 300, EZGUI.HALFH - 50, e);
 		}
 	}
 
@@ -200,7 +202,7 @@ public class Leaderboard : MonoBehaviour {
 		// player 2
 		string t2 = PlayerPrefs.GetString("BestTeamName_2");
 		int t2Num = PlayerPrefs.GetInt("BestTeamScore_2");
-		if(String.IsNullOrEmpty(t2)) {
+		if(String.IsNullOrEmpty(t2)){
 			e.color = new Color(0.95f, 0.95f, 0.95f);
 			EZGUI.placeTxt("-No Entry-", 35, startX + 100, startY + 240 + lineHeight*4, e);
 		}
@@ -211,7 +213,7 @@ public class Leaderboard : MonoBehaviour {
 		// player 3
 		string t3 = PlayerPrefs.GetString("BestTeamName_3");
 		int t3Num = PlayerPrefs.GetInt("BestTeamScore_3");
-		if(String.IsNullOrEmpty(t3)) {
+		if(String.IsNullOrEmpty(t3)){
 			e.color = new Color(0.95f, 0.95f, 0.95f);
 			EZGUI.placeTxt("-No Entry-", 35, startX + 100, startY + 240 + lineHeight*5, e);
 		}
@@ -296,14 +298,10 @@ public class Leaderboard : MonoBehaviour {
 	}
 
 	public void FlipGameState(){
-		if(GLOBAL.gameOver){
-			return;
-		}
-
-		if(gs == gameState.leaderboard){
+		if(!GLOBAL.gameOver && gs == gameState.leaderboard){
 			gs = gameState.running;
 		}
-		else{
+		else {
 			gs = gameState.leaderboard;
 		}
 	}

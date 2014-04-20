@@ -26,6 +26,10 @@ public class PunchAbility : AbilityBase {
 
 	public override void fire()
 	{
+		if(Leaderboard.gs == Leaderboard.gameState.leaderboard || Leaderboard.gs == Leaderboard.gameState.highscore){
+			return;
+		}
+
 		if(fakeArm == null)
 		{
 			arm.renderer.enabled = false;

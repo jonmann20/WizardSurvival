@@ -110,7 +110,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 			if(score > newBestIndividualPoints) {
 				newBestIndividualPoints = score;
-				newBestIndividualName = "TODO: network names"; // (int)p.customProperties["Name"];
+				newBestIndividualName = p.name;
 			}
 
 			newBestTeamPoints += score; 
@@ -131,15 +131,15 @@ public class GLOBAL : Photon.MonoBehaviour {
 			PlayerPrefs.SetInt("BestTeam", newBestTeamPoints);
 
 			for(int i=0; i < PhotonNetwork.playerList.Length; ++i){
-				PlayerPrefs.SetString("BestTeamName_" + i, "TODO: network names");
+				PlayerPrefs.SetString("BestTeamName_" + i, PhotonNetwork.playerList[i].name);
 				PlayerPrefs.SetInt("BestTeamScore_" + i, (int)PhotonNetwork.playerList[i].customProperties["Score"]);
 			}
 		}
 
-		// longest wave
+		// longest wave (picks player w/highest individual score)
 		int longestWave = PlayerPrefs.GetInt("LogenstWaveNum");
 		if(newBestWaveNum > longestWave){
-			PlayerPrefs.SetString("LongestWaveName", "TODO: network names");
+			PlayerPrefs.SetString("LongestWaveName", newBestIndividualName);
 			PlayerPrefs.SetInt("LongestWaveNum", newBestWaveNum);
 		}
 	}

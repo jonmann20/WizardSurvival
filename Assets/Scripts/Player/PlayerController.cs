@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 
     float movementSpeed = 500;
     float strafeSpeed = 400;
-    float jumpSpeed = 700;
+    float jumpSpeed = 720;
 
     //float fireRate = .11f;
     //float lastShot = -10;
