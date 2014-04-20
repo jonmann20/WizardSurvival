@@ -77,8 +77,12 @@ public class TalkingText : MonoBehaviour {
 	public void reset()
 	{
 		currentText = "";
-		temp = Random.Range (0.0f, manyStrings.Length - 1);
-		desiredTextCopy = manyStrings[(int) Mathf.Round(temp)];
+		if (this.tag == "WizardJumpy") {
+			temp = Random.Range (0.0f, manyStrings.Length - 1);
+			desiredTextCopy = manyStrings[(int) Mathf.Round(temp)];
+		} else {
+			desiredTextCopy = desiredText;
+		}
 		tm.text = "";
 		character_timer = CHARACTER_RATE;
 	}
