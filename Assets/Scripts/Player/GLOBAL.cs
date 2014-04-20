@@ -274,8 +274,13 @@ public class GLOBAL : Photon.MonoBehaviour {
 			int itemIndex = Random.Range(0, that.FountainItemPrefabs.Length);
 			GameObject prefab = that.FountainItemPrefabs[itemIndex];
 
-			Vector3 pos = Random.onUnitSphere * 15 + fountain.transform.position;
-			pos.y = fountain.transform.position.y;
+			float randVal = Random.Range(0, 2*Mathf.PI);
+			float xval = Mathf.Sin(randVal);
+			float zval = Mathf.Cos(randVal);
+
+			Vector3 randVec = new Vector3(xval, 0, zval);
+
+			Vector3 pos = randVec * 10 + fountain.transform.position;
 
 			GameObject item = GLOBAL.that.SuperInstantiate(prefab, pos, Quaternion.identity);
 			item.GetComponent<CollectableBase>().setQuantity(Random.Range(1, 5));
