@@ -31,7 +31,7 @@ public class TalkingText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		/*
 		if(Vector3.Distance(MainCamera.transform.position, transform.position) > MAX_DISTANCE)
 		{
 			renderer.enabled = false;
@@ -57,14 +57,13 @@ public class TalkingText : MonoBehaviour {
 			}
 			character_timer --;
 
-		}
+		}*/
 	}
 
 	public void reset()
 	{
 		currentText = "";
 		temp = Random.Range (0.0f, manyStrings.Length - 1);
-		desiredText = manyStrings[(int) Mathf.Round(temp)];
 		desiredTextCopy = desiredText;
 		tm.text = "";
 		character_timer = CHARACTER_RATE;

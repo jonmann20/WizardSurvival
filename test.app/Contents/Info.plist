@@ -5,17 +5,17 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>WizardSurvival</string>
+	<string>Defend Thy Kingdom</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Unity Player version 4.3.2f1 (0517a5ae8669). (c) 2013 Unity Technologies ApS. All rights reserved.</string>
 	<key>CFBundleIconFile</key>
 	<string>UnityPlayer.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>unity.EECS494.WizardSurvival</string>
+	<string>unity.EECS 494.Defend Thy Kingdom</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>WizardSurvival</string>
+	<string>Defend Thy Kingdom</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
