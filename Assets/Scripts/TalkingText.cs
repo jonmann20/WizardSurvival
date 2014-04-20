@@ -22,7 +22,7 @@ public class TalkingText : MonoBehaviour {
 	void Start () {
 		MainCamera = GameObject.Find("MainCamera");
 		tm = GetComponent<TextMesh>();
-		Debug.Log (this.tag);
+		//Debug.Log (this.tag);
 		if (this.tag == "WizardKing") {
 			desiredTextCopy = desiredText = tm.text;
 		} else if(this.tag == "WizardJumpy") {
