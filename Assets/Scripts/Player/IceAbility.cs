@@ -16,7 +16,7 @@ public class IceAbility : AbilityBase {
 		) as GameObject;
 
 		ice.GetComponent<ProjectileBase>().wizard = GLOBAL.myWizard;
-		ice.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * 20;
+		ice.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * 20 + new Vector3 (0, 4, 0);;
 		ice.transform.parent = w.parent;
 	}
 
