@@ -7,7 +7,7 @@ public class ForcefieldAbility : AbilityBase {
 	const int COOLDOWN_TIME = 10;
 	static int cooldownTimeLeft = COOLDOWN_TIME;
 
-	const int SPELL_DURATION = 10;
+	const int SPELL_DURATION = 15;
 	int spellDurationLeft = 0;
 
 	public static ForcefieldAbility that;
@@ -79,7 +79,7 @@ public class ForcefieldAbility : AbilityBase {
 
 		// forcefield is active
 		if(spellDurationLeft > 0){
-			EZGUI.drawBox(0, 0, EZGUI.FULLW, EZGUI.FULLH, new Color(0, 0.8f + Mathf.PingPong(Time.time/2, 0.14f), 0, 0.18f));
+			EZGUI.drawBox(0, 0, EZGUI.FULLW, EZGUI.FULLH, new Color(0, 0.9f + Mathf.PingPong(Time.time/2, 0.1f), 0, 0.175f));
 			EZGUI.placeTxt("forcefiled time remaining: " + spellDurationLeft + "s", 25, EZGUI.FULLW - 230, 130, e);
 		}
 		else if(!canFire && cooldownTimeLeft != COOLDOWN_TIME){

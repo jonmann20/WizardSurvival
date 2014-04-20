@@ -274,7 +274,7 @@ public class HudScript : MonoBehaviour {
 
 		if(ctrl_DpadUp.WasPressed)
 		{
-			if(inventorySelectedIndex != 1){
+			if(inventorySelectedIndex != 1  && numInventoryItems > 1){
 				GameAudio.playInvMove();
 				inventorySelectedIndex = 1;
 			}
@@ -285,7 +285,7 @@ public class HudScript : MonoBehaviour {
 
 		if(ctrl_DpadRight.WasPressed)
 		{
-			if(inventorySelectedIndex != 2){
+			if(inventorySelectedIndex != 2 && numInventoryItems > 2) {
 				GameAudio.playInvMove();
 				inventorySelectedIndex = 2;
 			}
