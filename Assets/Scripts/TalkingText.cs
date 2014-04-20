@@ -11,7 +11,7 @@ public class TalkingText : MonoBehaviour {
 	string desiredText = "";
 	string desiredTextCopy = "";
 	string currentText = "";
-	public string[] manyStrings;
+	string[] manyStrings = new string[4];
 	float temp;
 
 	TextMesh tm;
@@ -21,8 +21,10 @@ public class TalkingText : MonoBehaviour {
 	void Start () {
 		MainCamera = GameObject.Find("MainCamera");
 		tm = GetComponent<TextMesh>();
-		desiredText = manyStrings[0];
-		desiredTextCopy = desiredText;
+		manyStrings [0] = "No jumping in the pool!";
+		manyStrings [1] = "Press F1 to cast your spells!";
+		manyStrings [2] = "Press L2 and F2 to switch between your inventory.";
+		manyStrings [3] = "Stay Alive!";
 		tm.text = "";
 		currentText = "";
 
