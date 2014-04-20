@@ -54,7 +54,7 @@ public class FireballAbility : AbilityBase {
 
 		projectile.GetComponent<ProjectileBase>().wizard = gameObject;
 		//set initial velocity
-		projectile.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * SPEED;
+		projectile.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * SPEED + new Vector3(3, 0, 0);
 
         // keep Hierarchy clean
 		projectile.transform.parent = wizardHolder.transform;
