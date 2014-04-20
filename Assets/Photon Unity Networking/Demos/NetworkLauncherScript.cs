@@ -61,7 +61,7 @@ public class NetworkLauncherScript : MonoBehaviour {
 	bool AreAllOrbsCollectedAndReport()
 	{
 		GameObject[] existingOrbs = GameObject.FindGameObjectsWithTag("OrbOfHope");
-		PhotonNetwork.masterClient.customProperties["Orbs"] = existingOrbs.Length;
+		GLOBAL.myWizard.GetComponent<PlayerController>().networkedProperties["Orbs"] = existingOrbs.Length;
 
 		if(existingOrbs.Length <= 0)
 			return true;
