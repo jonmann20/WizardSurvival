@@ -18,8 +18,6 @@ public class ItemSpawnerOnce : MonoBehaviour {
 			attemptedSpawn = true;
 			if(PhotonNetwork.isMasterClient)
 				spawn();
-			else
-				Destroy(gameObject);
 		}
 	}
 	
