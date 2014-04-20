@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: cf3dd892ff91d42fab1df8b2bc83294b
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - OrbOfHopePrefab: {fileID: 100006, guid: c52ec7579e6ef4bf1a104b9b817a7b0e, type: 2}
+  - _invH: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

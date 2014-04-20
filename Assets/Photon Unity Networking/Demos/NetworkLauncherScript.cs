@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class NetworkLauncherScript : MonoBehaviour {
@@ -19,18 +19,14 @@ public class NetworkLauncherScript : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(GLOBAL.gameOver) {
-			return;
-		}
 
-
-		if(hasMasterClientDisconnected()){
+		if(hasMasterClientDisconnected() && !GLOBAL.gameOver){
 			GLOBAL.GameOver("The Host Disconnected...");
 		}
 
 		bool everyoneZeroHealth = true;
 		//CHECK IF EVERYONE IS DEAD
-		for(int i=0; i < PhotonNetwork.playerList.Length; ++i)
+		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
 		{
 			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health"))
 			{
@@ -49,6 +45,26 @@ public class NetworkLauncherScript : MonoBehaviour {
 		if(PhotonNetwork.connected == false) {
 			GLOBAL.GameOver("Online Connection Lost...");
 		}
+
+		//OrbsOfHope
+		if(PhotonNetwork.isMasterClient)
+		{
+			if(AreAllOrbsCollected())
+			{
+				GLOBAL.announceAllOrbsCollected();
+				GLOBAL.that.PlaceOrbsOfHope();
+			}
+		}
+	}
+
+	bool AreAllOrbsCollected()
+	{
+		GameObject[] existingOrbs = GameObject.FindGameObjectsWithTag("OrbOfHope");
+
+		if(existingOrbs.Length <= 0)
+			return true;
+		else
+			return false;
 	}
 
 	bool hasMasterClientDisconnected()

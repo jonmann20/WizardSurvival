@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GLOBAL : Photon.MonoBehaviour {
 
@@ -20,6 +21,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 	public static GameObject myWizard;
 
+	public GameObject OrbOfHopePrefab;
 	public GameObject _invH;
 	static GameObject _InventoryHolder;
 	public static Font spookyMagic;
@@ -174,6 +176,33 @@ public class GLOBAL : Photon.MonoBehaviour {
 		}
 	}
 
+	public void PlaceOrbsOfHope()
+	{
+		List<GameObject> OrbSpawners = GameObject.FindGameObjectsWithTag("OrbSpawner").OfType<GameObject>().ToList();
+		print("size: " + OrbSpawners.Count);
+		//Shuffle(ref OrbSpawners);
+		int numberOfOrbsToSpawn = 5;
+
+		for(int i = 0; i < numberOfOrbsToSpawn; i++)
+		{
+			print(i);
+			Vector3 pos = OrbSpawners[i].transform.position;
+			GameObject item = GLOBAL.that.SuperInstantiate(OrbOfHopePrefab, pos, Quaternion.identity);
+		}
+	}
+
+	public static void Shuffle(ref List<GameObject> list)  
+	{  
+		int n = list.Count;  
+		while (n > 1) {  
+			n--;  
+			int k = Random.Range(0, n + 1);  
+			GameObject value = list[k];  
+			list[k] = list[n];  
+			list[n] = value;  
+		}  
+	}
+
 	void OnGUI(){
 		if(gameOver){
 			EZGUI.init();
@@ -208,6 +237,22 @@ public class GLOBAL : Photon.MonoBehaviour {
 			HudScript.addNewMessage("Wave Complete!", 180, new Color(255, 215, 0));
 		if(health <= 0)
 			myWizard.GetComponent<PlayerController>().Respawn();
+	}
+
+	public static void announceAllOrbsCollected()
+	{
+		that.photonView.RPC("AllOrbsCollected", PhotonTargets.All);
+	}
+
+	[RPC]
+	public void AllOrbsCollected()
+	{
+		int waveNumver = (int)PhotonNetwork.masterClient.customProperties["Wave"];
+		if(waveNumver > 0)
+		{
+			HudScript.addNewMessage("All Orbs of Hope Collected!", 180, new Color(255, 215, 0));
+			HudScript.addNewMessage("Items Spawned at fountain!", 180, new Color(255, 215, 0));
+		}
 	}
 
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
