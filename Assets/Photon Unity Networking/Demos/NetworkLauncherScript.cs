@@ -18,35 +18,39 @@ public class NetworkLauncherScript : MonoBehaviour {
         wiz.transform.parent = GameObject.Find("_WizardHolder").transform;
 	}
 	
-	void Update () {
+	void Update(){
+		// detect if game should be over
+		if(!GLOBAL.gameOver) {
+			// host left
+			if(hasMasterClientDisconnected()){
+				GLOBAL.GameOver("The Host Disconnected...");
+			}
 
-		if(hasMasterClientDisconnected() && !GLOBAL.gameOver){
-			GLOBAL.GameOver("The Host Disconnected...");
-		}
-
-		bool everyoneZeroHealth = true;
-		//CHECK IF EVERYONE IS DEAD
-		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
-		{
-			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health"))
-			{
-				float tempHealth = (int) PhotonNetwork.playerList[i].customProperties["Health"];
-				if(tempHealth > 0.0f)
+			// all dead
+			bool everyoneZeroHealth = true;
+			for(int i=0; i < PhotonNetwork.playerList.Length; ++i){
+				if(PhotonNetwork.playerList[i].customProperties.ContainsKey("Health"))
 				{
-					everyoneZeroHealth = false;
+					float tempHealth = (int) PhotonNetwork.playerList[i].customProperties["Health"];
+					if(tempHealth > 0)
+					{
+						everyoneZeroHealth = false;
+						break;
+					}
 				}
+			}
+
+			if(everyoneZeroHealth){
+				GLOBAL.GameOver("Game Over");
+			}
+
+			// failed connection
+			if(PhotonNetwork.connected == false) {
+				GLOBAL.GameOver("Online Connection Lost...");
 			}
 		}
 
-		if(everyoneZeroHealth){
-			GLOBAL.GameOver("Game Over");
-		}
-
-		if(PhotonNetwork.connected == false) {
-			GLOBAL.GameOver("Online Connection Lost...");
-		}
-
-		//OrbsOfHope
+		// OrbsOfHope
 		if(PhotonNetwork.isMasterClient)
 		{
 			if(AreAllOrbsCollected())

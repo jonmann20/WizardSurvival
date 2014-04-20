@@ -138,7 +138,7 @@ public class Leaderboard : MonoBehaviour {
 			e.color = new Color(0.95f, 0.95f, 0.95f);
 			e.leftJustify = false;
 
-			EZGUI.placeTxt("Press \"x\" for start screen", 36, EZGUI.HALFW + 300, EZGUI.HALFH - 100, e);
+			EZGUI.pulseTxt("Press \"x\" for start screen", 36, EZGUI.HALFW + 300, EZGUI.HALFH - 100, e);
 			EZGUI.placeTxt("Press \"○\" for leaderboard", 36, EZGUI.HALFW + 300, EZGUI.HALFH - 50, e);
 		}
 	}
