@@ -181,15 +181,18 @@ public class GLOBAL : Photon.MonoBehaviour {
 	public void PlaceOrbsOfHope()
 	{
 		List<GameObject> OrbSpawners = GameObject.FindGameObjectsWithTag("OrbSpawner").OfType<GameObject>().ToList();
+		GameObject OrbSpawnerAlways = GameObject.FindWithTag("OrbSpawnerAlways");
 
 		//Shuffle(ref OrbSpawners);
-		int numberOfOrbsToSpawn = 5;
+		int numberOfOrbsToSpawn = 4;
 
 		for(int i = 0; i < numberOfOrbsToSpawn; i++)
 		{
 			Vector3 pos = OrbSpawners[i].transform.position;
-			GameObject item = GLOBAL.that.SuperInstantiate(OrbOfHopePrefab, pos, Quaternion.identity);
+			GLOBAL.that.SuperInstantiate(OrbOfHopePrefab, pos, Quaternion.identity);
 		}
+
+		GLOBAL.that.SuperInstantiate(OrbOfHopePrefab, OrbSpawnerAlways.transform.position, Quaternion.identity);
 	}
 
 	public static void Shuffle(ref List<GameObject> list)  
@@ -251,8 +254,8 @@ public class GLOBAL : Photon.MonoBehaviour {
 		int waveNumber = (int)PhotonNetwork.masterClient.customProperties["Wave"];
 		if(waveNumber > 0)
 		{
-			HudScript.addNewMessage("All Orbs of Hope Collected!", 180, new Color(255, 215, 0));
-			HudScript.addNewMessage("Items Spawned at fountain!", 180, new Color(255, 215, 0));
+			HudScript.addNewMessage("All Orbs of Hope Collected!", 120, new Color(255, 215, 0));
+			HudScript.addNewMessage("Items Spawned at fountain!", 120, new Color(255, 215, 0));
 		}
 	}
 
