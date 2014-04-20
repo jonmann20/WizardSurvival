@@ -295,10 +295,24 @@ public class HudScript : MonoBehaviour {
 		}
 
 		if(ctrl_special.WasPressed || ctrl_Triangle.WasPressed){
-			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
-				GameAudio.playInvSelect();
 
-				GLOBAL.useInventoryItemAt(inventorySelectedIndex);
+			bool isPlayerDown = (GLOBAL.health <= 0);
+			bool isItemHealthPotion = (GLOBAL.getInventoryItemAt(inventorySelectedIndex).GetComponent<CollectableBase>().getName() == "Surgeon's Delight");
+			if(inventorySelectedIndex > -1 && inventorySelectedIndex < numInventoryItems){
+
+				if(!isPlayerDown)
+				{
+					GameAudio.playInvSelect();
+					GLOBAL.useInventoryItemAt(inventorySelectedIndex);
+				}
+				else
+				{
+					if(!isItemHealthPotion)
+					{
+						GameAudio.playInvSelect();
+						GLOBAL.useInventoryItemAt(inventorySelectedIndex);
+					}
+				}
 			}
 			else {
 				HudScript.addNewMessage("No Item Selected!", 60, Color.red);
