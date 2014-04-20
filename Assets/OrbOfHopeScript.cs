@@ -22,7 +22,7 @@ public  class OrbOfHopeScript : MonoBehaviour {
 			GameObject[] existingOrbs = GameObject.FindGameObjectsWithTag("OrbOfHope");
 			int numberOfOrbsLeft = ((int)existingOrbs.Length) - 1;
 			if(numberOfOrbsLeft > 0)
-				HudScript.addNewMessage("Orb of Hope Collected! " + numberOfOrbsLeft + " left!", 180, new Color(255, 215, 0));
+				HudScript.addNewMessage("Orb of Hope Collected! " + numberOfOrbsLeft + " left!", 120, new Color(255, 215, 0));
 			GLOBAL.myWizard.GetComponent<PlayerController>().IncrementPoints(10);
 			GLOBAL.that.SuperDestroy(gameObject);
 		}
