@@ -253,7 +253,7 @@ public class Leaderboard : MonoBehaviour {
 				EZGUI.placeTxt(BETWEEN_SCENES.player_name, 35, startX, startY + (i * padBot), e);
 			}
 			else {
-				EZGUI.placeTxt("Player " + p.ID, 35, startX, startY + (i * padBot), e);
+				EZGUI.placeTxt(p.name, 35, startX, startY + (i * padBot), e);
 			}
 
 			// Health
