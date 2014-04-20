@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour {
 
 	//RESPAWN
 	private GameObject respawnArea;
+	int previousWave;
 
 	void Awake(){
 		refreshControls();
@@ -73,18 +74,10 @@ public class PlayerController : MonoBehaviour {
 	void Start(){
 
 		plusY = Physics.gravity.y * 1.4f;
-		//spawnPoint = GameObject.Find("SpawnPoint") as GameObject;
 
 		playerSingleton = this.transform;
-		//playerAbility = this.GetComponent<PlayerAbility>();
 
 		networkedProperties = PhotonNetwork.player.customProperties;
-
-		/*if( networkedProperties.ContainsKey("Ability") )
-		{
-			networkedProperties["Ability"] = AbilityManagerScript.currentAbility.getAbilityName();
-			PhotonNetwork.player.SetCustomProperties(networkedProperties);
-		}*/
 
         leaderboard = GLOBAL.MainCamera.GetComponent<Leaderboard>();
 
@@ -92,6 +85,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
     void Update(){
+
         refreshControls();
 
         if(getInput != null){
@@ -110,7 +104,16 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate(){
 		velMovement.y += plusY;
 
-        rigidbody.velocity = transform.TransformDirection(velMovement * Time.fixedDeltaTime);
+		if(updatePlayer == update_active)
+		{
+			Vector3 newForward = new Vector3(GLOBAL.MainCamera.transform.forward.x, 0, GLOBAL.MainCamera.transform.forward.z);
+			transform.forward = newForward;
+        	rigidbody.velocity = transform.TransformDirection(velMovement * Time.fixedDeltaTime);
+		}
+		else
+		{
+			velMovement = Vector3.zero;
+		}
     }
 
     void refreshControls(){
@@ -203,40 +206,36 @@ public class PlayerController : MonoBehaviour {
 		if(GLOBAL.health <= 0){
 			HudScript.addNewMessage("KO!", 120, Color.red);
 
-            getInput = null;        // control_down;
-            updatePlayer = null;    // update_down
-            
             rigidbody.constraints = RigidbodyConstraints.None;
-			GLOBAL.health = 0;
-			TakeDamage(-100, transform);
 			rigidbody.mass = 1;
 			rigidbody.velocity = new Vector3(0, 10, 0);
 			rigidbody.angularVelocity = Random.onUnitSphere * 10;
-			print("BLOW UP!");
 
+			getInput = null;
+			updatePlayer = update_down;
 		}
+	}
+
+	void update_down()
+	{
+
 	}
 
 	public void Respawn()
 	{
-		if( GLOBAL.health <= 0 )
-		{
+		print ( "Respawning this player ");
+		getInput = control_active;
+		updatePlayer = update_active;
 
-			print ( "Respawning this player ");
-			getInput = control_active;
-			updatePlayer = update_active;
+		TakeDamage(-100, transform);
 
-			TakeDamage(-100, transform);
+		Vector3 resLoc = respawnArea.transform.position;
+		transform.position = resLoc;
 
-			Vector3 resLoc = respawnArea.transform.position;
-			
-			GLOBAL.myWizard.transform.position = resLoc;
-
-			IncrementPoints(-((int)( (float)score * 0.1f )));
-
-			GLOBAL.reset();
-			
-		}
+		Vector3 newForward = new Vector3(GLOBAL.MainCamera.transform.forward.x, 0, GLOBAL.MainCamera.transform.forward.z);
+		transform.forward = newForward;
+		rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+		rigidbody.angularVelocity = Vector3.zero;
 	}
 
 	#region Animation
@@ -370,6 +369,7 @@ public class PlayerController : MonoBehaviour {
 	public void TakeDamage(int damage, Transform t){
 		if( this.gameObject.GetComponent<PhotonView>().isMine )
 		{
+			print("take damage: " + damage);
 			if(!invincible && !GLOBAL.gameOver){
 				invincible = true;
 				StartCoroutine(animDamage());

@@ -108,6 +108,11 @@ public class GameController : MonoBehaviour {
 		//In between waves
 		else if( WaveOver == true )
 		{
+			if(waveTimer == timeBetweenWaves)
+			{
+				if(PhotonNetwork.isMasterClient)
+					GLOBAL.sendRevivalMessages();
+			}
 			waveTimer -= Time.deltaTime;
 
 			if( waveTimer <= 0 )

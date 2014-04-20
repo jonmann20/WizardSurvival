@@ -19,7 +19,7 @@ public class ItemSpawnerOnce : MonoBehaviour {
 			if(PhotonNetwork.isMasterClient)
 				spawn();
 			else
-				GLOBAL.that.SuperDestroy(gameObject);
+				Destroy(gameObject);
 		}
 	}
 	

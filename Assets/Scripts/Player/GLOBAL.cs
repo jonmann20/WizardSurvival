@@ -189,8 +189,25 @@ public class GLOBAL : Photon.MonoBehaviour {
 	public void networkDestroyOnMasterClient(int id)
 	{
 		PhotonView view = PhotonView.Find(id);
-		print("trying to destroy via RPC view: " + view + " id: " + id);
+		print("newworkDestroyOnMasterClient id = " + id + " view = " + view);
+		if(view == null)
+			return;
 		PhotonNetwork.Destroy(view.gameObject);
+	}
+
+	public static void sendRevivalMessages()
+	{
+		that.photonView.RPC("revivePlayersRPC", PhotonTargets.All);
+	}
+
+	[RPC]
+	public void revivePlayersRPC()
+	{
+		int waveNumver = (int)PhotonNetwork.masterClient.customProperties["Wave"];
+		if(waveNumver > 0)
+			HudScript.addNewMessage("Wave Complete!", 180, new Color(255, 215, 0));
+		if(health <= 0)
+			myWizard.GetComponent<PlayerController>().Respawn();
 	}
 
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
