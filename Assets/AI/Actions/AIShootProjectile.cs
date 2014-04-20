@@ -19,7 +19,7 @@ public class AIShootProjectile : RAINAction
 
     public override void Start(AI ai)
     {
-		enemyObject = enemy.Evaluate(ai.DeltaTime, ai.WorkingMemory).GetValue<GameObject>();
+		enemyObject = ai.WorkingMemory.GetItem("Wizard").GetValue<RAIN.Entities.Aspects.VisualAspect>().Entity.Form;
 		if( enemyObject != null )
 		{
 			//enemyHealth = enemyObject.GetComponent<Health>();
@@ -40,8 +40,8 @@ public class AIShootProjectile : RAINAction
 		) as GameObject;
 
 		//set velocity
-		Vector3 vel = ai.Body.transform.forward * 15;
-		vel.y = 0;
+		Vector3 vel = (enemyObject.transform.position - ai.Body.transform.position).normalized * 15;
+		//vel.y = 0;
 		projectile.rigidbody.velocity = vel;
 
 		projectile.GetComponent<MageOrbScript>().damageToApply = (int) ai.WorkingMemory.GetItem("damageToApply").GetValue<int>(); 
