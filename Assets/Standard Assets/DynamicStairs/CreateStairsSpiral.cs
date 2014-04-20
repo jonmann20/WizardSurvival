@@ -178,6 +178,7 @@ public class CreateStairsSpiral : MonoBehaviour {
 	void Update () {
 
 		// THIS WILL TAKE EITHER "Stairs" INPUT OR BOOLEAN "createStaircase" SET TO TRUE; TO CREATE THE STAIRS AND EVERYTHING ASSOSIATED
+		/*
 		if (Input.GetButtonDown("Stairs") || createStaircase){
 			
 			if (!creatingStairs){
@@ -185,7 +186,7 @@ public class CreateStairsSpiral : MonoBehaviour {
 				StartCoroutine(CreateStairsRoutine());
 			}
 		}
-
+*/
 		if (pauseStairCreation){
 
 			if (!stairCreationPaused){
