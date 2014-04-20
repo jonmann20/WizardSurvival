@@ -22,6 +22,8 @@ public class GLOBAL : Photon.MonoBehaviour {
 	public static GameObject myWizard;
 
 	public GameObject OrbOfHopePrefab;
+	public GameObject[] FountainItemPrefabs;
+
 	public GameObject _invH;
 	static GameObject _InventoryHolder;
 	public static Font spookyMagic;
@@ -179,13 +181,12 @@ public class GLOBAL : Photon.MonoBehaviour {
 	public void PlaceOrbsOfHope()
 	{
 		List<GameObject> OrbSpawners = GameObject.FindGameObjectsWithTag("OrbSpawner").OfType<GameObject>().ToList();
-		print("size: " + OrbSpawners.Count);
+
 		//Shuffle(ref OrbSpawners);
 		int numberOfOrbsToSpawn = 5;
 
 		for(int i = 0; i < numberOfOrbsToSpawn; i++)
 		{
-			print(i);
 			Vector3 pos = OrbSpawners[i].transform.position;
 			GameObject item = GLOBAL.that.SuperInstantiate(OrbOfHopePrefab, pos, Quaternion.identity);
 		}
@@ -247,11 +248,34 @@ public class GLOBAL : Photon.MonoBehaviour {
 	[RPC]
 	public void AllOrbsCollected()
 	{
-		int waveNumver = (int)PhotonNetwork.masterClient.customProperties["Wave"];
-		if(waveNumver > 0)
+		int waveNumber = (int)PhotonNetwork.masterClient.customProperties["Wave"];
+		if(waveNumber > 0)
 		{
 			HudScript.addNewMessage("All Orbs of Hope Collected!", 180, new Color(255, 215, 0));
 			HudScript.addNewMessage("Items Spawned at fountain!", 180, new Color(255, 215, 0));
+		}
+	}
+
+	public static void spawnItemsAtFountain()
+	{
+		int waveNumber = (int)PhotonNetwork.masterClient.customProperties["Wave"];
+		if(waveNumber <= 0)
+			return;
+
+		GameObject fountain = GameObject.FindWithTag("Fountain");
+
+		int NumberOfItemsToSpawn = Random.Range(5, 10);
+
+		for(int i = 0; i < NumberOfItemsToSpawn; i++)
+		{
+			int itemIndex = Random.Range(0, that.FountainItemPrefabs.Length);
+			GameObject prefab = that.FountainItemPrefabs[itemIndex];
+
+			Vector3 pos = Random.onUnitSphere * 15 + fountain.transform.position;
+			pos.y = fountain.transform.position.y;
+
+			GameObject item = GLOBAL.that.SuperInstantiate(prefab, pos, Quaternion.identity);
+			item.GetComponent<CollectableBase>().setQuantity(Random.Range(1, 5));
 		}
 	}
 

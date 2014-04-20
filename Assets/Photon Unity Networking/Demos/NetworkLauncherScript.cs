@@ -52,6 +52,7 @@ public class NetworkLauncherScript : MonoBehaviour {
 			if(AreAllOrbsCollected())
 			{
 				GLOBAL.announceAllOrbsCollected();
+				GLOBAL.spawnItemsAtFountain();
 				GLOBAL.that.PlaceOrbsOfHope();
 			}
 		}
