@@ -5,13 +5,13 @@ public class TalkingText : MonoBehaviour {
 	
 	public float MAX_DISTANCE = 21;
 	
-	const int CHARACTER_RATE = 3;
+	const int CHARACTER_RATE = 2;
 	int character_timer = CHARACTER_RATE;
 	
 	string desiredText = "";
 	string desiredTextCopy = "";
 	string currentText = "";
-	string[] manyStrings = new string[4];
+	string[] manyStrings;
 	float temp = 0;
 	int count;
 	
@@ -22,10 +22,16 @@ public class TalkingText : MonoBehaviour {
 	void Start () {
 		MainCamera = GameObject.Find("MainCamera");
 		tm = GetComponent<TextMesh>();
-		manyStrings [0] = "No jumping in the pool!";
-		manyStrings [1] = "Press F1 to cast your spells!";
-		manyStrings [2] = "L2 and F2 switches between inventories.";
-		manyStrings [3] = "Stay Alive!";
+		Debug.Log (this.tag);
+		if (this.tag == "WizardKing") {
+			desiredTextCopy = desiredText = tm.text;
+		} else if(this.tag == "WizardJumpy") {
+			manyStrings = new string[4];
+			manyStrings [0] = "No jumping in the pool!";
+			manyStrings [1] = "Press F1 to cast your spells!";
+			manyStrings [2] = "L2 and F2 switches between inventories.";
+			manyStrings [3] = "Stay Alive!";
+		}
 		tm.text = "";
 		currentText = "";
 		count = 180;
@@ -41,12 +47,14 @@ public class TalkingText : MonoBehaviour {
 		}
 		else
 		{
-			if(renderer.enabled == false || count == 0) {
+			if(renderer.enabled == false || (count == 0 && this.tag == "WizardJumpy")) {
 				count = 180;
 				reset();
 			}
 			renderer.enabled = true;
-			--count;
+			if (this.tag == "WizardJumpy") {
+				--count;
+			}
 		}
 		
 		transform.rotation = Quaternion.LookRotation(MainCamera.transform.forward);
@@ -70,8 +78,7 @@ public class TalkingText : MonoBehaviour {
 	{
 		currentText = "";
 		temp = Random.Range (0.0f, manyStrings.Length - 1);
-		desiredText = manyStrings[(int) Mathf.Round(temp)];
-		desiredTextCopy = desiredText;
+		desiredTextCopy = manyStrings[(int) Mathf.Round(temp)];
 		tm.text = "";
 		character_timer = CHARACTER_RATE;
 	}
