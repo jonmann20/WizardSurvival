@@ -47,8 +47,6 @@ public abstract class CollectableBase : MonoBehaviour {
 
 				HudScript.addNewMessage(getName() + " " + quantityString, 120, Color.white);
 
-
-
 				GameObject newItem = Instantiate(getInventoryVersion()) as GameObject;
 				GLOBAL.addToInventory(newItem);
 

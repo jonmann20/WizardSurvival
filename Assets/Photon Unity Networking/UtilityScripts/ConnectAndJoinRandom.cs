@@ -38,14 +38,26 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 		customPlayerProps.Add("Ability", "none");
 		customPlayerProps.Add("Time", 300.0);
 		customPlayerProps.Add("Wave", 0);
+		customPlayerProps.Add("Orbs", 5);
 		PhotonNetwork.player.SetCustomProperties(customPlayerProps);
         PhotonNetwork.JoinRandomRoom();
+		PhotonNetwork.JoinRoom("MainRoom");
     }
 
-    public virtual void OnPhotonRandomJoinFailed()
+	public virtual void OnPhotonJoinRoomFailed()
+	{
+		PhotonNetwork.CreateRoom("MainRoom", true, true, 4);
+	}
+
+	public virtual void OnPhotonCreateRoomFailed()
+	{
+		PhotonNetwork.JoinRoom("MainRoom");
+	}
+
+    /*public virtual void OnPhotonRandomJoinFailed()
     {
         PhotonNetwork.CreateRoom(null, true, true, 4);
-    }
+    }*/
 
 	public GameObject NetworkLauncherPrefab;
     public void OnJoinedRoom()
