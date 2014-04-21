@@ -147,6 +147,7 @@ public class Logger : MonoBehaviour {
 
 	public void RetrieveDataFromServer()
 	{
+		print("attempting to retrieve log data");
 		string url = "http://www.ayarger.com/GAMES/WizardSurvival/logging/retrieve.php";
 		
 		WWWForm form = new WWWForm();
