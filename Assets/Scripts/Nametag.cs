@@ -17,10 +17,10 @@ public class Nametag : MonoBehaviour {
 			if(transform.parent.gameObject.GetComponent<PhotonView>().isMine)
 			{
 				PhotonNetwork.playerName = BETWEEN_SCENES.player_name;
-				GetComponent<TextMesh>().text = "";
 			}
 			else
 			{
+				renderer.enabled = true;
 				GetComponent<TextMesh>().text = p.name;
 			}
 		}
