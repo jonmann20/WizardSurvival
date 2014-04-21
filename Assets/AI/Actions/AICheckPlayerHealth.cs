@@ -33,6 +33,7 @@ public class AICheckPlayerHealth : RAINAction
 		if( ai.WorkingMemory.GetItem("Wizard").GetValue<RAIN.Entities.Aspects.VisualAspect>() == null )
 		{
 			enemyObject = null;
+			ai.WorkingMemory.SetItem("ShouldAttack", false );
 			return ActionResult.SUCCESS;
 		}
 		else
