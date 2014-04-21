@@ -2,11 +2,11 @@
 using System.Collections;
 
 public class CLIENTIZER_Spawner : MonoBehaviour {
-	
-	// Use this for initialization
-	void Start () {
-		if(!GetComponent<PhotonView>().owner.isMasterClient)
-		{
+
+	void Start(){
+		PhotonView pv = GetComponent<PhotonView>();
+
+		if(pv && pv.owner.isMasterClient){
 			Destroy(gameObject);
 		}
 	}

@@ -258,10 +258,12 @@ public class Leaderboard : MonoBehaviour {
 
 			// Health
 			e.color = new Color(0.85f, 0.85f, 0.85f);
-			if(p.customProperties.ContainsKey("Health")) {
+			if(p.customProperties.ContainsKey("Health")){
 				float tempHealth = (int)p.customProperties["Health"];
-				EZGUI.placeTxt("health: ", 35, startX + 50, startY + (i*padBot) + lineHeight, e);
-				EZGUI.drawBox(startX + 164, startY + (i * padBot) + 14, 1.7f * tempHealth, 20, Color.red);
+				if(tempHealth > 0){
+					EZGUI.placeTxt("health: ", 35, startX + 50, startY + (i*padBot) + lineHeight, e);
+					EZGUI.drawBox(startX + 164, startY + (i * padBot) + 14, 1.7f * tempHealth, 20, Color.red);
+				}
 			}
 
 			// Score
