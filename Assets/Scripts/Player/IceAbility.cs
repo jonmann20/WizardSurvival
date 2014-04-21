@@ -6,9 +6,9 @@ public class IceAbility : AbilityBase {
 	const int SPEED = 20;
 	const int MAX_LIFE = 90;
 
-	int delayTimer = 30;
-	int delayTimerInit = 30;
-	int cooldownResolution = 60;		// assumping 60fps here (could use Time.fixedTime)
+	int delayTimer = 20;
+	int delayTimerInit = 20;
+	//int cooldownResolution = 60;		// assumping 60fps here (could use Time.fixedTime)
 
 	void FixedUpdate(){
 		++delayTimer;

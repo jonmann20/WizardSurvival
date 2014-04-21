@@ -6,7 +6,7 @@ using System.Linq;
 
 public class SampleAIController : MonoBehaviour {
 	
-	public float health = 100f;
+	public float health = 90f;
 	public float speed = 7.0f;
 
 	private int damageToApply = 15;
@@ -39,14 +39,13 @@ public class SampleAIController : MonoBehaviour {
 			skeleton = transform.Find("Ice Golem");
 			damageToApply = (int)((float)damageToApply * (ratio + (1f)));
 			health *= ratio;
-			health *= 10;
+			health *= 3.5f;
 			speed *= speed * (ratio);
 			speed *= .8f;
 
 			speed = Mathf.Clamp(speed,4,7);
 		}
-		else
-		{
+		else{
 			float sc = Random.Range(3.8f, 4.5f);
 
 			transform.localScale = new Vector3(sc, sc, sc);
@@ -121,8 +120,6 @@ public class SampleAIController : MonoBehaviour {
 			view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
 			speedReduced = false;
 		}
-
-		print (health);
 	}
 
 	void FixedUpdate(){
@@ -140,37 +137,30 @@ public class SampleAIController : MonoBehaviour {
 	}
 
 	void doDamage(Collider col){
-
-		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet")
-		{
-			if( col.gameObject.GetComponent<IceballScript>() != null )
-			{
-				if( iceTimer <= 0 )
+		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet"){
+			if(col.gameObject.GetComponent<IceballScript>() != null){
+				if(iceTimer <= 0){
 					speedReduced = true;
+				}
 				iceTimer = speedRecutionTimer;
 
-				TakeDamage(5);
+				TakeDamage(20);
 				float[] healthParam = new float[1];
 				healthParam[0] = health;
 				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
 				view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
 
 			}
-
-			else
-			{
-				TakeDamage(25);
+			else{
+				TakeDamage(33);
 				float[] healthParam = new float[1];
 				healthParam[0] = health;
 				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
 				view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
-
-
 			}
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
 
 			if(health <= 0 && gameObject.layer == LayerMask.NameToLayer("Enemy")){
-
 				//if(col.gameObject.GetComponent<ProjectileBase>().wizard.GetComponent<PhotonView>().isMine){
 					GLOBAL.myWizard.gameObject.GetComponent<PlayerController>().IncrementPoints(this.scoreValue);
 				//}
@@ -200,13 +190,11 @@ public class SampleAIController : MonoBehaviour {
 
 	public void SetHealth(float inHealth)
 	{
-		health = Mathf.Clamp(inHealth,0,5000);
+		health = Mathf.Clamp(inHealth, 0, 5000);
 	}
 	
 	public void TakeDamage(float damage)
 	{
-		health = Mathf.Clamp(health-damage,0,5000);
+		health = Mathf.Clamp(health-damage, 0, 5000);
 	}
-
-
 }
