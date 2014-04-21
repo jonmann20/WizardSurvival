@@ -19,31 +19,32 @@ public class NetworkLauncherScript : MonoBehaviour {
 	}
 	
 	void Update () {
+		if(!GLOBAL.gameOver){
+			if(hasMasterClientDisconnected()){
+				GLOBAL.GameOver("The Host Disconnected...");
+			}
 
-		if(hasMasterClientDisconnected() && !GLOBAL.gameOver){
-			GLOBAL.GameOver("The Host Disconnected...");
-		}
-
-		bool everyoneZeroHealth = true;
-		//CHECK IF EVERYONE IS DEAD
-		for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
-		{
-			if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health"))
+			bool everyoneZeroHealth = true;
+			//CHECK IF EVERYONE IS DEAD
+			for( int i = 0; i < PhotonNetwork.playerList.Length; i++ )
 			{
-				float tempHealth = (int) PhotonNetwork.playerList[i].customProperties["Health"];
-				if(tempHealth > 0.0f)
+				if( PhotonNetwork.playerList[i].customProperties.ContainsKey("Health"))
 				{
-					everyoneZeroHealth = false;
+					float tempHealth = (int) PhotonNetwork.playerList[i].customProperties["Health"];
+					if(tempHealth > 0.0f)
+					{
+						everyoneZeroHealth = false;
+					}
 				}
 			}
-		}
 
-		if(everyoneZeroHealth){
-			GLOBAL.GameOver("Game Over");
-		}
+			if(everyoneZeroHealth){
+				GLOBAL.GameOver("Game Over");
+			}
 
-		if(PhotonNetwork.connected == false) {
-			GLOBAL.GameOver("Online Connection Lost...");
+			if(PhotonNetwork.connected == false) {
+				GLOBAL.GameOver("Online Connection Lost...");
+			}
 		}
 
 		//OrbsOfHope
