@@ -41,11 +41,11 @@ public class HolyLightScript : MonoBehaviour {
 
 		if(lightTimer > 0)
 		{
-			renderer.material.color = new Color(1, 1, 1, 0.1f);
+			renderer.material.color = new Color(1, 1, 1, 0.2f);
 			lightTimer -= 1;
 		}
 		else
-			renderer.material.color = new Color(1, 1, 1, 0);
+			renderer.material.color = new Color(1, 1, 1, 0.05f);
 	}
 
 	public static void spark()

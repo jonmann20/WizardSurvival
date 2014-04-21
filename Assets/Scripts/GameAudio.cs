@@ -8,12 +8,14 @@ public class GameAudio : MonoBehaviour {
 	public static AudioSource[] jumpSrc, flameSrc;
 	public static AudioSource chimesSrc, jumplandSrc, introSrc, spell0Src, lowHealthSrc, 
 		invSelectSrc, windSrc, magicFailSrc, invMoveSrc, chainSrc, invNoMoveSrc, painSrc, flameShootSrc,
-		gameOverSrc, freezeSpellSrc, freezeSpellCollisionSrc, battleMusicSrc;
+		gameOverSrc, freezeSpellSrc, freezeSpellCollisionSrc, battleMusicSrc, OrbCollectSoundSrc,
+		ItemGrabSrc;
 
 	GameObject[] jumpHolder, flameHolder;
 	GameObject audioHolder, chimesHolder, jumplandHolder, introHolder, spell0Holder, lowHealthHolder, 
 		invSelectHolder, windHolder, magicFailHolder, invMoveHolder, invNoMoveHolder, flameShootHolder,
-		chainHolder, painHolder, gameOverHolder, freezeSpellHolder, freezeSpellCollisionHolder, battleMusicHolder;
+		chainHolder, painHolder, gameOverHolder, freezeSpellHolder, freezeSpellCollisionHolder, battleMusicHolder,
+		OrbCollectSoundHolder, ItemGrabHolder;
 
 	void Awake(){
 		audioHolder = new GameObject("_AudioHolder");
@@ -51,6 +53,8 @@ public class GameAudio : MonoBehaviour {
 		setSoundEffect(ref freezeSpellHolder, ref freezeSpellSrc, "loudstream");
 		//setSoundEffect(ref freezeSpellCollisionHolder, ref freezeSpellCollisionSrc, "freeze");
 		setSoundEffect(ref battleMusicHolder, ref battleMusicSrc, "ColdHeartedv1");
+		setSoundEffect(ref OrbCollectSoundHolder, ref OrbCollectSoundSrc, "OrbCollectSound");
+		setSoundEffect(ref ItemGrabHolder, ref ItemGrabSrc, "ItemGrab");
 
 		freezeSpellSrc.playOnAwake = true;
 		freezeSpellSrc.audio.enabled = false;
@@ -191,6 +195,18 @@ public class GameAudio : MonoBehaviour {
 	public static void playChain(){
 		if(!chainSrc.isPlaying){
 			chainSrc.audio.Play();
+		}
+	}
+
+	public static void playOrbCollect(){
+		if(!OrbCollectSoundSrc.isPlaying){
+			OrbCollectSoundSrc.audio.Play();
+		}
+	}
+
+	public static void playItemGrab(){
+		if(!ItemGrabSrc.isPlaying){
+			ItemGrabSrc.audio.Play();
 		}
 	}
 }
