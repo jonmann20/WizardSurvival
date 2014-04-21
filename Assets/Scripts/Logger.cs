@@ -8,7 +8,7 @@ public class Logger : MonoBehaviour {
 	public float RayLength = 2;
 
 	const string FILE_NAME = "PosLog";
-	const int MOVEMENT_CAPTURE_INTERVAL = 60;
+	const int MOVEMENT_CAPTURE_INTERVAL = 120;
 	int movementCaptureTimer = MOVEMENT_CAPTURE_INTERVAL;
 
 	List<LogElement> CurrentDatums = new List<LogElement>();
