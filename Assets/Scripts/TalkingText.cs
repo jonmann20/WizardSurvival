@@ -5,7 +5,7 @@ public class TalkingText : MonoBehaviour {
 	
 	public float MAX_DISTANCE = 21;
 	
-	const int CHARACTER_RATE = 2;
+	const int CHARACTER_RATE = 3;
 	int character_timer = CHARACTER_RATE;
 	
 	string desiredText = "";
@@ -25,7 +25,9 @@ public class TalkingText : MonoBehaviour {
 		//Debug.Log (this.tag);
 		if (this.tag == "WizardKing") {
 			desiredTextCopy = desiredText = tm.text;
+			MAX_DISTANCE = 34;
 		} else if(this.tag == "WizardJumpy") {
+			MAX_DISTANCE = 21;
 			manyStrings = new string[4];
 			manyStrings [0] = "No jumping in the pool!";
 			manyStrings [1] = "Press F1 to cast your spells!";
@@ -34,7 +36,7 @@ public class TalkingText : MonoBehaviour {
 		}
 		tm.text = "";
 		currentText = "";
-		count = 180;
+		count = 200;
 	}
 	
 	// Update is called once per frame
@@ -43,17 +45,23 @@ public class TalkingText : MonoBehaviour {
 		if(Vector3.Distance(MainCamera.transform.position, transform.position) > MAX_DISTANCE)
 		{
 			renderer.enabled = false;
-			count = 180;
+			count = 200;
 		}
 		else
 		{
-			if(renderer.enabled == false || (count == 0 && this.tag == "WizardJumpy")) {
-				count = 180;
-				reset();
-			}
-			renderer.enabled = true;
 			if (this.tag == "WizardJumpy") {
+				if (renderer.enabled == false || count == 0) {
+					count = 200;
+					reset ();
+				}
+
+				renderer.enabled = true;
 				--count;
+			} else if (this.tag == "WizardKing") {
+				if (renderer.enabled == false) {
+					reset ();
+				}
+				renderer.enabled = true;
 			}
 		}
 		
@@ -80,7 +88,7 @@ public class TalkingText : MonoBehaviour {
 		if (this.tag == "WizardJumpy") {
 			temp = Random.Range (0.0f, manyStrings.Length - 1);
 			desiredTextCopy = manyStrings[(int) Mathf.Round(temp)];
-		} else {
+		} else if (this.tag == "WizardKing") {
 			desiredTextCopy = desiredText;
 		}
 		tm.text = "";
