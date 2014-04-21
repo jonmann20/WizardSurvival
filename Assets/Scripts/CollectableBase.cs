@@ -40,6 +40,7 @@ public abstract class CollectableBase : MonoBehaviour {
 		{
 			if(!GLOBAL.isInventoryFull())
 			{
+				GameAudio.playItemGrab();
 				string quantityString = "";
 				if(quantity > 1){
 					quantityString = "(" + quantity + ")";
