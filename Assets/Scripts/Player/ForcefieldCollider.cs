@@ -4,7 +4,7 @@ using System.Collections;
 public class ForcefieldCollider : MonoBehaviour {
 
 	void Start(){
-		Invoke("destory", 10);
+		Invoke("destory", 15);  // keep number in sync with ForcefieldAbility
 	}
 
 	void Update(){
@@ -13,7 +13,7 @@ public class ForcefieldCollider : MonoBehaviour {
 			transform.position = GLOBAL.myWizard.transform.position;
 		
 		// TODO: network this
-		//renderer.material.color = new Color(0, Mathf.PingPong(Time.time/2, 0.14f), 0, 0.18f);
+		renderer.material.color = new Color(0, Mathf.PingPong(Time.time/2, 0.14f), 0, 0.18f);
 	}
 
 	void destory(){
