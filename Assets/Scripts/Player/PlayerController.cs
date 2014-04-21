@@ -369,7 +369,7 @@ public class PlayerController : MonoBehaviour {
 	public void TakeDamage(int damage, Transform t){
 		if( this.gameObject.GetComponent<PhotonView>().isMine )
 		{
-			if(!invincible && !GLOBAL.gameOver){
+			if((!invincible || damage < 0) && !GLOBAL.gameOver  ){
 				invincible = true;
 				StartCoroutine(animDamage());
 
