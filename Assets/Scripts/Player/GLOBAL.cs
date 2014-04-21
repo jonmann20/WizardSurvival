@@ -248,6 +248,17 @@ public class GLOBAL : Photon.MonoBehaviour {
 		that.photonView.RPC("AllOrbsCollected", PhotonTargets.All);
 	}
 
+	public static void announceOrbCollected()
+	{
+		that.photonView.RPC("orbCollected", PhotonTargets.All);
+	}
+
+	[RPC]
+	public void orbCollected()
+	{
+		HolyLightScript.spark();
+	}
+
 	[RPC]
 	public void AllOrbsCollected()
 	{
@@ -278,12 +289,13 @@ public class GLOBAL : Photon.MonoBehaviour {
 			float xval = Mathf.Sin(randVal);
 			float zval = Mathf.Cos(randVal);
 
-			Vector3 randVec = new Vector3(xval, 0, zval);
+			Vector3 randVec = new Vector3(xval, 6, zval);
 
 			Vector3 pos = randVec * 10 + fountain.transform.position;
 
 			GameObject item = GLOBAL.that.SuperInstantiate(prefab, pos, Quaternion.identity);
 			item.GetComponent<CollectableBase>().setQuantity(Random.Range(1, 5));
+			item.AddComponent<FloatDownTillZero>();
 		}
 	}
 

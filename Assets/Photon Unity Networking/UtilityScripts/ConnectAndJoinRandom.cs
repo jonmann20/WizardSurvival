@@ -54,11 +54,6 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 		PhotonNetwork.JoinRoom("MainRoom");
 	}
 
-    /*public virtual void OnPhotonRandomJoinFailed()
-    {
-        PhotonNetwork.CreateRoom(null, true, true, 4);
-    }*/
-
 	public GameObject NetworkLauncherPrefab;
     public void OnJoinedRoom()
     {
