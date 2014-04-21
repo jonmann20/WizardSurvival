@@ -186,13 +186,13 @@ public class SampleAIController : MonoBehaviour {
 		doDamage(col);
 	}
 
-	//void OnCollisionStay(Collision col){
-	//	/*if(col.collider.gameObject.tag == "Player"){
-	//		if(col.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine){
-	//			col.collider.gameObject.transform.parent.GetComponent<PlayerController>().TakeDamage(20, transform);
-	//		}
-	//	}*/
-	//}
+	void OnCollisionStay(Collision col){
+		if(col.collider.gameObject.tag == "Player"){
+			if(col.collider.gameObject.transform.parent.GetComponent<PhotonView>().isMine){
+				col.collider.gameObject.transform.parent.GetComponent<PlayerController>().TakeDamage(20, transform);
+			}
+		}
+	}
 
 	public void Remove(){
 		this.gameObject.GetComponent<MGAISuperClass>().Remove();
