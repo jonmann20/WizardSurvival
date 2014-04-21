@@ -2,6 +2,7 @@
 using System.Collections;
 using RAIN.Core;
 using RAIN.Action;
+using System.Linq;
 
 public class SampleAIController : MonoBehaviour {
 	
@@ -65,6 +66,20 @@ public class SampleAIController : MonoBehaviour {
 		//for balance
 		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
 		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.WorkingMemory.SetItem("damageToApply", damageToApply);
+
+		//sync health and speed
+
+		PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
+		//health
+		float[] healthParam = new float[1];
+		healthParam[0] = health;
+		view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
+		//speed
+		float[] speedParam = new float[1];
+		speedParam[0] = speed;
+		view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
+
+
 		//health = transform.parent.transform.GetComponent<Health>().health;
 	}
 
@@ -88,6 +103,10 @@ public class SampleAIController : MonoBehaviour {
 			if( speedReduced )
 			{
 				this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed * speedReduction;
+				float[] speedParam = new float[1];
+				speedParam[0] = speed * speedReduction;
+				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
+				view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
 				speedReduced = false;
 			}
 
@@ -96,8 +115,14 @@ public class SampleAIController : MonoBehaviour {
 		else
 		{
 			this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
+			float[] speedParam = new float[1];
+			speedParam[0] = speed;
+			PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
+			view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
 			speedReduced = false;
 		}
+
+		print (health);
 	}
 
 	void FixedUpdate(){
@@ -118,20 +143,28 @@ public class SampleAIController : MonoBehaviour {
 
 		if(health > 0 && invincibilityTimer <= 0 && col.gameObject.tag == "PlayerBullet")
 		{
-			// TODO: check if Ice Blast, and slow enemy down
 			if( col.gameObject.GetComponent<IceballScript>() != null )
 			{
 				if( iceTimer <= 0 )
 					speedReduced = true;
 				iceTimer = speedRecutionTimer;
 
-				health = Mathf.Clamp(health-5,0,health);
+				TakeDamage(5);
+				float[] healthParam = new float[1];
+				healthParam[0] = health;
+				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
+				view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
 
 			}
 
 			else
 			{
-				health = Mathf.Clamp(health-25,0,health);
+				TakeDamage(25);
+				float[] healthParam = new float[1];
+				healthParam[0] = health;
+				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
+				view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
+
 
 			}
 			invincibilityTimer = MAX_INVINCIBILITY_TIMER;
@@ -164,4 +197,16 @@ public class SampleAIController : MonoBehaviour {
 	public void Remove(){
 		this.gameObject.GetComponent<MGAISuperClass>().Remove();
 	}
+
+	public void SetHealth(float inHealth)
+	{
+		health = Mathf.Clamp(inHealth,0,5000);
+	}
+	
+	public void TakeDamage(float damage)
+	{
+		health = Mathf.Clamp(health-damage,0,5000);
+	}
+
+
 }

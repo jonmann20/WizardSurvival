@@ -40,7 +40,7 @@ public class AICheckPlayerHealth : RAINAction
 			enemyObject = ai.WorkingMemory.GetItem("Wizard").GetValue<RAIN.Entities.Aspects.VisualAspect>().Entity.Form;
 		if( enemyObject != null )
 		{
-			if( enemyObject.GetPhotonView().isMine )
+			//if( enemyObject.GetPhotonView().isMine )
 			{
 				if ((int)enemyObject.GetPhotonView().owner.customProperties["Health"] <= 0 )
 				{
