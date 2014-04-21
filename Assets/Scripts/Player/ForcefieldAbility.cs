@@ -79,11 +79,13 @@ public class ForcefieldAbility : AbilityBase {
 		// forcefield is active
 		if(spellDurationLeft > 0){
 			EZGUI.drawBox(0, 0, EZGUI.FULLW, EZGUI.FULLH, new Color(0, 0.9f + Mathf.PingPong(Time.time/2, 0.1f), 0, 0.175f));
-			EZGUI.placeTxt("forcefiled time remaining: " + spellDurationLeft + "s", 25, EZGUI.FULLW - 230, 130, e);
+			EZGUI.placeTxt("time remaining: " + spellDurationLeft + "s", 25, EZGUI.FULLW - 230, 130, e);
+			EZGUI.drawBox(EZGUI.FULLW - 225, 130, 200 * ((SPELL_DURATION - spellDurationLeft) / SPELL_DURATION), 20, (Color)e.color);
 		}
 		else if(!canFire && cooldownTimeLeft != COOLDOWN_TIME){
 			e.color = Color.red;
 			EZGUI.placeTxt("cooldown: " + cooldownTimeLeft + "s", 25, EZGUI.FULLW - 170, 130, e);
+			EZGUI.drawBox(EZGUI.FULLW - 225, 130, 200 * ((COOLDOWN_TIME - cooldownTimeLeft) / COOLDOWN_TIME), 20, (Color)e.color);
 		}
 	}
 }

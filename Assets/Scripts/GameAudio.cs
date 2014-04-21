@@ -94,14 +94,16 @@ public class GameAudio : MonoBehaviour {
 	}
 
 	public static void playFreezeSpell() {
-		freezeSpellSrc.audio.enabled = true;
-		freezeSpellSrc.audio.loop = true;
+		//freezeSpellSrc.audio.enabled = true;
+		//freezeSpellSrc.audio.loop = true;
+
+		freezeSpellSrc.audio.Play();
 	}
 
-	public static void stopFreezeSpell() {
-		freezeSpellSrc.audio.enabled = false;
-		freezeSpellSrc.audio.loop = false;
-	}
+//	public static void stopFreezeSpell() {
+//		freezeSpellSrc.audio.enabled = false;
+//		freezeSpellSrc.audio.loop = false;
+//	}
 
 	public static void playFreezeSpellCollision(){
 		if(!freezeSpellCollisionSrc.isPlaying){

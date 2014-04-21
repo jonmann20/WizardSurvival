@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour {
 			doFire = ctrl_RightBumper.IsPressed;
 
 			if(!doFire) {
-				GameAudio.stopFreezeSpell();
+				//GameAudio.stopFreezeSpell();
 			}
 
 		}
