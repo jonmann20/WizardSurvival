@@ -18,14 +18,21 @@ public class PunchAbility : AbilityBase {
 
 	public Material[] punchMat;
 
-	void Awake()
-	{
+	int delayTimer = 8;
+	int delayTimerInit = 8;
+
+	void Awake(){
 		arm = transform.Find("ArmR").gameObject as GameObject;
 		punchMat = arm.renderer.materials;
 	}
 
 	public override void fire()
 	{
+		if(delayTimer < delayTimerInit){
+			//GameAudio.playMagicFail();
+			return;
+		}
+
 		if(Leaderboard.gs == Leaderboard.gameState.leaderboard || Leaderboard.gs == Leaderboard.gameState.highscore){
 			return;
 		}
@@ -61,7 +68,6 @@ public class PunchAbility : AbilityBase {
 			{
 				val = (float)lifeCounter / ((float)MAX_LIFE * 0.5f);
 				pos = transform.forward * val;
-
 			}
 		
 			pos *= DISTANCE;
@@ -75,7 +81,11 @@ public class PunchAbility : AbilityBase {
 			arm.renderer.enabled = true;
 		}
 	}
-	
+
+	void FixedUpdate(){
+		++delayTimer;
+	}
+
 	public override string getAbilityName()
 	{
 		return "Melee";

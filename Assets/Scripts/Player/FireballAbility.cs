@@ -10,8 +10,8 @@ public class FireballAbility : AbilityBase {
 
     GameObject wizardHolder;
 
-	int delayTimer = 180;
-	int delayTimerInit = 180;
+	int delayTimer = 120;
+	int delayTimerInit = 120;
 	int cooldownResolution = 60;		// assumping 60fps here (could use Time.fixedTime)
 
 	void Awake(){
@@ -34,8 +34,6 @@ public class FireballAbility : AbilityBase {
 		
 			EZGUI.placeTxt("cooldown " + (delayTimerInit/cooldownResolution - (delayTimer / cooldownResolution)) + "s", 25, EZGUI.FULLW - 170, 130, e);
 			EZGUI.drawBox(EZGUI.FULLW - 225, 130, 200 * ((float)(delayTimerInit - delayTimer) / (float)delayTimerInit), 20, new Color(1f, 0f, 0f, 1f));
-			//(float x, float y, float w, float h, Color c){
-			//
 		}
 	}
 
