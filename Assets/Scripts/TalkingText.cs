@@ -33,6 +33,15 @@ public class TalkingText : MonoBehaviour {
 			manyStrings [1] = "Press F1 to cast your spells!";
 			manyStrings [2] = "L2 and F2 switches between inventories.";
 			manyStrings [3] = "Stay Alive!";
+		} else if (this.tag == "CreepyKing") {
+			MAX_DISTANCE = 34;
+			desiredTextCopy = desiredText = "Seriously...";
+		} else if (this.tag == "JumpyKing") {
+			MAX_DISTANCE = 21;
+			manyStrings = new string[3];
+			manyStrings[0] = "You can't share your late days";
+			manyStrings[1] = "There's no one during office hours";
+			manyStrings[2] = "I think this game is awesome";
 		}
 		tm.text = "";
 		currentText = "";
