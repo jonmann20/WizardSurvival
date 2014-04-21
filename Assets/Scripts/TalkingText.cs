@@ -58,7 +58,7 @@ public class TalkingText : MonoBehaviour {
 		}
 		else
 		{
-			if (this.tag == "WizardJumpy") {
+			if (this.tag == "WizardJumpy" || this.tag == "CreepyJumpy") {
 				if (renderer.enabled == false || count == 0) {
 					count = 200;
 					reset ();
@@ -66,7 +66,7 @@ public class TalkingText : MonoBehaviour {
 
 				renderer.enabled = true;
 				--count;
-			} else if (this.tag == "WizardKing") {
+			} else if (this.tag == "WizardKing" || this.tag == "CreepyKing") {
 				if (renderer.enabled == false) {
 					reset ();
 				}
