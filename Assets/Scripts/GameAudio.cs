@@ -3,16 +3,14 @@ using System.Collections;
 
 public class GameAudio : MonoBehaviour {
 
-	static int NUM_FLAME = 1;
-
-	public static AudioSource[] jumpSrc, flameSrc;
-	public static AudioSource chimesSrc, jumplandSrc, introSrc, spell0Src, lowHealthSrc, 
+	public static AudioSource[] jumpSrc;
+	public static AudioSource flameSrc, chimesSrc, jumplandSrc, introSrc, spell0Src, lowHealthSrc, 
 		invSelectSrc, windSrc, magicFailSrc, invMoveSrc, chainSrc, invNoMoveSrc, painSrc, flameShootSrc,
 		gameOverSrc, freezeSpellSrc, freezeSpellCollisionSrc, battleMusicSrc, OrbCollectSoundSrc,
 		ItemGrabSrc;
 
-	GameObject[] jumpHolder, flameHolder;
-	GameObject audioHolder, chimesHolder, jumplandHolder, introHolder, spell0Holder, lowHealthHolder, 
+	GameObject[] jumpHolder;
+	GameObject flameHolder, audioHolder, chimesHolder, jumplandHolder, introHolder, spell0Holder, lowHealthHolder, 
 		invSelectHolder, windHolder, magicFailHolder, invMoveHolder, invNoMoveHolder, flameShootHolder,
 		chainHolder, painHolder, gameOverHolder, freezeSpellHolder, freezeSpellCollisionHolder, battleMusicHolder,
 		OrbCollectSoundHolder, ItemGrabHolder;
@@ -24,15 +22,8 @@ public class GameAudio : MonoBehaviour {
 		jumpSrc = new AudioSource[4];
 		jumpHolder = new GameObject[4];
 
-		flameSrc = new AudioSource[NUM_FLAME];
-		flameHolder = new GameObject[NUM_FLAME];
-
-		for(int i=0; i < NUM_FLAME; ++i){
-			setSoundEffect(ref flameHolder[i], ref flameSrc[i], "Fire");
-		}
-
+		setSoundEffect(ref flameHolder, ref flameSrc, "Fire");
         setSoundEffect(ref flameShootHolder, ref flameShootSrc, "TailWhip");
-
 		setSoundEffect(ref jumpHolder[0], ref jumpSrc[0], "jump0");
 		setSoundEffect(ref jumpHolder[1], ref jumpSrc[1], "jump1");
 		setSoundEffect(ref jumpHolder[2], ref jumpSrc[2], "jump2");
@@ -50,14 +41,14 @@ public class GameAudio : MonoBehaviour {
 		setSoundEffect(ref painHolder, ref painSrc, "pain1");
 		setSoundEffect(ref chimesHolder, ref chimesSrc, "heal");
 		setSoundEffect(ref gameOverHolder, ref gameOverSrc, "WinterSnow");
-		setSoundEffect(ref freezeSpellHolder, ref freezeSpellSrc, "loudstream");
+		setSoundEffect(ref freezeSpellHolder, ref freezeSpellSrc, "water"); //"loudstream");
 		//setSoundEffect(ref freezeSpellCollisionHolder, ref freezeSpellCollisionSrc, "freeze");
 		setSoundEffect(ref battleMusicHolder, ref battleMusicSrc, "ColdHeartedv1");
 		setSoundEffect(ref OrbCollectSoundHolder, ref OrbCollectSoundSrc, "OrbCollectSound");
 		setSoundEffect(ref ItemGrabHolder, ref ItemGrabSrc, "ItemGrab");
 
-		freezeSpellSrc.playOnAwake = true;
-		freezeSpellSrc.audio.enabled = false;
+		//freezeSpellSrc.playOnAwake = true;
+		//freezeSpellSrc.audio.enabled = false;
 
 		introSrc.loop = true;
 		battleMusicSrc.loop = true;
@@ -93,11 +84,12 @@ public class GameAudio : MonoBehaviour {
 		battleMusicSrc.audio.Stop();
 	}
 
-	public static void playFreezeSpell() {
+	public static void playFreezeSpell(){
 		//freezeSpellSrc.audio.enabled = true;
 		//freezeSpellSrc.audio.loop = true;
-
-		freezeSpellSrc.audio.Play();
+		//if(!freezeSpellSrc.isPlaying){
+			freezeSpellSrc.audio.Play();
+		//}
 	}
 
 //	public static void stopFreezeSpell() {
@@ -159,24 +151,30 @@ public class GameAudio : MonoBehaviour {
 	}
 
 	public static void playFlame(){
-
-		for(int i=0; i < NUM_FLAME; ++i){
-			if(flameSrc[i].isPlaying){
-				flameSrc[i].volume -= 1 * Time.deltaTime;
-				
-				if((i != (NUM_FLAME-1)) && !flameSrc[i+1].isPlaying){
-					flameSrc[i+1].volume = 1;
-					flameSrc[i+1].audio.Play();
-					break;
-				}
-			}
-			else {
-				flameSrc[i].volume = 1;
-				flameSrc[i].audio.Play();
-				break;
-			}
+		if(!flameSrc.isPlaying){
+			flameSrc.audio.Play();
 		}
 	}
+
+//	public static void playFlame(){
+//
+//		for(int i=0; i < NUM_FLAME; ++i){
+//			if(flameSrc[i].isPlaying){
+//				flameSrc[i].volume -= 1 * Time.deltaTime;
+//				
+//				if((i != (NUM_FLAME-1)) && !flameSrc[i+1].isPlaying){
+//					flameSrc[i+1].volume = 1;
+//					flameSrc[i+1].audio.Play();
+//					break;
+//				}
+//			}
+//			else {
+//				flameSrc[i].volume = 1;
+//				flameSrc[i].audio.Play();
+//				break;
+//			}
+//		}
+//	}
 
 	public static void playMagicFail(){
 		magicFailSrc.audio.Play();

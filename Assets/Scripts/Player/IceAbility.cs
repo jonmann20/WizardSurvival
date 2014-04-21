@@ -29,14 +29,12 @@ public class IceAbility : AbilityBase {
 //	}
 
 	public override void fire(){
-		GameAudio.playFreezeSpell();
-
-		print(delayTimer);
-		if(delayTimer < delayTimerInit) {
-			GameAudio.playMagicFail();
+		if(delayTimer < delayTimerInit){
+			//GameAudio.playMagicFail();
 			return;
 		}
-		
+
+		GameAudio.playFreezeSpell();
 		delayTimer = 0;
 
 		Transform w = GLOBAL.myWizard.transform;
