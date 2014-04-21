@@ -83,6 +83,9 @@ public class GLOBAL : Photon.MonoBehaviour {
 		Inventory.Clear();
 		inRoom = false;
 
+		BETWEEN_SCENES.jeremyEasterEgg = false;
+		BETWEEN_SCENES.isaiahEasterEgg = false;
+
 		Leaderboard.gs = Leaderboard.gameState.waiting;
 
 		HudScript.messageQueue.Clear();
@@ -280,8 +283,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 		int NumberOfItemsToSpawn = Random.Range(5, 10);
 
-		for(int i = 0; i < NumberOfItemsToSpawn; i++)
-		{
+		for(int i=0; i < NumberOfItemsToSpawn; ++i){
 			int itemIndex = Random.Range(0, that.FountainItemPrefabs.Length);
 			GameObject prefab = that.FountainItemPrefabs[itemIndex];
 

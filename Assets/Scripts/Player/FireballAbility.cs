@@ -6,6 +6,7 @@ public class FireballAbility : AbilityBase {
 	string FireballPrefabString = "FireballPrefab";
 	const int SPEED = 20;
 	const int MAX_LIFE = 90;
+	Vector3 pos;
 
     GameObject wizardHolder;
 
@@ -15,6 +16,8 @@ public class FireballAbility : AbilityBase {
 
 	void Awake(){
         wizardHolder = GameObject.Find("_WizardHolder");
+		pos.x = Screen.width / 2;
+		pos.y = Screen.height / 2;
 	}
 
 	void FixedUpdate(){
@@ -48,13 +51,13 @@ public class FireballAbility : AbilityBase {
 
 		GameObject projectile = PhotonNetwork.Instantiate(
 			FireballPrefabString, 
-			GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized,  
+			GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized,// + new Vector3(0.75f, 0, 2.0f),  
 			gameObject.transform.rotation, 0
 		) as GameObject;
 
 		projectile.GetComponent<ProjectileBase>().wizard = gameObject;
 		//set initial velocity
-		projectile.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * SPEED + new Vector3(3, 0, 0);
+		projectile.rigidbody.velocity = GLOBAL.MainCamera.transform.forward * SPEED;
 
         // keep Hierarchy clean
 		projectile.transform.parent = wizardHolder.transform;
