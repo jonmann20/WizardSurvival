@@ -36,7 +36,7 @@ public class TalkingText : MonoBehaviour {
 		} else if (this.tag == "CreepyKing") {
 			MAX_DISTANCE = 34;
 			desiredTextCopy = desiredText = "Seriously...";
-		} else if (this.tag == "JumpyKing") {
+		} else if (this.tag == "CreepyJumpy") {
 			MAX_DISTANCE = 21;
 			manyStrings = new string[3];
 			manyStrings[0] = "You can't share your late days";
@@ -94,10 +94,10 @@ public class TalkingText : MonoBehaviour {
 	public void reset()
 	{
 		currentText = "";
-		if (this.tag == "WizardJumpy") {
+		if (this.tag == "WizardJumpy" || this.tag == "CreepyJumpy") {
 			temp = Random.Range (0.0f, manyStrings.Length - 1);
 			desiredTextCopy = manyStrings[(int) Mathf.Round(temp)];
-		} else if (this.tag == "WizardKing") {
+		} else if (this.tag == "WizardKing" || this.tag == "CreepyKing") {
 			desiredTextCopy = desiredText;
 		}
 		tm.text = "";
