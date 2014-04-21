@@ -44,6 +44,11 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 		PhotonNetwork.JoinRoom("MainRoom");
     }
 
+	public virtual void OnFailedToConnectToPhoton()
+	{
+		GLOBAL.GameOver("Could not connect to server. Please try again.");
+	}
+
 	public virtual void OnPhotonJoinRoomFailed()
 	{
 		PhotonNetwork.CreateRoom("MainRoom", true, true, 4);
