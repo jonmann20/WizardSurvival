@@ -73,7 +73,16 @@ public class Intro : MonoBehaviour {
 		gs.font = e.font;
 		gs.fontSize = 27;
 		gs.padding = new RectOffset(8, 5, 3, 4);
-		BETWEEN_SCENES.player_name = GUI.TextField(new Rect(EZGUI.HALFW - 236, EZGUI.HALFH - 4, 350, 50), BETWEEN_SCENES.player_name, 18, gs);
+
+		if(!hitStart){
+			BETWEEN_SCENES.player_name = GUI.TextField(new Rect(EZGUI.HALFW - 236, EZGUI.HALFH - 4, 350, 50), BETWEEN_SCENES.player_name, 18, gs);
+		}
+		else {
+			e.color = Color.green;
+			e.leftJustify = true;
+			EZGUI.placeTxt(BETWEEN_SCENES.player_name, gs.fontSize, EZGUI.HALFW - 228, EZGUI.HALFH + 47, e);
+		}
+		e.leftJustify = false;
 
 		// start button
 		EZGUI.drawBox(EZGUI.HALFW + 135, EZGUI.HALFH - 4, 100, 50, btnColor);
@@ -86,14 +95,14 @@ public class Intro : MonoBehaviour {
 
 		EZButton b = EZGUI.placeBtn("Start", 29, EZGUI.HALFW + 185, EZGUI.HALFH + 52, e);
 
-		if(!hitStart) {
-			if(b.btn) {
+		if(!hitStart){
+			if(b.btn){
 				initStartGame();
 			}
-			else if(b.hover) {
+			else if(b.hover){
 				btnColor = new Color(0.95f, 0.95f, 0.95f, 0.85f);
 			}
-			else if(b.active) {
+			else if(b.active){
 				btnColor = new Color(0.93f, 0.93f, 0.93f, 0.85f);
 			}
 			else {
@@ -103,10 +112,22 @@ public class Intro : MonoBehaviour {
 		else {
 			btnColor = btnColorInit;
 		}
+
+		if(BETWEEN_SCENES.jeremyEasterEgg || BETWEEN_SCENES.isaiahEasterEgg){
+			e.color = Color.red;
+			EZGUI.placeTxt("Cheat Code unlocked!", 34, EZGUI.FULLW - 300, EZGUI.FULLH - 200, e);
+		}
 	}
 
 	void initStartGame() {
 		hitStart = true;
+
+		if(BETWEEN_SCENES.player_name == "Jeremy Gibson"){
+			BETWEEN_SCENES.jeremyEasterEgg = true;
+		}
+		else if(BETWEEN_SCENES.player_name == "Isaiah Hines"){
+			BETWEEN_SCENES.isaiahEasterEgg = true;
+		}
 
 		Invoke("startGame", 2.1f);
 

@@ -39,6 +39,19 @@ public class GameController : MonoBehaviour {
 	void Awake(){
 		that = this;
 		transform.localRotation = Quaternion.identity;
+
+		if(BETWEEN_SCENES.jeremyEasterEgg){
+			GameObject wk = GameObject.Find("WizardKing");
+			GameObject wkEgg = Resources.Load<GameObject>("WizardKingCreepy");
+			Instantiate(wkEgg, wk.transform.position, wk.transform.rotation);
+			Destroy(wk);
+		}
+		else if(BETWEEN_SCENES.isaiahEasterEgg){
+			GameObject wk = GameObject.Find("WizardJumpy");
+			GameObject wkEgg = Resources.Load<GameObject>("WizardJumpyCreepy");
+			Instantiate(wkEgg, wk.transform.position, wk.transform.rotation);
+			Destroy(wk);
+		}
 	}
 
 	void Start(){
