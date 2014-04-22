@@ -46,10 +46,12 @@ public class FireballAbility : AbilityBase {
 
 		delayTimer = 0;
 		GameAudio.playFlameShoot();
-
+		//Debug (GLOBAL.myWizard.transform.position);
+		///Debug (GLOBAL.myWizard.transform.forward.normalized);
+		Debug.Log (GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized);
 		GameObject projectile = PhotonNetwork.Instantiate(
 			FireballPrefabString, 
-			GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized,// + new Vector3(0.75f, 0, 2.0f),  
+			GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized, 
 			gameObject.transform.rotation, 0
 		) as GameObject;
 
@@ -67,5 +69,9 @@ public class FireballAbility : AbilityBase {
 
 	public override string getAbilityDescription(){
 		return "Burn, baby, Burn.";
+	}
+
+	private Vector3 projectileAdjustor() {
+		return new Vector3 (0, 0, 0);
 	}
 }
