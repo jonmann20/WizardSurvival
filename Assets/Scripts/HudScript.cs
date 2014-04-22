@@ -215,6 +215,26 @@ public class HudScript : MonoBehaviour {
 			SecondItemQuantityText.GetComponent<TextMesh>().text = "";
 		if(numInventoryItems < 1)
 			FirstItemQuantityText.GetComponent<TextMesh>().text = "";
+
+		// MESSAGE TEXT
+		if(messageQueue.Count > 0)
+		{
+			MessageText.GetComponent<TextMesh>().text = messageQueue.Peek().messageString;
+			MessageText.renderer.material.color = messageQueue.Peek().color;
+			if(messageQueue.Peek().life > 0){
+				--messageQueue.Peek().life;
+				MessageText.transform.localPosition += (new Vector3(0.1f, -1.50f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
+			}
+			else{
+				MessageText.transform.localPosition += (new Vector3(0.1f, -2.05f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
+				
+				//Swap to new message
+				if(MessageText.transform.localPosition.y < -2.0f)
+				{
+					messageQueue.Dequeue();
+				}
+			}
+		}
 	}
 
 	void setQuantityText(GameObject textGameObject, GameObject inventoryObject)
@@ -378,27 +398,6 @@ public class HudScript : MonoBehaviour {
 			WaveText.GetComponent<TextMesh>().text = "Wave: " + wave;
 			OrbText.GetComponent<TextMesh>().text = "Orbs: " + (5 - orbs) + " / 5";
 		}
-
-		// MESSAGE TEXT
-		if(messageQueue.Count > 0)
-		{
-			MessageText.GetComponent<TextMesh>().text = messageQueue.Peek().messageString;
-			MessageText.renderer.material.color = messageQueue.Peek().color;
-			if(messageQueue.Peek().life > 0){
-				--messageQueue.Peek().life;
-				MessageText.transform.localPosition += (new Vector3(0.1f, -1.50f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
-			}
-			else{
-				MessageText.transform.localPosition += (new Vector3(0.1f, -2.05f, 3.13f) - MessageText.transform.localPosition) * 0.1f;
-
-				//Swap to new message
-				if(MessageText.transform.localPosition.y < -2.0f)
-				{
-					messageQueue.Dequeue();
-				}
-			}
-		}
-
 		
 		// update score
 		for(int i=0; i < PhotonNetwork.playerList.Length; ++i){
