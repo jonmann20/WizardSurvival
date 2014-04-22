@@ -9,7 +9,7 @@ public class PunchAbility : AbilityBase {
 
 	const float CIRCLE_RATE = 0.2f;
 	const float CIRCLE_RADIUS = 3.0f;
-	const float DISTANCE = 2.0f;
+	const float DISTANCE = 3.0f;
 	const float FIST_SCALE = 0.8f;
 
 	GameObject arm;
