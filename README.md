@@ -1,10 +1,9 @@
-WizardSurvival
-==============
+# Defend Thy Kingdom
 
 A wave survival game in Unity.
 
-Characters Ideas
-----------------
+## Characters Ideas
+
 * Ryu (Street Fighter)
 	* fireballs (hadouken)
 * Jafar (Alladin)
@@ -19,8 +18,8 @@ Characters Ideas
 	* melee
 	* forcefield (defense)
 	
-Enemy Ideas
------------
+## Enemy Ideas
+
 * ghosts
 * multi headed dragons
 * garden gnomes

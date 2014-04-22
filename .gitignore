@@ -33,8 +33,10 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-
-
+# ============ #
+# Vi generated #
+# ============ #
+*.swp
 
 # Project Specific
 Assets/Resources/RAIN/Editor/RAINSettings.asset
