@@ -186,7 +186,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 		List<GameObject> OrbSpawners = GameObject.FindGameObjectsWithTag("OrbSpawner").OfType<GameObject>().ToList();
 		GameObject OrbSpawnerAlways = GameObject.FindWithTag("OrbSpawnerAlways");
 
-		//Shuffle(ref OrbSpawners);
+		Shuffle(ref OrbSpawners);
 		int numberOfOrbsToSpawn = 4;
 
 		for(int i = 0; i < numberOfOrbsToSpawn; i++)

@@ -165,6 +165,8 @@ public class HudScript : MonoBehaviour {
 
 			hudLight.intensity = Mathf.Abs(Mathf.Sin(sinCounter * 10)) * 5;
 		}
+		else
+			hudLight.intensity = 8;
 
 		//INVENTORY
 		int numInventoryItems = GLOBAL.getInventoryCount();
@@ -339,6 +341,7 @@ public class HudScript : MonoBehaviour {
 				HudScript.addNewMessage("No Item Selected!", 60, Color.red);
 				GameAudio.playMagicFail();
 			}
+			inventorySelectedIndex = moveInventoryIndex(inventorySelectedIndex);
 		}
 
 		/*// timer
@@ -429,5 +432,20 @@ public class HudScript : MonoBehaviour {
 		}
 
 		messageQueue.Enqueue(new Message(strmessage, duration, c));
+	}
+
+	//searches for next item in inventory and sets index to it.
+	//This prevents a player from not having an item selected in their inventory.
+	int moveInventoryIndex(int i)
+	{
+		if(GLOBAL.getInventoryCount() > i)
+			return i;
+		for(; i > -1; i--)
+		{
+			if(GLOBAL.getInventoryCount() > i)
+				return i;
+		}
+
+		return 0;
 	}
 }
