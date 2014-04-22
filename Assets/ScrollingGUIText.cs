@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using InControl;
 using System.Collections;
+using InControl;
 
 public class ScrollingGUIText : MonoBehaviour {
 
@@ -25,22 +25,18 @@ public class ScrollingGUIText : MonoBehaviour {
 	}
 
 	void Update () {
-		if (scrolling == false) {
-			return;
-		} else {
-		transform.Translate (Vector3.up * Time.deltaTime * speed);
+		if (scrolling == true) {
+			transform.Translate (Vector3.up * Time.deltaTime * speed);
 		}
+
 		if (gameObject.transform.position.y > -0.030f) {
 			scrolling = false;
 		}
 
 		if(hitSquare == false) {
-			Debug.Log(hitSquare);
 			InputDevice device = InputManager.ActiveDevice;
 			InputControl ctrl_Square = device.GetControl(InputControlType.Action3);
-			
 			if (ctrl_Square.WasPressed) {
-				Debug.Log (hitSquare);
 				initTitle();
 			}
 		}
@@ -48,7 +44,6 @@ public class ScrollingGUIText : MonoBehaviour {
 
 	void initTitle () {
 		hitSquare = true;
-		Debug.Log ("clicked");
 		Invoke ("startTitle", 2.1f);
 		GameAudio.stopIntro();
 		GameAudio.playChimes();
