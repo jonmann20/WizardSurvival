@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 public class TutorialCutsceneScript : MonoBehaviour {
 
+	public Font SpookyMagic;
+
 	int state = 0;
-	int timer = 300;
+	int timer = 400;
 	string message = "Behold your kingdom...";
 
 	Vector3 initState0 = new Vector3(-58, 7.2f, 2.19f);
@@ -23,9 +26,20 @@ public class TutorialCutsceneScript : MonoBehaviour {
 	Vector3 endState3 = new Vector3(-60.9f, 1.676f, -7.09f);
 	Vector3 rotationState3 = new Vector3(-0.97f, -34.9f, 0);
 
-	// Use this for initialization
-	void Start () {
+	InputDevice device;
 
+	void Start () {
+		InputDevice device = InputManager.ActiveDevice;
+	}
+
+	void Update()
+	{
+		InputDevice device = InputManager.ActiveDevice;
+		InputControl ctrl_Start = device.GetControl(InputControlType.Start);
+		
+		if(ctrl_Start.WasPressed) {	// NOTE: doesn't seem to work when active in TextField
+			Application.LoadLevel("MattScene");
+		}
 	}
 
 	void FixedUpdate()
@@ -38,7 +52,7 @@ public class TutorialCutsceneScript : MonoBehaviour {
 			if(state == 1)
 				timer = 400;
 			else if(state == 2)
-				timer = 300;
+				timer = 400;
 			else if(state == 3)
 				timer = 300;
 			else if(state == 4)
@@ -48,15 +62,15 @@ public class TutorialCutsceneScript : MonoBehaviour {
 		//STATES
 		if(state == 0)
 		{
-			message = "Behold your kingdom...";
-			transform.position = Vector3.Lerp(initState0, endState0, 1 - (float)timer / (float)300);
+			message = "Your kingdom is in danger...";
+			transform.position = Vector3.Lerp(initState0, endState0, 1 - (float)timer / (float)400);
 			transform.eulerAngles = rotationState0;
 			return;
 		}
 
 		if(state == 1)
 		{
-			message = "You must SURVIVE its greatest threat...";
+			message = "Hold out as long as you can...";
 			transform.position = Vector3.Lerp(initState1, endState1, 1 - (float)timer / (float)400);
 			transform.eulerAngles = rotationState1;
 			return;
@@ -64,15 +78,15 @@ public class TutorialCutsceneScript : MonoBehaviour {
 
 		if(state == 2)
 		{
-			message = "The Heavens send ITEMS TO AID you...";
-			transform.position = Vector3.Lerp(initState2, endState2, 1 - (float)timer / (float)300);
+			message = "ITEMS from the heavens will aid you...";
+			transform.position = Vector3.Lerp(initState2, endState2, 1 - (float)timer / (float)400);
 			transform.eulerAngles = rotationState2;
 			return;
 		}
 
 		if(state == 3)
 		{
-			message = "They send more...If you COLLECT THE ORBS";
+			message = "COLLECT the ORBS for reinforcements...";
 			transform.position = Vector3.Lerp(initState3, endState3, 1 - (float)timer / (float)300);
 			transform.eulerAngles = rotationState3;
 			return;
@@ -94,9 +108,9 @@ public class TutorialCutsceneScript : MonoBehaviour {
 		e.dropShadow = new Color(0.1f, 0.1f, 0.1f);
 		e.leftJustify = false;
 		
-		e.font = GLOBAL.spookyMagic;
-		
+		e.font = SpookyMagic;
 
+		EZGUI.placeTxt("Press Start to skip", 20, EZGUI.FULLW - 200, 100, e);
 		EZGUI.placeTxt(message, 50, EZGUI.HALFW, -100 + EZGUI.FULLH, e);
 		//.font = arial;
 		e.leftJustify = true;

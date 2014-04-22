@@ -2,20 +2,11 @@
 using System.Collections;
 
 public class DoorLeft : MonoBehaviour {
-
+	
 	private int door_LastIndex = 0;
 	private int count = 0;
-
-	public void playDoorAnim () {
-		if (door_LastIndex == 0) {
-			gameObject.animation.Play ("DoorLeftOpen");
-			door_LastIndex = 1;
-		} else {
-			gameObject.animation.Play ("DoorLeftClose");
-			door_LastIndex = 2;
-		}
-	}
-
+	public static bool closeDoor = false;
+	
 	void Update () {
 		if (door_LastIndex == 0) {
 			count = PhotonNetwork.playerList.Length;
@@ -27,11 +18,18 @@ public class DoorLeft : MonoBehaviour {
 			}
 			
 			if (count == 0) {
-				playDoorAnim ();
+				gameObject.animation.Play ("DoorLeftOpen");
+				door_LastIndex = 1;
 			}
 		} else if (door_LastIndex == 1) {
-			OneWayWall onewaywall = (OneWayWall) GameObject.Find("OneWayWallThrone").GetComponent(typeof(OneWayWall));
-			onewaywall.closeDoor = true;
+			if (closeDoor == true) {
+				gameObject.animation.Play ("DoorLeftClose1");
+				door_LastIndex = 2;
+			}
+		} else if ( door_LastIndex == 2 )
+		{
+			GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;
+			mainCam.GetComponent<GameController>().Begin();
 		}
 	}
 }
