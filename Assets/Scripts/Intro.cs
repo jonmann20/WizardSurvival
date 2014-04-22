@@ -10,6 +10,7 @@ public class Intro : MonoBehaviour {
 	public GameObject Between_Scenes_Prefab;
 
 	bool hitStart = false;
+	bool hitSquare = false;
 
 	Color btnColor, btnColorInit;
 	Font spookyMagic;
@@ -51,6 +52,15 @@ public class Intro : MonoBehaviour {
 				initStartGame();
 			}
 		}
+
+		if(!hitSquare) {
+			InputDevice device = InputManager.ActiveDevice;
+			InputControl ctrl_Square = device.GetControl(InputControlType.Action3);
+
+			if (ctrl_Square.WasPressed) {
+				initCredits();
+			}
+		}
 	}
 
 	
@@ -67,6 +77,8 @@ public class Intro : MonoBehaviour {
 		// cta text
 		EZGUI.drawBox(675, 440, 575, 180, new Color(0.3f, 0.3f, 0.3f, 0.6f));
 		EZGUI.placeTxt("Enter your name: ", 45, EZGUI.HALFW, EZGUI.HALFH, e);
+		EZGUI.placeBtn ("Press square for Credits", 40, EZGUI.HALFW, EZGUI.HALFW, e);
+
 
 		// input box
 		GUIStyle gs = new GUIStyle(GUI.skin.textField);
@@ -136,7 +148,19 @@ public class Intro : MonoBehaviour {
 		GameAudio.playInvMove();
 	}
 
+	void initCredits () {
+		hitSquare = true;
+		Invoke ("startCredits", 2.1f);
+		GameAudio.stopIntro();
+		GameAudio.playChimes();
+		GameAudio.playInvMove ();
+	}
+
 	void startGame(){
 		Application.LoadLevel("TutorialCutscene");
+	}
+
+	void startCredits () {
+		Application.LoadLevel ("Credits");
 	}
 }
