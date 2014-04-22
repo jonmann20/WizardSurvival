@@ -137,6 +137,6 @@ public class Intro : MonoBehaviour {
 	}
 
 	void startGame(){
-		Application.LoadLevel("MattScene");
+		Application.LoadLevel("TutorialCutscene");
 	}
 }
