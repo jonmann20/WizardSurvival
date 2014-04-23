@@ -30,6 +30,8 @@ public class SampleAIController : MonoBehaviour {
 	public int scoreValue = 10;
 	public Shader toonShader;
 
+	public bool speedBeingSent = false;
+
 	void Start(){
 		float ratio = Random.Range(1.0f, 2.5f);
 
@@ -95,34 +97,43 @@ public class SampleAIController : MonoBehaviour {
 			deathTimer = timeUntilRemove;
 		}
 
-		//for iceblast speed reduction
-		if( iceTimer > 0 )
+		if( speedBeingSent )
 		{
-			iceTimer -= Time.deltaTime;
-			if( speedReduced )
-			{
-				this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed * speedReduction;
-				float[] speedParam = new float[1];
-				speedParam[0] = speed * speedReduction;
-				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
-				view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
-				speedReduced = false;
-			}
-
-			//print ( this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed );
+			// getting speed from RPC
 		}
 		else
 		{
-			if( this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed != speed )
+			//for iceblast speed reduction
+			if( iceTimer > 0 )
 			{
-				this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
-				float[] speedParam = new float[1];
-				speedParam[0] = speed;
-				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
-				view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
+				iceTimer -= Time.deltaTime;
+				if( speedReduced )
+				{
+					this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed * speedReduction;
+					float[] speedParam = new float[2];
+					speedParam[0] = speed * speedReduction;
+					speedParam[1] = 1;
+					PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
+					view.RPC("setSpeedRPC",PhotonTargets.Others, speedParam);
+					speedReduced = false;
+				}
+
+				//print ( this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed );
+			}
+			else
+			{
+				if( this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed != speed )
+				{
+					this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
+					float[] speedParam = new float[2];
+					speedParam[0] = speed;
+					speedParam[1] = 0;
+					PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
+					view.RPC("setSpeedRPC",PhotonTargets.Others, speedParam);
+					speedReduced = false;
+				}
 				speedReduced = false;
 			}
-			speedReduced = false;
 		}
 
 		print ("Speed: " +this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed);
