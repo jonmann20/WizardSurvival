@@ -14,11 +14,12 @@ public class SampleAIController : MonoBehaviour {
 	private float deathTimer = 3.0f;
 	public float timeUntilRemove = 3.0f;
 
-	const int MAX_INVINCIBILITY_TIMER = 5;
-	int invincibilityTimer = 0;
+	public const int MAX_INVINCIBILITY_TIMER = 5;
+	public int invincibilityTimer = 0;
 
 	public Material initialMaterial;
 	public Material redMaterial;
+	public Material blueMaterial;
 
 	private bool speedReduced = false;
 	public float speedReduction = 0.6f;
@@ -31,6 +32,8 @@ public class SampleAIController : MonoBehaviour {
 	public Shader toonShader;
 
 	public bool speedBeingSent = false;
+
+	public bool turnRed = true;
 
 	void Start(){
 		float ratio = Random.Range(1.0f, 2.5f);
@@ -63,6 +66,9 @@ public class SampleAIController : MonoBehaviour {
 
 		redMaterial = new Material(Shader.Find("Toon/Basic"));
 		redMaterial.color = new Color(1, 0, 0, 0.7f);
+
+		blueMaterial = new Material(Shader.Find("Toon/Basic"));
+		blueMaterial.color = new Color(0, 0, 1, 0.7f);
 
 		//for balance
 		this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
@@ -144,9 +150,16 @@ public class SampleAIController : MonoBehaviour {
 		// invincible
 		if(invincibilityTimer > 0){
 			--invincibilityTimer;
-
-			skeleton.renderer.material = redMaterial;
-			skeleton.renderer.materials[1].SetColor("_Color", Color.red);
+			if( turnRed == true )
+			{
+				skeleton.renderer.material = redMaterial;
+				skeleton.renderer.materials[1].SetColor("_Color", Color.red);
+			}
+			else
+			{
+				skeleton.renderer.material = blueMaterial;
+				skeleton.renderer.materials[1].SetColor("_Color", Color.blue);
+			}
 		}
 		else {
 			skeleton.renderer.material = initialMaterial;
@@ -163,16 +176,20 @@ public class SampleAIController : MonoBehaviour {
 				iceTimer = speedRecutionTimer;
 
 				TakeDamage(5);
-				float[] healthParam = new float[1];
+				float[] healthParam = new float[2];
 				healthParam[0] = health;
+				healthParam[1] = 1;
+				turnRed = false;
 				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
 				view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
 
 			}
 			else{
 				TakeDamage(33);
-				float[] healthParam = new float[1];
+				float[] healthParam = new float[2];
 				healthParam[0] = health;
+				healthParam[1] = 0;
+				turnRed = true;
 				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
 				view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
 			}

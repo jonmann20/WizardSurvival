@@ -9,6 +9,16 @@ public class AINetworkHealth : MonoBehaviour {
 	public void setHealthRPC(float[] health)
 	{
 		this.GetComponentInChildren<SampleAIController>().SetHealth(health[0]);
+		this.GetComponentInChildren<SampleAIController>().invincibilityTimer = 4;
+		if( health.Length == 2 ) 
+		{
+			if( (int)health[1] == 0 )
+				this.GetComponentInChildren<SampleAIController>().turnRed = true;
+			else
+			{
+				this.GetComponentInChildren<SampleAIController>().turnRed = false;
+			}
+		}
 		
 	}
 	[RPC]
