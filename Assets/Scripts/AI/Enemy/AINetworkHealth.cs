@@ -21,4 +21,10 @@ public class AINetworkHealth : MonoBehaviour {
 	{
 		this.GetComponentInChildren<SampleAIController>().scoreValue = score[0];
 	}
+	[RPC]
+	public void setInitialSpeedRPC(float[] speed)
+	{
+		this.GetComponentInChildren<SampleAIController>().speed = speed[0];
+	}
+
 }
