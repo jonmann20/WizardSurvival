@@ -3,9 +3,15 @@ using System.Collections;
 
 public class DoorRight : MonoBehaviour {
 	
-	private int door_LastIndex = 0;
-	private int count = 0;
-	public static bool closeDoor = false;
+	private int door_LastIndex;
+	private int count;
+	public static bool closeDoor;
+
+	void Start () {
+		door_LastIndex = 0;
+		count = PhotonNetwork.playerList.Length;
+		closeDoor = false;
+	}
 
 	void Update () {
 		if (door_LastIndex == 0) {
@@ -13,7 +19,7 @@ public class DoorRight : MonoBehaviour {
 				for (int i = 0; i < PhotonNetwork.playerList.Length; ++i) {
 						string p = (string)PhotonNetwork.playerList [i].customProperties ["Ability"];
 						if (p != null && p != "none") {
-								--count;
+							--count;
 						}
 				}
 
