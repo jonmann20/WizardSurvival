@@ -14,6 +14,7 @@ public class AINetworkHealth : MonoBehaviour {
 	[RPC]
 	public void setSpeedRPC(float[] speed)
 	{
+		this.GetComponentInChildren<SampleAIController>().speedBeingSent = true;
 		this.transform.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed[0];	
 	}
 	[RPC]
