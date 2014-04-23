@@ -163,6 +163,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 	public void SuperDestroy(GameObject g)
 	{
+		print("superdestroy: " + g);
 		if(g.GetComponent<PhotonView>() == null)
 		{
 			Destroy (g);
