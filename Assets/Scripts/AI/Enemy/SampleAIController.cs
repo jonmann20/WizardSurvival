@@ -22,7 +22,7 @@ public class SampleAIController : MonoBehaviour {
 	public Material blueMaterial;
 
 	private bool speedReduced = false;
-	public float speedReduction = 0.6f;
+	public float speedReduction = 0.5f;
 	public float speedRecutionTimer = 5.0f;
 	private float iceTimer = 0.0f;
 	
@@ -162,9 +162,18 @@ public class SampleAIController : MonoBehaviour {
 			}
 		}
 		else {
-			skeleton.renderer.material = initialMaterial;
-            skeleton.renderer.materials[1].SetColor("_Color", new Color(0.63529411764f, 0.63529411764f, 0.63529411764f));
+			if( this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed < speed )
+			{
+				skeleton.renderer.material = blueMaterial;
+				skeleton.renderer.materials[1].SetColor("_Color", Color.blue);
+			}
+			else
+			{
+				skeleton.renderer.material = initialMaterial;
+	            skeleton.renderer.materials[1].SetColor("_Color", new Color(0.63529411764f, 0.63529411764f, 0.63529411764f));
+			}
 		}
+
 	}
 
 	void doDamage(Collider col){
@@ -175,7 +184,7 @@ public class SampleAIController : MonoBehaviour {
 				}
 				iceTimer = speedRecutionTimer;
 
-				TakeDamage(5);
+				TakeDamage(15);
 				float[] healthParam = new float[2];
 				healthParam[0] = health;
 				healthParam[1] = 1;
