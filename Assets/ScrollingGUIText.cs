@@ -20,7 +20,7 @@ public class ScrollingGUIText : MonoBehaviour {
 		creds += "Eugene Goh\n\n";
 		creds += "Many thanks to EECS494 for your awesome feedback and playtests\n\n";
 		creds += "Many more thanks to our awesome Jeremy Gibson and Isaiah Hines\n\n\n";
-		creds += "Press square to go back to Title Screen\n";
+		creds += "Press start to go back to Title Screen\n";
 		credits.text = creds;
 	}
 
@@ -35,7 +35,7 @@ public class ScrollingGUIText : MonoBehaviour {
 
 		if(hitSquare == false) {
 			InputDevice device = InputManager.ActiveDevice;
-			InputControl ctrl_Square = device.GetControl(InputControlType.Action3);
+			InputControl ctrl_Square = device.GetControl(InputControlType.Start);
 			if (ctrl_Square.WasPressed) {
 				initTitle();
 			}
