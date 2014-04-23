@@ -3,7 +3,7 @@
 Defend Thy Kingdom is a 3D Multiplayer Wizard Wave Survival built with Unity. 
 
 ## To Play
-You will need four players to play.
+You need 1~4 players
 
 You can download the zip builds at
 [Windows]() 
@@ -34,5 +34,18 @@ The default build from GitHub is for Mac (Quality: Reasonable), located inside t
        * 4 GB Ram
        * PS3 Controllers with USB Cable
 
-## Controls
-
+## Game Controls
+* PS3
+      * Fire                  - R1
+      * Punch                 - Right Joystick Button
+      * Movement              - Left Joystick
+      * Camera Control        - Right Joystick
+      * Switch inventory      - L2 (left), R2 (right)
+      * Use item              - L1
+* Mouse and Keyboard
+      * Fire                  - Left Mouse Click
+      * Punch                 - Shift
+      * Movement              - W (up), A (left), S (down), R (right)
+      * Camera Control        - Mouse Movement
+      * Switch inventory      - Q (left), E (right)
+      * Use item              - Backspace/Delete
