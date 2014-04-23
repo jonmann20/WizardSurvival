@@ -22,7 +22,7 @@ public class SampleAIController : MonoBehaviour {
 
 	private bool speedReduced = false;
 	public float speedReduction = 0.6f;
-	public float speedRecutionTimer = 4.0f;
+	public float speedRecutionTimer = 5.0f;
 	private float iceTimer = 0.0f;
 	
 	Transform skeleton;
@@ -136,8 +136,8 @@ public class SampleAIController : MonoBehaviour {
 			}
 		}
 
-		print ("Speed: " +this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed);
-		print ("Health: " + health);
+		//print ("Speed: " +this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed);
+		//print ("Health: " + health);
 	}
 
 	void FixedUpdate(){
