@@ -38,7 +38,7 @@ public class FireballAbility : AbilityBase {
 	}
 
 	public override void fire(){
-		print(delayTimer);
+		//print(delayTimer);
 		if(delayTimer < delayTimerInit) {
 			GameAudio.playMagicFail();
 			return;
@@ -46,9 +46,6 @@ public class FireballAbility : AbilityBase {
 
 		delayTimer = 0;
 		GameAudio.playFlameShoot();
-		//Debug (GLOBAL.myWizard.transform.position);
-		///Debug (GLOBAL.myWizard.transform.forward.normalized);
-		Debug.Log (GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized);
 		GameObject projectile = PhotonNetwork.Instantiate(
 			FireballPrefabString, 
 			GLOBAL.myWizard.transform.position + GLOBAL.myWizard.transform.forward.normalized, 
