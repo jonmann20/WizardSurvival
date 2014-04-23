@@ -5,7 +5,7 @@ public class TalkingText : MonoBehaviour {
 	
 	public float MAX_DISTANCE = 21;
 	
-	const int CHARACTER_RATE = 3;
+	const int CHARACTER_RATE = 2;
 	int character_timer = CHARACTER_RATE;
 	
 	string desiredText = "";
