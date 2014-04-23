@@ -15,19 +15,18 @@ public class DoorLeft : MonoBehaviour {
 	
 	void Update () {
 		if (door_LastIndex == 0) {
-			/*count = PhotonNetwork.playerList.Length;
+			count = PhotonNetwork.playerList.Length;
 			for (int i = 0; i < PhotonNetwork.playerList.Length; ++i) {
 				string p = (string) PhotonNetwork.playerList[i].customProperties["Ability"];
-				Debug.Log (p);
 				if (p != null && p != "none") {
 					--count;
 				}
 			}
 			
-			if (count == 0) {*/
+			if (count == 0) {
 				gameObject.animation.Play ("DoorLeftOpen");
 				door_LastIndex = 2;
-			//}
+			}
 		} else if (door_LastIndex == 1) {
 			if (closeDoor == true) {
 				gameObject.animation.Play ("DoorLeftClose1");
@@ -35,10 +34,6 @@ public class DoorLeft : MonoBehaviour {
 			}
 		} else if ( door_LastIndex == 2 )
 		{
-			for (int i = 0; i < PhotonNetwork.playerList.Length; ++i) {
-				string p = (string) PhotonNetwork.playerList[i].customProperties["Ability"];
-				Debug.Log (p);
-			}
 			GameObject mainCam = GameObject.FindWithTag("MainCamera") as GameObject;
 			mainCam.GetComponent<GameController>().Begin();
 		}
