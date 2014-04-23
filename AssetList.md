@@ -1,6 +1,6 @@
-Free Asset List
-===============
+# Asset List
 
+## Free
 * [books](https://www.assetstore.unity3d.com/#/content/3356)
 * [cross-platform controller](https://github.com/pbhogan/InControl)
 * [spells](http://opengameart.org/content/spell-sounds-starter-pack)
@@ -25,3 +25,11 @@ Free Asset List
 * [Spell Set icons](http://opengameart.org/content/spell-set)
 * [ceptor](http://opengameart.org/content/basic-wand)
 * [chair](http://opengameart.org/content/wooden-furniture)
+* [Stone Textures Pack v1.00](https://www.assetstore.unity3d.com/#/content/12962)
+* [Wood Fence](https://www.assetstore.unity3d.com/#/content/2630)
+* [Deluxe Primitives](Used with author's consent)(https://www.assetstore.unity3d.com/#/content/10769)
+* [RealSky v1.4.1](Used with author's consent)(https://www.assetstore.unity3d.com/#/content/7201)
+* [Basic Packages from Unity](Water(basic), Terrain, Light Flares, Particles etc, no URL)
+
+## Paid
+* [Ruins Creation Kit](https://www.assetstore.unity3d.com/#/content/2235) $5
