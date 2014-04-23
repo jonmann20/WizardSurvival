@@ -113,13 +113,20 @@ public class SampleAIController : MonoBehaviour {
 		}
 		else
 		{
-			this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
-			float[] speedParam = new float[1];
-			speedParam[0] = speed;
-			PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
-			view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
+			if( this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed != speed )
+			{
+				this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed;
+				float[] speedParam = new float[1];
+				speedParam[0] = speed;
+				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
+				view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
+				speedReduced = false;
+			}
 			speedReduced = false;
 		}
+
+		print ("Speed: " +this.transform.parent.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed);
+		print ("Health: " + health);
 	}
 
 	void FixedUpdate(){
@@ -144,7 +151,7 @@ public class SampleAIController : MonoBehaviour {
 				}
 				iceTimer = speedRecutionTimer;
 
-				TakeDamage(20);
+				TakeDamage(5);
 				float[] healthParam = new float[1];
 				healthParam[0] = health;
 				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);

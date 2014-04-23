@@ -98,7 +98,7 @@ public class MGSpawner : MonoBehaviour {
 			//Speed
 			float[] speedParam = new float[1];
 			speedParam[0] = unitTrans.GetComponent<SampleAIController>().speed;
-			view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
+			view.RPC("setInitialSpeedRPC",PhotonTargets.All, speedParam);
 
 			//print("Spawn");
 			//print(PhotonNetwork.playerList[0].ID);

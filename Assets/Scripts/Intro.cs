@@ -77,7 +77,7 @@ public class Intro : MonoBehaviour {
 		// cta text
 		EZGUI.drawBox(675, 440, 575, 180, new Color(0.3f, 0.3f, 0.3f, 0.6f));
 		EZGUI.placeTxt("Enter your name: ", 45, EZGUI.HALFW, EZGUI.HALFH, e);
-		EZGUI.placeBtn ("Press    for Credits", 40, EZGUI.HALFW, EZGUI.HALFW, e);
+		EZGUI.placeBtn ("Press \"Square\" for Credits", 40, EZGUI.HALFW, EZGUI.HALFW, e);
 
 
 		// input box
