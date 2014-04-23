@@ -1,4 +1,5 @@
 # Defend Thy Kingdom
+by, Eugene Goh, Matt Goldhaber, Jon Wiedmann, Austin Yarger
 
 Defend Thy Kingdom is a 3D Multiplayer Wizard Wave Survival built with Unity. 
 

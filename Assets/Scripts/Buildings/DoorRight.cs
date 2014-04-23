@@ -19,7 +19,7 @@ public class DoorRight : MonoBehaviour {
 
 				if (count == 0) {
 						gameObject.animation.Play ("DoorRightOpen");
-						door_LastIndex = 1;
+						door_LastIndex = 2;
 				}
 		} else if (door_LastIndex == 1) {
 				if (closeDoor == true) {
