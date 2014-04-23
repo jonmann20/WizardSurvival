@@ -59,6 +59,12 @@ public class NetworkLauncherScript : MonoBehaviour {
 		}
 	}
 
+	void OnDisconnectedFromPhoton()
+	{
+		PhotonPlayer p = GLOBAL.myWizard.GetComponent<PhotonView>().owner;
+		p.customProperties["Ability"] = "none";
+	}
+
 	bool AreAllOrbsCollectedAndReport()
 	{
 		GameObject[] existingOrbs = GameObject.FindGameObjectsWithTag("OrbOfHope");
