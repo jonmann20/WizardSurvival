@@ -16,4 +16,9 @@ public class AINetworkHealth : MonoBehaviour {
 	{
 		this.transform.FindChild("AI").GetComponent<AIRig>().AI.Motor.DefaultSpeed = speed[0];	
 	}
+	[RPC]
+	public void setScoreValueRPC(int[] score)
+	{
+		this.GetComponentInChildren<SampleAIController>().scoreValue = score[0];
+	}
 }

@@ -81,6 +81,24 @@ public class MGSpawner : MonoBehaviour {
 
 			unitTrans.GetComponent<SampleAIController>().health *= 1f + ((float)totalWaves/5f);
 			unitTrans.GetComponent<SampleAIController>().scoreValue = (int)( ((float)unitTrans.GetComponent<SampleAIController>().scoreValue) * (1f + ((float)(totalWaves-1)/6f)));
+			unitTrans.GetComponent<SampleAIController>().speed *= 1f + ((float)totalWaves/10f);
+
+			PhotonView view = PhotonView.Find(unit.gameObject.GetComponent<PhotonView>().viewID);
+
+			//health
+			float[] healthParam = new float[1];
+			healthParam[0] = unitTrans.GetComponent<SampleAIController>().health;
+			view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
+
+			//ScoreValue
+			int[] scoreParam = new int[1];
+			scoreParam[0] = unitTrans.GetComponent<SampleAIController>().scoreValue;
+			view.RPC("setScoreValueRPC",PhotonTargets.All, scoreParam);
+
+			//Speed
+			float[] speedParam = new float[1];
+			speedParam[0] = unitTrans.GetComponent<SampleAIController>().speed;
+			view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
 
 			//print("Spawn");
 			//print(PhotonNetwork.playerList[0].ID);

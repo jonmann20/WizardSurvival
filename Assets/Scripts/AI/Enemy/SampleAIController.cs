@@ -72,7 +72,7 @@ public class SampleAIController : MonoBehaviour {
 		//health
 		float[] healthParam = new float[1];
 		healthParam[0] = health;
-		view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
+		//view.RPC("setHealthRPC",PhotonTargets.All, healthParam);
 		//speed
 		float[] speedParam = new float[1];
 		speedParam[0] = speed;
@@ -105,7 +105,7 @@ public class SampleAIController : MonoBehaviour {
 				float[] speedParam = new float[1];
 				speedParam[0] = speed * speedReduction;
 				PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
-				//view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
+				view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
 				speedReduced = false;
 			}
 
@@ -117,7 +117,7 @@ public class SampleAIController : MonoBehaviour {
 			float[] speedParam = new float[1];
 			speedParam[0] = speed;
 			PhotonView view = PhotonView.Find(this.transform.parent.GetComponent<PhotonView>().viewID);
-			//view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
+			view.RPC("setSpeedRPC",PhotonTargets.All, speedParam);
 			speedReduced = false;
 		}
 	}
