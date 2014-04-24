@@ -1,7 +1,7 @@
 # Defend Thy Kingdom
 by, Eugene Goh, Matt Goldhaber, Jon Wiedmann, Austin Yarger
 
-Defend Thy Kingdom is a 3D Multiplayer Wizard Wave Survival built with Unity. 
+Defend Thy Kingdom is a 3D Multiplayer Wizard Wave Survival game built with Unity. 
 
 ## To Play
 You need 1~4 players
@@ -11,6 +11,8 @@ You can download the zip builds at
 [Mac]() 
 
 You can also clone it from GitHub, and build it yourself. 
+To clone:
+> git clone https://github.com/jonmann20/WizardSurvival.git
 To build:
 > File > Choose Target Platform > Choose Architecture > Build > Have fun
 

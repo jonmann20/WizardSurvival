@@ -282,7 +282,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 		GameObject fountain = GameObject.FindWithTag("Fountain");
 
-		int NumberOfItemsToSpawn = Random.Range(5, 10);
+		int NumberOfItemsToSpawn = Random.Range(10, 20);
 
 		for(int i=0; i < NumberOfItemsToSpawn; ++i){
 			int itemIndex = Random.Range(0, that.FountainItemPrefabs.Length);

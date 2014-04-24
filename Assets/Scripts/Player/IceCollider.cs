@@ -3,8 +3,18 @@ using System.Collections;
 
 public class IceCollider : MonoBehaviour {
 
+	void Awake(){
+		if(!GetComponent<PhotonView>().isMine){
+			Destroy(this);
+		}
+	}
+	
 	void OnTriggerEnter(){
-		//GameAudio.playFreezeSpellCollision();
-		GLOBAL.that.SuperDestroy(gameObject);
+		if(GetComponent<PhotonView>().isMine)
+		{
+			GLOBAL.that.SuperDestroy(gameObject);
+		}
 	}
 }
+
+

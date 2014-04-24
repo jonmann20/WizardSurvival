@@ -19,6 +19,7 @@ public class NetworkLauncherScript : MonoBehaviour {
 	}
 	
 	void Update () {
+
 		if(!GLOBAL.gameOver){
 			if(hasMasterClientDisconnected()){
 				GLOBAL.GameOver("The Host Disconnected...");
