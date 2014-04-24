@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 	// head, hat, body, legL, legR, armL, armR;
 	public GameObject[] parts;
 
-    public bool isInAir = true;
+	public bool isInAir = true;
 
 	public float fireSpeed = 4;
 	public GameObject fireProj;
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
 
 
 	//RESPAWN
-	private GameObject respawnArea;
+	//private GameObject respawnArea;
 	int previousWave;
 
 	void Awake(){
@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Start(){
-
 		plusY = Physics.gravity.y * 1.4f;
 
 		playerSingleton = this.transform;
@@ -81,11 +80,10 @@ public class PlayerController : MonoBehaviour {
 
         leaderboard = GLOBAL.MainCamera.GetComponent<Leaderboard>();
 
-		respawnArea = GameObject.Find("Respawn Area");
+		//respawnArea = GameObject.Find("Respawn Area");
 	}
 
     void Update(){
-
         refreshControls();
 
         if(getInput != null){
@@ -203,13 +201,16 @@ public class PlayerController : MonoBehaviour {
 		animate();
 
 		// health
-		if(GLOBAL.health <= 0){
+		if(!GLOBAL.isDead && GLOBAL.health <= 0){
+			GLOBAL.isDead = true;
 			HudScript.addNewMessage("KO!", 120, Color.red);
 
             rigidbody.constraints = RigidbodyConstraints.None;
 			rigidbody.mass = 1;
 			rigidbody.velocity = new Vector3(0, 10, 0);
 			rigidbody.angularVelocity = Random.onUnitSphere * 10;
+
+			print("UNLOCKED RIGIDBODY");
 
 			getInput = null;
 			updatePlayer = update_down;
@@ -223,19 +224,23 @@ public class PlayerController : MonoBehaviour {
 
 	public void Respawn()
 	{
-		print ( "Respawning this player ");
 		getInput = control_active;
 		updatePlayer = update_active;
 
 		TakeDamage(-100, transform);
 
-		Vector3 resLoc = respawnArea.transform.position;
-		transform.position = resLoc;
+		//Vector3 resLoc = respawnArea.transform.position;
+		//transform.position = resLoc;
 
 		Vector3 newForward = new Vector3(GLOBAL.MainCamera.transform.forward.x, 0, GLOBAL.MainCamera.transform.forward.z);
 		transform.forward = newForward;
 		rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 		rigidbody.angularVelocity = Vector3.zero;
+		rigidbody.freezeRotation = true;
+		velMovement = Vector3.zero;
+
+		print("LOCKED RIGIDBODY");
+		GLOBAL.isDead = false;
 	}
 
 	#region Animation
@@ -398,9 +403,13 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll){
 		if(coll.gameObject.tag == "EnemyBullet"){
-			if( this.gameObject.GetPhotonView().isMine )
-			{
-				TakeDamage(coll.gameObject.GetComponent<MageOrbScript>().damageToApply, coll.collider.transform);
+			
+			if(this.gameObject.GetPhotonView().isMine){
+				MageOrbScript m = coll.gameObject.GetComponent<MageOrbScript>();
+				if(m) {
+					TakeDamage(m.damageToApply, coll.collider.transform);
+				}
+				
 				GLOBAL.that.SuperDestroy(coll.gameObject);
 			}
 		}

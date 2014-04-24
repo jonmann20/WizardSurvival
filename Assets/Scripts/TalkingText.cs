@@ -30,8 +30,8 @@ public class TalkingText : MonoBehaviour {
 			MAX_DISTANCE = 21;
 			manyStrings = new string[4];
 			manyStrings [0] = "No jumping in the pool!";
-			manyStrings [1] = "Press F1 to cast your spells!";
-			manyStrings [2] = "L2 and F2 switches between inventories.";
+			manyStrings [1] = "Press R1 to cast your spells!";
+			manyStrings [2] = "L2 and R2 switches between inventories.";
 			manyStrings [3] = "Stay Alive!";
 		} else if (this.tag == "CreepyKing") {
 			MAX_DISTANCE = 34;

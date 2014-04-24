@@ -47,6 +47,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 	public virtual void OnFailedToConnectToPhoton()
 	{
 		GLOBAL.GameOver("Could not connect to server. Please try again.");
+		Leaderboard.gs = Leaderboard.gameState.highscore;	// hack since leaderboard fails to show in this case (need more checks for null in leaderboard code)
 	}
 
 	public virtual void OnPhotonJoinRoomFailed()

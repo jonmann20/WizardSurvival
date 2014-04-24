@@ -57,7 +57,7 @@ public class Intro : MonoBehaviour {
 			InputDevice device = InputManager.ActiveDevice;
 			InputControl ctrl_Square = device.GetControl(InputControlType.Action3);
 
-			if (ctrl_Square.WasPressed) {
+			if(ctrl_Square.WasPressed) {
 				initCredits();
 			}
 		}
@@ -77,8 +77,13 @@ public class Intro : MonoBehaviour {
 		// cta text
 		EZGUI.drawBox(675, 440, 575, 180, new Color(0.3f, 0.3f, 0.3f, 0.6f));
 		EZGUI.placeTxt("Enter your name: ", 45, EZGUI.HALFW, EZGUI.HALFH, e);
-		EZGUI.placeBtn ("Press \"Square\" for Credits", 40, EZGUI.HALFW, EZGUI.HALFW, e);
 
+		e.hoverColor = Color.green;
+		e.activeColor = new Color(0, 0.9f, 0);
+		EZButton ezb = EZGUI.placeBtn("Press \"□\" for Credits", 40, EZGUI.HALFW, EZGUI.HALFW, e);
+		if(ezb.btn) {
+			initCredits();
+		}
 
 		// input box
 		GUIStyle gs = new GUIStyle(GUI.skin.textField);

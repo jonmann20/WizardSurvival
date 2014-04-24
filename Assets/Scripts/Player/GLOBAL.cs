@@ -28,6 +28,8 @@ public class GLOBAL : Photon.MonoBehaviour {
 	static GameObject _InventoryHolder;
 	public static Font spookyMagic;
 
+	public static bool isDead = false;
+
 	void Awake(){
 		MainCamera = GameObject.FindWithTag("MainCamera") as GameObject;
 		that = this;
@@ -90,6 +92,7 @@ public class GLOBAL : Photon.MonoBehaviour {
 
 		HudScript.messageQueue.Clear();
 		HudScript.hudCamera.SetActive(true);
+		isDead = false;
 	}
 
 	public static void GameOver(string s){
